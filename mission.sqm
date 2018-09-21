@@ -8,20 +8,20 @@ class EditorData
 	toggles=5;
 	class ItemIDProvider
 	{
-		nextID=2;
+		nextID=4;
 	};
 	class Camera
 	{
-		pos[]={4868.8984,82.439293,12248.67};
-		dir[]={0.24100712,-0.17364821,0.9548623};
-		up[]={0.042496063,0.98480767,0.168368};
-		aside[]={0.96959251,-3.7252903e-009,-0.24472503};
+		pos[]={4880.9106,62.239059,12378.416};
+		dir[]={0.098469406,-0.46733376,0.87859088};
+		up[]={0.052051373,0.88407844,0.46442661};
+		aside[]={0.99378216,3.4517143e-008,-0.11138025};
 	};
 };
 binarizationWanted=0;
 addons[]=
 {
-	"A3_Characters_F"
+	"A3_Characters_F_Exp_Civil"
 };
 class AddonsMetaData
 {
@@ -30,8 +30,8 @@ class AddonsMetaData
 		items=1;
 		class Item0
 		{
-			className="A3_Characters_F";
-			name="Arma 3 Alpha - Characters and Clothing";
+			className="A3_Characters_F_Exp";
+			name="Arma 3 Apex - Characters and Clothing";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
@@ -68,7 +68,7 @@ class Mission
 		class Item0
 		{
 			dataType="Group";
-			side="West";
+			side="Civilian";
 			class Entities
 			{
 				items=1;
@@ -77,24 +77,24 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={4870.1333,65.470451,12275.585};
+						position[]={4882.1309,55.457581,12391.4};
 					};
-					side="West";
+					side="Civilian";
 					flags=7;
 					class Attributes
 					{
 						isPlayer=1;
 					};
-					id=1;
-					type="B_support_MG_F";
-					atlOffset=5.3405762e-005;
+					id=3;
+					type="C_Man_casual_4_F";
+					atlOffset=3.0517578e-005;
 				};
 			};
 			class Attributes
 			{
 			};
-			id=0;
-			atlOffset=5.3405762e-005;
+			id=2;
+			atlOffset=3.0517578e-005;
 		};
 	};
 };

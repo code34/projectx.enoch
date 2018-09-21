@@ -1,5 +1,7 @@
 #include "gui\define.hpp"
 #include "gui\style.hpp"
+#include "gui\vitems.hpp"
+#include "gui\loading.hpp"
 
 class RscTitles {
 #include "gui\hud.hpp"
