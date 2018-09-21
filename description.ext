@@ -1,0 +1,6 @@
+#include "gui\define.hpp"
+#include "gui\style.hpp"
+
+class RscTitles {
+#include "gui\hud.hpp"
+};
