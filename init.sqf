@@ -63,5 +63,5 @@
 	_hndl = ppEffectCreate ["colorCorrections", 1501];
 	_hndl ppEffectEnable true;
 	// gama, saturation, saturation, color,
-	_hndl ppEffectAdjust [1.0, 1.15, 0, [0, 0.1, 0, 0.2], [0, 0, 0, 1], [0, 0, 0, 0]];
+	_hndl ppEffectAdjust [1, 1.5, -0.10, [0.1, 0, 0.1, 0.2], [0, 0, 0, 1], [0, 0, 0, 0]];
 	_hndl ppEffectCommit 0;
