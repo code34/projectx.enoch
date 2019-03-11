@@ -18,10 +18,14 @@
 
 	call compile preprocessFileLineNumbers "vitems\oo_container.sqf";
 	call compile preprocessFileLineNumbers "vitems\oo_randomstuff.sqf";
-	call compile preprocessFileLineNumbers "gui\oo_UI_vitems.sqf";
+	call compile preprocessFileLineNumbers "gui\oo_vitems.sqf";
 	call compile preprocessFileLineNumbers "gui\oo_UI_loading.sqf";
 
 	_inventory = ["new", player] call OO_CONTAINER;
 	["setProperties", [name player,5,10]] call _inventory;
 
-	_actionID = player addAction ["Inventory", "actions\listinventory.sqf"];
+	player addEventHandler ["InventoryOpened", {
+		//player removeAllEventHandlers "InventoryOpened";
+		execVM "actions\listinventory.sqf";
+		true; // <-- inventory override
+	}];

@@ -100,7 +100,7 @@
 			DEBUG(#, "OO_CONTAINER::countWeight")
 			private _weight = 0;
 			{
-				_weight = _weight + (_x select 4);
+				_weight = _weight + (_x select 3);
 			} forEach (MEMBER("object", nil) getVariable["inventory", []]);
 			_weight;
 		};

@@ -8,4 +8,4 @@
 	};
 	"closeDialog" call loadingscreen;
 	
-	createDialog "UI_VITEMS";
+	createDialog "VITEMS";

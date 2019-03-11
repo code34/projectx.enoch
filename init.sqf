@@ -28,31 +28,32 @@
 	_briefcaseusecode = { if((_this getVariable ["name", ""]) isEqualTo "jacksonbro") then {	hint "Thank you Soldier! You just save the world"; true; } else {	hint "You tried to open the briefcase but destroy the content";closeDialog 0; true;};};
 
 	private _list = [
-			["Spare wheel","a deflated spare wheel","stuff",5,10,"Unknown",1, _wheelusecode, "pictures\wheel.jpg"],
-			["Coin","A XX century coin","stuff",5,0.1,"Food MetalX",-1, {true}, "pictures\coin.jpg"],
-			["Duck","a duck really alive with 3 legs","stuff",10,5,"Bloodycoal",5, {true}, "pictures\duck.jpg"],
-			["GPS tracker","A gps tracker that could be useful to us. The source of energy is a mystery.","stuff",20,0.1,"Unknown",-1, {true}, "pictures\gpstracker.jpg"],
-			["Lighter", "a lighter that will allow you to light campfires quickly. This object is not waterproof","stuff",5,0.1,"LyLKaay",5, _lighterusecode, "pictures\lighter.jpg"],
-			["A cloth bandage","A cloth bandage that will allow you to stop bleeding quickly","stuff",0,0.1,"Unknown",1, _bandageusecode, "pictures\bandage.jpg"],
-			["Adjustable wrench","a wrench that allows you to make the most basic repairs","stuff",2,1,"Unknown",10, _wrenchusecode, "pictures\wrench.jpg"],
-			["A figurine of mia kalifa","A figure of mia kalifa completely naked. She had, in all appearances, forgotten the whole epilation.","stuff",35,2,"Netarion",-1, {true}, "pictures\mia.jpg"],
-			["Antibiotic", "a box full of antibiotic in an acceptable state", "stuff", 1,0.1,"panics78",1, {true}, "pictures\antibiotic.jpg"]
+			// name, description, type, weight, durability, use code, picture
+			["Spare wheel","a deflated spare wheel","stuff",10,1, _wheelusecode, "pictures\wheel.jpg"],
+			["Coin","A XX century coin","stuff",0.05,-1, {true}, "pictures\coin.jpg"],
+			["Duck","a duck really alive with 3 legs","stuff",5,5, {true}, "pictures\duck.jpg"],
+			["GPS tracker","A gps tracker that could be useful to us. The source of energy is a mystery.","stuff",0.2,-1, {true}, "pictures\gpstracker.jpg"],
+			["Lighter", "a lighter that will allow you to light campfires quickly. This object is not waterproof","stuff",0.1, 5, _lighterusecode, "pictures\lighter.jpg"],
+			["A cloth bandage","A cloth bandage that will allow you to stop bleeding quickly","stuff",0.1, 1, _bandageusecode, "pictures\bandage.jpg"],
+			["Adjustable wrench","a wrench that allows you to make the most basic repairs","stuff",1,10, _wrenchusecode, "pictures\wrench.jpg"],
+			["A figurine of mia kalifa","A figure of mia kalifa completely naked. She had, in all appearances, forgotten the whole epilation.","stuff",0.5,-1, {true}, "pictures\mia.jpg"],
+			["Antibiotic", "a box full of antibiotic in an acceptable state", "stuff", 0.3,1, {true}, "pictures\antibiotic.jpg"]
 		];
 
 		_stuff = "new" call OO_RANDOMSTUFF;
 		["setStuff", _list] call _stuff;
 
 		_list = [
-			["Explosive C4", "A small amount of explosive that could allow you to spend a pleasant moment during this day. To use with precautions all the same", "military", 150, 5,"Unknown", 1, _c4usecode, "pictures\c4.jpg"],
-			["Mission plan #1425146", "Secret Defense - This information should not be disclosed to the enemy - Bring in sector c124535 the contents of this briefcase. Ask for colonel Jackson Bro", "military", 0,0.1, "HQ",-1, {true}, "pictures\mission.jpg"],
-			["A little briefcase", "a small black leather briefcase quite light. It is locked with an electronic code.It is impossible to open it without destroying its contents","military",0,1,"Unknown", 1, _briefcaseusecode, "pictures\briefcase.jpg"]
+			["Explosive C4", "A small amount of explosive that could allow you to spend a pleasant moment during this day. To use with precautions all the same", "military", 5, 1, _c4usecode, "pictures\c4.jpg"],
+			["Mission plan #1425146", "Secret Defense - This information should not be disclosed to the enemy - Bring in sector c124535 the contents of this briefcase. Ask for colonel Jackson Bro", "military", 0.05, -1, {true}, "pictures\mission.jpg"],
+			["A little briefcase", "a small black leather briefcase quite light. It is locked with an electronic code.It is impossible to open it without destroying its contents","military",5, 1, _briefcaseusecode, "pictures\briefcase.jpg"]
 		];
 		["setMilitary", _list] call _stuff;
 
 		_list = [
-			["Bottle","An water bottle","food",1,0.3,"Redcolision41",1, _bottleusecode, "pictures\bottle.jpg"],
-			["Potatoe","A vulgar potato damaged","food",2,0.5,"Captain_A",1, {true}, "pictures\potatoe.jpg"],
-			["Tin can Maxigaz","All you need protein to spend a good afternoon in the sun","food",10,0.2,"Unknown",2, {true}, "pictures\tin.jpg"]
+			["Bottle","An water bottle","food",1,1, _bottleusecode, "pictures\bottle.jpg"],
+			["Potatoe","A vulgar potato damaged","food",0.5, 1, {true}, "pictures\potatoe.jpg"],
+			["Tin can Maxigaz","All you need protein to spend a good afternoon in the sun","food", 0.2,2, {true}, "pictures\tin.jpg"]
 		];
 		["setFood", _list] call _stuff;
 
