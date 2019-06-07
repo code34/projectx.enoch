@@ -18,14 +18,26 @@
 
 	call compile preprocessFileLineNumbers "vitems\oo_container.sqf";
 	call compile preprocessFileLineNumbers "vitems\oo_randomstuff.sqf";
+	call compile preprocessFileLineNumbers "vitems\oo_bme.sqf";
+	call compile preprocessFileLineNumbers "objects\oo_health.sqf";
+	call compile preprocessFileLineNumbers "gui\oo_hud.sqf";
 	call compile preprocessFileLineNumbers "gui\oo_vitems.sqf";
 	call compile preprocessFileLineNumbers "gui\oo_UI_loading.sqf";
 
-	_inventory = ["new", player] call OO_CONTAINER;
-	["setProperties", [name player,5,10]] call _inventory;
+	bmeclient = "new" call OO_BME;
+	
+	private _result = false;
+	while { _result isEqualTo false} do { 
+		_result= ["remoteCall", ["BmeIsAlive", "" , 2, false]] call bmeclient;
+		sleep 1;
+	};
+	systemchat "BME 2.0 is initialized";
 
-	player addEventHandler ["InventoryOpened", {
-		//player removeAllEventHandlers "InventoryOpened";
-		execVM "actions\listinventory.sqf";
-		true; // <-- inventory override
-	}];
+	sleep 2;
+
+	player addEventHandler ["InventoryOpened", {execVM "gui\loading.sqf";true;}];
+	player addEventHandler ["InventoryClosed", {player addEventHandler ["InventoryOpened", {execVM "gui\loading.sqf";true;}];}];
+
+	1000 cutRsc ["hud", "PLAIN"];
+
+	health = "new" call OO_HEALTH;

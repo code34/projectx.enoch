@@ -8,9 +8,9 @@ class Vitems {
 	class controlsBackground {
 		class OOP_MainLayer_100_100 : OOP_MainLayer {
 			idc = 100;
-			x = -37.9208 * pixelGrid * pixelW;
+			x = -38 * pixelGrid * pixelW;
 			y = -13 * pixelGrid * pixelH;
-			w = 159.675 * pixelGrid * pixelW;
+			w = 160 * pixelGrid * pixelW;
 			h = 86.6667 * pixelGrid * pixelH;
 			onLBDrop = "['dragDrop', _this] call VITEMS;";
 			class controls{
@@ -18,7 +18,7 @@ class Vitems {
 					idc = 101;
 					x = 35.9269 * pixelGrid * pixelW;
 					y = 17.3333 * pixelGrid * pixelH;
-					w = 89.8172 * pixelGrid * pixelW;
+					w = 72.0731 * pixelGrid * pixelW;
 					h = 52 * pixelGrid * pixelH;
 					text = "";
 					colorBackground[] = {0, 0, 0, 0.7};
@@ -73,42 +73,39 @@ class Vitems {
 					idc = 106;
 					x = 35.9269 * pixelGrid * pixelW;
 					y = 13.8667 * pixelGrid * pixelH;
-					w = 89.8172 * pixelGrid * pixelW;
-					h = 3.46667 * pixelGrid * pixelH;
+					w = 72.0731 * pixelGrid * pixelW;
+					h = 3.46663 * pixelGrid * pixelH;
 					text = "Inventory";
 					colorText[] = {1, 1, 1, 1};
 					colorBackground[] = {0, 0.3, 0, 1};
 					tooltipColorText[] = {1, 1, 1, 1};
 				};
-				class OOP_Text_Description_109: OOP_StructuredText {
-					idc = 109;
+				class OOP_Text_Description_107: OOP_StructuredText {
+					idc = 107;
 					x = 37.9228 * pixelGrid * pixelW;
 					y = 55.4667 * pixelGrid * pixelH;
 					w = 49.8984 * pixelGrid * pixelW;
 					h = 12.1333 * pixelGrid * pixelH;
-					text = "";
+					text = "Description";
 					colorBackground[] = {1, 1, 1, 0.1};
 				};
-				class OOP_Listbox_primaryweapon_110: OOP_Listbox {
+				class OOP_btn_use_110: OOP_Button {
 					idc = 110;
-					style = "0x30 + 0x800";
-					x = 89.8172 * pixelGrid * pixelW;
-					y = 20.8 * pixelGrid * pixelH;
-					w = 33.9309 * pixelGrid * pixelW;
-					h = 8.66667 * pixelGrid * pixelH;
-					rowHeight = 0.14;
-					onLBDragging = "['setDestination', _this] call VITEMS";
-					onLBDrag = "['setSource', _this] call VITEMS";
+					x = 90 * pixelGrid * pixelW;
+					y = 27.7333 * pixelGrid * pixelH;
+					w = 16 * pixelGrid * pixelW;
+					h = 5.2 * pixelGrid * pixelH;
+					text = "Use";
+					action = "'btnAction_OOP_btn_use' call Vitems;";
 				};
-				class OOP_Listbox_secondaryweapon_111: OOP_Listbox {
+				class OOP_btn_weapons_111: OOP_Button {
 					idc = 111;
-					x = 89.8172 * pixelGrid * pixelW;
-					y = 31.2 * pixelGrid * pixelH;
-					w = 33.9309 * pixelGrid * pixelW;
-					h = 8.66667 * pixelGrid * pixelH;
-					rowHeight = 0.14;
-					onLBDragging = "['setDestination', _this] call VITEMS";
-					onLBDrag = "['setSource', _this] call VITEMS";
+					x = 90 * pixelGrid * pixelW;
+					y = 20.8 * pixelGrid * pixelH;
+					w = 16 * pixelGrid * pixelW;
+					h = 5.2 * pixelGrid * pixelH;
+					text = "Weapons";
+					action = "'btnAction_OOP_btn_weapons' call Vitems;";
 				};
 			};
 		};
@@ -117,5 +114,5 @@ class Vitems {
 };
 
 /*
-["Vitems",1000,[[[["35.9269 * pixelGrid * pixelW","17.3333 * pixelGrid * pixelH","89.8172 * pixelGrid * pixelW","52 * pixelGrid * pixelH"],"text","OOP_Text_Fond","","OOP_Text",true,[],[-1,-1,-1,-1],[0,0,0,0.7],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]],[[["37.9228 * pixelGrid * pixelW","20.8 * pixelGrid * pixelH","23.9513 * pixelGrid * pixelW","32.9333 * pixelGrid * pixelH"],"","OOP_Listbox_Proximity","","OOP_Listbox",true,["onLBSelChanged","onLBDragging","onLBDrag"],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]],[[["63.87 * pixelGrid * pixelW","20.8 * pixelGrid * pixelH","23.9513 * pixelGrid * pixelW","32.9333 * pixelGrid * pixelH"],"","OOP_Listbox_Capacities","","OOP_Listbox",true,["onLBSelChanged","onLBDrag","onLBDragging"],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]],[[["37.9228 * pixelGrid * pixelW","19.0667 * pixelGrid * pixelH","9.97969 * pixelGrid * pixelW","1.73333 * pixelGrid * pixelH"],"Proximity","OOP_Text_proximity","","OOP_Text",true,[],[1,1,1,1],[0,0,0,0],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]],[[["63.87 * pixelGrid * pixelW","19.0667 * pixelGrid * pixelH","9.97969 * pixelGrid * pixelW","1.73333 * pixelGrid * pixelH"],"Capacities","OOP_Text_Capacities","","OOP_Text",true,[],[1,1,1,1],[0,0,0,0],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]],[[["35.9269 * pixelGrid * pixelW","13.8667 * pixelGrid * pixelH","89.8172 * pixelGrid * pixelW","3.46667 * pixelGrid * pixelH"],"Inventory","OOP_Text_Inventory","","OOP_Text",true,[],[1,1,1,1],[0,0.3,0,1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]],[[["37.9228 * pixelGrid * pixelW","55.4667 * pixelGrid * pixelH","49.8984 * pixelGrid * pixelW","12.1333 * pixelGrid * pixelH"],"Description","OOP_Text_Description","","OOP_StructuredText",true,[],[-1,-1,-1,-1],[1,1,1,0.1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]],[[["89.8172 * pixelGrid * pixelW","20.8 * pixelGrid * pixelH","33.9309 * pixelGrid * pixelW","8.66667 * pixelGrid * pixelH"],"","OOP_Listbox_primaryweapon","","OOP_Listbox",true,[],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]],[[["89.8172 * pixelGrid * pixelW","31.2 * pixelGrid * pixelH","33.9309 * pixelGrid * pixelW","8.66667 * pixelGrid * pixelH"],"","OOP_Listbox_secondaryweapon","","OOP_Listbox",true,[],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]]]]
+["Vitems",1000,[[[["35.9269 * pixelGrid * pixelW","17.3333 * pixelGrid * pixelH","72.0731 * pixelGrid * pixelW","52 * pixelGrid * pixelH"],"text","OOP_Text_Fond","","OOP_Text",true,[],[-1,-1,-1,-1],[0,0,0,0.7],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]],[[["37.9228 * pixelGrid * pixelW","20.8 * pixelGrid * pixelH","23.9513 * pixelGrid * pixelW","32.9333 * pixelGrid * pixelH"],"","OOP_Listbox_Proximity","","OOP_Listbox",true,["onLBSelChanged","onLBDragging","onLBDrag"],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]],[[["63.87 * pixelGrid * pixelW","20.8 * pixelGrid * pixelH","23.9513 * pixelGrid * pixelW","32.9333 * pixelGrid * pixelH"],"","OOP_Listbox_Capacities","","OOP_Listbox",true,["onLBSelChanged","onLBDrag","onLBDragging"],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]],[[["37.9228 * pixelGrid * pixelW","19.0667 * pixelGrid * pixelH","9.97969 * pixelGrid * pixelW","1.73333 * pixelGrid * pixelH"],"Proximity","OOP_Text_proximity","","OOP_Text",true,[],[1,1,1,1],[0,0,0,0],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]],[[["63.87 * pixelGrid * pixelW","19.0667 * pixelGrid * pixelH","9.97969 * pixelGrid * pixelW","1.73333 * pixelGrid * pixelH"],"Capacities","OOP_Text_Capacities","","OOP_Text",true,[],[1,1,1,1],[0,0,0,0],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]],[[["35.9269 * pixelGrid * pixelW","13.8667 * pixelGrid * pixelH","72.0731 * pixelGrid * pixelW","3.46663 * pixelGrid * pixelH"],"Inventory","OOP_Text_Inventory","","OOP_Text",true,[],[1,1,1,1],[0,0.3,0,1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]],[[["37.9228 * pixelGrid * pixelW","55.4667 * pixelGrid * pixelH","49.8984 * pixelGrid * pixelW","12.1333 * pixelGrid * pixelH"],"Description","OOP_Text_Description","","OOP_StructuredText",true,[],[-1,-1,-1,-1],[1,1,1,0.1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]],[[["90 * pixelGrid * pixelW","27.7333 * pixelGrid * pixelH","16 * pixelGrid * pixelW","5.2 * pixelGrid * pixelH"],"Use","OOP_btn_use","","OOP_Button",true,[],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]],[[["90 * pixelGrid * pixelW","20.8 * pixelGrid * pixelH","16 * pixelGrid * pixelW","5.2 * pixelGrid * pixelH"],"Weapons","OOP_btn_weapons","","OOP_Button",true,[],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]]]]
 */
