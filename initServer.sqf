@@ -45,14 +45,14 @@
 		private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
 		private _sound = _path + "sounds\eat.ogg";
 		playSound3D [_sound, player, false, getPosASL player, 5, 1, 10];
-		["addFood", floor(random 50)] call (missionNamespace getVariable "health");
+		["addFood", floor(random 10)] call (missionNamespace getVariable "health");
 		true;
 	};
 	_drinkingcode = { 
 		private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
 		private _sound = _path + "sounds\drink.ogg";
 		playSound3D [_sound, player, false, getPosASL player, 5, 1, 10];
-		["addDrink", floor(random 50)] call (missionNamespace getVariable "health");
+		["addDrink", floor(random 10)] call (missionNamespace getVariable "health");
 		true;
 	};
 	_bottleusecode = { hint "You drink all the bottle. You fill very sick and finaly you die."; player setDamage 1;closeDialog 0; true;};
@@ -88,7 +88,7 @@
 		["setMilitary", _list] call _stuff;
 
 		_list = [
-			["Water Bottle","A Plastic mineral water bottle","food",1,1, _bottleusecode, "pictures\bottle.jpg"],
+			["Water Bottle","A Plastic mineral water bottle","food",1,1, _drinkingcode, "pictures\bottle.jpg"],
 			["Potatoe","A vulgar potato damaged","food",0.4, 1, _eatingcode, "pictures\potatoe.jpg"],
 			["A red apple","A nice great red apple","food",0.2, 1, _eatingcode, "pictures\redapple.jpg"],
 			["Tin can Maxigaz","All you need protein to spend a good afternoon in the sun","food", 0.2,2, _drinkingcode, "pictures\tin.jpg"],
