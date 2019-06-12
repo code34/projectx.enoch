@@ -27,6 +27,8 @@
 		PRIVATE VARIABLE("scalar","life");
 		PRIVATE VARIABLE("scalar","virus");
 		PRIVATE VARIABLE("scalar","temperature");
+		PRIVATE VARIABLE("scalar","bonusfood");
+		PRIVATE VARIABLE("scalar","bonusdrink");
 
 		PUBLIC FUNCTION("","constructor") { 
 			DEBUG(#, "OO_HEALTH::constructor")
@@ -35,6 +37,8 @@
 			MEMBER("setLife", 100);
 			MEMBER("setVirus", 0);
 			MEMBER("temperature", 37.2);
+			MEMBER("bonusfood", 0);
+			MEMBER("bonusdrink", 0);
 			SPAWN_MEMBER("checkLife", nil);
 			SPAWN_MEMBER("checkFood", nil);
 			SPAWN_MEMBER("checkDrink", nil);
@@ -67,18 +71,36 @@
 
 		PUBLIC FUNCTION("scalar","addDrink") {
 			DEBUG(#, "OO_HEALTH::addDrink")
-			private _drink = MEMBER("drink", nil);
-			_drink = _drink + _this;
-			if(_drink > 100) then { _drink = 100;};
-			MEMBER("setDrink", _drink);
+			private _bonusdrink = MEMBER("bonusdrink", nil);
+			_bonusdrink = _bonusdrink + _this;
+			if(_bonusdrink > 20) then { 
+				private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
+				private _sound = _path + "sounds\vomit.ogg";
+				playSound3D [_sound, player, false, getPosASL player, 5, 1, 10];
+				_bonusfood = 0;
+				_bonusdrink = 0;
+				MEMBER("setFood", 0);
+				MEMBER("setDrink", 0);
+			} else {
+				MEMBER("bonusdrink", _bonusdrink);
+			};
 		};
 
 		PUBLIC FUNCTION("scalar","addFood") {
 			DEBUG(#, "OO_HEALTH::addFood")
-			private _food = MEMBER("food", nil);
-			_food = _food + _this;
-			if(_food > 100) then { _food = 100;};
-			MEMBER("setFood", _food);
+			private _bonusfood = MEMBER("bonusfood", nil);
+			_bonusfood = _bonusfood + _this;
+			if(_bonusfood > 20) then { 
+				private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
+				private _sound = _path + "sounds\vomit.ogg";
+				playSound3D [_sound, player, false, getPosASL player, 5, 1, 10];
+				_bonusfood = 0;
+				_bonusdrink = 0;
+				MEMBER("setFood", 0);
+				MEMBER("setDrink", 0);
+			} else {
+				MEMBER("bonusfood", _bonusfood);
+			};
 		};
 
 		PUBLIC FUNCTION("","checkFood") {
@@ -87,12 +109,23 @@
 			private _level = 0;
 
 			while { true } do {
-				_food = MEMBER("food", nil);
-				_level = floor (random 3);
-				_food = _food - _level;
-				if(_food < 0) then {_food = 0;};
-				MEMBER("setFood", _food);
-				sleep 60;
+				private _bonusfood = MEMBER("bonusfood",nil);
+				if( _bonusfood > 0) then {
+					_bonusfood = _bonusfood - 1;
+					MEMBER("bonusfood", _bonusfood);
+					_food = MEMBER("food", nil);
+					_level = floor (random 5);
+					_food = _food + _level;
+					if(_food > 100) then {_food = 100;};
+					MEMBER("setFood", _food);
+				} else {
+					_food = MEMBER("food", nil);
+					_level = floor (random 5);
+					_food = _food - _level;
+					if(_food < 0) then {_food = 0;};
+					MEMBER("setFood", _food);
+				};
+				sleep 30;
 			};
 		};
 
@@ -102,12 +135,23 @@
 			private _level = 0;
 
 			while { true } do {
-				_drink = MEMBER("drink", nil);
-				_level = floor (random 3);
-				_drink = _drink - _level;
-				if(_drink < 0) then {_drink = 0;};
-				MEMBER("setDrink", _drink);
-				sleep 60;
+				private _bonusdrink = MEMBER("bonusdrink",nil);
+				if( _bonusdrink > 0) then {
+					_bonusdrink = _bonusdrink - 1;
+					MEMBER("bonusdrink", _bonusdrink);
+					_drink = MEMBER("drink", nil);
+					_level = floor (random 5);
+					_drink = _drink + _level;
+					if(_drink > 100) then {_drink = 100;};
+					MEMBER("setDrink", _drink);
+				} else {
+					_drink = MEMBER("drink", nil);
+					_level = floor (random 5);
+					_drink = _drink - _level;
+					if(_drink < 0) then {_drink = 0;};
+					MEMBER("setDrink", _drink);
+				};
+				sleep 30;
 			};
 		};
 
@@ -123,16 +167,16 @@
 					_level = floor(random 3);
 				};
 				if(MEMBER("food", nil) < 1) then {
-					_level = _level + floor(random 3);
+					_level = _level + floor(random 5);
 				};
 				if(MEMBER("drink", nil) < 1) then {
-					_level = _level + floor(random 3);
+					_level = _level + floor(random 5);
 				};
 				if(MEMBER("virus", nil) > 0) then {
-					_level = _level + floor(random 3);
+					_level = _level + floor(random 5);
 				};
 				if(getDammage player > 0) then {
-					_level = _level + floor(random 3);
+					_level = _level + floor(random 5);
 				};
 				_life = MEMBER("life", nil);
 				_life = _life - _level;
@@ -167,5 +211,7 @@
 			DELETE_VARIABLE("life");
 			DELETE_VARIABLE("virus");
 			DELETE_VARIABLE("temperature");
+			DELETE_VARIABLE("bonusfood");
+			DELETE_VARIABLE("bonusdrink");
 		};
 	ENDCLASS;
