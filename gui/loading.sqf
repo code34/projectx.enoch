@@ -1,7 +1,7 @@
 	createDialog "loadingscreen";
 
 	private _object = cursorObject;
-	if (isNull _object) then { 
+	if ((isNull _object) or (_object distance player > 5)) then { 
 		_object = "Box_B_UAV_06_F" createVehicle position player; 
 		_object setpos (position player);
 	};
