@@ -13,8 +13,6 @@ CLASS("oo_Vitems")
 	PRIVATE UI_VARIABLE("control", "OOP_btn_use");
 	PRIVATE UI_VARIABLE("control", "OOP_btn_weapons");
 	PRIVATE UI_VARIABLE("display", "Display");
-	PRIVATE VARIABLE("code", "prox_container");
-	PRIVATE VARIABLE("code", "cap_container");
 	PRIVATE UI_VARIABLE("array", "destination");
 	PRIVATE UI_VARIABLE("array", "source");
 	PRIVATE VARIABLE("string", "mode");
@@ -39,7 +37,7 @@ CLASS("oo_Vitems")
 	PUBLIC FUNCTION("", "btnAction_OOP_btn_use") {
 		private _index = lbCurSel  MEMBER("OOP_Listbox_Capacities", nil);
 		if(_index > -1) then {
-			["useItem", _index] call MEMBER("cap_container", nil);
+			["useItem", _index] call capcontainer;
 			MEMBER("refresh", nil);
 		};
 	};
@@ -47,16 +45,14 @@ CLASS("oo_Vitems")
 	PUBLIC FUNCTION("", "Init"){
 		//MEMBER("Display", nil) displayAddEventHandler ["KeyDown", "if (_this select 1 isEqualTo 1) then {true} else {false};"];
 		// print ground/object listbox
-		MEMBER("prox_container", proxcontainer);
-		MEMBER("cap_container", capcontainer);
 		MEMBER("refresh", nil);
 	};
 
 	PUBLIC FUNCTION("", "refresh"){
-		private _array = [MEMBER("OOP_Listbox_Proximity",nil), MEMBER("prox_container", nil)];
+		private _array = [MEMBER("OOP_Listbox_Proximity",nil), proxcontainer];
 		MEMBER("refresh_LISTBOX", _array);
 
-		private _array = [MEMBER("OOP_Listbox_Capacities",nil), MEMBER("cap_container", nil)];
+		private _array = [MEMBER("OOP_Listbox_Capacities",nil), capcontainer];
 		MEMBER("refresh_LISTBOX", _array);
 		MEMBER("refresh_title", nil);
 	};
@@ -78,15 +74,15 @@ CLASS("oo_Vitems")
 		private _dcontainer = "";
 
 		if (_source isEqualTo MEMBER("OOP_Listbox_Capacities", nil)) then {
-			_scontainer = MEMBER("cap_container", nil);
+			_scontainer = capcontainer;
 		} else {
-			_scontainer = MEMBER("prox_container", nil);
+			_scontainer = proxcontainer;
 		};
 
 		if (_destination isEqualTo MEMBER("OOP_Listbox_Capacities", nil)) then {
-			_dcontainer = MEMBER("cap_container", nil);
+			_dcontainer = capcontainer;
 		} else {
-			_dcontainer = MEMBER("prox_container", nil);
+			_dcontainer = proxcontainer;
 		};
 
 		private _index = (((_this select 4) select 0) select 1);
@@ -97,11 +93,11 @@ CLASS("oo_Vitems")
 
 	PUBLIC FUNCTION("", "refresh_title") {
 		DEBUG(#, "OO_VITEMS::refresh_title")
-		private _name = "getName" call MEMBER("cap_container", nil);
-		private _weight = "countWeight" call MEMBER("cap_container", nil);
-		private _size = "countSize" call MEMBER("cap_container", nil);
-		private _limitsize = "getLimitSize" call MEMBER("cap_container", nil);
-		private _limitweight = "getLimitWeight" call MEMBER("cap_container", nil);
+		private _name = "getName" call capcontainer;
+		private _weight = "countWeight" call capcontainer;
+		private _size = "countSize" call capcontainer;
+		private _limitsize = "getLimitSize" call capcontainer;
+		private _limitweight = "getLimitWeight" call capcontainer;
 		MEMBER("OOP_Text_Inventory", nil) ctrlSetText format["%1 inventory | Items: %2 | Total Weight: %4 Kg", _name, _size, _limitsize, _weight, _limitweight];
 	};
 
@@ -146,9 +142,9 @@ CLASS("oo_Vitems")
 	PUBLIC FUNCTION("array", "onLBSelChanged_OOP_Listbox_Proximity") {
 		private _control = _this select 0;
 		private _index = _this select 1;
-		if(_index >= ("countSize" call MEMBER("prox_container", nil))) exitWith {};
+		if(_index >= ("countSize" call proxcontainer)) exitWith {};
 		if(_index > -1) then {
-			private _content = ("getContent" call MEMBER("prox_container", nil)) select _index;
+			private _content = ("getContent" call proxcontainer) select _index;
 			MEMBER("OOP_Listbox_Capacities",nil) lbSetCurSel -1;
 			//"name", "description", "category", "price","weight", "owner", "life"
 			//MEMBER("OOP_Text_Description", nil) ctrlSetStructuredText parseText format ["Type: %1 Weight: %2Kg <br/>Durability: %3%<br/>Description: %4<br/>", _content select 2,_content select 3,_content select 4,_content select 1];
@@ -187,9 +183,9 @@ CLASS("oo_Vitems")
 	PUBLIC FUNCTION("array", "onLBSelChanged_OOP_Listbox_Capacities") {
 		private _control = _this select 0;
 		private _index = _this select 1;
-		if(_index >= ("countSize" call MEMBER("cap_container", nil))) exitWith {};
+		if(_index >= ("countSize" call capcontainer)) exitWith {};
 		if(_index > -1) then {
-			private _content = ("getContent" call MEMBER("cap_container", nil)) select _index;
+			private _content = ("getContent" call capcontainer) select _index;
 			MEMBER("OOP_Listbox_Proximity",nil) lbSetCurSel -1;
 			//"name", "description", "category", "price","weight", "owner", "life"
 			MEMBER("OOP_Text_Description", nil) ctrlSetStructuredText parseText format ["%1<br/>", _content select 1];
@@ -251,15 +247,15 @@ CLASS("oo_Vitems")
 	PUBLIC FUNCTION("display", "setDisplay"){ MEMBER("Display", _this); };
 	
 	PUBLIC FUNCTION("", "deconstructor"){
-		"save" call MEMBER("prox_container", nil);
-		"save" call MEMBER("cap_container", nil);
-		private _size = "countSize" call MEMBER("prox_container", nil);
+		"save" call proxcontainer;
+		"save" call capcontainer;
+		private _size = "countSize" call proxcontainer;
 		if (_size isEqualTo 0) then {
-			if(("getModel" call _container) isEqualTo "box_uav_06_f.p3d") then {
-				deleteVehicle (objectFromNetId ("getNetId" call _container));
+			if(("getModel" call proxcontainer) isEqualTo "box_uav_06_f.p3d") then {
+				deleteVehicle (objectFromNetId ("getNetId" call proxcontainer));
+				systemChat "delete box";
 			};
 		};
-
 		["delete", capcontainer] call OO_CONTAINER;
 		["delete", proxcontainer] call OO_CONTAINER;
 
@@ -275,8 +271,6 @@ CLASS("oo_Vitems")
 		DELETE_UI_VARIABLE("OOP_btn_use");
 		DELETE_UI_VARIABLE("OOP_btn_weapons");
 		DELETE_UI_VARIABLE("Display");
-		DELETE_VARIABLE("prox_container");
-		DELETE_VARIABLE("cap_container");
 		DELETE_VARIABLE("source");
 		DELETE_VARIABLE("destination");
 	};
