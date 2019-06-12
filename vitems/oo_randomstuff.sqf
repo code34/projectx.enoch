@@ -140,8 +140,12 @@
 						_kindofloot = ["stuff", "military"] selectRandomWeighted [0.97,0.03];
 					};
 				};
-				_entry = MEMBER(_kindofloot, nil) select (random (count(MEMBER(_kindofloot,nil)) - 1));
-				_result pushBack _entry;
+				if!(_type isEqualTo "neutre") then {
+					_entry = MEMBER(_kindofloot, nil) select (random (count(MEMBER(_kindofloot,nil)) - 1));
+					_result pushBack _entry;
+				} else {
+					_result = [];
+				};
 			};
 			_result;
 		};
