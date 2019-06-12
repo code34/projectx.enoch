@@ -1,4 +1,4 @@
-﻿	/*
+	/*
 	Author: code34 nicolas_boiteux@yahoo.fr
 	Copyright (C) 2018 Nicolas BOITEUX
 
