@@ -20,12 +20,14 @@ CLASS("oo_loadingscreen")
 		MEMBER("OOP_Text_Loading", _this displayCtrl 104);
 		MEMBER("Init", nil);
 	};
+	
 	PUBLIC FUNCTION("", "Init"){
 		MEMBER("Display", nil) displayAddEventHandler ["KeyDown", "if (_this select 1 isEqualTo 1) then {true} else {false};"];
 	};
 
 	PUBLIC FUNCTION("", "incProgressBar"){
 			private _pos = progressPosition MEMBER("OOP_Progress_Bar", nil);
+			if (isNil "_pos") exitWith {};
 			MEMBER("OOP_Progress_Bar", nil) progressSetPosition (_pos + 0.1);
 	};
 
