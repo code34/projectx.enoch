@@ -19,6 +19,7 @@
 	call compile preprocessFileLineNumbers "vitems\oo_container.sqf";
 	call compile preprocessFileLineNumbers "vitems\oo_randomstuff.sqf";
 	call compile preprocessFileLineNumbers "vitems\oo_bme.sqf";
+	call compile preprocessFileLineNumbers "objects\oo_sector.sqf";
 
 	// Get/Set content/properties of containers from NetID
 	vitems_getInventory = { 
@@ -48,6 +49,7 @@
 		["addFood", floor(random 10)] call (missionNamespace getVariable "health");
 		true;
 	};
+	
 	_drinkingcode = { 
 		private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
 		private _sound = _path + "sounds\drink.ogg";
@@ -55,7 +57,15 @@
 		["addDrink", floor(random 10)] call (missionNamespace getVariable "health");
 		true;
 	};
-	_bottleusecode = { hint "You drink all the bottle. You fill very sick and finaly you die."; player setDamage 1;closeDialog 0; true;};
+
+	_healingcode = {
+/*		private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
+		private _sound = _path + "sounds\eat.ogg";
+		playSound3D [_sound, player, false, getPosASL player, 5, 1, 10];*/
+		["addLife", floor(random 10)] call (missionNamespace getVariable "health");
+		true;
+	};
+
 	_c4usecode = { hint "C4 was armed"; _c4 = "DemoCharge_Remote_Ammo_Scripted" createVehicle position _this; _c4 attachTo [_this, [0,0,0]]; _c4 spawn { sleep 10; _this setDamage 1; };true;};
 	_lighterusecode = { skipTime 12;true;};
 	_bandageusecode = { _this setDamage ((getDammage _this) - 0.2);true;};
@@ -73,9 +83,10 @@
 			["A cloth bandage","A cloth bandage that will allow you to stop bleeding quickly","stuff",0.1, 1, _bandageusecode, "pictures\bandage.jpg"],
 			["Adjustable wrench","a wrench that allows you to make the most basic repairs","stuff",1,10, _wrenchusecode, "pictures\wrench.jpg"],
 			["A figurine of mia kalifa","A figure of mia kalifa completely naked. She had, in all appearances, forgotten the whole epilation.","stuff",0.5,-1, {true}, "pictures\mia.jpg"],
-			["Antibiotic", "a box full of antibiotic in an acceptable state", "stuff", 0.1,1, {true}, "pictures\antibiotic.jpg"],
+			["Antibiotic", "a box full of antibiotic in an acceptable state", "stuff", 0.1,1, _healingcode, "pictures\antibiotic.jpg"],
 			["Axe", "A Greenland Condor axe 1060 High Carbon", "stuff", 1,-1, {true}, "pictures\axe.jpg"],
-			["Plank", "A pine wood plank of 6 to 8 feet", "stuff", 1,1, {true}, "pictures\plank.jpg"]
+			["Plank", "A pine wood plank of 6 to 8 feet", "stuff", 1,1, {true}, "pictures\plank.jpg"],
+			["Cigarettes packet","A packet of french cigarettes.","stuff", 0.2,2, {true}, "pictures\cigarettes.jpg"]
 		];
 		["setStuff", _list] call _stuff;
 
@@ -95,8 +106,7 @@
 			["Oreo pack","Chocolate flavour sandwich biscuits, with a vanilla flavour filling","food", 0.2,2, _eatingcode, "pictures\oreopack.jpg"],
 			["Beef Jerky","Tender slices of lean 100% beef are lightly seasoned with a unique blend of spices, and then cooked in a smoke oven.","food", 0.2,2, _eatingcode, "pictures\beefjerky.jpg"],
 			["White mushrooms", "Some smalls white mushrooms", "stuff", 0.2,1, _eatingcode, "pictures\whitemushrooms.jpg"],
-			["Canned Ravioli","Beef Ravioli in Meat Sauce.","food", 1,2, _eatingcode, "pictures\ravioli.jpg"],
-			["Cigarettes packet","A packet of french cigarettes.","food", 0.2,2, {true}, "pictures\cigarettes.jpg"]
+			["Canned Ravioli","Beef Ravioli in Meat Sauce.","food", 1,2, _eatingcode, "pictures\ravioli.jpg"]
 		];
 		["setFood", _list] call _stuff;
 
@@ -110,9 +120,12 @@
 		_list = [
 			["Pile of leaves", "A dry pile of leaves", "stuff", 1,1, {true}, "pictures\pileofleaves.jpg"],
 			["Wooden stick", "A small wooden stick with moss", "stuff", 0.3,1, {true}, "pictures\woodenstick.jpg"],
-			["Bug", "Fifth instar nymph of Forest shield bug", "stuff", 0.1,1, {true}, "pictures\nymphbug.jpg"],
+			["Bug", "Fifth instar nymph of Forest shield bug", "stuff", 0.1,1,_eatingcode, "pictures\nymphbug.jpg"],
 			["Compost", "A pile of organic compost", "stuff", 1,1, {true}, "pictures\pileofcompost.jpg"],
-			["Yellow mushrooms", "Some smalls yellow mushrooms", "stuff", 0.3,1, {true}, "pictures\yellowmushrooms.jpg"]
+			["Yellow mushrooms", "Some smalls yellow mushrooms", "food", 0.3,1, _eatingcode, "pictures\yellowmushrooms.jpg"],
+			["Blueberries", "Blueberries are sweet, nutritious and wildly popular.","stuff", 0.3,1, _eatingcode, "pictures\blueberries.jpg"],
+			["Gooseberries", "Fresh, delicious, sweet gooseberries","stuff", 0.3,1, _eatingcode, "pictures\gooseberries.jpg"],
+			["Nettle", "This green vegetable offers excellent nutritional value.","stuff", 0.3,1, _eatingcode, "pictures\nettle.jpg"]
 		];
 		["setBush", _list] call _stuff;
 
@@ -121,3 +134,35 @@
 			["Stone", "A simple grey granite stone", "stuff", 0.5,1, {true}, "pictures\stone.jpg"]
 		];
 		["setWall", _list] call _stuff;
+
+
+		wczones = [];
+		{
+			{
+				private _position = locationPosition _x;
+				private _xcord = (size _x) select 0;
+				private _ycord = (size _x) select 1;
+				private _size = sqrt((_xcord * _xcord) + (_ycord * _ycord));
+				_size = [_size, _size];
+				wczones pushBack [_position, _size];
+
+				private _id = random 65000;
+				private _name = format["target_%1", _id];
+				private _marker = createMarker [_name,_position];
+				_marker setMarkerShape "ELLIPSE";
+				_marker setMarkerType "loc_CivilDefense";
+				_marker setMarkerText _name;
+				_marker setMarkerColor "ColorRed";
+				_marker setMarkerSize _size;
+				_marker setMarkerBrush "FDiagonal";
+				true;
+			} count nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), [_x], worldSize];
+			true;
+		} count ["NameVillage", "NameCity", "NameCityCapital","NameLocal","Hill","FlatArea","Mount","Area", "HistoricalSite", "Strategic", "VegetationBroadleaf"];
+
+
+		{
+			_location = ["new", _x select 0] call OO_SECTOR;
+			"popZombies" call _location;
+		}foreach wczones;
+
