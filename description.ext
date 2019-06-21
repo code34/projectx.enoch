@@ -4,5 +4,7 @@
 #include "gui\loading.hpp"
 
 class RscTitles {
+
 #include "gui\hud.hpp"
+#include "gui\cursor.hpp"
 };

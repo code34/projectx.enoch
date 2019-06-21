@@ -24,6 +24,29 @@
 	call compile preprocessFileLineNumbers "gui\oo_vitems.sqf";
 	call compile preprocessFileLineNumbers "gui\oo_UI_loading.sqf";
 
+
+	[] spawn {
+		private _active = false;
+		while { true } do {
+			_size = 0;
+			if ((typeof cursorObject) isKindOf "House") then {
+				_size = ((1 boundingBoxReal cursorObject) select 2) - 1;
+			} else {
+				_size = ((1 boundingBoxReal cursorObject) select 2) + 2;
+			};
+			if ((cursorObject distance player < _size) and !(cursorObject isKindOf "Man")) then {
+				if!(_active) then {
+					1001 cutRsc ["cursor", "PLAIN"];
+					_active = true;
+				};
+			} else {
+				1001 cutText ["", "PLAIN"];
+				_active = false;
+			};
+			sleep 0.1;
+		};
+	};
+
 	bmeclient = "new" call OO_BME;
 	
 	private _result = false;

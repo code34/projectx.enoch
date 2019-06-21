@@ -1,9 +1,25 @@
 	createDialog "loadingscreen";
 
 	private _object = cursorObject;
-	if ((isNull _object) or (_object distance player > (1 boundingBoxReal _object) select 2)) then { 
+	private _tocreate = false;
+	private _size = 0;
+
+	if (isNull _object) then {
+		_tocreate = true;
+	} else {
+		if ((typeof _object) isKindOf "House") then {
+			_size = ((1 boundingBoxReal _object) select 2) - 1;
+		} else {
+			_size = ((1 boundingBoxReal _object) select 2) + 2;
+		};
+		if(_object distance player > _size) then {
+			_tocreate = true;
+		};
+	};
+
+	if(_tocreate) then {
 		_object = "Box_B_UAV_06_F" createVehicle position player; 
-		_object setpos (position player);
+		_object setpos (position player);	
 	};
 
 	[] spawn {
