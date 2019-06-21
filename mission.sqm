@@ -5,28 +5,30 @@ class EditorData
 	angleGridStep=0.2617994;
 	scaleGridStep=1;
 	autoGroupingDist=10;
-	toggles=1;
+	toggles=513;
 	class ItemIDProvider
 	{
-		nextID=5;
+		nextID=11;
+	};
+	class MarkerIDProvider
+	{
+		nextID=1;
 	};
 	class Camera
 	{
-		pos[]={11168.104,11.032616,11527.566};
-		dir[]={-0.95612681,-0.26323998,-0.12951681};
-		up[]={-0.26094484,0.96465272,-0.035347536};
-		aside[]={-0.13424094,-2.4037217e-006,0.99102956};
+		pos[]={11167.201,17.097891,11457.96};
+		dir[]={-0.6849677,-0.43423158,-0.58525026};
+		up[]={-0.33017841,0.90071756,-0.28211123};
+		aside[]={-0.6496495,-1.2968667e-006,0.76034641};
 	};
 };
 binarizationWanted=0;
 addons[]=
 {
-	"A3_Characters_F",
-	"A3_Weapons_F_Rifles_MX_Black",
-	"A3_Weapons_F_Exp",
-	"A3_Weapons_F",
-	"A3_Weapons_F_Items",
-	"A3_Characters_F_Exp_Vests"
+	"A3_Characters_F_Exp",
+	"A3_Ui_F_Orange",
+	"A3_Ui_F",
+	"A3_Soft_F_Beta_Truck_02"
 };
 class AddonsMetaData
 {
@@ -35,29 +37,29 @@ class AddonsMetaData
 		items=4;
 		class Item0
 		{
-			className="A3_Characters_F";
-			name="Arma 3 Alpha - Characters and Clothing";
+			className="A3_Characters_F_Exp";
+			name="Arma 3 Apex - Characters and Clothing";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
 		class Item1
 		{
-			className="A3_Weapons_F";
-			name="Arma 3 Alpha - Weapons and Accessories";
+			className="A3_Ui_F_Orange";
+			name="Arma 3 Orange - User Interface";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
 		class Item2
 		{
-			className="A3_Weapons_F_Exp";
-			name="Arma 3 Apex - Weapons and Accessories";
+			className="A3_Ui_F";
+			name="Arma 3 - User Interface";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
 		class Item3
 		{
-			className="A3_Characters_F_Exp";
-			name="Arma 3 Apex - Characters and Clothing";
+			className="A3_Soft_F_Beta";
+			name="Arma 3 Beta - Unarmored Land Vehicles";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
@@ -74,6 +76,7 @@ class Mission
 	{
 		timeOfChanges=1800.0002;
 		startWeather=0.82238704;
+		startFog=0.16014597;
 		startWind=0.1;
 		startWaves=0.1;
 		forecastWeather=0.8789463;
@@ -87,12 +90,12 @@ class Mission
 		minute=-2;
 		startFogBase=250;
 		forecastFogBase=250;
-		startFogDecay=0.017999999;
+		startFogDecay=0.015185679;
 		forecastFogDecay=0.017999999;
 	};
 	class Entities
 	{
-		items=2;
+		items=3;
 		class Item0
 		{
 			dataType="Group";
@@ -105,271 +108,47 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={11158.539,5.3023486,11524.675};
+						position[]={11154.127,4.0626459,11433.277};
 					};
 					side="West";
 					flags=7;
 					class Attributes
 					{
 						isPlayer=1;
-						class Inventory
-						{
-							class primaryWeapon
-							{
-								name="arifle_MX_Black_F";
-								optics="optic_ERCO_blk_F";
-								class primaryMuzzleMag
-								{
-									name="30Rnd_65x39_caseless_black_mag";
-									ammoLeft=30;
-								};
-							};
-							class uniform
-							{
-								typeName="U_B_CombatUniform_mcam_vest";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=2;
-									class Item0
-									{
-										name="Chemlight_green";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="30Rnd_65x39_caseless_black_mag";
-										count=1;
-										ammoLeft=30;
-									};
-								};
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							class vest
-							{
-								typeName="V_PlateCarrier1_rgr_noflag_F";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=4;
-									class Item0
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="Chemlight_green";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="HandGrenade";
-										count=2;
-										ammoLeft=1;
-									};
-								};
-							};
-							class backpack
-							{
-								typeName="B_Carryall_khk";
-								isBackpack=1;
-							};
-							map="ItemMap";
-							compass="ItemCompass";
-							watch="ItemWatch";
-							radio="ItemRadio";
-							goggles="G_Bandanna_oli";
-							headgear="H_HelmetB";
-						};
 					};
-					id=1;
-					type="B_Soldier_F";
-					atlOffset=2.0980835e-005;
+					id=6;
+					type="B_T_Soldier_A_F";
 				};
 			};
 			class Attributes
 			{
 			};
-			id=0;
-			atlOffset=2.0980835e-005;
+			id=5;
 		};
 		class Item1
 		{
-			dataType="Group";
-			side="West";
-			class Entities
+			dataType="Marker";
+			position[]={11147.49,4.0879998,11428.289};
+			name="zlocation";
+			type="loc_CivilDefense";
+			id=9;
+			atlOffset=4.8160553e-005;
+		};
+		class Item2
+		{
+			dataType="Object";
+			class PositionInfo
 			{
-				items=1;
-				class Item0
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={11156.02,5.3716373,11527.263};
-					};
-					side="West";
-					flags=7;
-					class Attributes
-					{
-						isPlayable=1;
-						class Inventory
-						{
-							class primaryWeapon
-							{
-								name="arifle_MX_Black_F";
-								optics="optic_ERCO_blk_F";
-								class primaryMuzzleMag
-								{
-									name="30Rnd_65x39_caseless_black_mag";
-									ammoLeft=30;
-								};
-							};
-							class uniform
-							{
-								typeName="U_B_CombatUniform_mcam_vest";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=2;
-									class Item0
-									{
-										name="Chemlight_green";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="30Rnd_65x39_caseless_black_mag";
-										count=1;
-										ammoLeft=30;
-									};
-								};
-								class ItemCargo
-								{
-									items=1;
-									class Item0
-									{
-										name="FirstAidKit";
-										count=1;
-									};
-								};
-							};
-							class vest
-							{
-								typeName="V_PlateCarrier1_rgr_noflag_F";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=4;
-									class Item0
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="Chemlight_green";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="HandGrenade";
-										count=2;
-										ammoLeft=1;
-									};
-								};
-							};
-							class backpack
-							{
-								typeName="B_Carryall_khk";
-								isBackpack=1;
-							};
-							map="ItemMap";
-							compass="ItemCompass";
-							watch="ItemWatch";
-							radio="ItemRadio";
-							goggles="G_Bandanna_oli";
-							headgear="H_HelmetB";
-						};
-					};
-					id=4;
-					type="B_Soldier_F";
-					atlOffset=4.7683716e-007;
-					class CustomAttributes
-					{
-						class Attribute0
-						{
-							property="speaker";
-							expression="_this setspeaker _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
-									value="Male07ENG";
-								};
-							};
-						};
-						class Attribute1
-						{
-							property="pitch";
-							expression="_this setpitch _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=0.95999998;
-								};
-							};
-						};
-						nAttributes=2;
-					};
-				};
+				position[]={11157.999,6.4517035,11433.714};
 			};
+			side="Empty";
+			flags=4;
 			class Attributes
 			{
 			};
-			id=3;
-			atlOffset=4.7683716e-007;
+			id=10;
+			type="C_Truck_02_transport_F";
+			atlOffset=-5.4359436e-005;
 		};
 	};
 };
