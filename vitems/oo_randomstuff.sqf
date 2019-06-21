@@ -124,7 +124,7 @@
 
 			if(_type isEqualTo "loot") exitWith {_result;};
 
-			_count = [0,1,2] selectRandomWeighted [0.4,0.6,0.1];
+			_count = [0,1,2] selectRandomWeighted [0.2,0.6,0.4];
 
 			for "_i" from 1 to _count step 1 do {
 				switch (_type) do {
