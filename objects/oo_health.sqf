@@ -29,6 +29,7 @@
 		PRIVATE VARIABLE("scalar","temperature");
 		PRIVATE VARIABLE("scalar","bonusfood");
 		PRIVATE VARIABLE("scalar","bonusdrink");
+		PRIVATE VARIABLE("scalar","bonuslife");
 
 		PUBLIC FUNCTION("","constructor") { 
 			DEBUG(#, "OO_HEALTH::constructor")
@@ -39,6 +40,7 @@
 			MEMBER("temperature", 37.2);
 			MEMBER("bonusfood", 0);
 			MEMBER("bonusdrink", 0);
+			MEMBER("bonuslife", 0);
 			SPAWN_MEMBER("checkLife", nil);
 			SPAWN_MEMBER("checkFood", nil);
 			SPAWN_MEMBER("checkDrink", nil);
@@ -69,6 +71,32 @@
 			["setVirus", _this] call hud;
 		};
 
+		PUBLIC FUNCTION("scalar","setTemperature") {
+			DEBUG(#, "OO_HEALTH::setTemperature")
+			MEMBER("temperature", _this);
+			//["setTemperature", _this] call hud;
+		};
+
+		PUBLIC FUNCTION("scalar","addLife") {
+			DEBUG(#, "OO_HEALTH::addLife")
+			private _bonuslife = MEMBER("bonuslife", nil);
+			_bonuslife = _bonuslife + _this;
+			if(_bonuslife > 20) then { 
+				private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
+				private _sound = _path + "sounds\vomit.ogg";
+				playSound3D [_sound, player, false, getPosASL player, 5, 1, 10];
+				_bonusfood = 0;
+				_bonusdrink = 0;
+				MEMBER("setFood", 0);
+				MEMBER("setDrink", 0);
+				private _temperature = MEMBER("temperature", nil) + random (1);
+				MEMBER("setTemperature", _temperature);
+				systemChat format ["Temperature: %1", _temperature];
+			} else {
+				MEMBER("bonuslife", _bonuslife);
+			};
+		};
+
 		PUBLIC FUNCTION("scalar","addDrink") {
 			DEBUG(#, "OO_HEALTH::addDrink")
 			private _bonusdrink = MEMBER("bonusdrink", nil);
@@ -81,6 +109,9 @@
 				_bonusdrink = 0;
 				MEMBER("setFood", 0);
 				MEMBER("setDrink", 0);
+				private _temperature = MEMBER("temperature", nil) - random (1);
+				MEMBER("setTemperature", _temperature);
+				systemChat format ["Temperature: %1", _temperature];
 			} else {
 				MEMBER("bonusdrink", _bonusdrink);
 			};
@@ -98,6 +129,9 @@
 				_bonusdrink = 0;
 				MEMBER("setFood", 0);
 				MEMBER("setDrink", 0);
+				private _temperature = MEMBER("temperature", nil) - random (1);
+				MEMBER("setTemperature", _temperature);
+				systemChat format ["Temperature: %1", _temperature];
 			} else {
 				MEMBER("bonusfood", _bonusfood);
 			};
@@ -160,11 +194,12 @@
 			private _life = 0;
 			private _temperature = 0;
 			private _level = 0;
+			private _bonuslife = 0;
 
 			while { true } do {
 				_temperature = MEMBER("temperature", nil);
 				if((_temperature < 36.5) or (_temperature > 38.5)) then {
-					_level = floor(random 3);
+					_level = floor(random 5);
 				};
 				if(MEMBER("food", nil) < 1) then {
 					_level = _level + floor(random 5);
@@ -178,9 +213,16 @@
 				if(getDammage player > 0) then {
 					_level = _level + floor(random 5);
 				};
+				_bonuslife = MEMBER("bonuslife", nil);
+				if( _bonuslife > 0 ) then {
+					_level = _level - floor(random 5);
+					_bonuslife = _bonuslife - 1;
+					MEMBER("bonuslife", _bonuslife);
+				};
 				_life = MEMBER("life", nil);
 				_life = _life - _level;
 				if(_life < 0) then {_life = 0;};
+				if(_life > 100) then {_life = 100;};
 				MEMBER("setLife", _life);
 				if(_life isEqualTo 0) then { player setDamage 1;};
 				sleep 60;
@@ -213,5 +255,6 @@
 			DELETE_VARIABLE("temperature");
 			DELETE_VARIABLE("bonusfood");
 			DELETE_VARIABLE("bonusdrink");
+			DELETE_VARIABLE("bonuslife");
 		};
 	ENDCLASS;
