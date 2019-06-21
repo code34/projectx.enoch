@@ -8,11 +8,11 @@ class EditorData
 	toggles=513;
 	class ItemIDProvider
 	{
-		nextID=11;
+		nextID=12;
 	};
 	class MarkerIDProvider
 	{
-		nextID=1;
+		nextID=2;
 	};
 	class Camera
 	{
@@ -26,15 +26,13 @@ binarizationWanted=0;
 addons[]=
 {
 	"A3_Characters_F_Exp",
-	"A3_Ui_F_Orange",
-	"A3_Ui_F",
 	"A3_Soft_F_Beta_Truck_02"
 };
 class AddonsMetaData
 {
 	class List
 	{
-		items=4;
+		items=2;
 		class Item0
 		{
 			className="A3_Characters_F_Exp";
@@ -43,20 +41,6 @@ class AddonsMetaData
 			url="https://www.arma3.com";
 		};
 		class Item1
-		{
-			className="A3_Ui_F_Orange";
-			name="Arma 3 Orange - User Interface";
-			author="Bohemia Interactive";
-			url="https://www.arma3.com";
-		};
-		class Item2
-		{
-			className="A3_Ui_F";
-			name="Arma 3 - User Interface";
-			author="Bohemia Interactive";
-			url="https://www.arma3.com";
-		};
-		class Item3
 		{
 			className="A3_Soft_F_Beta";
 			name="Arma 3 Beta - Unarmored Land Vehicles";
@@ -95,7 +79,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=3;
+		items=2;
 		class Item0
 		{
 			dataType="Group";
@@ -108,7 +92,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={11154.127,4.0626459,11433.277};
+						position[]={11150.885,4.1014342,11424.825};
 					};
 					side="West";
 					flags=7;
@@ -118,23 +102,16 @@ class Mission
 					};
 					id=6;
 					type="B_T_Soldier_A_F";
+					atlOffset=-4.2915344e-006;
 				};
 			};
 			class Attributes
 			{
 			};
 			id=5;
+			atlOffset=-4.2915344e-006;
 		};
 		class Item1
-		{
-			dataType="Marker";
-			position[]={11147.49,4.0879998,11428.289};
-			name="zlocation";
-			type="loc_CivilDefense";
-			id=9;
-			atlOffset=4.8160553e-005;
-		};
-		class Item2
 		{
 			dataType="Object";
 			class PositionInfo
