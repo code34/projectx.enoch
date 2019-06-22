@@ -71,7 +71,10 @@
 
 	_c4usecode = { hint "C4 was armed"; _c4 = "DemoCharge_Remote_Ammo_Scripted" createVehicle position _this; _c4 attachTo [_this, [0,0,0]]; _c4 spawn { sleep 10; _this setDamage 1; };true;};
 	_lighterusecode = { skipTime 12;true;};
-	_bandageusecode = { _this setDamage ((getDammage _this) - 0.2);true;};
+	_bandageusecode = { 
+		hint format ["%1", _this];
+		_this setDamage ((getDammage _this) - 0.2);true;
+	};
 	_wheelusecode = { if (_this isKindOf "Car") then { hint "You repair the Wheel"; player playActionNow "PutDown"; _this setDamage 0; true;} else { false;};};
 	_wrenchusecode = { if (_this isKindOf "Car") then { hint "Repairing ..."; player playActionNow "PutDown"; _this setDamage 0; true;} else { false;};};
 
@@ -102,6 +105,9 @@
 		["setMilitary", _list] call _stuff;
 
 		_list = [
+			["Orange juice ","Simply Orange Pulp Free Juice with Calcium and Vitamin D.","food",1,1, _drinkingcode, "pictures\orangejuice.jpg"],
+			["Redbull can","Red Bull Energy Drink is a functional beverage especially developed for increased performance.","food",1,1, _drinkingcode, "pictures\redbull.jpg"],			["Russian Vodka Bottle","Russian Standard vodka has come from out of nowhere to grab a large slice of the premium vodka market in the UK since its launch in 2007.","food",1,1, _drinkingcode, "pictures\vodka.jpg"],
+			["Corona Bottle","Corona Extra is a pilsner-type Mexican beer with a slightly sweet taste and a dash of citrus.","food",1,1, _drinkingcode, "pictures\corona.jpg"],
 			["Water Bottle","A Plastic mineral water bottle","food",1,1, _drinkingcode, "pictures\bottle.jpg"],
 			["Potatoe","A vulgar potato damaged","food",0.4, 1, _eatingcode, "pictures\potatoe.jpg"],
 			["A red apple","A nice great red apple","food",0.2, 1, _eatingcode, "pictures\redapple.jpg"],
