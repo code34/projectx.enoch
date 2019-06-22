@@ -30,6 +30,7 @@
 		PRIVATE VARIABLE("scalar","bonusfood");
 		PRIVATE VARIABLE("scalar","bonusdrink");
 		PRIVATE VARIABLE("scalar","bonuslife");
+		PRIVATE VARIABLE("scalar","nausea");
 
 		PUBLIC FUNCTION("","constructor") { 
 			DEBUG(#, "OO_HEALTH::constructor")
@@ -41,11 +42,29 @@
 			MEMBER("bonusfood", 0);
 			MEMBER("bonusdrink", 0);
 			MEMBER("bonuslife", 0);
+			MEMBER("nausea", 0);
 			SPAWN_MEMBER("checkLife", nil);
 			SPAWN_MEMBER("checkFood", nil);
 			SPAWN_MEMBER("checkDrink", nil);
 			SPAWN_MEMBER("checkVirus", nil);
+			SPAWN_MEMBER("checkDamage", nil);
 		};
+
+
+		PUBLIC FUNCTION("","getBonusFood") {
+			DEBUG(#, "OO_HEALTH::getBonusFood")
+			MEMBER("bonusfood", nil);
+		};
+
+		PUBLIC FUNCTION("","getBonusDrink") {
+			DEBUG(#, "OO_HEALTH::getBonusDrink")
+			MEMBER("bonusdrink", nil);
+		};
+
+		PUBLIC FUNCTION("","getBonusLife") {
+			DEBUG(#, "OO_HEALTH::getBonusLife")
+			MEMBER("bonuslife", nil);
+		};		
 
 		PUBLIC FUNCTION("scalar","setFood") {
 			DEBUG(#, "OO_HEALTH::setFood")
@@ -77,21 +96,30 @@
 			//["setTemperature", _this] call hud;
 		};
 
-		PUBLIC FUNCTION("scalar","addLife") {
-			DEBUG(#, "OO_HEALTH::addLife")
-			private _bonuslife = MEMBER("bonuslife", nil);
-			_bonuslife = _bonuslife + _this;
-			if(_bonuslife > 20) then { 
+		PUBLIC FUNCTION("","beNauseous") {
+				DEBUG(#, "OO_HEALTH::beNauseous")
 				private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
 				private _sound = _path + "sounds\vomit.ogg";
 				playSound3D [_sound, player, false, getPosASL player, 5, 1, 10];
-				_bonusfood = 0;
-				_bonusdrink = 0;
-				MEMBER("setFood", 0);
-				MEMBER("setDrink", 0);
-				private _temperature = MEMBER("temperature", nil) + random (1);
+				private _food = MEMBER("food", nil) * 0.75;
+				private _drink = MEMBER("drink", nil) * 0.75;
+				MEMBER("nausea", 20);
+				MEMBER("setFood", _food);
+				MEMBER("setDrink", _drink);
+				MEMBER("bonusfood", 0);
+				MEMBER("bonusdrink", 0);
+				private _temperature = MEMBER("temperature", nil) - random (1);
 				MEMBER("setTemperature", _temperature);
 				systemChat format ["Temperature: %1", _temperature];
+		};
+
+		PUBLIC FUNCTION("scalar","addLife") {
+			DEBUG(#, "OO_HEALTH::addLife")
+			private _bonuslife = MEMBER("bonuslife", nil);
+			private _nausea = MEMBER("nausea", nil);
+			_bonuslife = _bonuslife + _this;
+			if((_bonuslife > 20) or (_nausea > 0)) then { 
+				MEMBER("beNauseous", nil);
 			} else {
 				MEMBER("bonuslife", _bonuslife);
 			};
@@ -100,18 +128,10 @@
 		PUBLIC FUNCTION("scalar","addDrink") {
 			DEBUG(#, "OO_HEALTH::addDrink")
 			private _bonusdrink = MEMBER("bonusdrink", nil);
+			private _nausea = MEMBER("nausea", nil);
 			_bonusdrink = _bonusdrink + _this;
-			if(_bonusdrink > 20) then { 
-				private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
-				private _sound = _path + "sounds\vomit.ogg";
-				playSound3D [_sound, player, false, getPosASL player, 5, 1, 10];
-				_bonusfood = 0;
-				_bonusdrink = 0;
-				MEMBER("setFood", 0);
-				MEMBER("setDrink", 0);
-				private _temperature = MEMBER("temperature", nil) - random (1);
-				MEMBER("setTemperature", _temperature);
-				systemChat format ["Temperature: %1", _temperature];
+			if((_bonusdrink > 20) or (_nausea > 0)) then { 
+				MEMBER("beNauseous", nil);
 			} else {
 				MEMBER("bonusdrink", _bonusdrink);
 			};
@@ -120,18 +140,10 @@
 		PUBLIC FUNCTION("scalar","addFood") {
 			DEBUG(#, "OO_HEALTH::addFood")
 			private _bonusfood = MEMBER("bonusfood", nil);
+			private _nausea = MEMBER("nausea", nil);
 			_bonusfood = _bonusfood + _this;
-			if(_bonusfood > 20) then { 
-				private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
-				private _sound = _path + "sounds\vomit.ogg";
-				playSound3D [_sound, player, false, getPosASL player, 5, 1, 10];
-				_bonusfood = 0;
-				_bonusdrink = 0;
-				MEMBER("setFood", 0);
-				MEMBER("setDrink", 0);
-				private _temperature = MEMBER("temperature", nil) - random (1);
-				MEMBER("setTemperature", _temperature);
-				systemChat format ["Temperature: %1", _temperature];
+			if((_bonusfood > 20) or (_nausea > 0)) then {  
+				MEMBER("beNauseous", nil);
 			} else {
 				MEMBER("bonusfood", _bonusfood);
 			};
@@ -144,7 +156,8 @@
 
 			while { true } do {
 				private _bonusfood = MEMBER("bonusfood",nil);
-				if( _bonusfood > 0) then {
+				private _nausea = MEMBER("nausea", nil);
+				if (( _bonusfood > 0) and (_nausea isEqualTo 0)) then {
 					_bonusfood = _bonusfood - 1;
 					MEMBER("bonusfood", _bonusfood);
 					_food = MEMBER("food", nil);
@@ -170,7 +183,8 @@
 
 			while { true } do {
 				private _bonusdrink = MEMBER("bonusdrink",nil);
-				if( _bonusdrink > 0) then {
+				private _nausea = MEMBER("nausea", nil);
+				if (( _bonusdrink > 0) and (_nausea isEqualTo 0)) then {
 					_bonusdrink = _bonusdrink - 1;
 					MEMBER("bonusdrink", _bonusdrink);
 					_drink = MEMBER("drink", nil);
@@ -189,15 +203,41 @@
 			};
 		};
 
+		PUBLIC FUNCTION("","checkDamage") {
+			DEBUG(#, "OO_HEALTH::checkDamage")
+			while { true } do {
+				private _life = floor(100 - ((getDammage player) * 100));
+				MEMBER("setLife", _life);
+				if(_life isEqualTo 0) then {
+					private _ctrl = "getOOP_Picture_life" call hud;
+					_ctrl ctrlSetText "paa\skull.paa";
+				};
+				sleep 1;
+			};
+		};
+
 		PUBLIC FUNCTION("","checkLife") {
 			DEBUG(#, "OO_HEALTH::checkLife")
 			private _life = 0;
 			private _temperature = 0;
 			private _level = 0;
 			private _bonuslife = 0;
+			private _damage = getDammage player;
 
 			while { true } do {
+				_life = 0;
+				_level = 0;
+				_bonuslife = 0;
 				_temperature = MEMBER("temperature", nil);
+				
+				_nausea = MEMBER("nausea", nil);
+				if(_nausea > 0) then {
+					_nausea = _nausea - floor(random 10);
+					if(_nausea  < 0) then {_nausea = 0;};
+					systemChat format ["Nausea: %1", _nausea];
+					MEMBER("nausea", _nausea);
+				};
+
 				if((_temperature < 36.5) or (_temperature > 38.5)) then {
 					_level = floor(random 5);
 				};
@@ -210,21 +250,24 @@
 				if(MEMBER("virus", nil) > 0) then {
 					_level = _level + floor(random 5);
 				};
-				if(getDammage player > 0) then {
+				/*if(getDammage player > 0) then {
 					_level = _level + floor(random 5);
-				};
+				};*/
+				
 				_bonuslife = MEMBER("bonuslife", nil);
 				if( _bonuslife > 0 ) then {
 					_level = _level - floor(random 5);
 					_bonuslife = _bonuslife - 1;
 					MEMBER("bonuslife", _bonuslife);
 				};
+
 				_life = MEMBER("life", nil);
 				_life = _life - _level;
 				if(_life < 0) then {_life = 0;};
 				if(_life > 100) then {_life = 100;};
 				MEMBER("setLife", _life);
-				if(_life isEqualTo 0) then { player setDamage 1;};
+				_damage = 1 - (_life / 100);
+				player setDamage _damage;
 				sleep 60;
 			};
 		};
@@ -256,5 +299,6 @@
 			DELETE_VARIABLE("bonusfood");
 			DELETE_VARIABLE("bonusdrink");
 			DELETE_VARIABLE("bonuslife");
+			DELETE_VARIABLE("nausea");
 		};
 	ENDCLASS;
