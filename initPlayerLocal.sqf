@@ -24,17 +24,19 @@
 	call compile preprocessFileLineNumbers "gui\oo_vitems.sqf";
 	call compile preprocessFileLineNumbers "gui\oo_UI_loading.sqf";
 
-
+	// SEARCH CURSOR
 	[] spawn {
 		private _active = false;
 		while { true } do {
 			_size = 0;
+			_canbeprint = false;
 			if ((typeof cursorObject) isKindOf "House") then {
 				_size = ((1 boundingBoxReal cursorObject) select 2) - 1;
 			} else {
 				_size = ((1 boundingBoxReal cursorObject) select 2) + 2;
 			};
-			if ((cursorObject distance player < _size) and !(cursorObject isKindOf "Man")) then {
+			if (isnull (findDisplay 1000) and isnull (findDisplay 602)) then { _canbeprint = true;};
+			if ((cursorObject distance player < _size) and !(cursorObject isKindOf "Man") and _canbeprint) then {
 				if!(_active) then {
 					1001 cutRsc ["cursor", "PLAIN"];
 					_active = true;
@@ -64,3 +66,8 @@
 	1000 cutRsc ["hud", "PLAIN"];
 
 	health = "new" call OO_HEALTH;
+
+	player setAnimSpeedCoef 1.45;
+	player enableFatigue false; 
+	player enableStamina false;
+	player allowSprint true;
