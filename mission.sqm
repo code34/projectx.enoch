@@ -8,7 +8,7 @@ class EditorData
 	toggles=513;
 	class ItemIDProvider
 	{
-		nextID=12;
+		nextID=15;
 	};
 	class MarkerIDProvider
 	{
@@ -26,7 +26,7 @@ binarizationWanted=0;
 addons[]=
 {
 	"A3_Characters_F_Exp",
-	"A3_Soft_F_Beta_Truck_02"
+	"A3_Air_F_Heli_Light_01"
 };
 class AddonsMetaData
 {
@@ -42,8 +42,8 @@ class AddonsMetaData
 		};
 		class Item1
 		{
-			className="A3_Soft_F_Beta";
-			name="Arma 3 Beta - Unarmored Land Vehicles";
+			className="A3_Air_F";
+			name="Arma 3 Alpha - Aircraft";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
@@ -116,16 +116,17 @@ class Mission
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={11157.999,6.4517035,11433.714};
+				position[]={11156.867,4.6621561,11440.114};
+				angles[]={0.004784164,0,0};
 			};
 			side="Empty";
 			flags=4;
 			class Attributes
 			{
 			};
-			id=10;
-			type="C_Truck_02_transport_F";
-			atlOffset=-5.4359436e-005;
+			id=14;
+			type="C_Heli_Light_01_civil_F";
+			atlOffset=-5.7220459e-006;
 		};
 	};
 };
