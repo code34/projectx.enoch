@@ -39,35 +39,74 @@
 			MEMBER("type", _type);
 		};
 
+		PUBLIC FUNCTION("","preload") {
+			DEBUG(#, "OO_RANDOMSTUFF::preload")
+
+			private _array = [];
+			MEMBER("military", _array);
+			private _array = [];
+			MEMBER("food", _array);
+			private _array = [];
+			MEMBER("stuff", _array);
+			private _array = [];
+			MEMBER("tools", _array);
+			private _array = [];
+			MEMBER("tree", _array);
+			private _array = [];
+			MEMBER("bush", _array);
+			private _array = [];
+			MEMBER("wall", _array);
+	
+			private _entry = missionConfigFile >> "cfgVitems";
+			for "_i" from 0 to (count _entry - 1) do {
+				private _name = (configName(_entry select _i));
+				private _type = getArray (missionConfigFile >> "cfgVitems" >> _name >> "type");
+                private _nbusage = getNumber (missionConfigFile >> "cfgVitems" >> _name >> "nbusage");
+				{
+					systemChat format["%1 %2", _x, _name];
+				MEMBER(_x, nil) pushBack [_name, _nbusage];
+				} forEach _type;
+			};
+			true;
+		};
+
 		PUBLIC FUNCTION("array","setNeutre") {
+			DEBUG(#, "OO_RANDOMSTUFF::neutre")
 			MEMBER("neutre", _this);
 		};
 
 		PUBLIC FUNCTION("array","setStuff") {
+			DEBUG(#, "OO_RANDOMSTUFF::setStuff")
 			MEMBER("stuff", _this);
 		};
 
 		PUBLIC FUNCTION("array","setFood") {
+			DEBUG(#, "OO_RANDOMSTUFF::setFood")
 			MEMBER("food", _this);
 		};
 
 		PUBLIC FUNCTION("array","setMilitary") {
+			DEBUG(#, "OO_RANDOMSTUFF::setMilitary")
 			MEMBER("military", _this);
 		};
 
 		PUBLIC FUNCTION("array","setTools") {
+			DEBUG(#, "OO_RANDOMSTUFF::setTools")
 			MEMBER("military", _this);
 		};
 
 		PUBLIC FUNCTION("array","setTree") {
+			DEBUG(#, "OO_RANDOMSTUFF::setTree")
 			MEMBER("tree", _this);
 		};
 
 		PUBLIC FUNCTION("array","setBush") {
+			DEBUG(#, "OO_RANDOMSTUFF::setBush")
 			MEMBER("bush", _this);
 		};
 
 		PUBLIC FUNCTION("array","setWall") {
+			DEBUG(#, "OO_RANDOMSTUFF::setWall")
 			MEMBER("wall", _this);
 		};
 
@@ -141,7 +180,7 @@
 					};
 				};
 				if!(_type isEqualTo "neutre") then {
-					_entry = MEMBER(_kindofloot, nil) select (random (count(MEMBER(_kindofloot,nil)) - 1));
+					_entry = selectRandom MEMBER(_kindofloot, nil);
 					_result pushBack _entry;
 				} else {
 					_result = [];
