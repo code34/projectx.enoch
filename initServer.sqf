@@ -78,13 +78,26 @@
 	_wheelusecode = { if (_this isKindOf "Car") then { hint "You repair the Wheel"; player playActionNow "PutDown"; _this setDamage 0; true;} else { false;};};
 	_wrenchusecode = { if (_this isKindOf "Car") then { hint "Repairing ..."; player playActionNow "PutDown"; _this setDamage 0; true;} else { false;};};
 
+
 	private _list = [];
 	_stuff = ["new", ""] call OO_RANDOMSTUFF;
 	["setNeutre", _list] call _stuff;
+    "preload" call _stuff;
 
-	_list = [
+/*	_entry = missionConfigFile >> "cfgVitems";
+	for "_i" from 0 to (count _entry - 1) do {
+		_class = configName(_entry select _i);
+		_title = getText (_entry >> _class >> "title");
+		_description = getText (_entry >> _class >> "description");
+		_weight = getNumber (_entry >> _class >> "weight");
+		_nbusage = getNumber (_entry >> _class >> "nbusage");
+		_picture = getText (_entry >> _class >> "picture");
+		_code = compile preprocessFileLineNumbers (getText (_entry >> _class >> "code"));
+	};*/
+
+	/*_list = [
 			// name, description, type, weight, durability, use code, picture
-			["Spare wheel","a deflated spare wheel","stuff",10,1, _wheelusecode, "pictures\wheel.jpg"],
+			["Spare wheel","A deflated spare wheel","stuff",10,1, _wheelusecode, "pictures\wheel.jpg"],
 			["Lighter", "a lighter that will allow you to light campfires quickly. This object is not waterproof","stuff",0.1, 5, _lighterusecode, "pictures\lighter.jpg"],
 			["A cloth bandage","A cloth bandage that will allow you to stop bleeding quickly","stuff",0.1, 1, _bandageusecode, "pictures\bandage.jpg"],
 			["Adjustable wrench","a wrench that allows you to make the most basic repairs","stuff",1,10, _wrenchusecode, "pictures\wrench.jpg"],
@@ -106,7 +119,8 @@
 
 		_list = [
 			["Orange juice ","Simply Orange Pulp Free Juice with Calcium and Vitamin D.","food",1,1, _drinkingcode, "pictures\orangejuice.jpg"],
-			["Redbull can","Red Bull Energy Drink is a functional beverage especially developed for increased performance.","food",1,1, _drinkingcode, "pictures\redbull.jpg"],			["Russian Vodka Bottle","Russian Standard vodka has come from out of nowhere to grab a large slice of the premium vodka market in the UK since its launch in 2007.","food",1,1, _drinkingcode, "pictures\vodka.jpg"],
+			["Redbull can","Red Bull Energy Drink is a functional beverage especially developed for increased performance.","food",1,1, _drinkingcode, "pictures\redbull.jpg"],
+			["Russian Vodka Bottle","Russian Standard vodka has come from out of nowhere to grab a large slice of the premium vodka market in the UK since its launch in 2007.","food",1,1, _drinkingcode, "pictures\vodka.jpg"],
 			["Corona Bottle","Corona Extra is a pilsner-type Mexican beer with a slightly sweet taste and a dash of citrus.","food",1,1, _drinkingcode, "pictures\corona.jpg"],
 			["Water Bottle","A Plastic mineral water bottle","food",1,1, _drinkingcode, "pictures\bottle.jpg"],
 			["Potatoe","A vulgar potato damaged","food",0.4, 1, _eatingcode, "pictures\potatoe.jpg"],
@@ -142,7 +156,7 @@
 		_list = [
 			["Stone", "A simple grey granite stone", "stuff", 0.5,1, {true}, "pictures\stone.jpg"]
 		];
-		["setWall", _list] call _stuff;
+		["setWall", _list] call _stuff;*/
 
 
         /*		wczones = [];
