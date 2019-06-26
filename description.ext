@@ -4,7 +4,15 @@
 #include "gui\loading.hpp"
 
 class RscTitles {
-
 #include "gui\hud.hpp"
 #include "gui\cursor.hpp"
+};
+
+class cfgVitems {
+#include "vitems\hpp\wall.hpp"
+#include "vitems\hpp\stuff.hpp"
+#include "vitems\hpp\military.hpp"
+#include "vitems\hpp\food.hpp"
+#include "vitems\hpp\tree.hpp"
+#include "vitems\hpp\bush.hpp"
 };
