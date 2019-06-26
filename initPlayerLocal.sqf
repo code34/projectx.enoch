@@ -24,6 +24,19 @@
 	call compile preprocessFileLineNumbers "gui\oo_vitems.sqf";
 	call compile preprocessFileLineNumbers "gui\oo_UI_loading.sqf";
 
+
+	// vitems parser
+	_entry = missionConfigFile >> "cfgVitems" >> "food";
+	for "_i" from 0 to (count _entry - 1) do {
+		_class = configName(_entry select _i);
+			/*_title = getText (_entry >> _class >> "title");
+			_description = getText (_entry >> _class >> "description");
+			_weight = getNumber (_entry >> _class >> "weight");
+			_nbusage = getNumber (_entry >> _class >> "nbusage");
+			_picture = getText (_entry >> _class >> "picture");
+			_code = compile preprocessFileLineNumbers (getText (_entry >> _class >> "code"));*/
+	};
+
 	// SEARCH CURSOR
 	[] spawn {
 		private _active = false;
@@ -67,7 +80,7 @@
 
 	health = "new" call OO_HEALTH;
 
-	player setAnimSpeedCoef 1.45;
+	player setAnimSpeedCoef 1.40;
 	player enableFatigue false; 
 	player enableStamina false;
 	player allowSprint true;
