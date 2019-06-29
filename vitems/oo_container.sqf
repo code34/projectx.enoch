@@ -37,9 +37,25 @@
 		PUBLIC FUNCTION("","load") {
 			DEBUG(#, "OO_CONTAINER::load")
 			private _netId = MEMBER("netId", nil);
-			private _inventory = ["remoteCall", ["vitems_getInventory",  _netId, 2, []]] call bmeclient;
 			private _properties = ["remoteCall", ["vitems_getProperties",  _netId, 2, []]] call bmeclient;
-			MEMBER("inventory", _inventory);
+			private _inventory = ["remoteCall", ["vitems_getInventory",  _netId, 2, []]] call bmeclient;
+			
+			private _list = [];
+
+			{
+				_classid = _x select 0;
+				_entry = missionConfigFile >> "cfgVitems" >> _classid;
+				_title = getText(missionConfigFile >> "cfgVitems" >> _classid >> "title");
+				_description = getText (_entry >> "description");
+				_weight = getNumber (_entry >> "weight");
+				_nbusage = _x select 1;
+				_picture = getText (_entry >> "picture");
+				//_code = compile preprocessFileLineNumbers (getText (_entry >> _x >> "code"));
+				_code = {true;};
+				_list pushBack [_classid, _title, _description, _weight, _nbusage, _code, _picture];
+			} forEach _inventory;
+
+			MEMBER("inventory", _list);
 			MEMBER("properties", _properties);
 		};
 
@@ -47,8 +63,16 @@
 			DEBUG(#, "OO_CONTAINER::save")
 			private _netId = MEMBER("netId", nil);
 			private _inventory = MEMBER("inventory", nil);
+			private _list = [];
+
+			{
+				_classid = _x select 0;
+				_nbusage = _x select 4;
+				_list pushBack [_classid, _nbusage];
+			} forEach _inventory;
+
 			private _properties = MEMBER("properties", nil);
-			["remoteSpawn", ["vitems_setInventory",  [_netId,_inventory], "server"]] call bmeclient;
+			["remoteSpawn", ["vitems_setInventory",  [_netId,_list], "server"]] call bmeclient;
 			["remoteSpawn", ["vitems_setProperties",  [_netId,_properties], "server"]] call bmeclient;
 		};
 
@@ -138,6 +162,7 @@
 			private _weight = 0;
 			private _netId = MEMBER("netId", nil);
 			private _result = MEMBER("inventory", nil);
+
 			{
 				_weight = _weight + (_x select 3);
 			} forEach _result;
@@ -178,17 +203,7 @@
 		// Get the properties of container with an array
 		PUBLIC FUNCTION("","getProperties") {
 			DEBUG(#, "OO_CONTAINER::getProperties")
-			//private _properties = (missionNamespace getVariable [format["properties_%1", MEMBER("netId", nil)], []]);
-			private _netId = MEMBER("netId", nil);
-			private _properties = MEMBER("properties", nil);
-			if (_properties isEqualTo []) then {
-				private _stuff = ["new", MEMBER("model", nil)] call OO_RANDOMSTUFF;
-				_properties = "createProperties" call _stuff;
-				MEMBER("setProperties", _properties);
-				private _content = "getRandomContent" call _stuff;
-				MEMBER("setContent", _content);
-			};
-			_properties;
+			MEMBER("properties", nil);
 		};
 
 
