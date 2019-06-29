@@ -1,4 +1,4 @@
-	createDialog "loadingscreen";
+	//createDialog "loadingscreen";
 
 	private _object = cursorObject;
 	private _tocreate = false;
@@ -22,16 +22,19 @@
 		_object setpos (position player);	
 	};
 
-	[] spawn {
+/*	[] spawn {
 		for "_i" from 0 to 9 do {
 				"incProgressBar" call loadingscreen;
 				sleep 0.1;
 		};
-	};
+	};*/
 
 	proxcontainer = ["new", [netId _object, ((getModelInfo _object) select 0)]] call OO_CONTAINER;
 	capcontainer = ["new", [netId player, ((getModelInfo player) select 0)]] call OO_CONTAINER;
 
-	"closeDialog" call loadingscreen;
+	private _content = [["masse", -1]];
+	["overLoad", _content] call capcontainer;
+
+	//"closeDialog" call loadingscreen;
 
 	createDialog "VITEMS";
