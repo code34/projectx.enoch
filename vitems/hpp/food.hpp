@@ -4,7 +4,6 @@
         description = "Simply Orange Pulp Free Juice with Calcium and Vitamin D.";
         weight = 1;
         nbusage = 1;
-        code = "vitems\items\orangejuice.sqf";
         picture = "pictures\orangejuice.jpg";
     };
     class redbullcan {
@@ -13,7 +12,6 @@
         description = "Red Bull Energy Drink is a functional beverage especially developed for increased performance.";
         weight = 1;
         nbusage = 1;
-        code = "vitems\items\redbull.sqf";
         picture = "pictures\redbull.jpg";
     };
     class coronabottle {
@@ -22,7 +20,6 @@
         description = "Corona Extra is a pilsner-type Mexican beer with a slightly sweet taste and a dash of citrus.";
         weight = 1;
         nbusage = 1;
-        code = "vitems\items\corona.sqf";
         picture = "pictures\corona.jpg";
     };
      class waterbottle {
@@ -31,7 +28,6 @@
         description = "A Plastic mineral water bottle.";
         weight = 1;
         nbusage = 1;
-        code = "vitems\items\waterbottle.sqf";
         picture = "pictures\bottle.jpg";
     };   
      class potatoe {
@@ -40,7 +36,6 @@
         description = "A vulgar potato damaged.";
         weight = 0.4;
         nbusage = 1;
-        code = "vitems\items\potatoe.sqf";
         picture = "pictures\potatoe.jpg";
     };
      class redapple {
@@ -49,7 +44,6 @@
         description = "A nice great red apple.";
         weight = 0.2;
         nbusage = 1;
-        code = "vitems\items\redapple.sqf";
         picture = "pictures\redapple.jpg";
     };
      class tincanmaxigaz {
@@ -58,7 +52,6 @@
         description = "All you need protein to spend a good afternoon in the sun.";
         weight = 0.2;
         nbusage = 2;
-        code = "vitems\items\tin.sqf";
         picture = "pictures\tin.jpg";
     };
      class oreopack {
@@ -67,7 +60,6 @@
         description = "Chocolate flavour sandwich biscuits, with a vanilla flavour filling.";
         weight = 0.2;
         nbusage = 2;
-        code = "vitems\items\oreopack.sqf";
         picture = "pictures\oreopack.jpg";
     };
      class beefjerky {
@@ -76,7 +68,6 @@
         description = "Tender slices of lean 100% beef are lightly seasoned with a unique blend of spices, and then cooked in a smoke oven.";
         weight = 0.2;
         nbusage = 2;
-        code = "vitems\items\beefjerky.sqf";
         picture = "pictures\beefjerky.jpg";
     };
      class whitemushrooms {
@@ -85,7 +76,6 @@
         description = "Some smalls white mushrooms.";
         weight = 0.2;
         nbusage = 1;
-        code = "vitems\items\whitemushrooms.sqf";
         picture = "pictures\whitemushrooms.jpg";
     };
      class cannedravioli {
@@ -94,7 +84,6 @@
         description = "Beef Ravioli in Meat Sauce.";
         weight = 1;
         nbusage = 2;
-        code = "vitems\items\ravioli.sqf";
         picture = "pictures\ravioli.jpg";
     };
      class russianvodka {
@@ -103,6 +92,5 @@
         description = "Russian Standard vodka has come from out of nowhere to grab a large slice of the premium vodka market in the UK since its launch in 2007.";
         weight = 1;
         nbusage = 1;
-        code = "vitems\items\vodka.sqf";
         picture = "pictures\vodka.jpg";
     };
