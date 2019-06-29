@@ -34,7 +34,17 @@
 	};
 	
 	vitems_getProperties = {
-		missionNamespace getVariable [format["properties_%1", _this], []];
+		private _netID = _this;
+		private _properties = missionNamespace getVariable [format["properties_%1", _netID], []];
+		if (_properties isEqualTo []) then {
+			private _model = (getModelInfo (objectFromNetId _netID)) select 0;
+			private _stuff = ["new", _model] call OO_RANDOMSTUFF;
+			_properties = "createProperties" call _stuff;
+			missionNamespace setVariable [format["properties_%1", _netID], _properties, false];
+			private _content = "getRandomContent" call _stuff;
+			missionNamespace setVariable [format["inventory_%1", _netID], _content, false];
+		};
+		_properties;
 	};
 	
 	vitems_setProperties = {
