@@ -50,13 +50,28 @@
 				_weight = getNumber (_entry >> "weight");
 				_nbusage = _x select 1;
 				_picture = getText (_entry >> "picture");
-				//_code = compile preprocessFileLineNumbers (getText (_entry >> _x >> "code"));
-				_code = {true;};
-				_list pushBack [_classid, _title, _description, _weight, _nbusage, _code, _picture];
+				_list pushBack [_classid, _title, _description, _weight, _nbusage, _picture];
 			} forEach _inventory;
 
 			MEMBER("inventory", _list);
 			MEMBER("properties", _properties);
+		};
+
+		PUBLIC FUNCTION("array","overLoad") {		
+			private _list = [];
+
+			{
+				_classid = _x select 0;
+				_entry = missionConfigFile >> "cfgVitems" >> _classid;
+				_title = getText(missionConfigFile >> "cfgVitems" >> _classid >> "title");
+				_description = getText (_entry >> "description");
+				_weight = getNumber (_entry >> "weight");
+				_nbusage = _x select 1;
+				_picture = getText (_entry >> "picture");
+				_list pushBack [_classid, _title, _description, _weight, _nbusage, _picture];
+			} forEach _this;
+
+			MEMBER("inventory", _list);
 		};
 
 		PUBLIC FUNCTION("","save") {
@@ -151,21 +166,18 @@
 		// Count the occuped size in container
 		PUBLIC FUNCTION("","countSize") {
 			DEBUG(#, "OO_CONTAINER::countSize")
-			private _netId = MEMBER("netId", nil);
 			count(MEMBER("inventory", nil));
-			//count(missionNamespace getVariable [format["inventory_%1", MEMBER("netId", nil)], []]);
 		};
 
 		// Count the weight in container
 		PUBLIC FUNCTION("","countWeight") {
 			DEBUG(#, "OO_CONTAINER::countWeight")
 			private _weight = 0;
-			private _netId = MEMBER("netId", nil);
-			private _result = MEMBER("inventory", nil);
+			private _inventory = MEMBER("inventory", nil);
 
 			{
 				_weight = _weight + (_x select 3);
-			} forEach _result;
+			} forEach _inventory;
 			_weight;
 		};
 
@@ -183,10 +195,10 @@
 			private _index = _this;
 			private _content = MEMBER("getContent", nil);
 			private _object = _content select _index;
-			private _code = _object select 5;
+			private _code = compile preprocessFileLineNumbers format["vitems\items\%1.sqf", _object select 0]; 
 			private _durability = _object select 4;
 			if !(_durability isEqualTo 0 ) then {
-				private _result = cursorObject call _code;
+				private _result = call _code;
 				if(_result) then {
 					if(_durability > -1) then { _durability = _durability - 1;	};
 					if !(_durability isEqualTo 0 ) then {
@@ -226,25 +238,18 @@
 		// Return the content of container (items in array format)
 		PUBLIC FUNCTION("","getContent") {
 			DEBUG(#, "OO_CONTAINER::getContent")
-			//(missionNamespace getVariable [format["inventory_%1", MEMBER("netId", nil)], []]);
-			private _netId = MEMBER("netId", nil);
 			MEMBER("inventory", nil);
 		};
 
 		// Set the content of container (items in array format)
 		PUBLIC FUNCTION("array","setContent") {
 			DEBUG(#, "OO_CONTAINER::setContent")
-			//missionNamespace setVariable [format["inventory_%1", MEMBER("netId", nil)], _this, true];
-			private _netId = MEMBER("netId", nil);
 			MEMBER("inventory", _this);
 		};
 
 		// Add x elements to container (items in array format)
 		PUBLIC FUNCTION("array","addContent") {
 			DEBUG(#, "OO_CONTAINER::addContent")
-			//private _inventory = (missionNamespace getVariable [format["inventory_%1", MEMBER("netId", nil)], []]);
-			// bizzare à vérifier ????
-			private _netId = MEMBER("netId", nil);
 			private _inventory = MEMBER("inventory", nil);
 			{
 				_inventory pushBack _x;
