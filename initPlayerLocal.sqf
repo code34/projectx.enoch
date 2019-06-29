@@ -25,17 +25,23 @@
 	call compile preprocessFileLineNumbers "gui\oo_UI_loading.sqf";
 
 
-	// vitems parser
+/*	addMissionEventHandler ["Draw3D", {
+	    private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
+    	private _paa = _path + "paa\skull.paa";
+		drawIcon3D [_paa, [1,1,1,1], getpos player, 1, 1, 2, "Target", 1, 0.05, "TahomaB"];
+	}];*/
+
+/*	// vitems parser
 	_entry = missionConfigFile >> "cfgVitems" >> "food";
 	for "_i" from 0 to (count _entry - 1) do {
 		_class = configName(_entry select _i);
-			/*_title = getText (_entry >> _class >> "title");
+			_title = getText (_entry >> _class >> "title");
 			_description = getText (_entry >> _class >> "description");
 			_weight = getNumber (_entry >> _class >> "weight");
 			_nbusage = getNumber (_entry >> _class >> "nbusage");
 			_picture = getText (_entry >> _class >> "picture");
-			_code = compile preprocessFileLineNumbers (getText (_entry >> _class >> "code"));*/
-	};
+			_code = compile preprocessFileLineNumbers (getText (_entry >> _class >> "code"));
+	};*/
 
 	// SEARCH CURSOR
 	[] spawn {
