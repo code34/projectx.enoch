@@ -107,6 +107,7 @@ CLASS("oo_Vitems")
 		private _container = _this select 1;
 
 		lbClear _control;
+		
 		private _name = "getName" call _container;
 		private _weight = "countWeight" call _container;
 		private _size = "countSize" call _container;
@@ -116,7 +117,7 @@ CLASS("oo_Vitems")
 
 		{
 			_control lbAdd (_x select 0);
-			_control lbSetPicture [_forEachIndex, (_x select 6)];
+			_control lbSetPicture [_forEachIndex, (_x select 5)];
 			_control lbSetValue[_forEachIndex, _forEachIndex];
 		}foreach _content;
 
@@ -140,6 +141,7 @@ CLASS("oo_Vitems")
 	*		Returns the control and the selected element index.
 	*/
 	PUBLIC FUNCTION("array", "onLBSelChanged_OOP_Listbox_Proximity") {
+		DEBUG(#, "OO_VITEMS::onLBSelChanged_OOP_Listbox_Proximity")
 		private _control = _this select 0;
 		private _index = _this select 1;
 		if(_index >= ("countSize" call proxcontainer)) exitWith {};
@@ -158,6 +160,7 @@ CLASS("oo_Vitems")
 	*		Returns the control and the x and y coordinates.
 	*/
 	PUBLIC FUNCTION("array", "onLBDragging_OOP_Listbox_Proximity") {
+		DEBUG(#, "OO_VITEMS::onLBDragging_OOP_Listbox_Proximity")
 		private _control = _this select 0;
 		private _abs = _this select 1;
 		private _ord = _this select 2;
@@ -170,6 +173,7 @@ CLASS("oo_Vitems")
 	*		Returns the control and the selected element index.
 	*/
 	PUBLIC FUNCTION("array", "onLBDrag_OOP_Listbox_Proximity") {
+		DEBUG(#, "OO_VITEMS::onLBDrag_OOP_Listbox_Proximity")
 		private _control = _this select 0;
 		private _index = _this select 1;
 
@@ -181,6 +185,7 @@ CLASS("oo_Vitems")
 	*		Returns the control and the selected element index.
 	*/
 	PUBLIC FUNCTION("array", "onLBSelChanged_OOP_Listbox_Capacities") {
+		DEBUG(#, "OO_VITEMS::onLBSelChanged_OOP_Listbox_Capacities")
 		private _control = _this select 0;
 		private _index = _this select 1;
 		if(_index >= ("countSize" call capcontainer)) exitWith {};
@@ -199,6 +204,7 @@ CLASS("oo_Vitems")
 	*		Returns the control and the selected element index.
 	*/
 	PUBLIC FUNCTION("array", "onLBDrag_OOP_Listbox_Capacities") {
+		DEBUG(#, "OO_VITEMS::onLBDrag_OOP_Listbox_Capacities")
 		private _control = _this select 0;
 		private _index = _this select 1;
 
@@ -210,6 +216,7 @@ CLASS("oo_Vitems")
 	*		Returns the control and the x and y coordinates.
 	*/
 	PUBLIC FUNCTION("array", "onLBDragging_OOP_Listbox_Capacities") {
+		DEBUG(#, "OO_VITEMS::onLBDragging_OOP_Listbox_Capacities")
 		private _control = _this select 0;
 		private _abs = _this select 1;
 		private _ord = _this select 2;
@@ -217,6 +224,7 @@ CLASS("oo_Vitems")
 	};
 
 	PUBLIC FUNCTION("", "btnAction_OOP_btn_weapons") {
+		DEBUG(#, "OO_VITEMS::btnAction_OOP_btn_weapons")
 		player removeAllEventHandlers "InventoryOpened";
 		player action ["Gear", player];
 	};
@@ -247,6 +255,7 @@ CLASS("oo_Vitems")
 	PUBLIC FUNCTION("display", "setDisplay"){ MEMBER("Display", _this); };
 	
 	PUBLIC FUNCTION("", "deconstructor"){
+		DEBUG(#, "OO_VITEMS::deconstructor")
 		"save" call proxcontainer;
 		"save" call capcontainer;
 		private _size = "countSize" call proxcontainer;
