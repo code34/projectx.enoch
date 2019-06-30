@@ -25,6 +25,15 @@
 	call compile preprocessFileLineNumbers "gui\oo_vitems.sqf";
 	call compile preprocessFileLineNumbers "gui\oo_UI_loading.sqf";
 
+	vitems_eating = compile preprocessFileLineNumbers "vitems\generic\eating.sqf";
+	vitems_drinking = compile preprocessFileLineNumbers "vitems\generic\drinking.sqf";
+	vitems_firing = compile preprocessFileLineNumbers "vitems\generic\firing.sqf";
+	vitems_explosing = compile preprocessFileLineNumbers "vitems\generic\explosing.sqf";
+	vitems_tracking = compile preprocessFileLineNumbers "vitems\generic\tracking.sqf";
+	vitems_healing = compile preprocessFileLineNumbers "vitems\generic\healing.sqf";
+	vitems_transforming = compile preprocessFileLineNumbers "vitems\generic\transforming.sqf";
+	vitems_banding = compile preprocessFileLineNumbers "vitems\generic\banding.sqf";
+
 /*	addMissionEventHandler ["Draw3D", {
 	    private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
     	private _paa = _path + "paa\skull.paa";
