@@ -32,9 +32,6 @@
 	proxcontainer = ["new", [netId _object, ((getModelInfo _object) select 0)]] call OO_CONTAINER;
 	capcontainer = ["new", [netId player, ((getModelInfo player) select 0)]] call OO_CONTAINER;
 
-	private _content = [["masse", -1]];
-	["overLoad", _content] call capcontainer;
-
 	//"closeDialog" call loadingscreen;
 
 	createDialog "VITEMS";
