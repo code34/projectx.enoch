@@ -19,17 +19,7 @@
 	call compile preprocessFileLineNumbers "vitems\oo_container.sqf";
 	call compile preprocessFileLineNumbers "vitems\oo_randomstuff.sqf";
 	call compile preprocessFileLineNumbers "vitems\oo_bme.sqf";
-	call compile preprocessFileLineNumbers "objects\oo_sector.sqf";
-    
-	vitems_eating = compile preprocessFileLineNumbers "vitems\generic\eating.sqf";
-	vitems_drinking = compile preprocessFileLineNumbers "vitems\generic\drinking.sqf";
-	vitems_firing = compile preprocessFileLineNumbers "vitems\generic\firing.sqf";
-	vitems_explosing = compile preprocessFileLineNumbers "vitems\generic\explosing.sqf";
-	vitems_tracking = compile preprocessFileLineNumbers "vitems\generic\tracking.sqf";
-	vitems_healing = compile preprocessFileLineNumbers "vitems\generic\healing.sqf";
-	vitems_transforming = compile preprocessFileLineNumbers "vitems\generic\transforming.sqf";
-	vitems_banding = compile preprocessFileLineNumbers "vitems\generic\banding.sqf";
-
+	call compile preprocessFileLineNumbers "objects\oo_sector.sqf";   
     //call compile preprocessFileLineNumbers "scripts\WC_fnc_enumvillages.sqf";
 
 	[] execVM "real_weather\real_weather.sqf";
@@ -62,7 +52,10 @@
 		true;
 	};
 
-	//bme_server = "'new" call OO_BME;
+	if((isServer) and (isDedicated)) then { 
+        bmeclient = "new" call OO_BME;
+        diag_log "BME Server 2.0 is initialized";
+    };
 	BmeIsAlive = { true;};
 
 	private _list = [];
@@ -70,37 +63,10 @@
 	["setNeutre", _list] call _stuff;
     "preload" call _stuff;
 
+    wczones = [[500,500],[4500,500],[5500,500],[8500,500],[9500,500],[10500,500],[11500,500],[1500,1500],[2500,1500],[3500,1500],[4500,1500],[6500,1500],[7500,1500],[8500,1500],[10500,1500],[11500,1500],[1500,2500],[2500,2500],[3500,2500],[4500,2500],[5500,2500],[7500,2500],[8500,2500],[10500,2500],[11500,2500],[500,3500],[1500,3500],[4500,3500],[5500,3500],[6500,3500],[7500,3500],[10500,3500],[11500,3500],[500,4500],[5500,4500],[6500,4500],[8500,4500],[9500,4500],[10500,4500],[11500,4500],[12500,4500],[500,5500],[1500,5500],[2500,5500],[4500,5500],[5500,5500],[7500,5500],[11500,5500],[500,6500],[1500,6500],[2500,6500],[3500,6500],[4500,6500],[5500,6500],[6500,6500],[7500,6500],[8500,6500],[9500,6500],[10500,6500],[12500,6500],[1500,7500],[2500,7500],[3500,7500],[4500,7500],[5500,7500],[9500,7500],[11500,7500],[12500,7500],[1500,8500],[3500,8500],[4500,8500],[6500,8500],[7500,8500],[8500,8500],[9500,8500],[10500,8500],[12500,8500],[500,9500],[1500,9500],[2500,9500],[4500,9500],[5500,9500],[6500,9500],[8500,9500],[10500,9500],[11500,9500],[1500,10500],[2500,10500],[4500,10500],[5500,10500],[6500,10500],[8500,10500],[9500,10500],[10500,10500],[11500,10500],[12500,10500],[1500,11500],[2500,11500],[3500,11500],[6500,11500],[7500,11500],[8500,11500],[9500,11500],[10500,11500],[11500,11500],[3500,12500],[4500,12500],[5500,12500],[7500,12500],[8500,12500],[9500,12500],[10500,12500]];
 
-
-
-        /*		wczones = [];
-		{
-			{
-				private _position = locationPosition _x;
-				private _xcord = (size _x) select 0;
-				private _ycord = (size _x) select 1;
-				private _size = sqrt((_xcord * _xcord) + (_ycord * _ycord));
-				_size = [_size, _size];
-				wczones pushBack [_position, _size];
-
-				private _id = random 65000;
-				private _name = format["target_%1", _id];
-				private _marker = createMarker [_name,_position];
-				_marker setMarkerShape "ELLIPSE";
-				_marker setMarkerType "loc_CivilDefense";
-				_marker setMarkerText _name;
-				_marker setMarkerColor "ColorRed";
-				_marker setMarkerSize _size;
-				_marker setMarkerBrush "FDiagonal";
-				true;
-			} count nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), [_x], worldSize];
-			true;
-		} count ["NameVillage", "NameCity", "NameCityCapital","NameLocal"];*/
-
-        wczones = [[500,500],[4500,500],[5500,500],[8500,500],[9500,500],[10500,500],[11500,500],[1500,1500],[2500,1500],[3500,1500],[4500,1500],[6500,1500],[7500,1500],[8500,1500],[10500,1500],[11500,1500],[1500,2500],[2500,2500],[3500,2500],[4500,2500],[5500,2500],[7500,2500],[8500,2500],[10500,2500],[11500,2500],[500,3500],[1500,3500],[4500,3500],[5500,3500],[6500,3500],[7500,3500],[10500,3500],[11500,3500],[500,4500],[5500,4500],[6500,4500],[8500,4500],[9500,4500],[10500,4500],[11500,4500],[12500,4500],[500,5500],[1500,5500],[2500,5500],[4500,5500],[5500,5500],[7500,5500],[11500,5500],[500,6500],[1500,6500],[2500,6500],[3500,6500],[4500,6500],[5500,6500],[6500,6500],[7500,6500],[8500,6500],[9500,6500],[10500,6500],[12500,6500],[1500,7500],[2500,7500],[3500,7500],[4500,7500],[5500,7500],[9500,7500],[11500,7500],[12500,7500],[1500,8500],[3500,8500],[4500,8500],[6500,8500],[7500,8500],[8500,8500],[9500,8500],[10500,8500],[12500,8500],[500,9500],[1500,9500],[2500,9500],[4500,9500],[5500,9500],[6500,9500],[8500,9500],[10500,9500],[11500,9500],[1500,10500],[2500,10500],[4500,10500],[5500,10500],[6500,10500],[8500,10500],[9500,10500],[10500,10500],[11500,10500],[12500,10500],[1500,11500],[2500,11500],[3500,11500],[6500,11500],[7500,11500],[8500,11500],[9500,11500],[10500,11500],[11500,11500],[3500,12500],[4500,12500],[5500,12500],[7500,12500],[8500,12500],[9500,12500],[10500,12500]];
-
-		{
-			_location = ["new", _x] call OO_SECTOR;
-			"check" spawn _location;
-		}foreach wczones;
+	{
+		_location = ["new", _x] call OO_SECTOR;
+		"check" spawn _location;
+	}foreach wczones;
 

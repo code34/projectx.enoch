@@ -45,3 +45,27 @@
 
 	systemChat "Spawning system: initilialized";
 	copyToClipboard format ["%1", wczones];
+
+    /*      wczones = [];
+        {
+            {
+                private _position = locationPosition _x;
+                private _xcord = (size _x) select 0;
+                private _ycord = (size _x) select 1;
+                private _size = sqrt((_xcord * _xcord) + (_ycord * _ycord));
+                _size = [_size, _size];
+                wczones pushBack [_position, _size];
+
+                private _id = random 65000;
+                private _name = format["target_%1", _id];
+                private _marker = createMarker [_name,_position];
+                _marker setMarkerShape "ELLIPSE";
+                _marker setMarkerType "loc_CivilDefense";
+                _marker setMarkerText _name;
+                _marker setMarkerColor "ColorRed";
+                _marker setMarkerSize _size;
+                _marker setMarkerBrush "FDiagonal";
+                true;
+            } count nearestLocations [getArray (configFile >> "CfgWorlds" >> worldName >> "centerPosition"), [_x], worldSize];
+            true;
+        } count ["NameVillage", "NameCity", "NameCityCapital","NameLocal"];*/
