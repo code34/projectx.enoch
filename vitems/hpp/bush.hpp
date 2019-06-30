@@ -4,7 +4,6 @@
         description = "A small wooden stick with moss";
         weight = 0.3;
         nbusage = 1;
-        code = "vitems\items\woodenstick.sqf";
         picture = "pictures\woodenstick.jpg";
     };
     class pileofleaves {
@@ -13,7 +12,6 @@
         description = "A dry pile of leaves.";
         weight = 1;
         nbusage = 1;
-        code = "vitems\items\pileofleaves.sqf";
         picture = "pictures\pileofleaves.jpg";
     };
     class nymphbug {
