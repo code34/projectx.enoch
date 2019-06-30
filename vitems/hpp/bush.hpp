@@ -38,7 +38,6 @@
         description = "Some smalls yellow mushrooms.";
         weight = 0.3;
         nbusage = 1;
-        code = "vitems\items\yellowmushrooms.sqf";
         picture = "pictures\yellowmushrooms.jpg";
     };
     class blueberries {
@@ -47,7 +46,6 @@
         description = "Blueberries are sweet, nutritious and wildly popular.";
         weight = 0.3;
         nbusage = 1;
-        code = "vitems\items\blueberries.sqf";
         picture = "pictures\blueberries.jpg";
     };
     class gooseberries {
@@ -56,7 +54,6 @@
         description = "Fresh, delicious, sweet gooseberries.";
         weight = 0.3;
         nbusage = 1;
-        code = "vitems\items\gooseberries.sqf";
         picture = "pictures\gooseberries.jpg";
     };
     class nettle {
@@ -65,6 +62,5 @@
         description = "This green vegetable offers excellent nutritional value.";
         weight = 0.3;
         nbusage = 1;
-        code = "vitems\items\nettle.sqf";
         picture = "pictures\nettle.jpg";
     };
