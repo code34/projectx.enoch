@@ -21,14 +21,14 @@
 	call compile preprocessFileLineNumbers "vitems\oo_bme.sqf";
 	call compile preprocessFileLineNumbers "objects\oo_sector.sqf";
     
-	vitems_eating = compile preprocessFileLineNumbers "vitems\items\eating.sqf";
-	vitems_drinking = compile preprocessFileLineNumbers "vitems\items\drinking.sqf";
-	vitems_firing = compile preprocessFileLineNumbers "vitems\items\firing.sqf";
-	vitems_explosing = compile preprocessFileLineNumbers "vitems\items\explosing.sqf";
-	vitems_tracking = compile preprocessFileLineNumbers "vitems\items\tracking.sqf";
-	vitems_healing = compile preprocessFileLineNumbers "vitems\items\healing.sqf";
-	vitems_cuting = compile preprocessFileLineNumbers "vitems\items\cuting.sqf";
-	vitems_massing = compile preprocessFileLineNumbers "vitems\items\massing.sqf";
+	vitems_eating = compile preprocessFileLineNumbers "vitems\generic\eating.sqf";
+	vitems_drinking = compile preprocessFileLineNumbers "vitems\generic\drinking.sqf";
+	vitems_firing = compile preprocessFileLineNumbers "vitems\generic\firing.sqf";
+	vitems_explosing = compile preprocessFileLineNumbers "vitems\generic\explosing.sqf";
+	vitems_tracking = compile preprocessFileLineNumbers "vitems\generic\tracking.sqf";
+	vitems_healing = compile preprocessFileLineNumbers "vitems\generic\healing.sqf";
+	vitems_transforming = compile preprocessFileLineNumbers "vitems\generic\transforming.sqf";
+	vitems_banding = compile preprocessFileLineNumbers "vitems\generic\banding.sqf";
 
     //call compile preprocessFileLineNumbers "scripts\WC_fnc_enumvillages.sqf";
 
