@@ -15,7 +15,7 @@ CLASS("oo_Vitems")
 	PRIVATE UI_VARIABLE("display", "Display");
 	PRIVATE UI_VARIABLE("array", "destination");
 	PRIVATE UI_VARIABLE("array", "source");
-	PRIVATE VARIABLE("string", "mode");
+	PRIVATE VARIABLE("scalar", "selectindex");
 
 	PUBLIC FUNCTION("display", "constructor"){
 		disableSerialization;
@@ -31,13 +31,20 @@ CLASS("oo_Vitems")
 		MEMBER("OOP_Text_proximity", _this displayCtrl 104);
 		MEMBER("OOP_btn_use", _this displayCtrl 110);
 		MEMBER("OOP_btn_weapons", _this displayCtrl 111);
+
+		MEMBER("selectindex", -1);
+		private _array = [];
+		MEMBER("source", _array);
+		private _array = [];
+		MEMBER("destination", _array);
 		MEMBER("Init", nil);
 	};
 
 	PUBLIC FUNCTION("", "btnAction_OOP_btn_use") {
 		private _index = lbCurSel  MEMBER("OOP_Listbox_Capacities", nil);
 		if(_index > -1) then {
-			["useItem", _index] call capcontainer;
+			_index = ["useItem", _index] call capcontainer;
+			MEMBER("selectindex", _index);
 			MEMBER("refresh", nil);
 		};
 	};
@@ -54,6 +61,7 @@ CLASS("oo_Vitems")
 
 		private _array = [MEMBER("OOP_Listbox_Capacities",nil), capcontainer];
 		MEMBER("refresh_LISTBOX", _array);
+		MEMBER("OOP_Listbox_Capacities",nil) lbSetCurSel MEMBER("selectindex", nil);
 		MEMBER("refresh_title", nil);
 	};
 
@@ -116,7 +124,7 @@ CLASS("oo_Vitems")
 		private _content = "getContent" call _container;
 
 		{
-			_control lbAdd (_x select 0);
+			_control lbAdd (_x select 1);
 			_control lbSetPicture [_forEachIndex, (_x select 5)];
 			_control lbSetValue[_forEachIndex, _forEachIndex];
 		}foreach _content;
@@ -149,8 +157,7 @@ CLASS("oo_Vitems")
 			private _content = ("getContent" call proxcontainer) select _index;
 			MEMBER("OOP_Listbox_Capacities",nil) lbSetCurSel -1;
 			//"name", "description", "category", "price","weight", "owner", "life"
-			//MEMBER("OOP_Text_Description", nil) ctrlSetStructuredText parseText format ["Type: %1 Weight: %2Kg <br/>Durability: %3%<br/>Description: %4<br/>", _content select 2,_content select 3,_content select 4,_content select 1];
-			MEMBER("OOP_Text_Description", nil) ctrlSetStructuredText parseText format ["%1<br/>", _content select 1];
+			MEMBER("OOP_Text_Description", nil) ctrlSetStructuredText parseText format ["%1<br/>", _content select 2];
 		};
 	};
 
@@ -193,8 +200,7 @@ CLASS("oo_Vitems")
 			private _content = ("getContent" call capcontainer) select _index;
 			MEMBER("OOP_Listbox_Proximity",nil) lbSetCurSel -1;
 			//"name", "description", "category", "price","weight", "owner", "life"
-			MEMBER("OOP_Text_Description", nil) ctrlSetStructuredText parseText format ["%1<br/>", _content select 1];
-			//MEMBER("OOP_Text_Description", nil) ctrlSetStructuredText parseText format ["Type: %1 Weight: %2Kg <br/>Durability: %3%<br/>Description: %4<br/>", _content select 2,_content select 3,_content select 4,_content select 1];
+			MEMBER("OOP_Text_Description", nil) ctrlSetStructuredText parseText format ["%1<br/>", _content select 2];
 		};
 	};
 
@@ -282,5 +288,6 @@ CLASS("oo_Vitems")
 		DELETE_UI_VARIABLE("Display");
 		DELETE_VARIABLE("source");
 		DELETE_VARIABLE("destination");
+		DELETE_VARIABLE("selectindex");
 	};
 ENDCLASS;
