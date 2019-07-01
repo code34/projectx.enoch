@@ -70,11 +70,11 @@
         nbusage = 20;
         picture = "pictures\cigarettes.jpg";
     };
-    class masse {
+    class mace {
         type[] = {"stuff"};
-        title = "A mass";
-        description = "Mass with fiberglass handle";
+        title = "A mace";
+        description = "Mace with fiberglass handle";
         weight = 4;
         nbusage = -1;
-        picture = "pictures\masse.jpg";
+        picture = "pictures\mace.jpg";
     };    
