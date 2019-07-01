@@ -133,7 +133,7 @@
             systemChat format ["active zones %1", count wczones];
 
             while { MEMBER("monitor", nil) } do {
-                private _list = _position nearEntities [["Man", "Air", "Car", "Motorcycle", "Tank"], 1500];
+                private _list = _position nearEntities [["Man", "Air", "Car", "Motorcycle", "Tank"], 1000];
                 sleep 1;
                 if((west countside _list > 0) and !MEMBER("active",nil)) then {
                     systemChat "Spawn location";
