@@ -74,7 +74,11 @@
 	};
 	systemchat "BME 2.0 is initialized";
 
-	sleep 2;
+	// Random spawn position
+	/*	private _position = position player;
+	_position = ["remoteCall", ["getSpawnPosition", "" , 2, _position]] call bmeclient;
+	player setpos _position;
+	player setpos(player getRelPos [random 250,random 360]);*/
 
 	player addEventHandler ["InventoryOpened", {execVM "gui\loading.sqf";true;}];
 	player addEventHandler ["InventoryClosed", {player addEventHandler ["InventoryOpened", {execVM "gui\loading.sqf";true;}];}];
