@@ -215,6 +215,10 @@
 
                 sleep 0.1;
     		};
+
+            // move last one
+            _position = _ref getRelPos [floor(random 250), random 360];
+            _ref setpos _position;
 		};
 
         PUBLIC FUNCTION("","unpopZombies") {
