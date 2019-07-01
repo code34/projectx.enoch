@@ -2,6 +2,7 @@
 #include "gui\style.hpp"
 #include "gui\vitems.hpp"
 #include "gui\loading.hpp"
+#include "gui\uirequirement.hpp"
 
 class RscTitles {
 #include "gui\hud.hpp"
