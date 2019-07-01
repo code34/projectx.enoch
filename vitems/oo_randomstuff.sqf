@@ -63,7 +63,6 @@
 				private _type = getArray (missionConfigFile >> "cfgVitems" >> _name >> "type");
                 private _nbusage = getNumber (missionConfigFile >> "cfgVitems" >> _name >> "nbusage");
 				{
-					systemChat format["%1 %2", _x, _name];
 				MEMBER(_x, nil) pushBack [_name, _nbusage];
 				} forEach _type;
 			};
@@ -148,7 +147,7 @@
 				case "tree" : {_properties = ["", 0,0];};
 				case "bush" : {_properties = ["", 0,0];};
 				case "wall" : {_properties = ["", 0,0];};
-				default {	_properties = ["", 0,0];};
+				default {_properties = ["", 0,0];};
 			};
 			_properties;
 		};
