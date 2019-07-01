@@ -40,6 +40,22 @@
 			MEMBER("getType", _model);
 		};
 
+		PUBLIC FUNCTION("string", "getModelClass") {
+			private _count = count (configfile >> "cfgVehicles");
+			private _list = [];
+			private _result = "";
+
+			for "_i" from 0 to (_count-1) do {
+				private _actual = (configfile >> "cfgVehicles") select _i;
+				if (isclass _actual) then {
+					private _class = configname _actual;
+					private _model = gettext (configfile >> "cfgvehicles" >> _class >> "model");
+					if(toLower(_model) == _this) then { _result = _class;};
+				};
+			};
+			_result;
+		};
+
 		PUBLIC FUNCTION("string", "getType") {
 			DEBUG(#, "OO_MODEL::getType")
 			private _model = _this;
