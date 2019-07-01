@@ -71,6 +71,8 @@
 				_list pushBack [_classid, _title, _description, _weight, _nbusage, _picture];
 			} forEach _this;
 
+			private _properties = ["", 0,0];
+			MEMBER("properties", _properties);
 			MEMBER("inventory", _list);
 		};
 
@@ -206,10 +208,12 @@
 						_content set[_index, _object];
 					} else {
 						_content deleteAt _index;
+						_index = -1;
 					};
 					MEMBER("setContent", _content);
 				};
 			};
+			_index;
 		};
 
 		// Get the properties of container with an array
