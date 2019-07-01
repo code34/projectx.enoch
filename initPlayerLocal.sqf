@@ -87,3 +87,10 @@
 	player enableFatigue false; 
 	player enableStamina false;
 	player allowSprint true;
+
+	capcontainer = ["new", [netId player, ((getModelInfo player) select 0)]] call OO_CONTAINER;
+	private _content = [["axe", -1],["masse", -1]];
+	["overLoad", _content] call capcontainer;
+	"save" call capcontainer;
+
+	systemchat "inventory load";
