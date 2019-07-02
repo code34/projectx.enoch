@@ -1,1 +1,1 @@
-    [2] call vitems_eating;
+    [120,true] call vitems_eating;

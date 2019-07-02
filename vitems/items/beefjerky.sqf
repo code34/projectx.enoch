@@ -1,1 +1,2 @@
-    [3] call vitems_eating;
+    [20,true] call vitems_eating;
+    [-5,false] call vitems_drinking;
