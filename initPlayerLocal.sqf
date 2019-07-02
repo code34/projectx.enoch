@@ -20,7 +20,6 @@
 	call compile preprocessFileLineNumbers "vitems\oo_randomstuff.sqf";
 	call compile preprocessFileLineNumbers "vitems\oo_bme.sqf";
 	call compile preprocessFileLineNumbers "vitems\oo_model.sqf";
-	call compile preprocessFileLineNumbers "vitems\oo_requirement.sqf";
 	call compile preprocessFileLineNumbers "objects\oo_health.sqf";
 	call compile preprocessFileLineNumbers "gui\oo_hud.sqf";
 	call compile preprocessFileLineNumbers "gui\oo_vitems.sqf";
@@ -95,7 +94,7 @@
 	player allowSprint true;
 
 	capcontainer = ["new", [netId player, ((getModelInfo player) select 0)]] call OO_CONTAINER;
-	private _content = [["wrench", -1], ["axe", -1],["mace", -1]];
+	private _content = [["wrench", -1], ["axe", -1],["mace", -1], ["lighter", 1]];
 	["overLoad", _content] call capcontainer;
 	"save" call capcontainer;
 
