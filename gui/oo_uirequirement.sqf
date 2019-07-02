@@ -22,21 +22,69 @@ CLASS("oo_uirequirement")
     };
     
     PUBLIC FUNCTION("", "Init"){
-        private _requirement = "new" call OO_REQUIREMENT;
-        private _result = ["checkStuffRequirement",["axe","mace","lighter"]] call _requirement;
-        private _control = MEMBER("OOP_Listbox_requirement", nil);
-        systemChat format ["%1", _result];
-		{
-				private _class = _x select 0;
-				private _color = if((_x select 1) isEqualTo -1) then {[1,0,0,1];}else{[1,1,1,1];};
-				private _entry = missionConfigFile >> "cfgVitems" >> _class;
-				private _title = getText(missionConfigFile >> "cfgVitems" >> _class >> "title");
-				_control lbAdd _title;
-				_control lbSetColor [_forEachIndex,_color];
-				private _picture = getText (_entry >> "picture");
-				_control lbSetPicture [_forEachIndex, _picture];
-		}foreach _result;
+
     };
+
+    // Param: requirement
+    // Rafraichit la listbox des prerequis
+    // si les pre requis ne sont pas réunis
+	PUBLIC FUNCTION("array", "refreshListBox"){
+        private _control = MEMBER("OOP_Listbox_requirement", nil);
+		private _result = _this;
+		if((_result select 0) isEqualTo false) then {
+			{
+					private _class = _x select 0;
+					private _color = if((_x select 1) isEqualTo -1) then {[1,0,0,1];}else{[1,1,1,1];};
+					private _entry = missionConfigFile >> "cfgVitems" >> _class;
+					private _title = getText(missionConfigFile >> "cfgVitems" >> _class >> "title");
+					_control lbAdd _title;
+					_control lbSetColor [_forEachIndex,_color];
+					private _picture = getText (_entry >> "picture");
+					_control lbSetPicture [_forEachIndex, _picture];
+			}foreach (_result select 1);
+		} else {
+			closeDialog 0;
+		};
+		_result;
+	};
+
+	// Param: requirement
+	// verifie les pre requis pour utiliser un objet
+    PUBLIC FUNCTION("array", "checkStuffRequirement") {
+		DEBUG(#, "OO_REQUIREMENT::checkRequirement")
+		private _content = +("getContent" call capcontainer);
+		private _list = [];
+		private _requirement = _this;
+		private _result = [];
+		private _count = 0;
+
+		{_list pushBack (_x select 0);} foreach _content;
+
+		// compare la liste des prerequis avec le contenu 
+		// des objets se trouvant dans l'inventaire
+		{
+			private _searchindex = _list find _x;
+			if(_searchindex > -1) then {
+				//_content deleteAt _searchindex;
+				_result pushBack [_x,1];
+				_count = _count + 1;
+			}else{
+				_result pushBack [_x, -1];
+			};
+		} foreach _requirement;
+		
+		// si les prequis sont egales au nombre d'objets trouvés
+		// dans l'inventaire, alors True sinon false
+		if((count _requirement) isEqualTo _count) then {
+			closeDialog 0;
+			_result = [true, _result, _content];
+		} else {
+			_result = [false, _result, _content];
+			MEMBER("refreshListBox", _result);
+		};
+		_result;
+	};
+
 
     PUBLIC FUNCTION("", "btnAction_OOP_Button_close_requirement") {
 
