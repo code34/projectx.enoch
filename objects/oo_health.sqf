@@ -130,7 +130,7 @@
 			private _bonusdrink = MEMBER("bonusdrink", nil);
 			private _nausea = MEMBER("nausea", nil);
 			_bonusdrink = _bonusdrink + _this;
-			if((_bonusdrink > 20) or (_nausea > 0)) then { 
+			if((_bonusdrink > 100) or (_nausea > 0)) then { 
 				MEMBER("beNauseous", nil);
 			} else {
 				MEMBER("bonusdrink", _bonusdrink);
@@ -142,7 +142,7 @@
 			private _bonusfood = MEMBER("bonusfood", nil);
 			private _nausea = MEMBER("nausea", nil);
 			_bonusfood = _bonusfood + _this;
-			if((_bonusfood > 20) or (_nausea > 0)) then {  
+			if((_bonusfood > 100) or (_nausea > 0)) then {  
 				MEMBER("beNauseous", nil);
 			} else {
 				MEMBER("bonusfood", _bonusfood);
@@ -152,7 +152,6 @@
 		PUBLIC FUNCTION("","checkFood") {
 			DEBUG(#, "OO_HEALTH::checkFood")
 			private _food = 0;
-			private _level = 0;
 
 			while { true } do {
 				private _bonusfood = MEMBER("bonusfood",nil);
@@ -161,25 +160,22 @@
 					_bonusfood = _bonusfood - 1;
 					MEMBER("bonusfood", _bonusfood);
 					_food = MEMBER("food", nil);
-					_level = floor (random 5);
-					_food = _food + _level;
+					_food = _food + 1;
 					if(_food > 100) then {_food = 100;};
 					MEMBER("setFood", _food);
 				} else {
 					_food = MEMBER("food", nil);
-					_level = floor (random 5);
-					_food = _food - _level;
+					_food = _food - 1;
 					if(_food < 0) then {_food = 0;};
 					MEMBER("setFood", _food);
 				};
-				sleep 30;
+				sleep 5;
 			};
 		};
 
 		PUBLIC FUNCTION("","checkDrink") {
 			DEBUG(#, "OO_HEALTH::checkDrink")
 			private _drink = 0;
-			private _level = 0;
 
 			while { true } do {
 				private _bonusdrink = MEMBER("bonusdrink",nil);
@@ -188,18 +184,16 @@
 					_bonusdrink = _bonusdrink - 1;
 					MEMBER("bonusdrink", _bonusdrink);
 					_drink = MEMBER("drink", nil);
-					_level = floor (random 5);
-					_drink = _drink + _level;
+					_drink = _drink + 1;
 					if(_drink > 100) then {_drink = 100;};
 					MEMBER("setDrink", _drink);
 				} else {
 					_drink = MEMBER("drink", nil);
-					_level = floor (random 5);
-					_drink = _drink - _level;
+					_drink = _drink - 1;
 					if(_drink < 0) then {_drink = 0;};
 					MEMBER("setDrink", _drink);
 				};
-				sleep 30;
+				sleep 5;
 			};
 		};
 
@@ -239,16 +233,16 @@
 				};
 
 				if((_temperature < 36.5) or (_temperature > 38.5)) then {
-					_level = floor(random 5);
+					_level = _level - 1;
 				};
 				if(MEMBER("food", nil) < 1) then {
-					_level = _level + floor(random 5);
+					_level = _level - 1;
 				};
 				if(MEMBER("drink", nil) < 1) then {
-					_level = _level + floor(random 5);
+					_level = _level - 1;
 				};
 				if(MEMBER("virus", nil) > 0) then {
-					_level = _level + floor(random 5);
+					_level = _level - 1;
 				};
 				/*if(getDammage player > 0) then {
 					_level = _level + floor(random 5);
@@ -256,19 +250,22 @@
 				
 				_bonuslife = MEMBER("bonuslife", nil);
 				if( _bonuslife > 0 ) then {
-					_level = _level - floor(random 5);
+					_level = _level + 1;
 					_bonuslife = _bonuslife - 1;
 					MEMBER("bonuslife", _bonuslife);
 				};
 
+                if(_level <= -1) then {_level = -1;};
+                if(_level >= 0) then {_level = 1;};
+
 				_life = MEMBER("life", nil);
-				_life = _life - _level;
+				_life = _life + _level;
 				if(_life < 0) then {_life = 0;};
 				if(_life > 100) then {_life = 100;};
 				MEMBER("setLife", _life);
 				_damage = 1 - (_life / 100);
 				player setDamage _damage;
-				sleep 60;
+				sleep 5;
 			};
 		};
 
