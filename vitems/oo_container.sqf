@@ -198,20 +198,22 @@
 			private _content = MEMBER("getContent", nil);
 			private _object = _content select _index;
 			private _code = compile preprocessFileLineNumbers format["vitems\items\%1.sqf", _object select 0]; 
-			private _durability = _object select 4;
-			if !(_durability isEqualTo 0 ) then {
-				private _result = call _code;
-				if(_result) then {
-					if(_durability > -1) then { _durability = _durability - 1;	};
-					if !(_durability isEqualTo 0 ) then {
-						_object set [4, _durability];
-						_content set[_index, _object];
-					} else {
-						_content deleteAt _index;
-						_index = -1;
+			createDialog "uirequirement";
+			private _array = [_object select 0];
+			private _result = ["checkStuffRequirement", _array] call uirequirement;
+			
+			if(_result select 0) then {
+				call _code;
+				_content = [];
+				{
+					private _durability = _x select 4;
+					if(_durability > 0) then { _durability = _durability - 1;	};
+					if!(_durability isEqualTo 0) then {
+						_x set [4, _durability];
+						_content pushBack _x;
 					};
-					MEMBER("setContent", _content);
-				};
+				}foreach (_result select 2);
+				MEMBER("setContent", _content);
 			};
 			_index;
 		};
