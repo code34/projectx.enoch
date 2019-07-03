@@ -19,8 +19,9 @@
 	call compile preprocessFileLineNumbers "vitems\oo_container.sqf";
 	call compile preprocessFileLineNumbers "vitems\oo_randomstuff.sqf";
 	call compile preprocessFileLineNumbers "vitems\oo_bme.sqf";
-	call compile preprocessFileLineNumbers "objects\oo_sector.sqf";   
+	call compile preprocessFileLineNumbers "objects\oo_sector.sqf";
     //call compile preprocessFileLineNumbers "scripts\WC_fnc_enumvillages.sqf";
+	call compile preprocessFileLineNumbers "meka\extraction.sqf";
 
 	[] execVM "real_weather\real_weather.sqf";
 
