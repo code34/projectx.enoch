@@ -3,6 +3,7 @@
 #include "gui\vitems.hpp"
 #include "gui\loading.hpp"
 #include "gui\uirequirement.hpp"
+#include "gui\missionnote.hpp"
 
 class RscTitles {
 #include "gui\hud.hpp"
@@ -16,4 +17,17 @@ class cfgVitems {
 #include "vitems\hpp\food.hpp"
 #include "vitems\hpp\tree.hpp"
 #include "vitems\hpp\bush.hpp"
+};
+
+class CfgDebriefing
+{  
+    class End1
+    {
+        title = "Mission Completed";
+        subtitle = "Finish as a cowardly, but alive (..)";
+        description = "You managed to escape from this desolated country. Maybe you left something behind you? Maybe that was the only solution? You will never know. But you will at least have a chance to see your friends alive again. But for how long (..).";
+        pictureBackground = "";
+        picture = "paa\fear.paa";
+        pictureColor[] = {0.0,0.3,0.6,1};
+    };
 };

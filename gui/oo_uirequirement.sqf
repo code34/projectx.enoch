@@ -71,8 +71,8 @@ CLASS("oo_uirequirement")
 			}else{
 				_result pushBack [_x, -1];
 			};
-		} foreach _requirement;
-		
+		} foreach _requirement;	
+
 		// si les prequis sont egales au nombre d'objets trouvés
 		// dans l'inventaire, alors True sinon false
 		if((count _requirement) isEqualTo _count) then {
@@ -84,6 +84,29 @@ CLASS("oo_uirequirement")
 		};
 		_result;
 	};
+
+        PUBLIC FUNCTION("array","useRequirement") {
+            DEBUG(#, "OO_CONTAINER::useRequirement")
+            private _requirement = _this;
+            private _content = ("getContent" call capcontainer);
+            private _list = [];
+            {_list pushBack (_x select 0);} foreach _content;
+
+            {
+                private _searchindex = _list find _x;
+                private _object = _content select _searchindex;
+                private _durability = _object select 4;
+                if(_durability > 0) then { _durability = _durability - 1; };
+                if(_durability < 0) then {_durability = _durability -1;};
+                if!(_durability isEqualTo 0) then {
+                    _object set [4, _durability];
+                    _content set [_searchindex, _object];
+                } else {
+                    _content deleteAt _searchindex;
+                };
+            } forEach _requirement;
+            _content;
+        };
 
 
     PUBLIC FUNCTION("", "btnAction_OOP_Button_close_requirement") {

@@ -66,8 +66,13 @@
 		};
 	};
 
+	callEnd = {
+		private _end = _this;
+		["End1", true, 5, true] spawn BIS_fnc_endMission;
+	};
+
 	bmeclient = "new" call OO_BME;
-	
+
 	private _result = false;
 	while { _result isEqualTo false} do { 
 		_result= ["remoteCall", ["BmeIsAlive", "" , 2, false]] call bmeclient;
@@ -99,3 +104,7 @@
 	"save" call capcontainer;
 
 	systemchat "inventory load";
+
+	createDialog "missionnote";
+	_ctrl = (uiNamespace getVariable "missionnote") displayCtrl 20001;
+	_ctrl htmlLoad "meka\story\index.html";

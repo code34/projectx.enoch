@@ -24,7 +24,7 @@
         while { alive _object && _time > 0} do {
             _marker setMarkerPos (position _object);
             _time = _time - 1;
-            sleep 10;
+            sleep 5;
         };
     };
 

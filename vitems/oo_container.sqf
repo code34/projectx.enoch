@@ -199,20 +199,12 @@
 			private _object = _content select _index;
 			private _code = compile preprocessFileLineNumbers format["vitems\items\%1.sqf", _object select 0]; 
 			createDialog "uirequirement";
-			private _array = [_object select 0];
-			private _result = ["checkStuffRequirement", _array] call uirequirement;
+			private _requirement = [_object select 0];
+			private _result = ["checkStuffRequirement", _requirement] call uirequirement;
 			
 			if(_result select 0) then {
 				call _code;
-				_content = [];
-				{
-					private _durability = _x select 4;
-					if(_durability > 0) then { _durability = _durability - 1;	};
-					if!(_durability isEqualTo 0) then {
-						_x set [4, _durability];
-						_content pushBack _x;
-					};
-				}foreach (_result select 2);
+				_content = ["useRequirement", _requirement] call uirequirement;
 				MEMBER("setContent", _content);
 			};
 			_index;
