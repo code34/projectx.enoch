@@ -26,6 +26,8 @@
 	call compile preprocessFileLineNumbers "gui\oo_UI_loading.sqf";
 	call compile preprocessFileLineNumbers "gui\oo_uirequirement.sqf";
 
+	fnc_relayradio = compile preprocessFileLineNumbers "meka\relayradio.sqf";
+
 	vitems_eating = compile preprocessFileLineNumbers "vitems\generic\eating.sqf";
 	vitems_drinking = compile preprocessFileLineNumbers "vitems\generic\drinking.sqf";
 	vitems_firing = compile preprocessFileLineNumbers "vitems\generic\firing.sqf";
@@ -81,7 +83,7 @@
 	systemchat "BME 2.0 is initialized";
 
 	// Random spawn position
-	/*	private _position = position player;
+/*	private _position = position player;
 	_position = ["remoteCall", ["getSpawnPosition", "" , 2, _position]] call bmeclient;
 	player setpos _position;
 	player setpos(player getRelPos [random 250,random 360]);*/
@@ -99,7 +101,7 @@
 	player allowSprint true;
 
 	capcontainer = ["new", [netId player, ((getModelInfo player) select 0)]] call OO_CONTAINER;
-	private _content = [["wrench", -1], ["axe", -1],["mace", -1], ["lighter", 1]];
+	private _content = [["armyradio", -1],["wrench",-1]];
 	["overLoad", _content] call capcontainer;
 	"save" call capcontainer;
 
@@ -107,4 +109,11 @@
 
 	createDialog "missionnote";
 	_ctrl = (uiNamespace getVariable "missionnote") displayCtrl 20001;
-	_ctrl htmlLoad "meka\story\index.html";
+	_ctrl htmlLoad "meka\story\introduction.html";
+
+
+/*	while {true} do {
+		systemChat format ["%1", typeof cursorObject];
+		copyToClipboard format ["%1", typeof cursorObject];
+		sleep 1;
+	};*/
