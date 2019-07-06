@@ -27,6 +27,7 @@
 		PRIVATE STATIC_VARIABLE("array","military");
 		PRIVATE STATIC_VARIABLE("array","food");
 		PRIVATE STATIC_VARIABLE("array", "stuff");
+		PRIVATE STATIC_VARIABLE("array", "mission");
 		PRIVATE STATIC_VARIABLE("array", "tools");
 		PRIVATE STATIC_VARIABLE("array", "tree");
 		PRIVATE STATIC_VARIABLE("array", "bush");
@@ -56,6 +57,8 @@
 			MEMBER("bush", _array);
 			private _array = [];
 			MEMBER("wall", _array);
+			private _array = [];
+			MEMBER("mission", _array);
 	
 			private _entry = missionConfigFile >> "cfgVitems";
 			for "_i" from 0 to (count _entry - 1) do {
@@ -69,8 +72,13 @@
 			true;
 		};
 
+		PUBLIC FUNCTION("array","setMission") {
+			DEBUG(#, "OO_RANDOMSTUFF::setMission")
+			MEMBER("mission", _this);
+		};		
+
 		PUBLIC FUNCTION("array","setNeutre") {
-			DEBUG(#, "OO_RANDOMSTUFF::neutre")
+			DEBUG(#, "OO_RANDOMSTUFF::setNeutre")
 			MEMBER("neutre", _this);
 		};
 
