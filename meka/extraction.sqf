@@ -2,7 +2,7 @@
 
     private _position = [4090.96,10220.8,0.101196];
     private _vehicle = createVehicle ["C_Heli_Light_01_civil_F", _position, [], 0, "NONE"];
-    _vehicle setVariable ["requirement", ["wrench", "axe"],true];
+    _vehicle setVariable ["requirement", ["choppermotor", "wrench"],true];
 
     private _id = random 65000;
     private _name = format["extraction_%1", _id];
