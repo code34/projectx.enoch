@@ -203,7 +203,7 @@
     			_group deleteGroupWhenEmpty true;
                 MEMBER("zombies", nil) pushBack _unit;
 
-                private _id = random 65000;
+/*                private _id = random 65000;
                 private _name = format["target_%1", _id];
                 private _marker = createMarker [_name, _position];
                 _marker setMarkerShape "ICON";
@@ -211,7 +211,7 @@
                 _marker setMarkerText _name;
                 _marker setMarkerColor "ColorRed";
                 _marker setMarkerSize [0.5,0.5];
-                _marker setMarkerBrush "FDiagonal";
+                _marker setMarkerBrush "FDiagonal";*/
 
                 sleep 0.1;
     		};
