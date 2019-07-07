@@ -14,3 +14,11 @@
         nbusage = -1;
         picture = "pictures\armyradio.jpg";    	
     };
+    class missionplan {
+        type[] = {"mission"};
+        title = "Mission #Transparence";
+        description = "Secret Defense - This information should not be disclosed to the enemy - Bring in sector c124535 the contents of this briefcase. Ask for colonel Jackson Bro";
+        weight = 0.05;
+        nbusage = 1;
+		picture = "pictures\mission.jpg";
+	};
