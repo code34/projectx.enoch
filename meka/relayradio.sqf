@@ -57,11 +57,13 @@
 		        _ok = false;
 		    };
 		};
-		addMissionEventHandler ["Draw3D", {}];
+		removeAllMissionEventHandlers "Draw3D";
 		
 		createDialog "missionnote";
 		_ctrl = (uiNamespace getVariable "missionnote") displayCtrl 20001;
 		_ctrl htmlLoad "meka\story\relaisradiooff.html";
-		["remoteSpawn", ["setCommunicationOn", "", "server"]] call bmeclient;
-
 		missionNamespace setVariable["armyradiostate", 1];
+
+		private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
+		private _sound = _path + "sounds\whitenoise.ogg";
+		playSound3D [_sound, player, false, getPosASL player, 2, 1, 10];
