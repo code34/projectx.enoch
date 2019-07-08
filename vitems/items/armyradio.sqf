@@ -7,9 +7,8 @@
     	};
     	// le relai radio est inactif, les communications sont rétablies
     	case 1 : {
-			createDialog "missionnote";
-			_ctrl = (uiNamespace getVariable "missionnote") displayCtrl 20001;
-			_ctrl htmlLoad "meka\story\receptionsignal.html";
+            ["setPages", ["meka\story\receptionsignal.html"]] call tabnote;
+            "createDialog" call tabnote;
     	};
     	default {};
 	};
