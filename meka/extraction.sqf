@@ -1,6 +1,6 @@
     // extraction point
-
     private _position = [4090.96,10220.8,0.101196];
+
     private _vehicle = createVehicle ["C_Heli_Light_01_civil_F", _position, [], 0, "NONE"];
     _vehicle setVariable ["requirement", ["choppermotor", "wrench"],true];
      
@@ -8,7 +8,6 @@
     private _sergent = _group createUnit ["B_T_Soldier_A_F", _position, [], 0, "FORM"];
     _sergent setDamage 1;
     _sergent setpos (_sergent getRelPos [100 + (random 50), 60 + random 30]);
-    player setpos (getpos _sergent);
 
     private _classes = ["B_T_Engineer_F", "B_T_Soldier_A_F", "B_T_Soldier_AAR_F", "B_T_Support_AMG_F"];
     {
@@ -48,7 +47,7 @@
 
     _object = selectRandom _objects;
     private _container = ["new", [netId _object, ((getModelInfo _object) select 0)]] call OO_CONTAINER;
-    private _content = [["armyradio", -1],["missionplan",-1]];
+    private _content = [["armyradio", -1],["missionplan",-1],["medal",-1]];
     ["overLoad", _content] call _container;
     "save" call _container;
 
@@ -84,6 +83,9 @@
     _marker2 setMarkerSize [1,1];
     _marker2 setMarkerBrush "FDiagonal";
 
+    while { player distance _position > 500} do {sleep 1;};
+    ["setPages", ["meka\story\sergentradiocom.html"]] call tabnote;
+    "createDialog" call tabnote;
 
     [_vehicle, _position] spawn {
         _vehicle = _this select 0;
