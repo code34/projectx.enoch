@@ -20,5 +20,13 @@
         description = "Secret Defense - This information should not be disclosed to the enemy - Bring in sector c124535 the contents of this briefcase. Ask for colonel Jackson Bro";
         weight = 0.05;
         nbusage = 1;
-		picture = "pictures\mission.jpg";
+		picture = "pictures\missionplan.jpg";
 	};
+    class medal {
+        type[] = {"mission"};
+        title = "Bravery medal";
+        description = "A military medal of bravery";
+        weight = 0.05;
+        nbusage = 1;
+        picture = "pictures\medal.jpg";
+    };
