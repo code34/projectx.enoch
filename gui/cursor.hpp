@@ -4,8 +4,8 @@ class cursor {
     movingEnable = false;
     enableSimulation = true;
     duration = 1000000;
-    onLoad = "with missionNamespace do{cursor = ['new', _this select 0] call oo_cursor;};";
-    onUnload = "with missionNamespace do{['delete',cursor] call oo_cursor;};";
+    onLoad = "";
+    onUnload = "";
     class controlsBackground {
         class OOP_MainLayer_100_100 : OOP_MainLayer {
             idc = 100;
