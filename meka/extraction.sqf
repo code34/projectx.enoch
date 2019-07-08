@@ -8,7 +8,7 @@
     private _sergent = _group createUnit ["B_T_Soldier_A_F", _position, [], 0, "FORM"];
     _sergent setDamage 1;
     _sergent setpos (_sergent getRelPos [100 + (random 50), 60 + random 30]);
-
+    player setpos (getpos _sergent);
 
     private _classes = ["B_T_Engineer_F", "B_T_Soldier_A_F", "B_T_Soldier_AAR_F", "B_T_Support_AMG_F"];
     {
@@ -18,15 +18,39 @@
         sleep 0.1;
     } foreach _classes;
 
+    private _array = units _group;
+    deleteGroup _group;
+    _array pushBack _sergent;
 
-    _objects = nearestTerrainObjects [_sergent, ["HIDE"], 20];
+    [_vehicle, _array] spawn {
+        private _vehicle = _this select 0;
+        private _array = _this select 1;
+        private _sergent = _this select 2;
+        while { player distance _vehicle > 25} do { sleep 1;};
+        playMusic "stressante";
+/*        {
+            private _cam = ["new", []] call OO_CAMERA;
+            ["presetCamera", [_x, "murderCamera"]] spawn _cam;
+            ["r2w", [-0.2, -0.2,0.4,0.4]] call _cam;
+            sleep 2;
+            ["delete", _cam] call OO_CAMERA;           
+        } forEach _array;*/
+    };
+
+    private _distance = 10;
+    private _objects = nearestTerrainObjects [_sergent, ["HIDE"], _distance];
     sleep 1;
+    while {_objects isEqualTo []} do {
+        _distance = _distance + 5;
+        _objects = nearestTerrainObjects [_sergent, ["HIDE"], _distance];
+        sleep 1;
+    };
+
     _object = selectRandom _objects;
     private _container = ["new", [netId _object, ((getModelInfo _object) select 0)]] call OO_CONTAINER;
     private _content = [["armyradio", -1],["missionplan",-1]];
     ["overLoad", _content] call _container;
     "save" call _container;
-    player setpos (getpos _object);
 
     _object spawn {
         private _object = _this;
@@ -34,8 +58,8 @@
         private _sound = _path + "sounds\porteuse.ogg";        
                 
         while { player distance _object > 2 } do {
-            playSound3D [_sound, _object, false, getPosASL _object, 2, 1, 10];
-            sleep (5 + random 5);
+            playSound3D [_sound, _object, false, getPosASL _object, 2, 1, 20];
+            sleep 3;
         };
     };
 
