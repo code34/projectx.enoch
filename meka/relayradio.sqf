@@ -1,5 +1,4 @@
         // relai radio turn off signal
-
 		missionNamespace setVariable["armyradiostate", -1];
 		["setPages", ["meka\story\radio.html"]] call tabnote;
 		"createDialog" call tabnote;
@@ -66,4 +65,4 @@
 
         deleteMarker _missionmarker;
 
-        ["remoteSpawn", ["launchExtraction", "", "server"]] call _bmeclient;
+        ["remoteSpawn", ["launchExtraction", "", "server"]] call bmeclient;
