@@ -1,10 +1,8 @@
         // relai radio turn off signal
 
 		missionNamespace setVariable["armyradiostate", -1];
-
-        createDialog "missionnote";
-		_ctrl = (uiNamespace getVariable "missionnote") displayCtrl 20001;
-		_ctrl htmlLoad "meka\story\radio.html"; 
+		["setPages", ["meka\story\radio.html"]] call tabnote;
+		"createDialog" call tabnote;
         
         private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
         private _sound = _path + "sounds\porteuse.ogg";
@@ -15,13 +13,13 @@
         
 		private _id = random 65000;
 		private _name = format["radio_%1", _id];
-		missionmarker = createMarker [_name, position (_radio select 0)];
-		missionmarker setMarkerShape "ICON";
-		missionmarker setMarkerType "selector_selectedMission";
-		missionmarker setMarkerText "Radio Site";
-		missionmarker setMarkerColor "ColorRed";
-		missionmarker setMarkerSize [1,1];
-		missionmarker setMarkerBrush "FDiagonal";
+		_missionmarker = createMarker [_name, position (_radio select 0)];
+		_missionmarker setMarkerShape "ICON";
+		_missionmarker setMarkerType "selector_selectedMission";
+		_missionmarker setMarkerText "Radio Site";
+		_missionmarker setMarkerColor "ColorRed";
+		_missionmarker setMarkerSize [1,1];
+		_missionmarker setMarkerBrush "FDiagonal";
 
 		radiocenter = nearestObjects [(_radio select 0), ["Land_TBox_F"], 50];
 		sleep 2;    
@@ -46,9 +44,8 @@
 		    sleep 1;
 		};
 
-		createDialog "missionnote";
-		_ctrl = (uiNamespace getVariable "missionnote") displayCtrl 20001;
-		_ctrl htmlLoad "meka\story\relaisradio.html";   
+		["setPages", ["meka\story\relaisradio.html"]] call tabnote;
+		"createDialog" call tabnote;
 
 		private _ok = true;
 		while { _ok } do {
@@ -59,11 +56,14 @@
 		};
 		removeAllMissionEventHandlers "Draw3D";
 		
-		createDialog "missionnote";
-		_ctrl = (uiNamespace getVariable "missionnote") displayCtrl 20001;
-		_ctrl htmlLoad "meka\story\relaisradiooff.html";
+		["setPages", ["meka\story\relaisradiooff.html"]] call tabnote;
+		"createDialog" call tabnote;
 		missionNamespace setVariable["armyradiostate", 1];
 
 		private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
 		private _sound = _path + "sounds\whitenoise.ogg";
 		playSound3D [_sound, player, false, getPosASL player, 2, 1, 10];
+
+        deleteMarker _missionmarker;
+
+        ["remoteSpawn", ["launchExtraction", "", "server"]] call _bmeclient;
