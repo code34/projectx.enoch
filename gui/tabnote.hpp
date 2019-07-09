@@ -11,6 +11,7 @@ class tabnote {
     objects[] = { };
     controlsBackground[] = { };
     onload = "['setDisplay', _this select 0] call tabnote;";
+    onunload = "'closeDialog' call tabnote;";
     class Controls {
 		class notepad: RscPicture
 		{
