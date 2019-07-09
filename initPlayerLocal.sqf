@@ -22,6 +22,8 @@
 	call compile preprocessFileLineNumbers "vitems\oo_model.sqf";
 	call compile preprocessFileLineNumbers "objects\oo_health.sqf";
 	call compile preprocessFileLineNumbers "objects\oo_tabnote.sqf";
+	call compile preprocessFileLineNumbers "objects\oo_camera.sqf";
+	call compile preprocessFileLineNumbers "objects\oo_keyhandler.sqf";
 	call compile preprocessFileLineNumbers "gui\oo_hud.sqf";
 	call compile preprocessFileLineNumbers "gui\oo_vitems.sqf";
 	call compile preprocessFileLineNumbers "gui\oo_UI_loading.sqf";
@@ -80,6 +82,8 @@
 	player enableStamina false;
 	player allowSprint true;
 
+	keyhandler = "new" call OO_KEYHANDLER;
+
 	// load inventory
 	capcontainer = ["new", [netId player, ((getModelInfo player) select 0)]] call OO_CONTAINER;
 	private _content = [["armyradio", -1],["wrench",-1]];
@@ -90,4 +94,4 @@
 	// initialize mission tab
 	tabnote = "new" call OO_TABNOTE;
 	["setPages", ["meka\story\introduction1.html","meka\story\introduction2.html"]] call tabnote;
-	"createDialog" call tabnote;
+	["showFile", true] call hud;
