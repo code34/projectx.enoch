@@ -19,7 +19,7 @@ class hud {
 					x = 142 * pixelGrid * pixelW;
 					y = 31.2 * pixelGrid * pixelH;
 					w = 16 * pixelGrid * pixelW;
-					h = 29.4667 * pixelGrid * pixelH;
+					h = 34 * pixelGrid * pixelH;
 					class controls{
 						class OOP_Picture_drink_102: OOP_Picture {
 							idc = 102;
@@ -52,6 +52,14 @@ class hud {
 							w = 6 * pixelGrid * pixelW;
 							h = 5.2 * pixelGrid * pixelH;
 							text = "paa\virus.paa";
+						};
+						class OOP_Picture_file_110: OOP_Picture {
+							idc = 110;
+							x = 8 * pixelGrid * pixelW;
+							y = 29.4 * pixelGrid * pixelH;
+							w = 6 * pixelGrid * pixelW;
+							h = 5.2 * pixelGrid * pixelH;
+							text = "paa\file.paa";
 						};
 						class OOP_Text_drink_106: OOP_Text {
 							idc = 106;
