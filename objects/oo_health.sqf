@@ -101,8 +101,8 @@
 				private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
 				private _sound = _path + "sounds\vomit.ogg";
 				playSound3D [_sound, player, false, getPosASL player, 5, 1, 10];
-				private _food = MEMBER("food", nil) * 0.75;
-				private _drink = MEMBER("drink", nil) * 0.75;
+				private _food = floor(MEMBER("food", nil) * 0.75);
+				private _drink = floor(MEMBER("drink", nil) * 0.75);
 				MEMBER("nausea", 20);
 				MEMBER("setFood", _food);
 				MEMBER("setDrink", _drink);
@@ -169,7 +169,7 @@
 					if(_food < 0) then {_food = 0;};
 					MEMBER("setFood", _food);
 				};
-				sleep 5;
+				sleep 10;
 			};
 		};
 
@@ -193,7 +193,7 @@
 					if(_drink < 0) then {_drink = 0;};
 					MEMBER("setDrink", _drink);
 				};
-				sleep 5;
+				sleep 10;
 			};
 		};
 
@@ -201,7 +201,6 @@
 			DEBUG(#, "OO_HEALTH::checkDamage")
 			while { true } do {
 				private _life = floor(100 - ((getDammage player) * 100));
-				MEMBER("setLife", _life);
 				if(_life isEqualTo 0) then {
 					private _ctrl = "getOOP_Picture_life" call hud;
 					_ctrl ctrlSetText "paa\skull.paa";
@@ -263,7 +262,8 @@
 				if(_life < 0) then {_life = 0;};
 				if(_life > 100) then {_life = 100;};
 				MEMBER("setLife", _life);
-				_damage = 1 - (_life / 100);
+				// no physical injuries under 50
+				if(_life > 50 && _life < 1) then { _damage = 1 - (_life / 100);};
 				player setDamage _damage;
 				sleep 5;
 			};
