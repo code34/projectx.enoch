@@ -24,20 +24,40 @@
 		PRIVATE VARIABLE("code","this");
 		PRIVATE UI_VARIABLE("display", "mydisplay");
 		PRIVATE VARIABLE("array","pages");
+		PRIVATE VARIABLE("scalar","index");
+		PRIVATE VARIABLE("bool","isDisplay");
+		PRIVATE VARIABLE("string","mode");
 
 		PUBLIC FUNCTION("","constructor") { 
 			DEBUG(#, "OO_TABNOTE::constructor")
 			private _array = [];
 			MEMBER("pages", _array);
+			MEMBER("index", 0);
+			MEMBER("isDisplay", false);
+			MEMBER("setMode", "F1");
 		};
 
 		PUBLIC FUNCTION("","createDialog") {
 			createDialog "tabnote";
-			MEMBER("nextPage", nil);
+			MEMBER("printPage", 0);
+			MEMBER("isDisplay", true);
+			["showFile", false] call hud;
+		};
+
+		PUBLIC FUNCTION("string","setMode") {
+			MEMBER("mode", _this);
+		};
+
+		PUBLIC FUNCTION("","closeDialog") {
+			MEMBER("isDisplay", false);
 		};
 
 		PUBLIC FUNCTION("display","setDisplay") {
 			MEMBER("mydisplay", _this);
+		};
+
+		PUBLIC FUNCTION("","isDisplay") {
+			MEMBER("isDisplay", nil);
 		};
 
 		PUBLIC FUNCTION("array","setPages") {
@@ -46,15 +66,22 @@
 
 		PUBLIC FUNCTION("","nextPage") {
 			DEBUG(#, "OO_TABNOTE::nextPage")
-			private _pages = MEMBER("pages", nil);
-			private _page = _pages deleteAt 0;
-			_pages pushBack _page;
-			MEMBER("printPage", _page)
+			//systemChat format ["mode: %1", MEMBER("mode",nil)];
+			switch (MEMBER("mode",nil)) do {
+				case "F1" : {
+					private _index = MEMBER("index", nil);
+					private _count = count(MEMBER("pages", nil)) - 1;
+					if(_index + 1 > _count) then { _index = 0;} else {_index = _index + 1;};
+					MEMBER("index", _index);
+					MEMBER("printPage", _index);
+				};
+				default {};
+			};
 		};
 
-		PUBLIC FUNCTION("string","printPage") {
+		PUBLIC FUNCTION("scalar","printPage") {
 			private _ctrl = MEMBER("mydisplay", nil) displayCtrl 20001;
-			_ctrl htmlLoad _this;
+			_ctrl htmlLoad (MEMBER("pages", nil) select _this);
 		};
 
 		PUBLIC FUNCTION("","deconstructor") {
@@ -62,5 +89,8 @@
 			DELETE_VARIABLE("this");
 			DELETE_UI_VARIABLE("mydisplay");
 			DELETE_VARIABLE("pages");
+			DELETE_VARIABLE("isDisplay");
+			DELETE_VARIABLE("index");
+			DELETE_VARIABLE("mode");
 		};
 	ENDCLASS;
