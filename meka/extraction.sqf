@@ -85,7 +85,7 @@
 
     while { player distance _position > 500} do {sleep 1;};
     ["setPages", ["meka\story\sergentradiocom.html"]] call tabnote;
-    "createDialog" call tabnote;
+    ["showFile", true] call hud;
 
     [_vehicle, _position] spawn {
         _vehicle = _this select 0;

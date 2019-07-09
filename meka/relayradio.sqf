@@ -1,7 +1,7 @@
         // relai radio turn off signal
 		missionNamespace setVariable["armyradiostate", -1];
 		["setPages", ["meka\story\radio.html"]] call tabnote;
-		"createDialog" call tabnote;
+		["showFile", true] call hud;
         
         private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
         private _sound = _path + "sounds\porteuse.ogg";
@@ -44,7 +44,7 @@
 		};
 
 		["setPages", ["meka\story\relaisradio.html"]] call tabnote;
-		"createDialog" call tabnote;
+		["showFile", true] call hud;
 
 		private _ok = true;
 		while { _ok } do {
@@ -56,7 +56,7 @@
 		removeAllMissionEventHandlers "Draw3D";
 		
 		["setPages", ["meka\story\relaisradiooff.html"]] call tabnote;
-		"createDialog" call tabnote;
+		["showFile", true] call hud;
 		missionNamespace setVariable["armyradiostate", 1];
 
 		private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
