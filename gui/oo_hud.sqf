@@ -14,7 +14,7 @@ CLASS("oo_hud")
 	PRIVATE UI_VARIABLE("control", "OOP_Text_life");
 	PRIVATE UI_VARIABLE("control", "OOP_Text_virus");
 	PRIVATE UI_VARIABLE("display", "Display");
-	PRIVATE VARIABLE("bool", "showfile");
+	PRIVATE VARIABLE("bool", "isshowfile");
 
 	PUBLIC FUNCTION("display", "constructor"){
 		disableSerialization;
@@ -42,7 +42,7 @@ CLASS("oo_hud")
 
 	PUBLIC FUNCTION("", "hintFile"){
 		while { true } do {
-			if(MEMBER("showfile", nil)) then {
+			if(MEMBER("isshowfile", nil)) then {
 				MEMBER("OOP_Picture_file", nil) ctrlShow true;
 				sleep 1;
 				MEMBER("OOP_Picture_file", nil) ctrlShow false;
@@ -52,7 +52,10 @@ CLASS("oo_hud")
 	};
 
 	PUBLIC FUNCTION("bool", "showFile"){
-		MEMBER("showfile", _this);
+		if(_this) then {
+			playsound "newmessage";
+		};
+		MEMBER("isshowfile", _this);
 	};
 
 	PUBLIC FUNCTION("scalar", "setFood"){
@@ -117,6 +120,6 @@ CLASS("oo_hud")
 		DELETE_UI_VARIABLE("OOP_Text_life");
 		DELETE_UI_VARIABLE("OOP_Text_virus");
 		DELETE_UI_VARIABLE("Display");
-		DELETE_VARIABLE("showfile");
+		DELETE_VARIABLE("isshowfile");
 	};
 ENDCLASS;
