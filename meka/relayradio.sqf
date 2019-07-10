@@ -2,10 +2,7 @@
 		missionNamespace setVariable["armyradiostate", -1];
 		["setPages", ["meka\story\radio.html"]] call tabnote;
 		["showFile", true] call hud;
-        
-        private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
-        private _sound = _path + "sounds\porteuse.ogg";
-        playSound3D [_sound, player, false, getPosASL player, 2, 1, 10];
+		playsound "carrier";
 
 		private _radio = nearestObjects [player, ["Land_Communication_F"], 5000];
         sleep 2;
@@ -59,10 +56,7 @@
 		["showFile", true] call hud;
 		missionNamespace setVariable["armyradiostate", 1];
 
-		private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
-		private _sound = _path + "sounds\whitenoise.ogg";
-		playSound3D [_sound, player, false, getPosASL player, 2, 1, 10];
-
+		playSound "whitenoise";
         deleteMarker _missionmarker;
 
         ["remoteSpawn", ["launchExtraction", "", "server"]] call bmeclient;
