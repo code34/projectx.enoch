@@ -42,3 +42,32 @@ class CfgMusic
 		sound[]	= { "\sounds\stressante.ogg", db + 0, 1.0 };
 	};
 };
+
+class CfgSounds
+{
+    sounds[] = {};
+    class carrier
+    {
+        name = "carrier";
+        sound[] = { "sounds\carrier.ogg", 1, 1, 10 };
+        titles[] = { 1, "**radio carrier**" };
+    };
+    class whitenoise
+    {
+        name = "whitenoise";
+        sound[] = { "sounds\whitenoise.ogg", 1, 1, 10 };
+        titles[] = { 1, "**Radio white noise**" };
+    };
+    class wrench
+    {
+        name = "wrench";
+        sound[] = { "sounds\wrench.ogg", 1, 1, 10 };
+        titles[] = {};
+    };
+    class newmessage
+    {
+        name = "newmessage";
+        sound[] = { "sounds\newmessage.ogg", 1, 1, 10 };
+       titles[] = { 0, "**Press F1**" };
+    };
+};
