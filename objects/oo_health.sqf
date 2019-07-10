@@ -118,6 +118,7 @@
 			private _bonuslife = MEMBER("bonuslife", nil);
 			private _nausea = MEMBER("nausea", nil);
 			_bonuslife = _bonuslife + _this;
+			if(_bonuslife < 0) then {_bonuslife = 0;};
 			if((_bonuslife > 20) or (_nausea > 0)) then { 
 				MEMBER("beNauseous", nil);
 			} else {
@@ -130,6 +131,7 @@
 			private _bonusdrink = MEMBER("bonusdrink", nil);
 			private _nausea = MEMBER("nausea", nil);
 			_bonusdrink = _bonusdrink + _this;
+			if(_bonusdrink < 0) then {_bonusdrink = 0;};
 			if((_bonusdrink > 100) or (_nausea > 0)) then { 
 				MEMBER("beNauseous", nil);
 			} else {
@@ -142,6 +144,7 @@
 			private _bonusfood = MEMBER("bonusfood", nil);
 			private _nausea = MEMBER("nausea", nil);
 			_bonusfood = _bonusfood + _this;
+			if(_bonusfood < 0) then {_bonusfood = 0;};
 			if((_bonusfood > 100) or (_nausea > 0)) then {  
 				MEMBER("beNauseous", nil);
 			} else {
@@ -216,6 +219,7 @@
 			private _level = 0;
 			private _bonuslife = 0;
 			private _damage = getDammage player;
+			private _nausea = 0;
 
 			while { true } do {
 				_life = 0;
@@ -225,10 +229,9 @@
 				
 				_nausea = MEMBER("nausea", nil);
 				if(_nausea > 0) then {
-					_nausea = _nausea - floor(random 10);
-					if(_nausea  < 0) then {_nausea = 0;};
-					systemChat format ["Nausea: %1", _nausea];
+					_nausea = _nausea - 1;
 					MEMBER("nausea", _nausea);
+					systemChat format ["Nausea: %1", _nausea];
 				};
 
 				if((_temperature < 36.5) or (_temperature > 38.5)) then {
