@@ -1,18 +1,22 @@
-    if(isNull cursorObject && {(cursorObject isKindOf "Man")}) exitWith { false;};
-    
-    switch (typeOf cursorObject) do { 
+    [] spawn {
+        if(isNull cursorObject && {(cursorObject isKindOf "Man")}) exitWith { false;};
         
-        case "Land_TBox_F" : {  
-            cursorObject setVariable ["radioactive", false, true];
-            true;
-        }; 
+        playSound "wrench";
+        sleep 4;
 
-        default { 
-            hint "You repaired the object"; 
-            player playActionNow "PutDown"; 
-            cursorObject setDamage 0; 
-            true;
-        }; 
-    };
+		switch (typeOf cursorObject) do {    
+			case "Land_TBox_F" : {  
+                cursorObject setVariable ["radioactive", false, true];
+                true;
+			}; 
+
+			default { 
+                hint "You repaired the object"; 
+                player playActionNow "PutDown"; 
+                cursorObject setDamage 0; 
+                true;
+			}; 
+		};
+	};
     
 
