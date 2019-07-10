@@ -1,1 +1,1 @@
-    [5,true] call vitems_drinking;
+    [10,true] call vitems_drinking;
