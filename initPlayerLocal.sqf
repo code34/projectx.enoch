@@ -86,7 +86,7 @@
 
 	// load inventory
 	capcontainer = ["new", [netId player, ((getModelInfo player) select 0)]] call OO_CONTAINER;
-	private _content = [["armyradio", -1],["wrench",-1]];
+	private _content = [["armyradio", -1],["wrench",-1], ["bandage", 1]];
 	["overLoad", _content] call capcontainer;
 	"save" call capcontainer;
 	systemchat "inventory load";
