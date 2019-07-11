@@ -202,11 +202,21 @@
 
 		PUBLIC FUNCTION("","checkDamage") {
 			DEBUG(#, "OO_HEALTH::checkDamage")
+			private _physicallife = 0;
+			private _virtuallife = 0;
 			while { true } do {
-				private _life = floor(100 - ((getDammage player) * 100));
-				if(_life isEqualTo 0) then {
+				_physicallife = 100 - ((getDammage player) * 100);
+				_virtuallife = MEMBER("life", nil);
+				if(_physicallife < _virtuallife) then { _virtuallife = _physicallife;};
+				if((_physicallife < 1) or (_virtuallife < 1)) then {
 					private _ctrl = "getOOP_Picture_life" call hud;
 					_ctrl ctrlSetText "paa\skull.paa";
+					MEMBER("life", 0);
+					player setDamage 0;
+				} else {
+					MEMBER("life", floor(_virtuallife));
+					_damage = (100 - _physicallife) / 100;
+					player setDamage _damage;
 				};
 				sleep 1;
 			};
@@ -246,10 +256,7 @@
 				if(MEMBER("virus", nil) > 0) then {
 					_level = _level - 1;
 				};
-				/*if(getDammage player > 0) then {
-					_level = _level + floor(random 5);
-				};*/
-				
+
 				_bonuslife = MEMBER("bonuslife", nil);
 				if( _bonuslife > 0 ) then {
 					_level = _level + 1;
@@ -265,9 +272,6 @@
 				if(_life < 0) then {_life = 0;};
 				if(_life > 100) then {_life = 100;};
 				MEMBER("setLife", _life);
-				// no physical injuries under 50
-				if(_life > 50 && _life < 1) then { _damage = 1 - (_life / 100);};
-				player setDamage _damage;
 				sleep 5;
 			};
 		};

@@ -17,10 +17,10 @@ class hud {
 				class OOP_SubLayer_101_101 : OOP_SubLayer {
 					idc = 101;
 					x = 142 * pixelGrid * pixelW;
-					y = 31.2 * pixelGrid * pixelH;
+					y = 22 * pixelGrid * pixelH;
 					w = 16 * pixelGrid * pixelW;
-					h = 34 * pixelGrid * pixelH;
-					class controls{
+					h = 43 * pixelGrid * pixelH;
+					class controls{				
 						class OOP_Picture_drink_102: OOP_Picture {
 							idc = 102;
 							x = 8 * pixelGrid * pixelW;
@@ -53,14 +53,22 @@ class hud {
 							h = 5.2 * pixelGrid * pixelH;
 							text = "paa\virus.paa";
 						};
-						class OOP_Picture_file_110: OOP_Picture {
-							idc = 110;
+						class OOP_Picture_blood_110: OOP_Picture {
+							idc = 111;
 							x = 8 * pixelGrid * pixelW;
 							y = 29.4 * pixelGrid * pixelH;
 							w = 6 * pixelGrid * pixelW;
 							h = 5.2 * pixelGrid * pixelH;
+							text = "paa\blood.paa";
+						};	
+						class OOP_Picture_file_110: OOP_Picture {
+							idc = 110;
+							x = 8 * pixelGrid * pixelW;
+							y = 36.4 * pixelGrid * pixelH;
+							w = 6 * pixelGrid * pixelW;
+							h = 5.2 * pixelGrid * pixelH;
 							text = "paa\file.paa";
-						};
+						};						
 						class OOP_Text_drink_106: OOP_Text {
 							idc = 106;
 							x = 2 * pixelGrid * pixelW;
