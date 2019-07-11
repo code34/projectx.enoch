@@ -5,10 +5,6 @@
     	case 0 : { 
     		[] spawn fnc_relayradio;
     	};
-    	// le relai radio est inactif, les communications sont rétablies
-    	case 1 : {
-            ["setPages", ["meka\story\receptionsignal.html"]] call tabnote;
-            ["showFile", true] call hud;
-    	};
     	default {};
 	};
+    true;
