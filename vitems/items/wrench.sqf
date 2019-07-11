@@ -1,5 +1,6 @@
     [] spawn {
         if(isNull cursorObject && {(cursorObject isKindOf "Man")}) exitWith { false;};
+        if(cursorObject distance player > 5) exitWith { false;};
         
         playSound "wrench";
         sleep 4;
