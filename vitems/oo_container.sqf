@@ -203,9 +203,10 @@
 			private _result = ["checkStuffRequirement", _requirement] call uirequirement;
 			
 			if(_result select 0) then {
-				call _code;
-				_content = ["useRequirement", _requirement] call uirequirement;
-				MEMBER("setContent", _content);
+				if(call _code) then {
+					_content = ["useRequirement", _requirement] call uirequirement;
+					MEMBER("setContent", _content);
+				};
 			};
 			_index;
 		};
