@@ -1,7 +1,7 @@
         // relai radio turn off signal
 		missionNamespace setVariable["armyradiostate", -1];
 		["setPages", ["meka\story\radio.html"]] call tabnote;
-		["showFile", true] call hud;
+		"keyF1" call keyhandler;
 		playsound "carrier";
 
 		private _radio = nearestObjects [player, ["Land_Communication_F"], 5000];
@@ -59,4 +59,7 @@
 		playSound "whitenoise";
         deleteMarker _missionmarker;
 
-        ["remoteSpawn", ["launchExtraction", "", "server"]] call bmeclient;
+        sleep 60 + (random 120);
+
+		["setPages", ["meka\story\receptionsignal1.html","meka\story\receptionsignal2.html"]] call tabnote;
+		["showFile", true] call hud;
