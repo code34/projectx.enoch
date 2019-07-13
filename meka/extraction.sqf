@@ -2,6 +2,7 @@
     private _position = [4090.96,10220.8,0.101196];
     private _flag = false;
     //player setpos [4252.46,10394.5,0];
+    player setpos [4095.96,10220.8,0.101196];
     
     while {! _flag} do {
         _objects = nearestObjects [_position, ["Man"], 500];
@@ -15,15 +16,20 @@
 
     private _vehicle = createVehicle ["C_Heli_Light_01_civil_F", _position, [], 0, "NONE"];
     private _container = ["new", [netId _vehicle, ((getModelInfo _vehicle) select 0)]] call OO_CONTAINER;
-    private _content = [["choppermotor",-1]];
+    private _content = [["helicopterengine",-1]];
     ["overLoad", _content] call _container;
     "save" call _container;
-
      
     private _group = createGroup west;
     private _sergent = _group createUnit ["B_T_Soldier_A_F", _position, [], 0, "FORM"];
     _sergent setDamage 1;
     _sergent setpos (_sergent getRelPos [100 + (random 50), 60 + random 30]);
+
+    _sergent spawn {
+        private _object = _this;               
+        while { player distance _object > 5 } do {sleep 1;};
+        playMusic "stressante";
+    };
 
     private _classes = ["B_T_Engineer_F", "B_T_Soldier_A_F", "B_T_Soldier_AAR_F", "B_T_Support_AMG_F"];
     {
@@ -43,6 +49,8 @@
         private _sergent = _this select 2;
         while { player distance _vehicle > 25} do { sleep 1;};
         playMusic "stressante";
+        sleep 10;
+        ["setPages", ["meka\story\carnageaeroport1.html", "meka\story\carnageaeroport2.html", "meka\story\carnageaeroport3.html","meka\story\carnageaeroport4.html","meka\story\carnageaeroport5.html"]] call tabnote;
 /*        {
             private _cam = ["new", []] call OO_CAMERA;
             ["presetCamera", [_x, "murderCamera"]] spawn _cam;
