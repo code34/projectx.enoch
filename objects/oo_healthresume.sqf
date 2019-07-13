@@ -30,7 +30,7 @@
 
 		PUBLIC FUNCTION("","resume") { 
 			DEBUG(#, "OO_HEALTHRESUME::resume")
-			private _result = "<t size='1.2'>Medical Statement</t>";
+			private _result = "<t size='1.2'>Medical Statement</t><br/>";
 			_result = _result + "<br/>" +  MEMBER("resumeLife", nil);
 			_result = _result + "<br/>" +  MEMBER("resumeInjury", nil);
 			_result = _result + "<br/>" +  MEMBER("resumeTemperature", nil);
@@ -55,7 +55,7 @@
 					_result ="Votre nausée est forte";
 				};
 				case (_nausea > 0) : {
-					_result ="Votre nausée est faible";
+					_result ="Vous avez la nausée";
 				};
 				default{
 					_result ="Vous n'avez pas de nausée.";
