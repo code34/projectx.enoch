@@ -116,6 +116,12 @@
 			//["setTemperature", _this] call hud;
 		};
 
+		PUBLIC FUNCTION("scalar","setNausea") {
+			DEBUG(#, "OO_HEALTH::setNausea")
+			MEMBER("nausea", _this);
+			systemChat format ["Nausea: %1", _this];
+		};
+
 		PUBLIC FUNCTION("","beNauseous") {
 				DEBUG(#, "OO_HEALTH::beNauseous")
 				private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
@@ -123,7 +129,7 @@
 				playSound3D [_sound, player, false, getPosASL player, 5, 1, 10];
 				private _food = floor(MEMBER("food", nil) * 0.75);
 				private _drink = floor(MEMBER("drink", nil) * 0.75);
-				MEMBER("nausea", 20);
+				MEMBER("setNausea", 20);
 				MEMBER("setFood", _food);
 				MEMBER("setDrink", _drink);
 				MEMBER("bonusfood", 0);
@@ -138,7 +144,7 @@
 			private _nausea = MEMBER("nausea", nil);
 			_bonuslife = _bonuslife + _this;
 			if(_bonuslife < 0) then {_bonuslife = 0;};
-			if((_bonuslife > 20) or (_nausea > 0)) then { 
+			if((_bonuslife > 100) or (_nausea > 5)) then { 
 				MEMBER("beNauseous", nil);
 			} else {
 				MEMBER("bonuslife", _bonuslife);
@@ -151,9 +157,12 @@
 			private _nausea = MEMBER("nausea", nil);
 			_bonusdrink = _bonusdrink + _this;
 			if(_bonusdrink < 0) then {_bonusdrink = 0;};
-			if((_bonusdrink > 100) or (_nausea > 0)) then { 
+			if((_bonusdrink > 100) or (_nausea > 5)) then { 
 				MEMBER("beNauseous", nil);
 			} else {
+				if(_bonusdrink > 70) then {
+					MEMBER("setNausea", 5);
+				};
 				MEMBER("bonusdrink", _bonusdrink);
 			};
 		};
@@ -164,9 +173,12 @@
 			private _nausea = MEMBER("nausea", nil);
 			_bonusfood = _bonusfood + _this;
 			if(_bonusfood < 0) then {_bonusfood = 0;};
-			if((_bonusfood > 100) or (_nausea > 0)) then {  
+			if((_bonusfood > 100) or (_nausea > 5)) then {  
 				MEMBER("beNauseous", nil);
 			} else {
+				if(_bonusfood > 70) then {
+					MEMBER("setNausea", 5);
+				};
 				MEMBER("bonusfood", _bonusfood);
 			};
 		};
@@ -178,7 +190,7 @@
 			while { true } do {
 				private _bonusfood = MEMBER("bonusfood",nil);
 				private _nausea = MEMBER("nausea", nil);
-				if (( _bonusfood > 0) and (_nausea isEqualTo 0)) then {
+				if (( _bonusfood > 0) and (_nausea < 5.1)) then {
 					_bonusfood = _bonusfood - 1;
 					MEMBER("bonusfood", _bonusfood);
 					_food = MEMBER("food", nil);
@@ -202,7 +214,7 @@
 			while { true } do {
 				private _bonusdrink = MEMBER("bonusdrink",nil);
 				private _nausea = MEMBER("nausea", nil);
-				if (( _bonusdrink > 0) and (_nausea isEqualTo 0)) then {
+				if (( _bonusdrink > 0) and (_nausea < 5.1)) then {
 					_bonusdrink = _bonusdrink - 1;
 					MEMBER("bonusdrink", _bonusdrink);
 					_drink = MEMBER("drink", nil);
@@ -259,8 +271,7 @@
 				_nausea = MEMBER("nausea", nil);
 				if(_nausea > 0) then {
 					_nausea = _nausea - 1;
-					MEMBER("nausea", _nausea);
-					systemChat format ["Nausea: %1", _nausea];
+					MEMBER("setNausea", _nausea);
 				};
 
 				if((_temperature < 36) or (_temperature > 38)) then {
