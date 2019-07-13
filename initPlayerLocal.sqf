@@ -21,6 +21,7 @@
 	call compile preprocessFileLineNumbers "vitems\oo_bme.sqf";
 	call compile preprocessFileLineNumbers "vitems\oo_model.sqf";
 	call compile preprocessFileLineNumbers "objects\oo_health.sqf";
+	call compile preprocessFileLineNumbers "objects\oo_healthresume.sqf";	
 	call compile preprocessFileLineNumbers "objects\oo_tabnote.sqf";
 	call compile preprocessFileLineNumbers "objects\oo_camera.sqf";
 	call compile preprocessFileLineNumbers "objects\oo_keyhandler.sqf";
@@ -54,6 +55,10 @@
 		["End1", true, 5, true] spawn BIS_fnc_endMission;
 	};
 
+	callSergentRadio = {
+		["setPages", ["meka\story\sergentradiocom.html"]] call tabnote;
+    	["showFile", true] call hud;
+	};
 
 	// Initiliaze Bus message
 	bmeclient = "new" call OO_BME;
@@ -76,6 +81,7 @@
 	// Initialize hud
 	1000 cutRsc ["hud", "PLAIN"];
 	health = "new" call OO_HEALTH;
+	healthresume = "new" call OO_HEALTHRESUME;
 
 	player setAnimSpeedCoef 1.40;
 	player enableFatigue false; 
@@ -86,7 +92,7 @@
 
 	// load inventory
 	capcontainer = ["new", [netId player, ((getModelInfo player) select 0)]] call OO_CONTAINER;
-	private _content = [["armyradio", -1],["wrench",-1], ["bandage", 1]];
+	private _content = [["armyradio", -1],["wrench",-1], ["bandage", 1], ["waterbottle",-1], ["cannedravioli", -1]];
 	["overLoad", _content] call capcontainer;
 	"save" call capcontainer;
 	systemchat "inventory load";
@@ -95,3 +101,6 @@
 	tabnote = "new" call OO_TABNOTE;
 	["setPages", ["meka\story\introduction1.html","meka\story\introduction2.html"]] call tabnote;
 	["showFile", true] call hud;
+
+	// initialize ui requirement
+	uirequirement = "new" call oo_uirequirement;
