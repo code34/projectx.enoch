@@ -50,6 +50,25 @@
 			SPAWN_MEMBER("checkDamage", nil);
 		};
 
+		PUBLIC FUNCTION("","getNausea") {
+			MEMBER("nausea", nil);
+		};
+
+		PUBLIC FUNCTION("","getDrink") {
+			MEMBER("drink", nil);
+		};
+
+		PUBLIC FUNCTION("","getFood") {
+			MEMBER("food", nil);
+		};
+
+		PUBLIC FUNCTION("","getTemperature") {
+			MEMBER("temperature", nil);
+		};
+
+		PUBLIC FUNCTION("","getLife") {
+			MEMBER("life", nil);
+		};
 
 		PUBLIC FUNCTION("","getBonusFood") {
 			DEBUG(#, "OO_HEALTH::getBonusFood")
@@ -93,6 +112,7 @@
 		PUBLIC FUNCTION("scalar","setTemperature") {
 			DEBUG(#, "OO_HEALTH::setTemperature")
 			MEMBER("temperature", _this);
+			systemChat format ["Temperature: %1", _this];
 			//["setTemperature", _this] call hud;
 		};
 
@@ -110,7 +130,6 @@
 				MEMBER("bonusdrink", 0);
 				private _temperature = MEMBER("temperature", nil) - random (1);
 				MEMBER("setTemperature", _temperature);
-				systemChat format ["Temperature: %1", _temperature];
 		};
 
 		PUBLIC FUNCTION("scalar","addLife") {
@@ -212,7 +231,7 @@
 					private _ctrl = "getOOP_Picture_life" call hud;
 					_ctrl ctrlSetText "paa\skull.paa";
 					MEMBER("life", 0);
-					player setDamage 0;
+					player setDamage 1;
 				} else {
 					MEMBER("life", floor(_virtuallife));
 					_damage = (100 - _physicallife) / 100;
@@ -244,9 +263,17 @@
 					systemChat format ["Nausea: %1", _nausea];
 				};
 
-				if((_temperature < 36.5) or (_temperature > 38.5)) then {
-					_level = _level - 1;
+				if((_temperature < 36) or (_temperature > 38)) then {
+/*					private _newtemp = 37 - _temperature;
+					if(_newtemp < 0) then {_newtemp = _newtemp * -1;};*/
+
+					if((_temperature > 41.8) or (_temperature < 28)) then {
+						_level = -100;
+					} else {
+						_level = _level - 1;
+					};
 				};
+
 				if(MEMBER("food", nil) < 1) then {
 					_level = _level - 1;
 				};
@@ -264,8 +291,15 @@
 					MEMBER("bonuslife", _bonuslife);
 				};
 
-                if(_level <= -1) then {_level = -1;};
-                if(_level >= 0) then {_level = 1;};
+                switch (true) do {
+                	case (_level < -50) : {
+                		_level = -100;
+                	};
+                	case (_level < 0) : {
+                		_level = -1;
+                	};
+                	default {_level = 1;};
+            	};
 
 				_life = MEMBER("life", nil);
 				_life = _life + _level;
