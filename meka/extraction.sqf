@@ -2,7 +2,7 @@
     private _position = [4090.96,10220.8,0.101196];
     private _flag = false;
     //player setpos [4252.46,10394.5,0];
-    player setpos [4095.96,10220.8,0.101196];
+    //player setpos [4095.96,10220.8,0.101196];
     
     while {! _flag} do {
         _objects = nearestObjects [_position, ["Man"], 500];
