@@ -50,7 +50,8 @@
 				_weight = getNumber (_entry >> "weight");
 				_nbusage = _x select 1;
 				_picture = getText (_entry >> "picture");
-				_list pushBack [_classid, _title, _description, _weight, _nbusage, _picture];
+				_requirement = getArray(_entry >> "requirement");
+				_list pushBack [_classid, _title, _description, _weight, _nbusage, _picture,_requirement];
 			} forEach _inventory;
 
 			MEMBER("inventory", _list);
@@ -68,7 +69,8 @@
 				_weight = getNumber (_entry >> "weight");
 				_nbusage = _x select 1;
 				_picture = getText (_entry >> "picture");
-				_list pushBack [_classid, _title, _description, _weight, _nbusage, _picture];
+				_requirement = getArray(_entry >> "requirement");
+				_list pushBack [_classid, _title, _description, _weight, _nbusage, _picture,_requirement];
 			} forEach _this;
 
 			private _properties = ["", 0,0];
@@ -198,7 +200,7 @@
 			private _content = MEMBER("getContent", nil);
 			private _object = _content select _index;
 			private _code = compile preprocessFileLineNumbers format["vitems\items\%1.sqf", _object select 0];
-			private _requirement = [_object select 0];
+			private _requirement = _object select 6;
 			private _result = ["checkStuffRequirement", _requirement] call uirequirement;
 			if!(_result select 0) then {
 				"createDialog" call uirequirement;
