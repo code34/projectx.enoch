@@ -197,12 +197,13 @@
 			private _index = _this;
 			private _content = MEMBER("getContent", nil);
 			private _object = _content select _index;
-			private _code = compile preprocessFileLineNumbers format["vitems\items\%1.sqf", _object select 0]; 
-			createDialog "uirequirement";
+			private _code = compile preprocessFileLineNumbers format["vitems\items\%1.sqf", _object select 0];
 			private _requirement = [_object select 0];
 			private _result = ["checkStuffRequirement", _requirement] call uirequirement;
-			
-			if(_result select 0) then {
+			if!(_result select 0) then {
+				"createDialog" call uirequirement;
+				["refreshListBox", (_result select 1)] call uirequirement;
+			} else {
 				if(call _code) then {
 					_content = ["useRequirement", _requirement] call uirequirement;
 					MEMBER("setContent", _content);
