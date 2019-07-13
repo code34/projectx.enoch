@@ -23,10 +23,8 @@
     //call compile preprocessFileLineNumbers "scripts\WC_fnc_enumvillages.sqf";
 	fnc_extraction = compile preprocessFileLineNumbers "meka\extraction.sqf";
 	[] execVM "real_weather\real_weather.sqf";
-
-	launchExtraction = {
-		[] spawn fnc_extraction;
-	};
+	
+	[] spawn fnc_extraction;
 
 	// Get/Set content/properties of containers from NetID
 	vitems_getInventory = { 
