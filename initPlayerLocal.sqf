@@ -104,3 +104,30 @@
 
 	// initialize ui requirement
 	uirequirement = "new" call oo_uirequirement;
+
+	// manage weight vs speed
+	[] spawn {
+		private _weight = 0;
+		while { true } do {
+			_weight = "countWeight" call capcontainer;
+			switch (true) do { 
+				case (_weight > 60) : { 
+					player setAnimSpeedCoef 0.1;
+				}; 
+				case (_weight > 40) : { 
+					player setAnimSpeedCoef 0.5;
+				}; 
+				case (_weight > 30) : { 
+					player setAnimSpeedCoef 0.8;
+				};
+				case (_weight > 20) : { 
+					player setAnimSpeedCoef 1;
+				};
+				case (_weight > 10) : { 
+					player setAnimSpeedCoef 1.2;
+				};
+				default { player setAnimSpeedCoef 1.4; }; 
+			};
+			sleep 1;
+		};
+	};
