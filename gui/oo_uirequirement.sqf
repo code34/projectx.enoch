@@ -8,21 +8,37 @@ CLASS("oo_uirequirement")
     PRIVATE UI_VARIABLE("control", "OOP_Text_fond");
     PRIVATE UI_VARIABLE("control", "OOP_Text_fond_requirement");
     PRIVATE UI_VARIABLE("display", "Display");
+    PRIVATE VARIABLE("bool", "isshow");
 
-    PUBLIC FUNCTION("display", "constructor"){
-        disableSerialization;
-        MEMBER("Display", _this);
+    PUBLIC FUNCTION("", "constructor"){
+        MEMBER("isshow", false);
+    };
+    
+    PUBLIC FUNCTION("", "Init"){
+
+    };
+
+    PUBLIC FUNCTION("","createDialog") {
+        createDialog "uirequirement";
+        MEMBER("isshow", true);
+    };
+
+    PUBLIC FUNCTION("display", "setDisplay"){
+        MEMBER("display", _this);
         MEMBER("MainLayer", _this displayCtrl 100);
         MEMBER("OOP_Button_close_requirement", _this displayCtrl 107);
         MEMBER("OOP_Listbox_requirement", _this displayCtrl 104);
         MEMBER("OOP_MainLayer_100", _this displayCtrl 100);
         MEMBER("OOP_Text_fond", _this displayCtrl 103);
         MEMBER("OOP_Text_fond_requirement", _this displayCtrl 105);
-        MEMBER("Init", nil);
     };
-    
-    PUBLIC FUNCTION("", "Init"){
 
+    PUBLIC FUNCTION("", "closeDialog"){
+        MEMBER("isshow", false);
+    };
+
+    PUBLIC FUNCTION("","isDisplay") {
+        MEMBER("isshow", nil);
     };
 
     // Param: requirement
@@ -31,21 +47,16 @@ CLASS("oo_uirequirement")
 	PUBLIC FUNCTION("array", "refreshListBox"){
         private _control = MEMBER("OOP_Listbox_requirement", nil);
 		private _result = _this;
-		if((_result select 0) isEqualTo false) then {
-			{
-					private _class = _x select 0;
-					private _color = if((_x select 1) isEqualTo -1) then {[1,0,0,1];}else{[1,1,1,1];};
-					private _entry = missionConfigFile >> "cfgVitems" >> _class;
-					private _title = getText(missionConfigFile >> "cfgVitems" >> _class >> "title");
-					_control lbAdd _title;
-					_control lbSetColor [_forEachIndex,_color];
-					private _picture = getText (_entry >> "picture");
-					_control lbSetPicture [_forEachIndex, _picture];
-			}foreach (_result select 1);
-		} else {
-			closeDialog 0;
-		};
-		_result;
+		{
+				private _class = _x select 0;
+				private _color = if((_x select 1) isEqualTo -1) then {[1,0,0,1];}else{[1,1,1,1];};
+				private _entry = missionConfigFile >> "cfgVitems" >> _class;
+				private _title = getText(missionConfigFile >> "cfgVitems" >> _class >> "title");
+				_control lbAdd _title;
+				_control lbSetColor [_forEachIndex,_color];
+				private _picture = getText (_entry >> "picture");
+				_control lbSetPicture [_forEachIndex, _picture];
+		}foreach _result;
 	};
 
 	// Param: requirement
@@ -76,11 +87,9 @@ CLASS("oo_uirequirement")
 		// si les prequis sont egales au nombre d'objets trouvés
 		// dans l'inventaire, alors True sinon false
 		if((count _requirement) isEqualTo _count) then {
-			closeDialog 0;
-			_result = [true, _result, _content];
+			_result = [true, _result];
 		} else {
-			_result = [false, _result, _content];
-			MEMBER("refreshListBox", _result);
+			_result = [false, _result];
 		};
 		_result;
 	};
@@ -109,9 +118,7 @@ CLASS("oo_uirequirement")
         };
 
 
-    PUBLIC FUNCTION("", "btnAction_OOP_Button_close_requirement") {
-
-    };
+    PUBLIC FUNCTION("", "btnAction_OOP_Button_close_requirement") {};
     PUBLIC FUNCTION("", "getDisplay") FUNC_GETVAR("Display");
     PUBLIC FUNCTION("", "getMainLayer") FUNC_GETVAR("MainLayer");
     PUBLIC FUNCTION("", "getOOP_Button_close_requirement") FUNC_GETVAR("OOP_Button_close_requirement");
@@ -125,7 +132,7 @@ CLASS("oo_uirequirement")
     PUBLIC FUNCTION("control", "setOOP_MainLayer_100"){ MEMBER("OOP_MainLayer_100", _this); };
     PUBLIC FUNCTION("control", "setOOP_Text_fond"){ MEMBER("OOP_Text_fond", _this); };
     PUBLIC FUNCTION("control", "setOOP_Text_fond_requirement"){ MEMBER("OOP_Text_fond_requirement", _this); };
-    PUBLIC FUNCTION("display", "setDisplay"){ MEMBER("Display", _this); };
+    
     PUBLIC FUNCTION("", "deconstructor"){
         DELETE_UI_VARIABLE("MainLayer");
         DELETE_UI_VARIABLE("OOP_Button_close_requirement");
@@ -134,5 +141,6 @@ CLASS("oo_uirequirement")
         DELETE_UI_VARIABLE("OOP_Text_fond");
         DELETE_UI_VARIABLE("OOP_Text_fond_requirement");
         DELETE_UI_VARIABLE("Display");
+        DELETE_VARIABLE("isshow");
     };
 ENDCLASS;
