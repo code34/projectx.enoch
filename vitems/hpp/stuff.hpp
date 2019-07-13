@@ -5,6 +5,7 @@
         weight = 0.1;
         nbusage = 1;
         picture = "pictures\bandage.jpg";
+		requirement[] = {};        
     };
     class sparewheel {
         type[] = {"stuff"};
@@ -13,6 +14,7 @@
         weight = 10;
         nbusage = 1;
         picture = "pictures\wheel.jpg";
+		requirement[] = {"wrench"};        
     }; 
     class lighter {
         type[] = {"stuff"};
@@ -21,6 +23,7 @@
         weight = 0.1;
         nbusage = 5;
         picture = "pictures\lighter.jpg";
+		requirement[] = {};        
     }; 
     class wrench {
         type[] = {"stuff"};
@@ -29,6 +32,7 @@
         weight = 1;
         nbusage = -1;
         picture = "pictures\wrench.jpg";
+        requirement[] = {};
     }; 
     class miakalifa {
         type[] = {"stuff"};
@@ -37,6 +41,7 @@
         weight = 0.5;
         nbusage = -1;
         picture = "pictures\mia.jpg";
+        requirement[] = {};
     };
     class antibiotic {
         type[] = {"stuff"};
@@ -45,6 +50,7 @@
         weight = 0.1;
         nbusage = 1;
         picture = "pictures\antibiotic.jpg";
+        requirement[] = {};
     };
     class axe {
         type[] = {"stuff"};
@@ -53,6 +59,7 @@
         weight = 1;
         nbusage = -1;
         picture = "pictures\axe.jpg";
+		requirement[] = {};
     };
     class plank {
         type[] = {"stuff"};
@@ -61,6 +68,7 @@
         weight = 1;
         nbusage = 1;
         picture = "pictures\plank.jpg";
+		requirement[] = {};
     };
     class cigarettespacket {
         type[] = {"stuff"};
@@ -69,6 +77,7 @@
         weight = 0.2;
         nbusage = 20;
         picture = "pictures\cigarettes.jpg";
+		requirement[] = {"lighter"};
     };
     class mace {
         type[] = {"stuff"};
@@ -77,4 +86,5 @@
         weight = 4;
         nbusage = -1;
         picture = "pictures\mace.jpg";
+		requirement[] = {};
     };    

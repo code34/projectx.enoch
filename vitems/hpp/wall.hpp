@@ -6,4 +6,5 @@
         nbusage = 1;
         code = "vitems\items\stone.sqf";
         picture = "pictures\stone.jpg";
+        requirement[] = {};
     };

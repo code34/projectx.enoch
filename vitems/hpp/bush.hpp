@@ -5,6 +5,7 @@
         weight = 0.3;
         nbusage = 1;
         picture = "pictures\woodenstick.jpg";
+        requirement[] = {"lighter"};
     };
     class pileofleaves {
         type[] = {"bush"};
@@ -13,6 +14,7 @@
         weight = 1;
         nbusage = 1;
         picture = "pictures\pileofleaves.jpg";
+        requirement[] = {};
     };
     class nymphbug {
         type[] = {"bush"};
@@ -22,6 +24,7 @@
         nbusage = 1;
         code = "vitems\items\nymphbug.sqf";
         picture = "pictures\nymphbug.jpg";
+        requirement[] = {};
     };
     class pileofcompost {
         type[] = {"bush"};
@@ -31,6 +34,7 @@
         nbusage = 1;
         code = "vitems\items\pileofcompost.sqf";
         picture = "pictures\pileofcompost.jpg";
+        requirement[] = {};
     };
     class yellowmushrooms {
         type[] = {"bush", "tree", "wall"};
@@ -39,6 +43,7 @@
         weight = 0.3;
         nbusage = 1;
         picture = "pictures\yellowmushrooms.jpg";
+        requirement[] = {};
     };
     class blueberries {
         type[] = {"bush"};
@@ -47,6 +52,7 @@
         weight = 0.3;
         nbusage = 1;
         picture = "pictures\blueberries.jpg";
+        requirement[] = {};
     };
     class gooseberries {
         type[] = {"bush"};
@@ -55,6 +61,7 @@
         weight = 0.3;
         nbusage = 1;
         picture = "pictures\gooseberries.jpg";
+        requirement[] = {};
     };
     class nettle {
         type[] = {"bush"};
@@ -63,4 +70,5 @@
         weight = 0.3;
         nbusage = 1;
         picture = "pictures\nettle.jpg";
+        requirement[] = {};
     };

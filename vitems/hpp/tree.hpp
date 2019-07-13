@@ -6,6 +6,7 @@
         nbusage = 1;
         code = "vitems\items\woodbranch.sqf";
         picture = "pictures\woodbranch.jpg";
+        requirement[] = {"lighter"}; 
     };
     class barkofwood {
         type[] = {"tree"};
@@ -15,4 +16,5 @@
         nbusage = 1;
         code = "vitems\items\barkofwood.sqf";
         picture = "pictures\barkofwood.jpg";
+        requirement[] = {"lighter"};
     };

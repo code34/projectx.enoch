@@ -5,6 +5,7 @@
         weight = 1;
         nbusage = 1;
         picture = "pictures\orangejuice.jpg";
+        requirement[] = {};
     };
     class redbullcan {
         type[] = {"food"};
@@ -13,6 +14,7 @@
         weight = 1;
         nbusage = 1;
         picture = "pictures\redbull.jpg";
+        requirement[] = {};
     };
     class coronabottle {
         type[] = {"food"};
@@ -21,6 +23,7 @@
         weight = 1;
         nbusage = 1;
         picture = "pictures\corona.jpg";
+        requirement[] = {};
     };
      class waterbottle {
         type[] = {"food"};
@@ -29,6 +32,7 @@
         weight = 1;
         nbusage = 1;
         picture = "pictures\bottle.jpg";
+        requirement[] = {};
     };   
      class potatoe {
         type[] = {"food"};
@@ -37,6 +41,7 @@
         weight = 0.4;
         nbusage = 1;
         picture = "pictures\potatoe.jpg";
+        requirement[] = {};
     };
      class redapple {
         type[] = {"food"};
@@ -45,6 +50,7 @@
         weight = 0.2;
         nbusage = 1;
         picture = "pictures\redapple.jpg";
+        requirement[] = {};
     };
      class tincanmaxigaz {
         type[] = {"food"};
@@ -53,6 +59,7 @@
         weight = 0.2;
         nbusage = 2;
         picture = "pictures\tin.jpg";
+        requirement[] = {};
     };
      class oreopack {
         type[] = {"food"};
@@ -61,6 +68,7 @@
         weight = 0.2;
         nbusage = 2;
         picture = "pictures\oreopack.jpg";
+        requirement[] = {};
     };
      class beefjerky {
         type[] = {"food"};
@@ -69,6 +77,7 @@
         weight = 0.2;
         nbusage = 2;
         picture = "pictures\beefjerky.jpg";
+        requirement[] = {};
     };
      class whitemushrooms {
         type[] = {"food"};
@@ -77,6 +86,7 @@
         weight = 0.2;
         nbusage = 1;
         picture = "pictures\whitemushrooms.jpg";
+        requirement[] = {};
     };
      class cannedravioli {
         type[] = {"food"};
@@ -84,7 +94,8 @@
         description = "Beef Ravioli in Meat Sauce.";
         weight = 1;
         nbusage = 2;
-        picture = "pictures\ravioli.jpg";
+        picture = "pictures\cannedravioli.jpg";
+		requirement[] = {};
     };
      class russianvodka {
         type[] = {"food"};
@@ -93,4 +104,5 @@
         weight = 1;
         nbusage = 1;
         picture = "pictures\vodka.jpg";
+        requirement[] = {};
     };

@@ -5,6 +5,7 @@
         weight = 5;
         nbusage = 1;
         picture = "pictures\c4.jpg";
+		requirement[] = {};        
     };
     class briefcase {
         type[] = {"military"};
@@ -13,6 +14,7 @@
         weight = 5;
         nbusage = 1;
         picture = "pictures\briefcase.jpg";
+		requirement[] = {};        
     };
     class gpstracker {
         type[] = {"military"};
@@ -21,4 +23,5 @@
         weight = 0.2;
         nbusage = -1;
         picture = "pictures\gpstracker.jpg";
+        requirement[] = {};
     };
