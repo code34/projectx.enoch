@@ -54,6 +54,7 @@
 				case DIK_LEFT : { MEMBER("keyLeft", nil); }; 
 				case DIK_RIGHT : { MEMBER("keyRight", nil); }; 
 				case DIK_F1 : { MEMBER("keyF1", nil); }; 
+				case DIK_F2 : { MEMBER("keyF2", nil); }; 
 				default {  /*...code...*/ }; 
 			};
 			false;
@@ -63,10 +64,18 @@
 		PUBLIC FUNCTION("","keyDown") { hint "DOWN"; };
 		PUBLIC FUNCTION("","keyLeft") { hint "LEFT"; };
 		PUBLIC FUNCTION("","keyRight") { hint "RIGHT"; };
-		PUBLIC FUNCTION("","keyF1") { 
+		
+		PUBLIC FUNCTION("","keyF1") {
 			if!("isDisplay" call tabnote) then {				
-				"createDialog" call tabnote;	
 				["setMode", "F1"] call tabnote;
+				"createDialog" call tabnote;	
+			};
+		};
+
+		PUBLIC FUNCTION("","keyF2") { 
+			if!("isDisplay" call tabnote) then {				
+				["setMode", "F2"] call tabnote;
+				"createDialog" call tabnote;	
 			};
 		};
 
