@@ -22,7 +22,7 @@ class tabnote {
 			w = 48.5 * GUI_GRID_W;
 			h = 33 * GUI_GRID_H;
 		};
-		class mapage : RscFeedback
+		class F1 : RscFeedback
 		{
 			onMouseButtonClick = "'nextPage' call tabnote;";
 		    idc = 20001;
@@ -33,5 +33,23 @@ class tabnote {
 			colorBackground[] = {0.67,0.67,0.4,1};
 			colorText[] = {0,0,0,1};
 		};
+		class F2 : RscStructuredText
+		{
+		    idc = 20003;
+		    x = 0.4 * GUI_GRID_W + GUI_GRID_X;
+		    y = 0.1 * GUI_GRID_H + GUI_GRID_Y;
+		    w = 38.8 * GUI_GRID_W;
+		    h = 24.1 * GUI_GRID_H;
+			colorBackground[] = {0.67,0.67,0.4,1};
+			colorText[] = {0,0,0,1};
+			class Attributes {
+				color = "#000000";
+				font = "EtelkaMonospacePro";
+				align = "left";
+				valign = "top";
+				size = "1";
+				shadow = false;
+			};
+		};    
     };
 };
