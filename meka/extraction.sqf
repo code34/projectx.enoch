@@ -1,8 +1,24 @@
     // extraction point
     private _position = [4090.96,10220.8,0.101196];
+    private _flag = false;
+    //player setpos [4252.46,10394.5,0];
+    
+    while {! _flag} do {
+        _objects = nearestObjects [_position, ["Man"], 500];
+        sleep 2;
+        _count = west countSide _objects;
+        if(_count > 0) then { _flag = true;};
+        sleep 15;
+    };
+
+    ["remoteSpawn", ["callSergentRadio", "", "client"]] call bmeclient;
 
     private _vehicle = createVehicle ["C_Heli_Light_01_civil_F", _position, [], 0, "NONE"];
-    _vehicle setVariable ["requirement", ["choppermotor", "wrench"],true];
+    private _container = ["new", [netId _vehicle, ((getModelInfo _vehicle) select 0)]] call OO_CONTAINER;
+    private _content = [["choppermotor",-1]];
+    ["overLoad", _content] call _container;
+    "save" call _container;
+
      
     private _group = createGroup west;
     private _sergent = _group createUnit ["B_T_Soldier_A_F", _position, [], 0, "FORM"];
@@ -54,11 +70,11 @@
     _object spawn {
         private _object = _this;
         private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
-        private _sound = _path + "sounds\porteuse.ogg";        
+        private _sound = _path + "sounds\carrier.ogg";        
                 
         while { player distance _object > 2 } do {
             playSound3D [_sound, _object, false, getPosASL _object, 2, 1, 20];
-            sleep 3;
+            sleep 2;
         };
     };
 
@@ -77,15 +93,11 @@
     private _name = format["extraction_%1", _id];
     private _marker2 = createMarker [_name, position _sergent];
     _marker2 setMarkerShape  "ICON";
-    _marker2 setMarkerType "hd_pickup";
-    _marker2 setMarkerText "57 Bgd - Sergent Location";
+    _marker2 setMarkerType "hd_join";
+    _marker2 setMarkerText "57 Bgd - Sergent Contact";
     _marker2 setMarkerColor "ColorRed";
     _marker2 setMarkerSize [1,1];
     _marker2 setMarkerBrush "FDiagonal";
-
-    while { player distance _position > 500} do {sleep 1;};
-    ["setPages", ["meka\story\sergentradiocom.html"]] call tabnote;
-    ["showFile", true] call hud;
 
     [_vehicle, _position] spawn {
         _vehicle = _this select 0;
