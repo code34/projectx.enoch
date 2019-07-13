@@ -3,8 +3,8 @@ class uirequirement {
     name= "uirequirement";
     movingEnable = false;
     enableSimulation = true;
-    onLoad = "with missionNamespace do{uirequirement = ['new', _this select 0] call oo_uirequirement;};";
-    onUnload = "with missionNamespace do{['delete',uirequirement] call oo_uirequirement;};";
+    onLoad = "['setDisplay', _this select 0] call uirequirement;";
+    onUnload = "'closeDialog' call uirequirement;";
     class controlsBackground {
         class OOP_MainLayer_100_100 : OOP_MainLayer {
             idc = 100;
