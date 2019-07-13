@@ -271,7 +271,7 @@ CLASS("oo_Vitems")
 				systemChat "delete box";
 			};
 		};
-		["delete", capcontainer] call OO_CONTAINER;
+		//["delete", capcontainer] call OO_CONTAINER;
 		["delete", proxcontainer] call OO_CONTAINER;
 
 		DELETE_UI_VARIABLE("MainLayer");
