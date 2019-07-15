@@ -130,8 +130,7 @@
 			private _position = MEMBER("position", nil);
             MEMBER("monitor", true);
 
-            systemChat format ["active zones %1", count wczones];
-
+            //systemChat format ["active zones %1", count wczones];
             while { MEMBER("monitor", nil) } do {
                 private _list = _position nearEntities [["Man", "Air", "Car", "Motorcycle", "Tank"], 1000];
                 sleep 1;
