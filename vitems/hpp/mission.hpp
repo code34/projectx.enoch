@@ -1,11 +1,20 @@
-	class helicopterengine {
+	class failurehelicopterengine {
+        type[] = {"mission"};
+        title = "Failure helicopter engine";
+        description = "An old failure Lycoming 235 Series Four-Cylinder Engine.";
+        weight = 110;
+        nbusage = 1;
+        picture = "pictures\helicopterengine.jpg";
+        requirement[] = {"wrench", "helicoptergears", "helicoptercandle", "helicopterhose"};
+    };
+ 	class helicopterengine {
         type[] = {"mission"};
         title = "Helicopter engine";
         description = "The Lycoming 235 Series Four-Cylinder Engine is a Popular Choice for Homebuilt and Original Aircraft";
         weight = 110;
         nbusage = 1;
         picture = "pictures\helicopterengine.jpg";
-        requirement[] = {"wrench", "helicoptergears", "helicoptercandle", "helicopterhose"};
+        requirement[] = {};
     };
     class armyradio {
         type[] = {"mission"};
@@ -15,6 +24,15 @@
         nbusage = -1;
         picture = "pictures\armyradio.jpg";
         requirement[] = {};
+    };
+    class radioamplifier {
+        type[] = {"mission"};
+        title = "Radio amplifier";
+        description = "A working military amplifier";
+        weight = 10;
+        nbusage = -1;
+        picture = "pictures\radioamplifier.jpg";
+        requirement[] = {"wrench", "screwdriver"};
     };
     class missionplan {
         type[] = {"mission"};
@@ -38,7 +56,7 @@
         type[] = {"mission"};
         title = "Helicopter gears";
         description = "Two accurately manufactured gears in mesh behave like the two circular wheels.";
-        weight = 0.05;
+        weight = 2;
         nbusage = 1;
         picture = "pictures\helicoptergears.jpg";
         requirement[] = {};
@@ -47,7 +65,7 @@
         type[] = {"mission"};
         title = "Helicopter engine candle";
         description = "Internal combustion engine candle.";
-        weight = 0.05;
+        weight = 0.1;
         nbusage = 1;
         picture = "pictures\helicoptercandle.jpg";
         requirement[] = {};
@@ -56,7 +74,7 @@
         type[] = {"mission"};
         title = "Helicopter engine hose";
         description = "A hose for the Lycoming 235 Series Four-Cylinder Engine";
-        weight = 0.05;
+        weight = 0.1;
         nbusage = 1;
         picture = "pictures\helicopterhose.jpg";
         requirement[] = {};
