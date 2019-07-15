@@ -40,6 +40,14 @@
 		    sleep 1;
 		};
 
+		// add radio amplifier in
+		private _object = (radiocenter select 0);
+    	private _container = ["new", [netId _object , (getModelInfo _object) select 0]] call OO_CONTAINER;
+    	private _content = [["radioamplifier", 1]];
+    	["overLoad", _content] call _container;
+    	"save" call _container;
+    	["delete", _container] call OO_CONTAINER;
+
 		["setPages", ["meka\story\relaisradio.html"]] call tabnote;
 		["showFile", true] call hud;
 
