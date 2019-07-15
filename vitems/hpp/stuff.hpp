@@ -87,4 +87,31 @@
         nbusage = -1;
         picture = "pictures\mace.jpg";
 		requirement[] = {};
-    };    
+    };
+    class hose {
+        type[] = {"stuff"};
+        title = "An engine hose";
+        description = "Tube has been upgraded to meet changes in fuel characteristics and resists heat and oil.";
+        weight = 0.2;
+        nbusage = 1;
+        picture = "pictures\hose.jpg";
+        requirement[] = {};
+    };
+    class checkvalve {
+        type[] = {"stuff"};
+        title = "Check valve";
+        description = "Aluminum alloy check valve, one-way diesel fuel for cars, helicopters, motorcycles, fuel pumps.";
+        weight = 0.1;
+        nbusage = 1;
+        picture = "pictures\checkvalve.jpg";
+        requirement[] = {"hose"};
+    };
+    class screwdriver {
+        type[] = {"stuff"};
+        title = "Screw driver";
+        description = "The high quality bits have been designed for an improved, long-lasting life, while the built-in bolster allows for additional leverage and torque.";
+        weight = 0.2;
+        nbusage = 1;
+        picture = "pictures\screwdriver.jpg";
+        requirement[] = {};
+    };
