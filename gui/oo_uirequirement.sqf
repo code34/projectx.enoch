@@ -76,9 +76,9 @@ CLASS("oo_uirequirement")
 		{
 			private _searchindex = _list find _x;
 			if(_searchindex > -1) then {
-				//_content deleteAt _searchindex;
 				_result pushBack [_x,1];
 				_count = _count + 1;
+				_object = _content select _searchindex;
 			}else{
 				_result pushBack [_x, -1];
 			};
@@ -112,6 +112,7 @@ CLASS("oo_uirequirement")
                     _content set [_searchindex, _object];
                 } else {
                     _content deleteAt _searchindex;
+                    _list deleteAt _searchindex;
                 };
             } forEach _requirement;
             _content;
