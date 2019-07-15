@@ -39,43 +39,32 @@
 			private _netId = MEMBER("netId", nil);
 			private _properties = ["remoteCall", ["vitems_getProperties",  _netId, 2, []]] call bmeclient;
 			private _inventory = ["remoteCall", ["vitems_getInventory",  _netId, 2, []]] call bmeclient;
-			
-			private _list = [];
-
-			{
-				_classid = _x select 0;
-				_entry = missionConfigFile >> "cfgVitems" >> _classid;
-				_title = getText(missionConfigFile >> "cfgVitems" >> _classid >> "title");
-				_description = getText (_entry >> "description");
-				_weight = getNumber (_entry >> "weight");
-				_nbusage = _x select 1;
-				_picture = getText (_entry >> "picture");
-				_requirement = getArray(_entry >> "requirement");
-				_list pushBack [_classid, _title, _description, _weight, _nbusage, _picture,_requirement];
-			} forEach _inventory;
-
+			private _list = MEMBER("fillInventory", _inventory);
 			MEMBER("inventory", _list);
 			MEMBER("properties", _properties);
 		};
 
 		PUBLIC FUNCTION("array","overLoad") {		
-			private _list = [];
-
-			{
-				_classid = _x select 0;
-				_entry = missionConfigFile >> "cfgVitems" >> _classid;
-				_title = getText(missionConfigFile >> "cfgVitems" >> _classid >> "title");
-				_description = getText (_entry >> "description");
-				_weight = getNumber (_entry >> "weight");
-				_nbusage = _x select 1;
-				_picture = getText (_entry >> "picture");
-				_requirement = getArray(_entry >> "requirement");
-				_list pushBack [_classid, _title, _description, _weight, _nbusage, _picture,_requirement];
-			} forEach _this;
-
+			private _list = MEMBER("fillInventory", _this);
 			private _properties = ["", 0,0];
 			MEMBER("properties", _properties);
 			MEMBER("inventory", _list);
+		};
+
+		PUBLIC FUNCTION("array","fillInventory") {
+			private _list = [];
+			{
+				private _classid = _x select 0;
+				private _entry = missionConfigFile >> "cfgVitems" >> _classid;
+				private _title = getText(missionConfigFile >> "cfgVitems" >> _classid >> "title");
+				private _description = getText (_entry >> "description");
+				private _weight = getNumber (_entry >> "weight");
+				private _nbusage = _x select 1;
+				private _picture = getText (_entry >> "picture");
+				private _requirement = getArray(_entry >> "requirement");
+				_list pushBack [_classid, _title, _description, _weight, _nbusage, _picture,_requirement];
+			} forEach _this;
+			_list;
 		};
 
 		PUBLIC FUNCTION("","save") {
@@ -200,7 +189,8 @@
 			private _content = MEMBER("getContent", nil);
 			private _object = _content select _index;
 			private _code = compile preprocessFileLineNumbers format["vitems\items\%1.sqf", _object select 0];
-			private _requirement = _object select 6;
+			private _requirement = +(_object select 6);
+			_requirement pushBack (_object select 0);
 			private _result = ["checkStuffRequirement", _requirement] call uirequirement;
 			if!(_result select 0) then {
 				"createDialog" call uirequirement;
@@ -258,6 +248,17 @@
 			} foreach _this;
 		};
 
+		PUBLIC FUNCTION("string","containsItem") {
+			DEBUG(#, "OO_CONTAINER::containsItem")
+			private _content = MEMBER("getContent", nil);
+			private _list = [];
+			{_list pushBack (_x select 0);} forEach _content;
+			private _searchindex = _list find _this;
+			//systemChat format ["%1 %2", _list, _searchindex];
+			if(_searchindex > -1) exitWith {true;};
+			false;
+		};
+
 		// Add an item to the content of container
 		PUBLIC FUNCTION("array","addItem") {
 			DEBUG(#, "OO_CONTAINER::addItem")
@@ -265,6 +266,20 @@
 			//if( MEMBER("countSize", nil) <= MEMBER("limitsize", nil) && _newweight <= MEMBER("limitweight", nil)) exitWith {
 				private _content = MEMBER("getContent", nil);
 				_content pushBack _this;
+				MEMBER("setContent", _content);
+				true;
+			//};
+			//false;
+		};
+
+		// Add an item to the content of container
+		PUBLIC FUNCTION("array","addItemsByLabel") {
+			DEBUG(#, "OO_CONTAINER::addItem")
+			//private _newweight = MEMBER("countWeight", nil) + ("getWeight" call _this);
+			//if( MEMBER("countSize", nil) <= MEMBER("limitsize", nil) && _newweight <= MEMBER("limitweight", nil)) exitWith {
+				private _content = MEMBER("getContent", nil);
+				private _list = MEMBER("fillInventory", _this);
+				_content append _list;
 				MEMBER("setContent", _content);
 				true;
 			//};
