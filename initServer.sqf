@@ -22,9 +22,14 @@
 	call compile preprocessFileLineNumbers "objects\oo_sector.sqf";
     //call compile preprocessFileLineNumbers "scripts\WC_fnc_enumvillages.sqf";
 	fnc_extraction = compile preprocessFileLineNumbers "meka\extraction.sqf";
-	[] execVM "real_weather\real_weather.sqf";
-	
+	fnc_missiongears = compile preprocessFileLineNumbers "meka\missiongears.sqf";
+	fnc_missioncandle = compile preprocessFileLineNumbers "meka\missioncandle.sqf";
+	fnc_weathers = compile preprocessFileLineNumbers "real_weather\real_weather.sqf";
+
+	[] spawn fnc_weathers;
 	[] spawn fnc_extraction;
+	[] spawn fnc_missiongears;
+	[] spawn fnc_missioncandle;
 
 	// Get/Set content/properties of containers from NetID
 	vitems_getInventory = { 
