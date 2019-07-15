@@ -12,14 +12,25 @@
         sleep 15;
     };
 
-    ["remoteSpawn", ["callSergentRadio", "", "client"]] call bmeclient;
-
     private _vehicle = createVehicle ["C_Heli_Light_01_civil_F", _position, [], 0, "NONE"];
+    ["remoteSpawn", ["callSergentRadio", "", "client"]] call bmeclient;
     private _container = ["new", [netId _vehicle, ((getModelInfo _vehicle) select 0)]] call OO_CONTAINER;
-    private _content = [["helicopterengine",-1]];
+    private _content = [["failurehelicopterengine", 1]];
     ["overLoad", _content] call _container;
     "save" call _container;
+    ["delete", _container] call OO_CONTAINER;
      
+    _vehicle spawn { 
+        private _vehicle = _this;       
+        private _flag = false;
+        while {!_flag} do {
+            _flag = _vehicle getVariable ["enginerepaired", false];
+            _vehicle setHitPointDamage["HitEngine", 1];
+            sleep 1;
+        };
+        _vehicle setHitPointDamage["HitEngine", 0];
+    };
+
     private _group = createGroup west;
     private _sergent = _group createUnit ["B_T_Soldier_A_F", _position, [], 0, "FORM"];
     _sergent setDamage 1;
@@ -74,6 +85,7 @@
     private _content = [["armyradio", -1],["missionplan",-1],["medal",-1]];
     ["overLoad", _content] call _container;
     "save" call _container;
+    ["delete", _container] call OO_CONTAINER;
 
     _object spawn {
         private _object = _this;
@@ -112,11 +124,11 @@
         _position = _this select 1;
 
         while { (_vehicle distance _position < 500) } do {
-    	   sleep 30;
+           sleep 30;
         };
 
         {
-        	["remoteSpawn", ["callEnd", "End1", "client", owner _x]] call bmeclient;
-    	   sleep 0.1;
+            ["remoteSpawn", ["callEnd", "End1", "client", owner _x]] call bmeclient;
+           sleep 0.1;
         } forEach (crew _vehicle);
     };
