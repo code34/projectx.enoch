@@ -61,7 +61,7 @@
         while { player distance _vehicle > 25} do { sleep 1;};
         playMusic "stressante";
         sleep 10;
-        ["setPages", ["meka\story\carnageaeroport1.html", "meka\story\carnageaeroport2.html", "meka\story\carnageaeroport3.html","meka\story\carnageaeroport4.html","meka\story\carnageaeroport5.html"]] call tabnote;
+		["setPages", ["meka\story\carnageaeroport1.html", "meka\story\carnageaeroport2.html", "meka\story\carnageaeroport3.html","meka\story\carnageaeroport4.html","meka\story\carnageaeroport5.html"]] call tabnote;
 /*        {
             private _cam = ["new", []] call OO_CAMERA;
             ["presetCamera", [_x, "murderCamera"]] spawn _cam;
@@ -96,6 +96,7 @@
             playSound3D [_sound, _object, false, getPosASL _object, 2, 1, 20];
             sleep 2;
         };
+		["setPages", ["meka\story\cachesergent.html"]] call tabnote;
     };
 
 
