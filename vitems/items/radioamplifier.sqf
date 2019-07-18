@@ -5,5 +5,6 @@
 
     cursorObject setVariable ["radioactive", false, true];
 	playSound "wrench";
+	player playActionNow "PutDown";
 
 	true;
