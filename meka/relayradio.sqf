@@ -67,7 +67,4 @@
 		playSound "whitenoise";
         deleteMarker _missionmarker;
 
-        sleep 60 + (random 120);
-
-		["setPages", ["meka\story\receptionsignal1.html","meka\story\receptionsignal2.html"]] call tabnote;
-		["showFile", true] call hud;
+        ["remoteSpawn", ["callMission", "sergent", "server"]] call bmeclient;
