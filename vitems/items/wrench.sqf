@@ -4,12 +4,6 @@
 	playSound "wrench";
 
 	switch (typeOf cursorObject) do {    
-		case "Land_TBox_F" : {  
-			cursorObject setVariable ["radioactive", false, true];
-			player playActionNow "PutDown"; 
-			true;
-		}; 
-
 		default { 
 			hint "You repaired the object"; 
 			player playActionNow "PutDown"; 
