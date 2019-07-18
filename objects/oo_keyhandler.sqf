@@ -66,17 +66,15 @@
 		PUBLIC FUNCTION("","keyRight") { hint "RIGHT"; };
 		
 		PUBLIC FUNCTION("","keyF1") {
-			if!("isDisplay" call tabnote) then {				
-				["setMode", "F1"] call tabnote;
-				"createDialog" call tabnote;	
-			};
+			if("isDisplay" call tabnote) then {	 closeDialog 0;};
+			["setMode", "F1"] call tabnote;
+			"createDialog" call tabnote;	
 		};
 
 		PUBLIC FUNCTION("","keyF2") { 
-			if!("isDisplay" call tabnote) then {				
-				["setMode", "F2"] call tabnote;
-				"createDialog" call tabnote;	
-			};
+			if("isDisplay" call tabnote) then {	closeDialog 0;};
+			["setMode", "F2"] call tabnote;
+			"createDialog" call tabnote;	
 		};
 
 		PUBLIC FUNCTION("","deconstructor") { 
