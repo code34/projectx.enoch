@@ -20,8 +20,9 @@
 	call compile preprocessFileLineNumbers "vitems\oo_randomstuff.sqf";
 	call compile preprocessFileLineNumbers "vitems\oo_bme.sqf";
 	call compile preprocessFileLineNumbers "objects\oo_sector.sqf";
-    //call compile preprocessFileLineNumbers "scripts\WC_fnc_enumvillages.sqf";
+    //call compile preprocessFileLineNumbers "scripts\fnc_enumvillages.sqf";
 	fnc_extraction = compile preprocessFileLineNumbers "meka\extraction.sqf";
+	fnc_sergent = compile preprocessFileLineNumbers "meka\sergent.sqf";
 	fnc_missiongears = compile preprocessFileLineNumbers "meka\missiongears.sqf";
 	fnc_missioncandle = compile preprocessFileLineNumbers "meka\missioncandle.sqf";
 	fnc_weathers = compile preprocessFileLineNumbers "real_weather\real_weather.sqf";
@@ -32,6 +33,13 @@
 	[] spawn fnc_missioncandle;
 
 	// Get/Set content/properties of containers from NetID
+	callMission = {
+		switch (true) do {
+			case (_this isEqualTo "sergent") : { [] spawn fnc_sergent;	};
+			default {};
+		};
+	};
+
 	vitems_getInventory = { 
 		missionNamespace getVariable [format["inventory_%1", _this], []];
 	};
