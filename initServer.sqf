@@ -20,15 +20,37 @@
 	call compile preprocessFileLineNumbers "vitems\oo_randomstuff.sqf";
 	call compile preprocessFileLineNumbers "vitems\oo_bme.sqf";
 	call compile preprocessFileLineNumbers "objects\oo_sector.sqf";
+	call compile preprocessFileLineNumbers "objects\oo_missionloader.sqf";
     //call compile preprocessFileLineNumbers "scripts\fnc_enumvillages.sqf";
+	fnc_weathers = compile preprocessFileLineNumbers "real_weather\real_weather.sqf";
+	
 	fnc_extraction = compile preprocessFileLineNumbers "meka\extraction.sqf";
 	fnc_sergent = compile preprocessFileLineNumbers "meka\sergent.sqf";
+	fnc_village = compile preprocessFileLineNumbers "meka\village.sqf";
+	fnc_militarycasern = compile preprocessFileLineNumbers "meka\militarycasern.sqf";
+	fnc_industrialsite = compile preprocessFileLineNumbers "meka\industrialsite.sqf";
+
 	fnc_missiongears = compile preprocessFileLineNumbers "meka\missiongears.sqf";
 	fnc_missioncandle = compile preprocessFileLineNumbers "meka\missioncandle.sqf";
-	fnc_weathers = compile preprocessFileLineNumbers "real_weather\real_weather.sqf";
+
+	if((isServer) and (isDedicated)) then { 
+        bmeclient = "new" call OO_BME;
+        diag_log "BME Server 2.0 is initialized";
+    };
+	BmeIsAlive = { true;};
+	while { isNil "bmeclient" } do {sleep 1;};
 
 	[] spawn fnc_weathers;
+	
+	// Server missions
+	missionloader = "new" call oo_missionloader;
+	[]	spawn fnc_sergent;
 	[] spawn fnc_extraction;
+	[] spawn fnc_village;
+	[] spawn fnc_militarycasern;
+	[] spawn fnc_industrialsite;
+
+	// Stuff missions
 	[] spawn fnc_missiongears;
 	[] spawn fnc_missioncandle;
 
@@ -36,6 +58,7 @@
 	callMission = {
 		switch (true) do {
 			case (_this isEqualTo "sergent") : { [] spawn fnc_sergent;	};
+			//case (_this isEqualTo "village") : {[] spawn fnc_village;};
 			default {};
 		};
 	};
@@ -71,12 +94,6 @@
 		selectRandom [[500,6500],[1500,6500],[2500,6500],[3500,6500],[4500,6500],[5500,6500],[6500,6500],[7500,6500],[8500,6500],[9500,6500],[10500,6500],[12500,6500],[1500,7500],[2500,7500],[3500,7500],[4500,7500],[5500,7500],[9500,7500],[11500,7500],[12500,7500],[1500,8500],[3500,8500],[4500,8500],[6500,8500],[7500,8500],[8500,8500],[9500,8500],[10500,8500],[12500,8500],[500,9500],[1500,9500],[2500,9500],[4500,9500],[5500,9500],[6500,9500],[8500,9500],[10500,9500],[11500,9500],[1500,10500],[2500,10500],[4500,10500],[5500,10500],[6500,10500],[8500,10500],[9500,10500],[10500,10500],[11500,10500],[12500,10500],[1500,11500],[2500,11500],[3500,11500],[6500,11500],[7500,11500],[8500,11500],[9500,11500],[10500,11500],[11500,11500],[3500,12500],[4500,12500],[5500,12500],[7500,12500],[8500,12500],[9500,12500],[10500,12500]];
 	};
 
-	if((isServer) and (isDedicated)) then { 
-        bmeclient = "new" call OO_BME;
-        diag_log "BME Server 2.0 is initialized";
-    };
-	BmeIsAlive = { true;};
-
 	private _list = [];
 	_stuff = ["new", ""] call OO_RANDOMSTUFF;
 	["setNeutre", _list] call _stuff;
@@ -84,7 +101,15 @@
 
     wczones = [[500,500],[4500,500],[5500,500],[8500,500],[9500,500],[10500,500],[11500,500],[1500,1500],[2500,1500],[3500,1500],[4500,1500],[6500,1500],[7500,1500],[8500,1500],[10500,1500],[11500,1500],[1500,2500],[2500,2500],[3500,2500],[4500,2500],[5500,2500],[7500,2500],[8500,2500],[10500,2500],[11500,2500],[500,3500],[1500,3500],[4500,3500],[5500,3500],[6500,3500],[7500,3500],[10500,3500],[11500,3500],[500,4500],[5500,4500],[6500,4500],[8500,4500],[9500,4500],[10500,4500],[11500,4500],[12500,4500],[500,5500],[1500,5500],[2500,5500],[4500,5500],[5500,5500],[7500,5500],[11500,5500],[500,6500],[1500,6500],[2500,6500],[3500,6500],[4500,6500],[5500,6500],[6500,6500],[7500,6500],[8500,6500],[9500,6500],[10500,6500],[12500,6500],[1500,7500],[2500,7500],[3500,7500],[4500,7500],[5500,7500],[9500,7500],[11500,7500],[12500,7500],[1500,8500],[3500,8500],[4500,8500],[6500,8500],[7500,8500],[8500,8500],[9500,8500],[10500,8500],[12500,8500],[500,9500],[1500,9500],[2500,9500],[4500,9500],[5500,9500],[6500,9500],[8500,9500],[10500,9500],[11500,9500],[1500,10500],[2500,10500],[4500,10500],[5500,10500],[6500,10500],[8500,10500],[9500,10500],[10500,10500],[11500,10500],[12500,10500],[1500,11500],[2500,11500],[3500,11500],[6500,11500],[7500,11500],[8500,11500],[9500,11500],[10500,11500],[11500,11500],[3500,12500],[4500,12500],[5500,12500],[7500,12500],[8500,12500],[9500,12500],[10500,12500]];
 
-/*	{
+	/*	{
 		_location = ["new", _x] call OO_SECTOR;
 		"check" spawn _location;
 	}foreach wczones;*/
+
+	onPlayerConnected {
+/*		params ["_id", "_uid", "_name", "_jip", "_owner", "_idstr"];
+		private _mission = ["getMission", _name] call oo_missionloader;
+		if(_mission isEqualTo "") then {
+			_mission = "getMissionactive" call oo_missionloader;
+		};*/
+	};
