@@ -31,7 +31,13 @@
 	call compile preprocessFileLineNumbers "gui\oo_uirequirement.sqf";
 	[] spawn compile preprocessFileLineNumbers "gui\cursor.sqf";
 
-	fnc_relayradio = compile preprocessFileLineNumbers "meka\relayradio.sqf";
+	fnc_relayradio_clientside = compile preprocessFileLineNumbers "meka\relayradio_clientside.sqf";
+	fnc_sergent_clientside = compile preprocessFileLineNumbers "meka\sergent_clientside.sqf";
+	fnc_extraction_clientside = compile preprocessFileLineNumbers "meka\extraction_clientside.sqf";
+	fnc_village_clientside = compile preprocessFileLineNumbers "meka\village_clientside.sqf";
+	fnc_militarycasern_clientside = compile preprocessFileLineNumbers "meka\militarycasern_clientside.sqf";
+	fnc_industrialsite_clientside = compile preprocessFileLineNumbers "meka\industrialsite_clientside.sqf";
+
 	fnc_getnearestplayer = compile preprocessFileLineNumbers "scripts\fnc_getnearestplayer.sqf";
 
 	vitems_eating = compile preprocessFileLineNumbers "vitems\generic\eating.sqf";
@@ -43,23 +49,50 @@
 	vitems_transforming = compile preprocessFileLineNumbers "vitems\generic\transforming.sqf";
 	vitems_banding = compile preprocessFileLineNumbers "vitems\generic\banding.sqf";
 
-	/*	addMissionEventHandler ["Draw3D", {
-	    private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
-    	private _paa = _path + "paa\skull.paa";
-		drawIcon3D [_paa, [1,1,1,1], getpos player, 1, 1, 2, "Target", 1, 0.05, "TahomaB"];
-	}];*/
-
-
 	// Initiliaze End
 	callEnd = {
 		private _end = _this;
 		["End1", true, 5, true] spawn BIS_fnc_endMission;
 	};
 
-	callSergentRadio = {
-		["setPages", ["meka\story\sergentradiocom.html"]] call tabnote;
-    	["showFile", true] call hud;
+	// Sergent mission handler
+	sergentposition = [];
+	sergentobject = objNull;
+	callSergentMission = {
+		sergentposition = _this select 0;
+		sergentobject = _this select 1;
 	};
+	[] spawn fnc_sergent_clientside;
+
+	// Sergent mission handler
+	extractionposition = [];
+	extractionvehicle = objNull;
+	callExtractionMission = {
+		extractionposition = _this select 0;
+		extractionvehicle = _this select 1;
+	};
+	[] spawn fnc_extraction_clientside;
+
+	// Village mission handler
+	villageposition = [];
+	callVillageMission = {
+		villageposition = _this select 0;
+	};
+	[] spawn fnc_village_clientside;
+
+	// Military casern mission handler
+	militarycasernposition = [];
+	callMilitaryCasernMission = {
+		militarycasernposition = _this select 0;
+	};
+	[] spawn fnc_militarycasern_clientside;
+
+	// Military casern mission handler
+	industrialsiteposition = [];
+	callIndustrialSiteMission = {
+		industrialsiteposition = _this select 0;
+	};
+	[] spawn fnc_industrialsite_clientside;
 
 	callTabnote = {
 		["setPages", _this] call tabnote;
@@ -98,15 +131,10 @@
 
 	// load inventory
 	capcontainer = ["new", [netId player, ((getModelInfo player) select 0)]] call OO_CONTAINER;
-	private _content = [["armyradio", -1],["wrench",-1], ["bandage", 1], ["waterbottle",-1], ["cannedravioli", -1], ["screwdriver", -1]];
+	private _content = [["armyradio", -1],["wrench",-1], ["bandage", 1], ["waterbottle",-1], ["cannedravioli", -1], ["screwdriver", -1], ["missionplan", -1]];
 	["overLoad", _content] call capcontainer;
 	"save" call capcontainer;
 	systemchat "inventory load";
-
-	// initialize mission tab
-	tabnote = "new" call OO_TABNOTE;
-	["setPages", ["meka\story\introduction1.html","meka\story\introduction2.html"]] call tabnote;
-	["showFile", true] call hud;
 
 	// initialize ui requirement
 	uirequirement = "new" call oo_uirequirement;
@@ -137,3 +165,27 @@
 			sleep 1;
 		};
 	};
+
+	// initialize mission tab
+	tabnote = "new" call OO_TABNOTE;
+	["setPages", ["meka\story\introduction1.html","meka\story\introduction2.html"]] call tabnote;
+	["showFile", true] call hud;
+
+/*	addMissionEventHandler ["Draw3D", {
+		    if((typeOf cursorObject) isEqualTo "House_F") then {
+			    private _object = cursorObject;
+			    private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
+			    private _paa = _path + "paa\radiocenter.paa";
+			    
+			    private _index = 0;
+			    private _positions = [];
+				while { !((_object buildingPos _index) isEqualTo [0,0,0]) } do {
+					_positions pushBack (_object buildingPos _index);
+					_index = _index + 1;
+				};
+
+				{
+					drawIcon3D [_paa, [1,1,1,10], _x , 1, 1, 2, "Radio Amplifier", 0, 0.03, "TahomaB", "center", true];
+				}foreach _positions;
+			};
+	}];*/
