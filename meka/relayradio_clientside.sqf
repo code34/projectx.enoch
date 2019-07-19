@@ -65,6 +65,4 @@
 		missionNamespace setVariable["armyradiostate", 1];
 
 		playSound "whitenoise";
-        deleteMarker _missionmarker;
-
-        ["remoteSpawn", ["callMission", "sergent", "server"]] call bmeclient;
+		deleteMarker _missionmarker;	
