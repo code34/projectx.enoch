@@ -70,4 +70,10 @@ class CfgSounds
         sound[] = { "sounds\newmessage.ogg", 1, 1, 10 };
        titles[] = { 0, "**Press F1**" };
     };
+    class sergentbattle
+    {
+		name = "sergentbattle";
+		sound[] = { "sounds\sergentbattle.ogg", 1, 1, 10 };
+		titles[] = { 1, "**Battle sound from your radio**" };
+    };
 };
