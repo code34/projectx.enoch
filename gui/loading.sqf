@@ -18,8 +18,7 @@
 	};
 
 	if(_tocreate) then {
-		_object = "Box_B_UAV_06_F" createVehicle position player; 
-		_object setpos (position player);	
+		_object = createSimpleObject ["Box_B_UAV_06_F", [0,0,0]];
 	};
 
 /*	[] spawn {
