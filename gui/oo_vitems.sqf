@@ -264,11 +264,14 @@ CLASS("oo_Vitems")
 		DEBUG(#, "OO_VITEMS::deconstructor")
 		"save" call proxcontainer;
 		"save" call capcontainer;
-		private _size = "countSize" call proxcontainer;
-		if (_size isEqualTo 0) then {
-			if(("getModel" call proxcontainer) isEqualTo "box_uav_06_f.p3d") then {
+		if(("getModel" call proxcontainer) isEqualTo "box_uav_06_f.p3d") then {
+			private _size = "countSize" call proxcontainer;
+			if (_size isEqualTo 0) then {
 				deleteVehicle (objectFromNetId ("getNetId" call proxcontainer));
 				systemChat "delete box";
+			} else {
+				private _netid = "getNetId" call proxcontainer;
+				(objectFromNetId _netid) setPosATL (getPosATL player);
 			};
 		};
 		//["delete", capcontainer] call OO_CONTAINER;
