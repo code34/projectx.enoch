@@ -1,16 +1,6 @@
     // extraction point
     private _position = [4090.96,10220.8,0.101196];
-    private _flag = false;
-    //player setpos [4252.46,10394.5,0];
-    
-    while {! _flag} do {
-        _objects = nearestObjects [_position, ["Man"], 500];
-        sleep 2;
-        _count = west countSide _objects;
-        if(_count > 0) then { _flag = true;};
-        sleep 15;
-    };
-
+   
     private _vehicle = createVehicle ["C_Heli_Light_01_civil_F", _position, [], 0, "NONE"];
     private _container = ["new", [netId _vehicle, ((getModelInfo _vehicle) select 0)]] call OO_CONTAINER;
     private _content = [["failurehelicopterengine", 1]];
@@ -39,30 +29,9 @@
     } foreach _classes;
     deleteGroup _group;
 
-    _vehicle spawn {
-        private _position = getpos _this;
-        private _flag = false;
-        private _min = 0;
-        while { !_flag } do {
-        	_min = (_position call fnc_getnearestplayer) select 0;
-			if( _min < 25) then {_flag = true;};
-        	 sleep 1;
-        };
-        playMusic "stressante";
-        sleep 5;
-		["remoteSpawn", ["callTabnote", ["meka\story\carnageaeroport1.html", "meka\story\carnageaeroport2.html", "meka\story\carnageaeroport3.html","meka\story\carnageaeroport4.html","meka\story\carnageaeroport5.html"], "client"]] call bmeclient;
-    };
-
-    [_vehicle, _position] spawn {
-        _vehicle = _this select 0;
-        _position = _this select 1;
-
-        while { (_vehicle distance _position < 500) } do {
-           sleep 30;
-        };
-
-        {
-            ["remoteSpawn", ["callEnd", "End1", "client", owner _x]] call bmeclient;
-           sleep 0.1;
-        } forEach (crew _vehicle);
+	private _flag = true;
+    while { _flag } do {
+		_flag = ["checkMissionDone", "extraction"] call missionloader;
+		["remoteSpawn", ["callExtractionMission", [_position, _vehicle], "client"]] call bmeclient;
+		sleep 300 + (random 240);
     };

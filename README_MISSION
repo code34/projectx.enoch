@@ -1,0 +1,29 @@
+
+	TRAME PRINCIPALE: 	
+		server
+			- lancement de la mission principale
+			- generation des objets coté server
+			- suivi de la progression de la mission
+
+		client
+			- affichage des messages
+			- lancement des sons
+
+	TRAME SECONDAIRE:
+		client
+			- lancement des missions côté client
+			- generation des objets coté client
+			- suivi de la progression de la mission
+			- lancement des sons côté client
+			- affichage des messages côté client
+
+		** trame principale: extraction => mission qui peut etre lancé qu'une fois
+		** trame principale: sergent => mission qui peut etre lancé qu'une fois
+		** trame principale: village => mission qui peut etre lancé qu'une fois
+		** trame principale: site industriel => mission qui peut etre lancé qu'une fois
+		** trame principale: casern militaire => mission qui peut etre lancé qu'une fois
+
+		** trame secondaire: relayradio => mission qui peut etre lancé plusieurs fois en //
+		
+		trame secondaire: mission candle => logic qui distribue du stuff
+		trame secondaire: mission gears => logic qui distribue du stuff
