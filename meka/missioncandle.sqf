@@ -6,12 +6,10 @@
 	sleep 2;
 
 	{
-    	if(random 1 > 0.3) then {
-    		private _container = ["new", [netId _x, ((getModelInfo _x) select 0)]] call OO_CONTAINER;
-    		private _content = [["helicoptercandle", 1]];
-    		["overLoad", _content] call _container;
-    		"save" call _container;
-    		["delete", _container] call OO_CONTAINER;
-    		sleep 0.1;
-    	};
+   		private _container = ["new", [netId _x, ((getModelInfo _x) select 0)]] call OO_CONTAINER;
+   		private _content = [["helicoptercandle", 1]];
+   		["overLoad", _content] call _container;
+   		"save" call _container;
+   		["delete", _container] call OO_CONTAINER;
+   		sleep 0.1;
 	} forEach _array;
