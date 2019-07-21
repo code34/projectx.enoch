@@ -100,6 +100,10 @@
 			ryanzombiesinfecteddeath = 0.9;
 		};
 
+		PUBLIC FUNCTION("","slowVirus") {
+			ryanzombiesinfectedrate = 0.1;
+		};
+
 		PUBLIC FUNCTION("scalar","setFood") {
 			DEBUG(#, "OO_HEALTH::setFood")
 			MEMBER("food", _this);
