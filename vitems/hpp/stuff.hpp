@@ -1,5 +1,5 @@
     class bandage {
-        type[] = {"stuff"};
+        type[] = {"stuff","man"};
         title = "A cloth bandage";
         description = "A cloth bandage that will allow you to stop bleeding quickly";
         weight = 0.1;
@@ -17,7 +17,7 @@
 		requirement[] = {"wrench"};        
     }; 
     class lighter {
-        type[] = {"stuff"};
+        type[] = {"stuff","man"};
         title = "A lighter";
         description = "A lighter that will allow you to light campfires quickly. This object is not waterproof";
         weight = 0.1;
@@ -44,7 +44,7 @@
         requirement[] = {};
     };
     class antibiotic {
-        type[] = {"stuff"};
+        type[] = {"stuff","man"};
         title = "Antibiotic";
         description = "A box full of antibiotic in an acceptable state";
         weight = 0.1;

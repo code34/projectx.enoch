@@ -46,7 +46,7 @@
         requirement[] = {};
     };
     class blueberries {
-        type[] = {"bush"};
+        type[] = {"bush", "man"};
         title = "Blueberries";
         description = "Blueberries are sweet, nutritious and wildly popular.";
         weight = 0.3;
@@ -55,7 +55,7 @@
         requirement[] = {};
     };
     class gooseberries {
-        type[] = {"bush"};
+        type[] = {"bush", "man"};
         title = "Gooseberries";
         description = "Fresh, delicious, sweet gooseberries.";
         weight = 0.3;
@@ -70,5 +70,14 @@
         weight = 0.3;
         nbusage = 1;
         picture = "pictures\nettle.jpg";
+        requirement[] = {};
+    };
+    class hawthornberries {
+        type[] = {"bush", "man"};
+        title = "Hawthorn berries";
+        description = "Small Hawthorn berries";
+        weight = 0.1;
+        nbusage = 1;
+        picture = "pictures\hawthornberries.jpg";
         requirement[] = {};
     };

@@ -44,7 +44,7 @@
         requirement[] = {};
     };
      class redapple {
-        type[] = {"food"};
+        type[] = {"food", "man"};
         title = "A red apple";
         description = "A nice great red apple.";
         weight = 0.2;
