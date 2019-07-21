@@ -7,3 +7,4 @@
 		["remoteSpawn", ["callMilitaryCasernMission", [_position], "client"]] call bmeclient;
 		sleep 300 + (random 240);
 	};
+
