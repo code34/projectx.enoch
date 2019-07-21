@@ -289,9 +289,6 @@
 				};
 
 				if((_temperature < 36) or (_temperature > 38)) then {
-/*					private _newtemp = 37 - _temperature;
-					if(_newtemp < 0) then {_newtemp = _newtemp * -1;};*/
-
 					if((_temperature > 41.8) or (_temperature < 28)) then {
 						_level = -100;
 					} else {
