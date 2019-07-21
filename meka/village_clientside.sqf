@@ -33,3 +33,6 @@
 
 	["setPages", ["meka\story\village.html"]] call tabnote;
 	["showFile", true] call hud;
+
+
+	
