@@ -37,7 +37,7 @@
 			MEMBER("setDrink", 25);
 			MEMBER("setFood", 25);
 			MEMBER("setLife", 100);
-			MEMBER("setVirus", 0);
+			MEMBER("getVirus", nil);
 			MEMBER("temperature", 37.2);
 			MEMBER("bonusfood", 0);
 			MEMBER("bonusdrink", 0);
@@ -46,7 +46,6 @@
 			SPAWN_MEMBER("checkLife", nil);
 			SPAWN_MEMBER("checkFood", nil);
 			SPAWN_MEMBER("checkDrink", nil);
-			SPAWN_MEMBER("checkVirus", nil);
 			SPAWN_MEMBER("checkDamage", nil);
 		};
 
@@ -85,6 +84,13 @@
 			MEMBER("bonuslife", nil);
 		};		
 
+		PUBLIC FUNCTION("","getVirus") {
+			DEBUG(#, "OO_HEALTH::getVirus")
+			private _infection = floor((player getvariable ["ryanzombiesinfected",0]) * 100);
+			MEMBER("virus", _infection);
+			["setVirus", _infection] call hud;
+		};
+
 		PUBLIC FUNCTION("scalar","setFood") {
 			DEBUG(#, "OO_HEALTH::setFood")
 			MEMBER("food", _this);
@@ -101,12 +107,6 @@
 			DEBUG(#, "OO_HEALTH::setLife")
 			MEMBER("life", _this);
 			["setLife", _this] call hud;
-		};
-
-		PUBLIC FUNCTION("scalar","setVirus") {
-			DEBUG(#, "OO_HEALTH::setVirus")
-			MEMBER("virus", _this);
-			["setVirus", _this] call hud;
 		};
 
 		PUBLIC FUNCTION("scalar","setTemperature") {
@@ -267,7 +267,8 @@
 				_level = 0;
 				_bonuslife = 0;
 				_temperature = MEMBER("temperature", nil);
-				
+				MEMBER("getVirus", nil);
+
 				_nausea = MEMBER("nausea", nil);
 				if(_nausea > 0) then {
 					_nausea = _nausea - 1;
@@ -318,22 +319,6 @@
 				if(_life > 100) then {_life = 100;};
 				MEMBER("setLife", _life);
 				sleep 5;
-			};
-		};
-
-		PUBLIC FUNCTION("","checkVirus") {
-			DEBUG(#, "OO_HEALTH::checkVirus")
-			private _virus = 0;
-			private _level = 0;
-
-			while { true } do {
-				_virus = MEMBER("virus", nil);
-				if(_virus > 0) then {
-					_level = floor(random 5);
-					_virus = _virus + _level;
-					MEMBER("setVirus", _virus);
-				};
-				sleep 60;
 			};
 		};
 
