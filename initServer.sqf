@@ -33,6 +33,8 @@
 	fnc_missiongears = compile preprocessFileLineNumbers "meka\missiongears.sqf";
 	fnc_missioncandle = compile preprocessFileLineNumbers "meka\missioncandle.sqf";
 
+	fnc_getnearestplayer = compile preprocessFileLineNumbers "scripts\fnc_getnearestplayer.sqf";
+
 	if((isServer) and (isDedicated)) then { 
         bmeclient = "new" call OO_BME;
         diag_log "BME Server 2.0 is initialized";
