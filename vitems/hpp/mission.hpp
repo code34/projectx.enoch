@@ -79,3 +79,12 @@
         picture = "pictures\helicopterhose.jpg";
         requirement[] = {};
     };
+    class bk18 {
+        type[] = {"mission"};
+        title = "BK18 syringe";
+        description = "BK18 is a nuclear serum single dose product";
+        weight = 0.1;
+        nbusage = 1;
+        picture = "pictures\bk18.jpg";
+        requirement[] = {};
+    };
