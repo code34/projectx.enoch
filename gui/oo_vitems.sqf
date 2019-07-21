@@ -232,6 +232,7 @@ CLASS("oo_Vitems")
 	PUBLIC FUNCTION("", "btnAction_OOP_btn_weapons") {
 		DEBUG(#, "OO_VITEMS::btnAction_OOP_btn_weapons")
 		player removeAllEventHandlers "InventoryOpened";
+		closeDialog 0;
 		player action ["Gear", player];
 	};
 
