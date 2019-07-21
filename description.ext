@@ -18,6 +18,7 @@ class cfgVitems {
 #include "vitems\hpp\tree.hpp"
 #include "vitems\hpp\bush.hpp"
 #include "vitems\hpp\mission.hpp"
+#include "vitems\hpp\man.hpp"
 };
 
 class CfgDebriefing
