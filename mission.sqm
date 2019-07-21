@@ -196,7 +196,6 @@ class Mission
 							map="ItemMap";
 							compass="ItemCompass";
 							watch="ItemWatch";
-							radio="ItemRadio";
 							goggles="G_Combat";
 							headgear="H_HelmetB_tna_F";
 						};
