@@ -29,7 +29,7 @@
     _marker2 setMarkerSize [1,1];
     _marker2 setMarkerBrush "FDiagonal";
 
-	while { player distance _position > 100 } do { sleep 10;};
+	while { player distance _position > 10 } do { sleep 5;};
 
-	["setPages", ["meka\story\casern.html"]] call tabnote;
+	["setPages", ["meka\story\militarycasern1.html","meka\story\militarycasern2.html"]] call tabnote;
 	["showFile", true] call hud;
