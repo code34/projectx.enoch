@@ -88,3 +88,12 @@
         picture = "pictures\bk18.jpg";
         requirement[] = {};
     };
+    class medicalnote {
+        type[] = {"mission"};
+        title = "Medical note";
+        description = "A medical note that has been distributed in the mailboxes of surrounding houses.";
+        weight = 0.1;
+        nbusage = 1;
+        picture = "pictures\medicalnote.jpg";
+        requirement[] = {};
+    };
