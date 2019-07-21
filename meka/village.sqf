@@ -11,16 +11,28 @@
 			sleep 300 + (random 240);
 		};
 	};
-	
+
+	private _houses = nearestObjects [_position, ["Ruins"] , 100];
+	sleep 2;
+
+	{
+		if(random 1 > 0) then {
+			private _container = ["new", [netId _x, ((getModelInfo _x) select 0)]] call OO_CONTAINER;
+   			["addItemsByLabel", [["medicalnote", -1]]] call _container;
+   			"save" call _container;
+   			["delete", _container] call OO_CONTAINER;
+   		};
+   		sleep 1;
+	}foreach _houses;
+
 	while { ((_position call fnc_getnearestplayer) select 0) > 100} do { sleep 5;};
 
 	private _zombies = ["RyanZombieC_man_1medium", "RyanZombieC_man_polo_1_Fmedium", "RyanZombieC_man_polo_2_Fmedium", "RyanZombieC_man_polo_4_Fmedium", "RyanZombieC_man_polo_5_Fmedium", "RyanZombieC_man_polo_6_Fmedium", "RyanZombieC_man_p_fugitive_Fmedium", "RyanZombieC_man_w_worker_Fmedium", "RyanZombieC_scientist_Fmedium", "RyanZombieC_man_hunter_1_Fmedium", "RyanZombieC_man_pilot_Fmedium", "RyanZombieC_journalist_Fmedium", "RyanZombieC_Orestesmedium", "RyanZombieC_Nikosmedium", "RyanZombie15medium", "RyanZombie16medium", "RyanZombie17medium", "RyanZombie18medium", "RyanZombie19medium", "RyanZombie20medium", "RyanZombie21medium", "RyanZombie22medium", "RyanZombie23medium", "RyanZombie24medium", "RyanZombie25medium", "RyanZombie26medium", "RyanZombie27medium", "RyanZombie28medium", "RyanZombie29medium", "RyanZombie30medium", "RyanZombie31medium", "RyanZombie32medium"];
 
 	private _gc = [];
 	private _group = createGroup east;
-	private _wgroup = createGroup west;
 
-	for "_i" from 0 to 143 step 1 do {
+	for "_i" from 0 to 140 step 1 do {
 			_position = _ref getRelPos [200 + (random 100), random 360];
 			private _type = format["%1%2", (selectRandom _zombies),"Opfor"];
 			private _unit = _group createUnit [_type, _position, [], 0, "NONE"];
