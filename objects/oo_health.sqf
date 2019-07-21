@@ -37,6 +37,7 @@
 			MEMBER("setDrink", 25);
 			MEMBER("setFood", 25);
 			MEMBER("setLife", 100);
+			MEMBER("initVirus", nil);
 			MEMBER("getVirus", nil);
 			MEMBER("temperature", 37.2);
 			MEMBER("bonusfood", 0);
@@ -89,6 +90,14 @@
 			private _infection = floor((player getvariable ["ryanzombiesinfected",0]) * 100);
 			MEMBER("virus", _infection);
 			["setVirus", _infection] call hud;
+		};
+
+		PUBLIC FUNCTION("","initVirus") {
+			DEBUG(#, "OO_HEALTH::getVirus")
+			ryanzombiesinfectedchance = 100;
+			ryanzombiesinfectedrate = 0.3;
+			ryanzombiesinfectedsymptoms = 0.9;
+			ryanzombiesinfecteddeath = 0.9;
 		};
 
 		PUBLIC FUNCTION("scalar","setFood") {
