@@ -39,6 +39,7 @@
 			_result = _result + "<br/>" +  MEMBER("resumeDrink", nil);
 			_result = _result +  MEMBER("resumeBonusDrink", nil);
 			_result = _result + "<br/>" +  MEMBER("resumeNausea", nil);
+			_result = _result + "<br/>" +  MEMBER("resumeZombie", nil);
 			parseText _result;
 		};
 
@@ -59,6 +60,27 @@
 				};
 				default{
 					_result ="Vous n'avez pas de nausée.";
+				};
+			};
+			 _result;
+		};
+
+		PUBLIC FUNCTION("", "resumeZombie") {
+			private _zombie = "getZombie" call health;
+			private _result = "";
+		
+			switch (true) do {
+				case (_zombie > 70) : {
+					_result = "Vous ne vous vous sentez plus vous même.";
+				};
+				case (_zombie > 50) : {
+					_result ="Vous avez des visions.";
+				};
+				case (_zombie > 0) : {
+					_result ="Vous vous sentez bizarre.";
+				};
+				default{
+					_result ="Vous vous sentez normal.";
 				};
 			};
 			 _result;
