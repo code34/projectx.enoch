@@ -1,1 +1,1 @@
-    [10] call vitems_healing;
+    [-200] call vitems_healingvirus;
