@@ -1,7 +1,5 @@
-    if(random 1 > 0.9) then {
-    	[20,true] call vitems_drinking;
-    } else {
-		[120,true] call vitems_drinking;
-	};
+	[20,true] call vitems_drinking;
+	private _virus = floor (random 200);
+	["addVirus", _virus] call health;
 	["addItemsByLabel", [["emptybottle", 1]]] call capcontainer;
     true;
