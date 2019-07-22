@@ -19,7 +19,7 @@ class hud {
 					x = 142 * pixelGrid * pixelW;
 					y = 22 * pixelGrid * pixelH;
 					w = 16 * pixelGrid * pixelW;
-					h = 43 * pixelGrid * pixelH;
+					h = 50 * pixelGrid * pixelH;
 					class controls{				
 						class OOP_Picture_drink_102: OOP_Picture {
 							idc = 102;
@@ -61,10 +61,18 @@ class hud {
 							h = 5.2 * pixelGrid * pixelH;
 							text = "paa\blood.paa";
 						};	
+						class OOP_Picture_zombie_112: OOP_Picture {
+							idc = 112;
+							x = 8 * pixelGrid * pixelW;
+							y = 36.4 * pixelGrid * pixelH;
+							w = 6 * pixelGrid * pixelW;
+							h = 5.2 * pixelGrid * pixelH;
+							text = "paa\zombie.paa";
+						};	
 						class OOP_Picture_file_110: OOP_Picture {
 							idc = 110;
 							x = 8 * pixelGrid * pixelW;
-							y = 36.4 * pixelGrid * pixelH;
+							y = 43.4 * pixelGrid * pixelH;
 							w = 6 * pixelGrid * pixelW;
 							h = 5.2 * pixelGrid * pixelH;
 							text = "paa\file.paa";
@@ -103,6 +111,16 @@ class hud {
 							idc = 109;
 							x = 2 * pixelGrid * pixelW;
 							y = 24.2667 * pixelGrid * pixelH;
+							w = 6 * pixelGrid * pixelW;
+							h = 3.46667 * pixelGrid * pixelH;
+							text = "100%";
+							colorText[] = {1, 1, 1, 1};
+							tooltipColorText[] = {1, 1, 1, 1};
+						};
+						class OOP_Text_zombie_113: OOP_Text {
+							idc = 113;
+							x = 2 * pixelGrid * pixelW;
+							y = 38.4 * pixelGrid * pixelH;
 							w = 6 * pixelGrid * pixelW;
 							h = 3.46667 * pixelGrid * pixelH;
 							text = "100%";

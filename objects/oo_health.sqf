@@ -26,6 +26,7 @@
 		PRIVATE VARIABLE("scalar","food");
 		PRIVATE VARIABLE("scalar","life");
 		PRIVATE VARIABLE("scalar","virus");
+		PRIVATE VARIABLE("scalar","zombie");		
 		PRIVATE VARIABLE("scalar","temperature");
 		PRIVATE VARIABLE("scalar","bonusfood");
 		PRIVATE VARIABLE("scalar","bonusdrink");
@@ -37,8 +38,8 @@
 			MEMBER("setDrink", 25);
 			MEMBER("setFood", 25);
 			MEMBER("setLife", 100);
-			MEMBER("initVirus", nil);
-			MEMBER("getVirus", nil);
+			MEMBER("initZombie", nil);
+			MEMBER("getZombie", nil);
 			MEMBER("temperature", 37.2);
 			MEMBER("bonusfood", 0);
 			MEMBER("bonusdrink", 0);
@@ -85,23 +86,23 @@
 			MEMBER("bonuslife", nil);
 		};		
 
-		PUBLIC FUNCTION("","getVirus") {
-			DEBUG(#, "OO_HEALTH::getVirus")
+		PUBLIC FUNCTION("","getZombie") {
+			DEBUG(#, "OO_HEALTH::getZombie")
 			private _infection = floor((player getvariable ["ryanzombiesinfected",0]) * 100);
-			MEMBER("virus", _infection);
-			["setVirus", _infection] call hud;
+			MEMBER("zombie", _infection);
+			["setZombie", _infection] call hud;
 		};
 
-		PUBLIC FUNCTION("","initVirus") {
-			DEBUG(#, "OO_HEALTH::getVirus")
+		PUBLIC FUNCTION("","initZombie") {
+			DEBUG(#, "OO_HEALTH::getZombie")
 			ryanzombiesinfectedchance = 100;
-			ryanzombiesinfectedrate = 0.3;
+			ryanzombiesinfectedrate = 0.1;
 			ryanzombiesinfectedsymptoms = 0.9;
 			ryanzombiesinfecteddeath = 0.9;
 		};
 
-		PUBLIC FUNCTION("","slowVirus") {
-			ryanzombiesinfectedrate = 0.1;
+		PUBLIC FUNCTION("","slowZombie") {
+			ryanzombiesinfectedrate = 0.01;
 		};
 
 		PUBLIC FUNCTION("scalar","setFood") {
@@ -280,7 +281,7 @@
 				_level = 0;
 				_bonuslife = 0;
 				_temperature = MEMBER("temperature", nil);
-				MEMBER("getVirus", nil);
+				MEMBER("getZombie", nil);
 
 				_nausea = MEMBER("nausea", nil);
 				if(_nausea > 0) then {
@@ -302,7 +303,7 @@
 				if(MEMBER("drink", nil) < 1) then {
 					_level = _level - 1;
 				};
-				if(MEMBER("virus", nil) > 0) then {
+				if(MEMBER("zombie", nil) > 0) then {
 					_level = _level - 1;
 				};
 
@@ -338,7 +339,7 @@
 			DELETE_VARIABLE("drink");
 			DELETE_VARIABLE("food");
 			DELETE_VARIABLE("life");
-			DELETE_VARIABLE("virus");
+			DELETE_VARIABLE("zombie");
 			DELETE_VARIABLE("temperature");
 			DELETE_VARIABLE("bonusfood");
 			DELETE_VARIABLE("bonusdrink");
