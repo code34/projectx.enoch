@@ -115,3 +115,12 @@
         picture = "pictures\screwdriver.jpg";
         requirement[] = {};
     };
+    class aquatablet {
+        type[] = {"stuff"};
+        title = "Potable aqua";
+        description = "Potable Aqua Water Purification Tablets.";
+        weight = 0.2;
+        nbusage = 1;
+        picture = "pictures\aquatablet.jpg";
+        requirement[] = {"bottlewaterunverified"};
+    };
