@@ -1,5 +1,5 @@
 	// Mission Village
-    private _position = selectRandom [[5958.14,6820.89,0],[7324.22,6442.56,0],[10188.8,6836.29,0],[5234.04,5543.04,0]];
+    private _position = selectRandom [[4583.51,6406.58,0],[5244.35,5519.82,0],[5989.35,6813.9,0],[7663.97,5317.38,0],[7343.57,6417.51,0],[5964.46,8082.89,0],[8120.9,8726.18,0],[9881.56,8439.16,0],[10353.8,6832.84,0],[8441.52,6902.36,0]];
 	private _ref = "Box_B_UAV_06_F" createVehicle _position;
 
 	_position spawn {
@@ -32,7 +32,7 @@
 	private _gc = [];
 	private _group = createGroup east;
 
-	for "_i" from 0 to 140 step 1 do {
+	for "_i" from 0 to 60 step 1 do {
 			_position = _ref getRelPos [200 + (random 100), random 360];
 			private _type = format["%1%2", (selectRandom _zombies),"Opfor"];
 			private _unit = _group createUnit [_type, _position, [], 0, "NONE"];
