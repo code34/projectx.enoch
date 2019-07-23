@@ -33,26 +33,30 @@
 		PRIVATE VARIABLE("scalar","bonuslife");
 		PRIVATE VARIABLE("scalar","bonusvirus");
 		PRIVATE VARIABLE("scalar","nausea");
+		PRIVATE VARIABLE("scalar","stomac");
 
 		PUBLIC FUNCTION("","constructor") { 
 			DEBUG(#, "OO_HEALTH::constructor")
-			MEMBER("setDrink", 25);
-			MEMBER("setFood", 25);
+			MEMBER("setDrink", 50);
+			MEMBER("setFood", 50);
 			MEMBER("setLife", 100);
 			MEMBER("setVirus", 0);
 			MEMBER("initZombie", nil);
 			MEMBER("setZombie", nil);
-			MEMBER("temperature", 37.2);
+			MEMBER("temperature", 37);
 			MEMBER("bonusfood", 0);
 			MEMBER("bonusdrink", 0);
 			MEMBER("bonuslife", 0);
 			MEMBER("bonusvirus", 0);
 			MEMBER("nausea", 0);
+			MEMBER("stomac", 0);
 			SPAWN_MEMBER("checkLife", nil);
 			SPAWN_MEMBER("checkFood", nil);
 			SPAWN_MEMBER("checkDrink", nil);
 			SPAWN_MEMBER("checkDamage", nil);
 			SPAWN_MEMBER("checkVirus", nil);
+			SPAWN_MEMBER("checkStomac", nil);
+			SPAWN_MEMBER("checkTemperature", nil);
 		};
 
 		PUBLIC FUNCTION("","getNausea") {
@@ -155,6 +159,11 @@
 			//["setTemperature", _this] call hud;
 		};
 
+		PUBLIC FUNCTION("scalar","setStomac") {
+			DEBUG(#, "OO_HEALTH::setStomac")
+			MEMBER("stomac", _this);
+		};
+
 		PUBLIC FUNCTION("scalar","setNausea") {
 			DEBUG(#, "OO_HEALTH::setNausea")
 			MEMBER("nausea", _this);
@@ -168,14 +177,29 @@
 				playSound3D [_sound, player, false, getPosASL player, 5, 1, 10];
 				private _food = floor(MEMBER("food", nil) * 0.75);
 				private _drink = floor(MEMBER("drink", nil) * 0.75);
+				private _stomac = floor(MEMBER("stomac", nil) * 0.75);
 				MEMBER("setNausea", 20);
 				MEMBER("setFood", _food);
 				MEMBER("setDrink", _drink);
+				MEMBER("setStomac", _stomac);
 				MEMBER("bonusfood", 0);
 				MEMBER("bonusdrink", 0);
-				private _temperature = MEMBER("temperature", nil) - random (1);
+				private _temperature = MEMBER("temperature", nil) - floor(random (1));
 				MEMBER("setTemperature", _temperature);
 		};
+
+		PUBLIC FUNCTION("scalar","addStomac") {
+			DEBUG(#, "OO_HEALTH::addStomac")
+			private _stomac = MEMBER("stomac", nil);
+			private _nausea = MEMBER("nausea", nil);
+			_stomac = _stomac + _this;
+			if((_stomac > 200) or (_nausea > 5)) then { 
+				MEMBER("beNauseous", nil);
+			} else {
+				MEMBER("stomac", _stomac);
+			};
+		};
+
 
 		PUBLIC FUNCTION("scalar","addLife") {
 			DEBUG(#, "OO_HEALTH::addLife")
@@ -183,9 +207,7 @@
 			private _nausea = MEMBER("nausea", nil);
 			_bonuslife = _bonuslife + _this;
 			if(_bonuslife < 0) then {_bonuslife = 0;};
-			if((_bonuslife > 100) or (_nausea > 5)) then { 
-				MEMBER("beNauseous", nil);
-			} else {
+			if(_nausea isEqualTo 0) then {
 				MEMBER("bonuslife", _bonuslife);
 			};
 		};
@@ -196,12 +218,7 @@
 			private _nausea = MEMBER("nausea", nil);
 			_bonusdrink = _bonusdrink + _this;
 			if(_bonusdrink < 0) then {_bonusdrink = 0;};
-			if((_bonusdrink > 100) or (_nausea > 5)) then { 
-				MEMBER("beNauseous", nil);
-			} else {
-				if(_bonusdrink > 70) then {
-					MEMBER("setNausea", 5);
-				};
+			if(_nausea isEqualTo 0) then {
 				MEMBER("bonusdrink", _bonusdrink);
 			};
 		};
@@ -212,13 +229,24 @@
 			private _nausea = MEMBER("nausea", nil);
 			_bonusfood = _bonusfood + _this;
 			if(_bonusfood < 0) then {_bonusfood = 0;};
-			if((_bonusfood > 100) or (_nausea > 5)) then {  
-				MEMBER("beNauseous", nil);
-			} else {
-				if(_bonusfood > 70) then {
-					MEMBER("setNausea", 5);
-				};
+			if(_nausea isEqualTo 0) then {
 				MEMBER("bonusfood", _bonusfood);
+			};
+		};
+
+		PUBLIC FUNCTION("scalar","addTemperature") {
+			DEBUG(#, "OO_HEALTH::addTemperature")
+			private _temperature = MEMBER("temperature", nil);
+			_temperature = _temperature + _this;
+			MEMBER("temperature", _temperature);
+		};
+
+		PUBLIC FUNCTION("scalar","delTemperature") {
+			DEBUG(#, "OO_HEALTH::delTemperature")
+			private _temperature = MEMBER("temperature", nil);
+			_temperature = _temperature - _this;
+			if(_temperature > 37) then {
+				MEMBER("temperature", _temperature);
 			};
 		};
 
@@ -230,6 +258,47 @@
 			if(_bonusvirus < 0) then {_bonusvirus = 0;};
 			if(_bonusvirus > 100) then { _bonusvirus = 100;};
 			MEMBER("bonusvirus", _bonusvirus);
+		};
+
+		PUBLIC FUNCTION("","checkStomac") {
+			DEBUG(#, "OO_HEALTH::checkStomac")
+			private _stomac = 0;
+			while { true } do {
+				_stomac = MEMBER("stomac", nil);
+				if(_stomac > 0) then { _stomac = _stomac - 1; };
+				sleep 10;
+			};
+		};
+
+		PUBLIC FUNCTION("","checkTemperature") {
+			DEBUG(#, "OO_HEALTH::checkTemperature")
+			private _temperature = 0;
+			private _rain = true;
+			private _virus = 0;
+			private _change = false;
+			private _wind = 0;
+
+			while { true } do {
+				_temperature = MEMBER("temperature", nil);
+				_virus = MEMBER("virus", nil);
+				_nausea = MEMBER("nausea", nil);
+				systemChat format ["External Temperature: %1", externaltemperature];
+				if((_virus > 0) or (_nausea > 0)) then {
+						MEMBER("addTemperature", 0.1);
+						_change = true;
+				} else {
+					if(externaltemperature < 7) then {
+						MEMBER("delTemperature", 0.1);
+						_change = true;
+					};
+				};
+				if!(_change) then {
+					if(_temperature < 37) then { MEMBER("addTemperature", 0.1);};
+					if(_temperature > 37) then { MEMBER("delTemperature", 0.1);};
+				};
+				systemChat format ["Body Temperature: %1", MEMBER("temperature", nil)];
+				sleep 10;
+			};
 		};
 
 		PUBLIC FUNCTION("","checkVirus") {
