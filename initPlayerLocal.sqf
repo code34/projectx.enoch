@@ -42,10 +42,12 @@
 
 	vitems_eating = compile preprocessFileLineNumbers "vitems\generic\eating.sqf";
 	vitems_drinking = compile preprocessFileLineNumbers "vitems\generic\drinking.sqf";
+	vitems_digesting = compile preprocessFileLineNumbers "vitems\generic\digesting.sqf";
 	vitems_firing = compile preprocessFileLineNumbers "vitems\generic\firing.sqf";
 	vitems_explosing = compile preprocessFileLineNumbers "vitems\generic\explosing.sqf";
 	vitems_tracking = compile preprocessFileLineNumbers "vitems\generic\tracking.sqf";
 	vitems_healing = compile preprocessFileLineNumbers "vitems\generic\healing.sqf";
+	vitems_healingvirus = compile preprocessFileLineNumbers "vitems\generic\healingvirus.sqf";
 	vitems_transforming = compile preprocessFileLineNumbers "vitems\generic\transforming.sqf";
 	vitems_banding = compile preprocessFileLineNumbers "vitems\generic\banding.sqf";
 
@@ -131,7 +133,7 @@
 
 	// load inventory
 	capcontainer = ["new", [netId player, ((getModelInfo player) select 0)]] call OO_CONTAINER;
-	private _content = [["armyradio", -1],["wrench",-1], ["bandage", 1], ["waterbottle",1], ["cannedravioli", -1], ["screwdriver", -1], ["missionplan", -1], ["bk18",-1], ["hawthornberries", -1]];
+	private _content = [["armyradio", -1],["wrench",-1], ["bandage", -1], ["waterbottle",3],["waterbottle",4], ["cannedravioli", -1], ["screwdriver", -1], ["missionplan", -1], ["bk18",-1], ["hawthornberries", -1], ["aquatablet", -1],["antibiotic", -1], ["tinopener", -1], ["riflemx",-1],["riflemxmag", 1]];
 	["overLoad", _content] call capcontainer;
 	"save" call capcontainer;
 	systemchat "inventory load";
@@ -171,6 +173,11 @@
 	["setPages", ["meka\story\introduction1.html","meka\story\introduction2.html"]] call tabnote;
 	["showFile", true] call hud;
 
+	/*copyToClipboard format ["%1 %2", getText(configfile >> "cfgWeapons" >> "arifle_MX_khk_F">> "picture"), getText(configfile >> "cfgMagazines" >> "30Rnd_65x39_caseless_khaki_mag" >> "picture")];*/
+
+/*	["arifle_MX_khk_F","hgun_P07_khk_F"] 
+	["30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag"]*/
+
 /*	addMissionEventHandler ["Draw3D", {
 		    if((typeOf cursorObject) isEqualTo "House_F") then {
 			    private _object = cursorObject;
@@ -189,3 +196,6 @@
 				}foreach _positions;
 			};
 	}];*/
+
+	// splash screen
+	//["Paste",["Enoch",[554.372,1133.97,17.4291],67.7519,0.75,[-9.87417,0],0,0,600,0.3,0,1,0,1]] call bis_fnc_camera;
