@@ -124,7 +124,11 @@ CLASS("oo_Vitems")
 		private _content = "getContent" call _container;
 
 		{
-			_control lbAdd (_x select 1);
+			if((_x select 4) > -1) then {
+				_control lbAdd format["%1x %2",(_x select 4), (_x select 1)];
+			} else {
+				_control lbAdd format["%1",(_x select 1)];
+			};
 			_control lbSetPicture [_forEachIndex, (_x select 5)];
 			_control lbSetValue[_forEachIndex, _forEachIndex];
 		}foreach _content;
