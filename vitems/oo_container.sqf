@@ -169,7 +169,11 @@
 			private _inventory = MEMBER("inventory", nil);
 
 			{
-				_weight = _weight + (_x select 3);
+				if((_x select 4) > -1) then {
+					_weight = _weight + ((_x select 3) + (_x select 4));
+				} else {
+					_weight = _weight + (_x select 3);
+				};
 			} forEach _inventory;
 			_weight;
 		};
@@ -265,7 +269,19 @@
 			//private _newweight = MEMBER("countWeight", nil) + ("getWeight" call _this);
 			//if( MEMBER("countSize", nil) <= MEMBER("limitsize", nil) && _newweight <= MEMBER("limitweight", nil)) exitWith {
 				private _content = MEMBER("getContent", nil);
-				_content pushBack _this;
+				private _flag = false;
+				// if object is already declare in content, add new quantity to already existing object
+				{
+					if((_x select 0) isEqualTo (_this select 0)) then {
+						private _array = _x;
+						if(((_array select 4) > -1) and !(_flag)) then {
+							_array set [4, ((_x select 4) + (_this select 4))];
+							_content set [_forEachIndex, _array];
+							_flag = true;
+						};
+					};
+				} foreach _content;
+				if!(_flag) then { 	_content pushBack _this;};
 				MEMBER("setContent", _content);
 				true;
 			//};
@@ -279,8 +295,9 @@
 			//if( MEMBER("countSize", nil) <= MEMBER("limitsize", nil) && _newweight <= MEMBER("limitweight", nil)) exitWith {
 				private _content = MEMBER("getContent", nil);
 				private _list = MEMBER("fillInventory", _this);
-				_content append _list;
-				MEMBER("setContent", _content);
+				{
+					MEMBER("addItem", _x);
+				}foreach _list;
 				true;
 			//};
 			//false;
