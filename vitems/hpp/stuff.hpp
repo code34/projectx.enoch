@@ -124,3 +124,21 @@
         picture = "pictures\aquatablet.jpg";
         requirement[] = {"bottlewaterunverified"};
     };
+     class emptybottle {
+        type[] = {"stuff"};
+        title = "A plastic bottle";
+        description = "A Plastic empty bottle.";
+        weight = 0.1;
+        nbusage = 1;
+        picture = "pictures\emptybottle.jpg";
+        requirement[] = {};
+    };
+     class tinopener {
+        type[] = {"stuff"};
+        title = "Tin opener";
+        description = "Swedish tin opener.";
+        weight = 0.1;
+        nbusage = -1;
+        picture = "pictures\tinopener.jpg";
+        requirement[] = {};
+    };
