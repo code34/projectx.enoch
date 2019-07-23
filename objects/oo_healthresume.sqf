@@ -70,10 +70,10 @@
 			private _result = "";
 		
 			switch (true) do {
-				case (_zombie > 70) : {
+				case (_zombie > 60) : {
 					_result = "Vous ne vous vous sentez plus vous même.";
 				};
-				case (_zombie > 50) : {
+				case (_zombie > 40) : {
 					_result ="Vous avez des visions.";
 				};
 				case (_zombie > 0) : {
@@ -93,17 +93,17 @@
 			//systemChat format ["food: %1", _food];
 			
 			switch (true) do {
-				case (_food > 70) : {
-					_result = "votre estomac est tres lourd";
+				case (_food > 60) : {
+					_result = "vous avez trop mangé.";
 				};
-				case (_food > 50) : {
-					_result ="votre estomac est rempli";
+				case (_food > 40) : {
+					_result ="vous avez bien mangé.";
 				};
 				case (_food > 0) : {
-					_result ="votre estomac est un peu rempli";
+					_result ="vous avez mangé un peu.";
 				};
 				default{
-					_result ="votre estomac est vide.";
+					_result ="vous n'avez pas mangé.";
 				};
 			};
 			 _result;
@@ -116,10 +116,10 @@
 			//systemChat format ["drink: %1", _drink];
 			
 			switch (true) do {
-				case (_drink > 70) : {
+				case (_drink > 60) : {
 					_result = "vous avez trop bu.";
 				};
-				case (_drink > 50) : {
+				case (_drink > 40) : {
 					_result ="vous avez bien bu.";
 				};
 				case (_drink > 0) : {
@@ -137,17 +137,17 @@
 			private _result = "";
 			
 			switch (true) do {
-				case (_drink > 70) : {
-					_result = "Vous n'avez pas soif et ";
+				case (_drink > 60) : {
+					_result = "Votre corps est hydraté et ";
 				};
-				case (_drink > 50) : {
-					_result ="Vous commencez à avoir soif et ";
+				case (_drink > 40) : {
+					_result ="Votre corps est légèrement déshydraté et ";
 				};
-				case (_drink > 25) : {
-					_result ="Vous avez très soif et ";
+				case (_drink > 20) : {
+					_result ="Votre corps est déshydraté et ";
 				};
 				default{
-					_result ="Vous êtes mort de soif et ";
+					_result ="Votre corps est complètement déshydraté et ";
 				};
 			};
 			 _result;
@@ -158,17 +158,17 @@
 			private _result = "";
 			
 			switch (true) do {
-				case (_food > 70) : {
-					_result = "Vous n'avez pas faim et ";
+				case (_food > 60) : {
+					_result = "Vous êtes bien nourri et ";
 				};
-				case (_food > 50) : {
-					_result ="Vous commencez à avoir faim et ";
+				case (_food > 40) : {
+					_result ="Vous avez de légères carrences et ";
 				};
-				case (_food > 25) : {
-					_result ="Vous avez très faim et ";
+				case (_food > 20) : {
+					_result ="Vous souffrez d'une anémie sévère et ";
 				};
 				default{
-					_result ="Vous êtes affamé et ";
+					_result ="Vous souffrez d'une anémie extrême et ";
 				};
 			};
 			 _result;
@@ -227,14 +227,17 @@
 			private _result = "";
 			
 			switch (true) do {
+				case (_life > 90) : {
+					_result = "Votre santé est excellente.";
+				};
 				case (_life > 70) : {
-					_result = "Vous êtes en bonne santé.";
+					_result ="Votre santé est bonne.";
 				};
 				case (_life > 50) : {
-					_result ="Votre santé n'est pas très bonne.";
+					_result ="Votre santé est fragile.";
 				};
 				case (_life > 25) : {
-					_result ="Votre santé est très mauvaise.";
+					_result ="Votre santé est mauvaise.";
 				};
 				case (_life > 0) : {
 					_result ="Votre santé est très mauvaise.";
