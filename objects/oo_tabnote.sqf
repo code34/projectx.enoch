@@ -49,6 +49,10 @@
 			MEMBER("mode", _this);
 		};
 
+		PUBLIC FUNCTION("","getMode") {
+			MEMBER("mode", nil);
+		};
+
 		PUBLIC FUNCTION("","closeDialog") {
 			MEMBER("isshow", false);
 		};
