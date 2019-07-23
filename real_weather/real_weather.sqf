@@ -48,15 +48,18 @@
 	_timesync = 60;
 
 	// Mission starting date is 25/09/2013 at 12:00
-	_startingdate = [2015, 07, 01, 10, 00];
+	_startingdate = [2015, 07, 01, 8, 00];
 
 	// Mission starting weather "CLEAR|CLOUDY|RAIN";
-	_startingweather = ["CLEAR", "CLOUDY", "RAIN"] call BIS_fnc_selectRandom;
+	_startingweather = selectRandom ["CLEAR", "CLOUDY", "RAIN"];
 
 	/////////////////////////////////////////////////////////////////
 	// Do not edit below
 	/////////////////////////////////////////////////////////////////
 	
+	// export temperature outside
+	externaltemperature = 22;
+
 	if(_mintime > _maxtime) exitwith {hint format["Real weather: Max time: %1 can no be higher than Min time: %2", _maxtime, _mintime];};
 	_timeforecast = _mintime;
 
@@ -82,6 +85,23 @@
 		};
 	};
 
+	checkTemperature = {
+		params ["_rain", "_fog", "_overcast", "_wind", "_date"];
+		private _basetemp = 22;
+		private _rainmalus = 10 * _rain;
+		private _fogmalus = 10 * _rain;
+		private _windmalus = 10 * windStr;
+		private _hour = _date select 3;
+		private _hourmalus = 0;
+		if((_hour >= 22) and (_hour <= 24)) then {
+			_hourmalus = 6;
+		};
+		if((_hour >=0) and(_hour <=6)) then {
+			_hourmalus = 10;
+		};
+		floor(_basetemp - _rainmalus - _fogmalus - _windmalus - _hourmalus);
+	};
+
 	// add handler
 	if (local player) then {
 		wcweatherstart = true;
@@ -105,6 +125,7 @@
 				setwind (wcweather select 3);
 				setdate (wcweather select 4);
 			};
+			externaltemperature = wcweather call checkTemperature;
 		};
 	};
 
@@ -133,6 +154,7 @@
 		while { true } do {
 			wcweather set [4, date];
 			publicvariable "wcweather";
+			externaltemperature = wcweather call checkTemperature;
 			if(!_realtime) then { 
 				if((date select 3 > 16) or (date select 3 <6)) then {
 					setTimeMultiplier _nighttimeratio;
