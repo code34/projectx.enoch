@@ -34,24 +34,6 @@
         picture = "pictures\bottle.jpg";
         requirement[] = {};
     };
-     class emptybottle {
-        type[] = {"food"};
-        title = "A plastic bottle";
-        description = "A Plastic empty bottle.";
-        weight = 1;
-        nbusage = 1;
-        picture = "pictures\emptybottle.jpg";
-        requirement[] = {};
-    };
-     class bottlewaterunverified {
-        type[] = {"food"};
-        title = "An unfiltred water bottle";
-        description = "A Plastic mineral unfiltred and unpure water bottle with nasty odor.";
-        weight = 1;
-        nbusage = 1;
-        picture = "pictures\bottlewaterunverified.jpg";
-        requirement[] = {};
-    };
      class potatoe {
         type[] = {"food"};
         title = "Potatoe";
@@ -113,7 +95,7 @@
         weight = 1;
         nbusage = 2;
         picture = "pictures\cannedravioli.jpg";
-		requirement[] = {};
+		requirement[] = {"tinopener"};
     };
      class russianvodka {
         type[] = {"food"};
