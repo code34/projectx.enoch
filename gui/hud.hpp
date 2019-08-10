@@ -127,6 +127,16 @@ class hud {
 							colorText[] = {1, 1, 1, 1};
 							tooltipColorText[] = {1, 1, 1, 1};
 						};
+						class OOP_Text_file_114: OOP_Text {
+							idc = 114;
+							x = 2 * pixelGrid * pixelW;
+							y = 43.4 * pixelGrid * pixelH;
+							w = 6 * pixelGrid * pixelW;
+							h = 3.46667 * pixelGrid * pixelH;
+							text = "F1";
+							colorText[] = {1, 1, 1, 1};
+							tooltipColorText[] = {1, 1, 1, 1};
+						};
 					};
 				};
 			};
