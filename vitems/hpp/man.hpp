@@ -57,7 +57,7 @@
 		title = "Carabiner";
 		description = "Light allow carabiner, hot forged with ample aperture, ideal for sport climbing and for intense use.";
 		weight = 0.1;
-		nbusage = 10;
+		nbusage = -1;
 		picture = "pictures\carabiner.jpg";
 		requirement[] = {};
 	};
@@ -66,7 +66,7 @@
 		title = "Watch";
 		description = "An analog simple watch";
 		weight = 0.1;
-		nbusage = 10;
+		nbusage = -1;
 		picture = "pictures\watch.jpg";
 		requirement[] = {};
 	};
