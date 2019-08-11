@@ -18,6 +18,7 @@
 
 	call compile preprocessFileLineNumbers "vitems\oo_container.sqf";
 	call compile preprocessFileLineNumbers "vitems\oo_randomstuff.sqf";
+	call compile preprocessFileLineNumbers "vitems\oo_armagear.sqf";
 	call compile preprocessFileLineNumbers "vitems\oo_bme.sqf";
 	call compile preprocessFileLineNumbers "vitems\oo_model.sqf";
 	call compile preprocessFileLineNumbers "objects\oo_health.sqf";
@@ -111,10 +112,10 @@
 	systemchat "BME 2.0 is initialized";
 
 	// Random spawn position
-	/*	private _position = position player;
+	private _position = position player;
 	_position = ["remoteCall", ["getSpawnPosition", "" , 2, _position]] call bmeclient;
 	player setpos _position;
-	player setpos(player getRelPos [random 250,random 360]);*/
+	player setpos(player getRelPos [random 250,random 360]);
 
 	player addEventHandler ["InventoryOpened", {execVM "gui\loading.sqf";true;}];
 	player addEventHandler ["InventoryClosed", {player addEventHandler ["InventoryOpened", {execVM "gui\loading.sqf";true;}];}];
@@ -133,10 +134,12 @@
 
 	// load inventory
 	capcontainer = ["new", [netId player, ((getModelInfo player) select 0)]] call OO_CONTAINER;
-	private _content = [["armyradio", -1],["wrench",-1], ["bandage", -1], ["waterbottle",3],["waterbottle",4], ["cannedravioli", -1], ["screwdriver", -1], ["missionplan", -1], ["bk18",-1], ["hawthornberries", -1], ["aquatablet", -1],["antibiotic", -1], ["tinopener", -1], ["riflemx",-1],["riflemxmag", 1]];
+	//private _content = 	[["armyradio",-1],["wrench",-1],["medicalkit",1],["survivalration",5],["arifle_MX_khk_F",1],["hgun_P07_khk_F",1],["Binocular",1],["30Rnd_65x39_caseless_khaki_mag",5],["16Rnd_9x21_Mag",2]];
+	private _content = 	[["armyradio",-1],["wrench",-1],["medicalkit",1],["survivalration",5]];
 	["overLoad", _content] call capcontainer;
+	"loadInventory" call capcontainer;
 	"save" call capcontainer;
-	systemchat "inventory load";
+	systemchat "Inventory load";
 
 	// initialize ui requirement
 	uirequirement = "new" call oo_uirequirement;
@@ -151,7 +154,7 @@
 					player setAnimSpeedCoef 0.1;
 				}; 
 				case (_weight > 40) : { 
-					player setAnimSpeedCoef 0.5;
+					player setAnimSpeedCoef 0.7;
 				}; 
 				case (_weight > 30) : { 
 					player setAnimSpeedCoef 0.8;
@@ -173,7 +176,7 @@
 	["setPages", ["meka\story\introduction1.html","meka\story\introduction2.html"]] call tabnote;
 	["showFile", true] call hud;
 
-	/*copyToClipboard format ["%1 %2", getText(configfile >> "cfgWeapons" >> "arifle_MX_khk_F">> "picture"), getText(configfile >> "cfgMagazines" >> "30Rnd_65x39_caseless_khaki_mag" >> "picture")];*/
+/*	copyToClipboard format ["%1 %2", getText(configfile >> "cfgWeapons" >> "hgun_P07_khk_F">> "picture"), getText(configfile >> "cfgMagazines" >> "16Rnd_9x21_Mag" >> "picture")];*/
 
 /*	["arifle_MX_khk_F","hgun_P07_khk_F"] 
 	["30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag"]*/
@@ -199,3 +202,10 @@
 
 	// splash screen
 	//["Paste",["Enoch",[554.372,1133.97,17.4291],67.7519,0.75,[-9.87417,0],0,0,600,0.3,0,1,0,1]] call bis_fnc_camera;
+
+/*	while { true } do {
+		private _position = (lineIntersectsSurfaces [getPosASL player, getPosASL cursorObject, objNull, objNull, false, -1]);
+		//private _distance = player distance _position;
+		systemchat format ["%1", _position];
+		sleep 1;
+	};*/
