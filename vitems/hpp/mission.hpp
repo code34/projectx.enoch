@@ -48,7 +48,7 @@
         title = "Bravery medal";
         description = "A military medal of bravery";
         weight = 0.05;
-        nbusage = 1;
+        nbusage = -1;
         picture = "pictures\medal.jpg";
         requirement[] = {};
     };

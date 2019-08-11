@@ -25,21 +25,21 @@
         picture = "pictures\gpstracker.jpg";
         requirement[] = {};
     };
-    class riflemx {
+    class survivalration {
         type[] = {"military"};
-        title = "Rifle MX";
-        description = "A rifle MX weapons.";
-        weight = 0.5;
-        nbusage = -1;
-        picture = "\A3\Weapons_F_Exp\Rifles\MX\Data\UI\icon_arifle_MX_khk_F_X_CA.paa";
-        requirement[] = {};
-    };
-    class riflemxmag {
-        type[] = {"military"};
-        title = "Rifle MX mag";
-        description = "A rifle MX mag.";
+        title = "Survival Ration";
+        description = "Ultimate Survival Technologies 5-Year Emergency Food Ration Bar.";
         weight = 0.2;
         nbusage = 1;
-        picture = "\a3\Weapons_F\MagazineProxies\data\UI\icon_30Rnd_65x39_caseless_khaki_mag_CA.paa";
+        picture = "pictures\survivalration.jpg";
+        requirement[] = {};
+    };
+    class medicalkit {
+        type[] = {"military"};
+        title = "Medical Kit";
+        description = "First aid kit.";
+        weight = 2;
+        nbusage = 3;
+        picture = "pictures\medicalkit.jpg";
         requirement[] = {};
     };

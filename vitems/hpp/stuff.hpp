@@ -48,7 +48,7 @@
         title = "Antibiotic";
         description = "A box full of antibiotic in an acceptable state";
         weight = 0.1;
-        nbusage = 1;
+        nbusage = 10;
         picture = "pictures\antibiotic.jpg";
         requirement[] = {};
     };
@@ -111,7 +111,7 @@
         title = "Screw driver";
         description = "The high quality bits have been designed for an improved, long-lasting life, while the built-in bolster allows for additional leverage and torque.";
         weight = 0.2;
-        nbusage = 1;
+        nbusage = -1;
         picture = "pictures\screwdriver.jpg";
         requirement[] = {};
     };
@@ -120,7 +120,7 @@
         title = "Potable aqua";
         description = "Potable Aqua Water Purification Tablets.";
         weight = 0.2;
-        nbusage = 1;
+        nbusage = 10;
         picture = "pictures\aquatablet.jpg";
         requirement[] = {"bottlewaterunverified"};
     };
