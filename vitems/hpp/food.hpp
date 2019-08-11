@@ -57,7 +57,7 @@
         title = "Tin can Maxigaz";
         description = "All you need protein to spend a good afternoon in the sun.";
         weight = 0.2;
-        nbusage = 2;
+        nbusage = 1;
         picture = "pictures\tin.jpg";
         requirement[] = {};
     };
@@ -66,7 +66,7 @@
         title = "Oreo pack";
         description = "Chocolate flavour sandwich biscuits, with a vanilla flavour filling.";
         weight = 0.2;
-        nbusage = 2;
+        nbusage = 1;
         picture = "pictures\oreopack.jpg";
         requirement[] = {};
     };
@@ -75,7 +75,7 @@
         title = "Beef Jerky";
         description = "Tender slices of lean 100% beef are lightly seasoned with a unique blend of spices, and then cooked in a smoke oven.";
         weight = 0.2;
-        nbusage = 2;
+        nbusage = 1;
         picture = "pictures\beefjerky.jpg";
         requirement[] = {};
     };
@@ -93,7 +93,7 @@
         title = "Canned Ravioli";
         description = "Beef Ravioli in Meat Sauce.";
         weight = 1;
-        nbusage = 2;
+        nbusage = 1;
         picture = "pictures\cannedravioli.jpg";
 		requirement[] = {"tinopener"};
     };
