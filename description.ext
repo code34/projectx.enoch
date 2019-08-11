@@ -1,9 +1,15 @@
+OnloadName="Projectx";
+Author="Code34";
+loadscreen="splash\splash.jpg";
+OnLoadMission="When bullets are more valuable than humans";
+
 #include "gui\define.hpp"
 #include "gui\style.hpp"
 #include "gui\vitems.hpp"
 #include "gui\loading.hpp"
 #include "gui\uirequirement.hpp"
 #include "gui\tabnote.hpp"
+#include "gui\splash.hpp"
 
 class RscTitles {
 #include "gui\hud.hpp"
@@ -52,13 +58,13 @@ class CfgSounds
     {
         name = "carrier";
         sound[] = { "sounds\carrier.ogg", 1, 1, 10 };
-        titles[] = { 1, "**radio carrier**" };
+        titles[] = { 1, "** Radio carrier **" };
     };
     class whitenoise
     {
         name = "whitenoise";
         sound[] = { "sounds\whitenoise.ogg", 1, 1, 10 };
-        titles[] = { 1, "**Radio white noise**" };
+        titles[] = { 1, "** Radio white noise **" };
     };
     class wrench
     {
@@ -70,12 +76,12 @@ class CfgSounds
     {
         name = "newmessage";
         sound[] = { "sounds\newmessage.ogg", 1, 1, 10 };
-       titles[] = { 0, "**Press F1**" };
+       titles[] = { 0, "** Press F1 **" };
     };
     class sergentbattle
     {
 		name = "sergentbattle";
 		sound[] = { "sounds\sergentbattle.ogg", 1, 1, 10 };
-		titles[] = { 1, "**Battle sound from your radio**" };
+		titles[] = { 1, "** Battle sound from your radio **" };
     };
 };
