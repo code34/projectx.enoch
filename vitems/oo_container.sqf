@@ -44,6 +44,19 @@
 			MEMBER("properties", _properties);
 		};
 
+		PUBLIC FUNCTION("","loadInventory") {
+			private _gear = "new" call OO_ARMAGEAR;
+			private _weapons = "loadWeapons" call _gear;
+			private _magazines = "loadMagazines" call _gear;
+			{
+				MEMBER("addItem", _x);
+			}foreach _weapons;
+
+			{
+				MEMBER("addItem", _x);
+			}foreach _magazines;
+		};
+
 		PUBLIC FUNCTION("array","overLoad") {		
 			private _list = MEMBER("fillInventory", _this);
 			private _properties = ["", 0,0];
@@ -52,17 +65,13 @@
 		};
 
 		PUBLIC FUNCTION("array","fillInventory") {
+			DEBUG(#, "OO_CONTAINER::fillInventory")
 			private _list = [];
+			private _gear = "new" call OO_ARMAGEAR;
+
 			{
-				private _classid = _x select 0;
-				private _entry = missionConfigFile >> "cfgVitems" >> _classid;
-				private _title = getText(missionConfigFile >> "cfgVitems" >> _classid >> "title");
-				private _description = getText (_entry >> "description");
-				private _weight = getNumber (_entry >> "weight");
-				private _nbusage = _x select 1;
-				private _picture = getText (_entry >> "picture");
-				private _requirement = getArray(_entry >> "requirement");
-				_list pushBack [_classid, _title, _description, _weight, _nbusage, _picture,_requirement];
+				private _result = ["loadCfg", _x] call _gear;
+				_list pushBack _result;
 			} forEach _this;
 			_list;
 		};
@@ -78,6 +87,8 @@
 				_nbusage = _x select 4;
 				_list pushBack [_classid, _nbusage];
 			} forEach _inventory;
+
+			diag_log format ["%1", _list];
 
 			private _properties = MEMBER("properties", nil);
 			["remoteSpawn", ["vitems_setInventory",  [_netId,_list], "server"]] call bmeclient;
@@ -159,7 +170,15 @@
 		// Count the occuped size in container
 		PUBLIC FUNCTION("","countSize") {
 			DEBUG(#, "OO_CONTAINER::countSize")
-			count(MEMBER("inventory", nil));
+			private _size = 0;
+			{
+				if((_x select 4) > 0) then {
+					_size = _size + (_x select 4);
+				} else {
+					_size = _size + 1;
+				};
+			} foreach MEMBER("inventory", nil);
+			_size;
 		};
 
 		// Count the weight in container
@@ -169,8 +188,8 @@
 			private _inventory = MEMBER("inventory", nil);
 
 			{
-				if((_x select 4) > -1) then {
-					_weight = _weight + ((_x select 3) + (_x select 4));
+				if((_x select 4) > 0) then {
+					_weight = _weight + ((_x select 3) * (_x select 4));
 				} else {
 					_weight = _weight + (_x select 3);
 				};
@@ -308,6 +327,23 @@
 			DEBUG(#, "OO_CONTAINER::getItem")
 			private _content = MEMBER("getContent", nil);
 			private _return = _content deleteAt _this;
+			MEMBER("setContent", _content);
+			_return;
+		};
+
+		// Delete an item of the content of container
+		PUBLIC FUNCTION("scalar","getItemUnitary") {
+			DEBUG(#, "OO_CONTAINER::getItemUnitary")
+			private _content = MEMBER("getContent", nil);
+			private _return = "";
+			if((_content select _this) select 4 < 2) then {
+				_return = _content deleteAt _this;
+			} else {
+				_return = +(_content select _this);
+				_return set[4,1];
+				private _nbusage = ((_content select _this) select 4) - 1;
+				(_content select _this) set[4, _nbusage];
+			};
 			MEMBER("setContent", _content);
 			_return;
 		};
