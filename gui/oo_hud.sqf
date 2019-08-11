@@ -15,7 +15,8 @@ CLASS("oo_hud")
 	PRIVATE UI_VARIABLE("control", "OOP_Text_food");
 	PRIVATE UI_VARIABLE("control", "OOP_Text_life");
 	PRIVATE UI_VARIABLE("control", "OOP_Text_virus");
-	PRIVATE UI_VARIABLE("control", "OOP_Text_zombie");	
+	PRIVATE UI_VARIABLE("control", "OOP_Text_zombie");
+	PRIVATE UI_VARIABLE("control", "OOP_Text_file");
 	PRIVATE UI_VARIABLE("display", "Display");
 	PRIVATE VARIABLE("bool", "isshowfile");
 	PRIVATE VARIABLE("bool", "isshowzombie");
@@ -38,6 +39,7 @@ CLASS("oo_hud")
 		MEMBER("OOP_Text_life", _this displayCtrl 108);
 		MEMBER("OOP_Text_virus", _this displayCtrl 109);
 		MEMBER("OOP_Text_zombie", _this displayCtrl 113);		
+		MEMBER("OOP_Text_file", _this displayCtrl 114);
 		MEMBER("Init", nil);
 	};
 
@@ -53,8 +55,10 @@ CLASS("oo_hud")
 		while { true } do {
 			if(MEMBER("isshowfile", nil)) then {
 				MEMBER("OOP_Picture_file", nil) ctrlShow true;
+				MEMBER("OOP_Text_file", nil) ctrlShow true;
 				sleep 1;
 				MEMBER("OOP_Picture_file", nil) ctrlShow false;
+				MEMBER("OOP_Text_file", nil) ctrlShow false;
 			};
 			sleep 1;
 		};
@@ -156,6 +160,7 @@ CLASS("oo_hud")
 	PUBLIC FUNCTION("control", "setOOP_Text_life"){ MEMBER("OOP_Text_life", _this); };
 	PUBLIC FUNCTION("control", "setOOP_Text_virus"){ MEMBER("OOP_Text_virus", _this); };
 	PUBLIC FUNCTION("control", "setOOP_Text_zombie"){ MEMBER("OOP_Text_zombie", _this); };
+	PUBLIC FUNCTION("control", "setOOP_Text_file"){ MEMBER("OOP_Text_file", _this); };
 	PUBLIC FUNCTION("display", "setDisplay"){ MEMBER("Display", _this); };
 
 
@@ -175,6 +180,7 @@ CLASS("oo_hud")
 		DELETE_UI_VARIABLE("OOP_Text_life");
 		DELETE_UI_VARIABLE("OOP_Text_virus");
 		DELETE_UI_VARIABLE("OOP_Text_zombie");
+		DELETE_UI_VARIABLE("OOP_Text_file");
 		DELETE_UI_VARIABLE("Display");
 		DELETE_VARIABLE("isshowfile");
 		DELETE_VARIABLE("isshowzombie");
