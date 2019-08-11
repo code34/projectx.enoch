@@ -162,7 +162,7 @@
 					_result = "Vous êtes bien nourri et ";
 				};
 				case (_food > 40) : {
-					_result ="Vous avez de légères carrences et ";
+					_result ="Vous avez de légères carences et ";
 				};
 				case (_food > 20) : {
 					_result ="Vous souffrez d'une anémie sévère et ";
