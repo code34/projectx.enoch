@@ -24,11 +24,18 @@
 	CLASS("OO_KEYHANDLER")
 		PRIVATE VARIABLE("code","this");
 		PRIVATE VARIABLE("scalar","handler");
+		PRIVATE VARIABLE("scalar","mousehandler");
 
 		PUBLIC FUNCTION("","constructor") { 
 			DEBUG(#, "OO_KEYHANDLER::constructor")
 			waitUntil {!(isNull (findDisplay 46))};
 			MEMBER("addKeyHandler", nil);
+			MEMBER("addZMouseHandler", nil);
+		};
+
+		PUBLIC FUNCTION("","addZMouseHandler") { 
+			private _mousehandler = (findDisplay 46) displayAddEventHandler ["MouseZChanged", format[" ['mouseCatcher', _this] call %1", MEMBER("this", nil)]];
+			MEMBER("mousehandler", _mousehandler);
 		};
 
 		PUBLIC FUNCTION("","addKeyHandler") {
@@ -39,7 +46,15 @@
 
 		PUBLIC FUNCTION("","removeKeyHandler") {
 			DEBUG(#, "OO_KEYHANDLER::removeKeyHandler")
-			(findDisplay 46) displayRemoveEventHandler ["KeyDown", MEMBER("handler", nil)];
+			(findDisplay 46) displayRemoveEventHandler ["KeyDown", MEMBER("mousehandler", nil)];
+		};
+
+		PUBLIC FUNCTION("","removeMouseHandler") {
+			(findDisplay 46) displayRemoveEventHandler ["MouseZChanged", MEMBER("handler", nil)];
+		};
+
+		PUBLIC FUNCTION("array","mouseCatcher") {
+			// à compléter avec le coef speed
 		};
 
 		PUBLIC FUNCTION("array","keyCatcher") {
@@ -96,7 +111,9 @@
 		PUBLIC FUNCTION("","deconstructor") { 
 			DEBUG(#, "OO_KEYHANDLER::deconstructor")
 			MEMBER("removeKeyHandler", nil);
+			MEMBER("removeMouseHandler", nil);
 			DELETE_VARIABLE("this");
 			DELETE_VARIABLE("handler");
+			DELETE_VARIABLE("mousehandler");
 		};
 	ENDCLASS;
