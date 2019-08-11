@@ -76,6 +76,7 @@ CLASS("oo_Vitems")
 	};
 
 	PUBLIC FUNCTION("array", "dragDrop") {
+		private _gear = "new" call OO_ARMAGEAR;
 		private _source = MEMBER("source", nil) select 0;
 		private _destination = MEMBER("destination", nil) select 0;
 		private _scontainer = "";
@@ -93,8 +94,47 @@ CLASS("oo_Vitems")
 			_dcontainer = proxcontainer;
 		};
 
+		// TODO: add a portion of code for A3 inventory	
 		private _index = (((_this select 4) select 0) select 1);
 		private _item = ["getItem", _index] call _scontainer;
+		if(_item select 7) then {
+			if((_scontainer isEqualTo capcontainer) and (_dcontainer isEqualTo proxcontainer)) then { 
+				["removeToInventory", _item] call _gear;
+			} else {
+				if((_scontainer isEqualTo proxcontainer) and(_dcontainer isEqualTo capcontainer)) then {
+					["addToInventory", _item] call _gear;
+				};
+			};
+		};
+		["addItem", _item] call _dcontainer;
+		MEMBER("refresh", nil);
+	};
+
+	PUBLIC FUNCTION("array", "getDblClick") {
+		private _gear = "new" call OO_ARMAGEAR;
+		private _control = _this select 0;
+		private _index = _this select 1;
+		private _scontainer = "";
+		private _dcontainer = "";
+
+		if(_control isEqualTo MEMBER("OOP_Listbox_Capacities", nil)) then {
+			_scontainer = capcontainer;
+			_dcontainer = proxcontainer;
+		} else {
+			_scontainer = proxcontainer;
+			_dcontainer = capcontainer;
+		};
+
+		private _item = ["getItemUnitary", _index] call _scontainer;
+		if(_item select 7) then {
+			if((_scontainer isEqualTo capcontainer) and (_dcontainer isEqualTo proxcontainer)) then { 
+				["removeToInventory", _item] call _gear;
+			} else {
+				if((_scontainer isEqualTo proxcontainer) and(_dcontainer isEqualTo capcontainer)) then {
+					["addToInventory", _item] call _gear;
+				};
+			};
+		};
 		["addItem", _item] call _dcontainer;
 		MEMBER("refresh", nil);
 	};
@@ -273,7 +313,6 @@ CLASS("oo_Vitems")
 			private _size = "countSize" call proxcontainer;
 			if (_size isEqualTo 0) then {
 				deleteVehicle (objectFromNetId ("getNetId" call proxcontainer));
-				systemChat "delete box";
 			} else {
 				private _netid = "getNetId" call proxcontainer;
 				(objectFromNetId _netid) setPosATL (getPosATL player);
