@@ -34,6 +34,7 @@ class Vitems {
 					canDrag = 1;
 					onLBDragging = "['setDestination', _this] call VITEMS";
 					onLBDrag = "['setSource', _this] call VITEMS";
+					onLBDblClick = "['getDblClick', _this] call VITEMS";
 				};
 				class OOP_Listbox_Capacities_103: OOP_Listbox {
 					idc = 103;
@@ -46,6 +47,7 @@ class Vitems {
 					onLBSelChanged = "['onLBSelChanged_OOP_Listbox_Capacities', _this] call Vitems;";
 					onLBDragging = "['setDestination', _this] call VITEMS";
 					onLBDrag = "['setSource', _this] call VITEMS";
+					onLBDblClick = "['getDblClick', _this] call VITEMS";
 				};
 				class OOP_Text_proximity_104: OOP_Text {
 					idc = 104;
