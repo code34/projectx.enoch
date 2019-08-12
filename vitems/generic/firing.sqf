@@ -1,7 +1,8 @@
 
     private _time = _this select 0;
-    private _position = player getRelPos [0.5,0];
+    private _position = player getRelPos [1,0];
     private _fire = "FirePlace_burning_F" createVehicle _position;
+    _fire setpos _position;
         
     [_time, _fire] spawn {
         private _time = _this select 0;
