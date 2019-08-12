@@ -26,6 +26,7 @@
 	call compile preprocessFileLineNumbers "objects\oo_tabnote.sqf";
 	call compile preprocessFileLineNumbers "objects\oo_camera.sqf";
 	call compile preprocessFileLineNumbers "objects\oo_keyhandler.sqf";
+	call compile preprocessFileLineNumbers "objects\oo_sound.sqf";
 	call compile preprocessFileLineNumbers "gui\oo_hud.sqf";
 	call compile preprocessFileLineNumbers "gui\oo_vitems.sqf";
 	call compile preprocessFileLineNumbers "gui\oo_UI_loading.sqf";
@@ -132,7 +133,7 @@
 	// load inventory
 	capcontainer = ["new", [netId player, ((getModelInfo player) select 0)]] call OO_CONTAINER;
 	//private _content = 	[["armyradio",-1],["wrench",-1],["medicalkit",1],["survivalration",5],["arifle_MX_khk_F",1],["hgun_P07_khk_F",1],["Binocular",1],["30Rnd_65x39_caseless_khaki_mag",5],["16Rnd_9x21_Mag",2]];
-	private _content = 	[["armyradio",-1],["wrench",-1],["medicalkit",1],["survivalration",5], ["screwdriver", -1]];
+	private _content = 	[["armyradio",-1],["wrench",-1],["medicalkit",1],["survivalration",5], ["screwdriver", -1],["waterbottle",1]];
 	["overLoad", _content] call capcontainer;
 	"loadInventory" call capcontainer;
 	"save" call capcontainer;
@@ -206,3 +207,13 @@
 		systemchat format ["%1", _position];
 		sleep 1;
 	};*/
+
+	_sound = "new" call OO_SOUND;
+
+/*	while { true } do {
+		hint format["%1 %2", typeOf cursorTarget, (getModelInfo cursorTarget) select 0];
+		copyToClipboard format ["%1 %2", typeOf cursorTarget, (getModelInfo cursorTarget) select 0];
+		sleep 1;
+	};
+
+	Land_ConcreteWell_02_F*/

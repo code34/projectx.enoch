@@ -1,10 +1,20 @@
 	private _result = true;
 
-	if(surfaceIsWater(getpos player)) then {
-		player playActionNow "PutDown";
-		["addItemsByLabel", [["bottlewaterunverified", 1]]] call capcontainer;
-		_result = true;
+	if(((typeof cursorTarget) isEqualTo "Land_ConcreteWell_02_F") and (cursorTarget distance player < 5)) then {
+			player playActionNow "PutDown";
+        	private _object = cursorTarget;
+        	private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
+        	private _sound = _path + "sounds\waterpump.ogg";
+			playSound3D [_sound, _object, false, getPosASL _object, 2, 1, 40];
+			["addItemsByLabel", [["waterbottle", 1]]] call capcontainer;
+			_result = true;
 	} else {
-		_result = false;
+		if(surfaceIsWater(getpos player)) then {
+			player playActionNow "PutDown";
+			["addItemsByLabel", [["bottlewaterunverified", 1]]] call capcontainer;
+			_result = true;
+		} else {
+			_result = false;
+		};
 	};
 	_result;
