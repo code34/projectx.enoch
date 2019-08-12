@@ -39,6 +39,7 @@
 	fnc_militarycasern_clientside = compile preprocessFileLineNumbers "meka\militarycasern_clientside.sqf";
 	fnc_industrialsite_clientside = compile preprocessFileLineNumbers "meka\industrialsite_clientside.sqf";
 
+	fnc_weathers = compile preprocessFileLineNumbers "scripts\real_weather.sqf";
 	fnc_getnearestplayer = compile preprocessFileLineNumbers "scripts\fnc_getnearestplayer.sqf";
 
 	vitems_eating = compile preprocessFileLineNumbers "vitems\generic\eating.sqf";
@@ -52,6 +53,8 @@
 	vitems_transforming = compile preprocessFileLineNumbers "vitems\generic\transforming.sqf";
 	vitems_banding = compile preprocessFileLineNumbers "vitems\generic\banding.sqf";
 
+	[] spawn fnc_weathers;
+
 	// Initiliaze End
 	callEnd = {
 		private _end = _this;
@@ -59,12 +62,6 @@
 	};
 
 	// Sergent mission handler
-	sergentposition = [];
-	sergentobject = objNull;
-	callSergentMission = {
-		sergentposition = _this select 0;
-		sergentobject = _this select 1;
-	};
 	[] spawn fnc_sergent_clientside;
 
 	// Sergent mission handler
@@ -111,11 +108,11 @@
 	};
 	systemchat "BME 2.0 is initialized";
 
-	// Random spawn position
-	private _position = position player;
+	// Random respawn position
+/*	private _position = position player;
 	_position = ["remoteCall", ["getSpawnPosition", "" , 2, _position]] call bmeclient;
 	player setpos _position;
-	player setpos(player getRelPos [random 250,random 360]);
+	player setpos(player getRelPos [random 250,random 360]);*/
 
 	player addEventHandler ["InventoryOpened", {execVM "gui\loading.sqf";true;}];
 	player addEventHandler ["InventoryClosed", {player addEventHandler ["InventoryOpened", {execVM "gui\loading.sqf";true;}];}];
@@ -135,7 +132,7 @@
 	// load inventory
 	capcontainer = ["new", [netId player, ((getModelInfo player) select 0)]] call OO_CONTAINER;
 	//private _content = 	[["armyradio",-1],["wrench",-1],["medicalkit",1],["survivalration",5],["arifle_MX_khk_F",1],["hgun_P07_khk_F",1],["Binocular",1],["30Rnd_65x39_caseless_khaki_mag",5],["16Rnd_9x21_Mag",2]];
-	private _content = 	[["armyradio",-1],["wrench",-1],["medicalkit",1],["survivalration",5]];
+	private _content = 	[["armyradio",-1],["wrench",-1],["medicalkit",1],["survivalration",5], ["screwdriver", -1]];
 	["overLoad", _content] call capcontainer;
 	"loadInventory" call capcontainer;
 	"save" call capcontainer;
