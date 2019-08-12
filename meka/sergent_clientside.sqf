@@ -42,7 +42,7 @@
         private _object = _this;
         private _position = getpos _object;
         private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
-        private _sound = _path + "sounds\carrier.ogg";        
+        private _sound = _path + "sounds\carrier.ogg";
         private _flag = false;
         private _min = 0;
 		
