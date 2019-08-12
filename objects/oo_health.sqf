@@ -289,7 +289,7 @@
 					if(externaltemperature < 7) then {
 						private _buildings = nearestObjects [player, ["House_F","FirePlace_burning_F"], 10];
 						sleep 0.1;
-						if(count _buildings isEqualTo 0) then { MEMBER("delTemperature", 0.01); _change = true;};
+						if(count _buildings isEqualTo 0) then { MEMBER("delTemperature", 0.1); _change = true;};
 					};
 				};
 				if!(_change) then {
