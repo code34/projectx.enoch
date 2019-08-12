@@ -97,3 +97,12 @@
         picture = "pictures\medicalnote.jpg";
         requirement[] = {};
     };
+    class am212 {
+        type[] = {"mission"};
+        title = "Am212";
+        description = "Am212 Isotop product";
+        weight = 0.1;
+        nbusage = 1;
+        picture = "pictures\am212.jpg";
+        requirement[] = {};
+    };
