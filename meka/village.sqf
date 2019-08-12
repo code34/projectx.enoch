@@ -6,7 +6,7 @@
 		private _flag = true;
 		private _position = _this;
 		while { _flag } do {
-			_flag = ["checkMissionDone", "village"] call missionloader;
+			//_flag = ["checkMissionDone", "village"] call missionloader;
 			["remoteSpawn", ["callVillageMission", [_position], "client"]] call bmeclient;
 			sleep 300 + (random 240);
 		};

@@ -26,7 +26,8 @@
 
     private _flag = true;
     while { _flag } do {
-    	_flag = ["checkMissionDone", "sergent"] call missionloader;
+    	//_flag = ["checkMissionDone", "sergent"] call missionloader;
     	["remoteSpawn", ["callSergentMission", [_position, _object], "client"]] call bmeclient;
+    	diag_log format ["Tick: Send sergent mission infos"];
     	sleep 60;
     };

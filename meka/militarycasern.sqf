@@ -3,7 +3,7 @@
 
 	private _flag = true;
 	while { _flag } do {
-		_flag = ["checkMissionDone", "militarycasern"] call missionloader;
+		//_flag = ["checkMissionDone", "militarycasern"] call missionloader;
 		["remoteSpawn", ["callMilitaryCasernMission", [_position], "client"]] call bmeclient;
 		sleep 300 + (random 240);
 	};

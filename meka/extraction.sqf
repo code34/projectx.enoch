@@ -31,7 +31,7 @@
 
 	private _flag = true;
     while { _flag } do {
-		_flag = ["checkMissionDone", "extraction"] call missionloader;
+		//_flag = ["checkMissionDone", "extraction"] call missionloader;
 		["remoteSpawn", ["callExtractionMission", [_position, _vehicle], "client"]] call bmeclient;
 		sleep 300 + (random 240);
     };

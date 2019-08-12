@@ -1,4 +1,12 @@
 	// Mission Sergent
+	sergentposition = [];
+	sergentobject = objNull;
+
+	// Event handler catch by remotespawn signal send by server
+	callSergentMission = {
+		sergentposition = _this select 0;
+		sergentobject = _this select 1;
+	};
 
 	private _radiostate = missionNamespace getVariable ["armyradiostate", 0];
 	while { !(_radiostate isEqualTo 1) } do {
