@@ -45,20 +45,20 @@
 	// send sync data across the network each xxx seconds
 	// 60 real seconds by default is a good value
 	// shortest time do not improve weather sync
-	_timesync = 10;
+	_timesync = 60;
 
 	// Mission starting date is 25/09/2013 at 12:00
-	_startingdate = [2015, 07, 01, 8, 00];
+	_startingdate = [2019, 08, 01, 05, 00];
 
 	// Mission starting weather "CLEAR|CLOUDY|RAIN";
-	_startingweather = selectRandom ["CLEAR", "CLOUDY", "RAIN"];
+	_startingweather = selectRandom ["CLOUDY", "RAIN"];
 
 	/////////////////////////////////////////////////////////////////
 	// Do not edit below
 	/////////////////////////////////////////////////////////////////
 	
 	// export temperature outside
-	externaltemperature = 22;
+	externaltemperature = 28;
 
 	if(_mintime > _maxtime) exitwith {hint format["Real weather: Max time: %1 can no be higher than Min time: %2", _maxtime, _mintime];};
 	_timeforecast = _mintime;
