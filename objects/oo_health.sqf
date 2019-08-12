@@ -245,9 +245,7 @@
 			DEBUG(#, "OO_HEALTH::delTemperature")
 			private _temperature = MEMBER("temperature", nil);
 			_temperature = _temperature - _this;
-			if(_temperature > 37) then {
-				MEMBER("temperature", _temperature);
-			};
+			MEMBER("temperature", _temperature);
 		};
 
 
@@ -279,6 +277,7 @@
 			private _wind = 0;
 
 			while { true } do {
+				_change = false;
 				_temperature = MEMBER("temperature", nil);
 				_virus = MEMBER("virus", nil);
 				_nausea = MEMBER("nausea", nil);
@@ -288,8 +287,9 @@
 						_change = true;
 				} else {
 					if(externaltemperature < 7) then {
-						MEMBER("delTemperature", 0.1);
-						_change = true;
+						private _buildings = nearestObjects [player, ["House_F","FirePlace_burning_F"], 10];
+						sleep 0.1;
+						if(count _buildings isEqualTo 0) then { MEMBER("delTemperature", 0.01); _change = true;};
 					};
 				};
 				if!(_change) then {
