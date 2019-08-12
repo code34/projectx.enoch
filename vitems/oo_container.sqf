@@ -88,8 +88,6 @@
 				_list pushBack [_classid, _nbusage];
 			} forEach _inventory;
 
-			diag_log format ["%1", _list];
-
 			private _properties = MEMBER("properties", nil);
 			["remoteSpawn", ["vitems_setInventory",  [_netId,_list], "server"]] call bmeclient;
 			["remoteSpawn", ["vitems_setProperties",  [_netId,_properties], "server"]] call bmeclient;
