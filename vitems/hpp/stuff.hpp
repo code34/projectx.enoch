@@ -4,7 +4,7 @@
         description = "A cloth bandage that will allow you to stop bleeding quickly";
         weight = 0.1;
         nbusage = 1;
-        picture = "pictures\bandage.jpg";
+        picture = "paa\bandage.paa";
 		requirement[] = {};        
     };
     class sparewheel {
@@ -21,8 +21,8 @@
         title = "A lighter";
         description = "A lighter that will allow you to light campfires quickly. This object is not waterproof";
         weight = 0.1;
-        nbusage = 5;
-        picture = "pictures\lighter.jpg";
+        nbusage = -1;
+        picture = "paa\lighter.paa";
 		requirement[] = {};        
     }; 
     class wrench {
@@ -31,7 +31,7 @@
         description = "A wrench that allows you to make the most basic repairs";
         weight = 1;
         nbusage = -1;
-        picture = "pictures\wrench.jpg";
+        picture = "paa\wrench.paa";
         requirement[] = {};
     }; 
     class miakalifa {
@@ -49,7 +49,7 @@
         description = "A box full of antibiotic in an acceptable state";
         weight = 0.1;
         nbusage = 10;
-        picture = "pictures\antibiotic.jpg";
+        picture = "paa\antibiotic.paa";
         requirement[] = {};
     };
     class axe {
@@ -58,7 +58,7 @@
         description = "A Greenland Condor axe 1060 High Carbon";
         weight = 1;
         nbusage = -1;
-        picture = "pictures\axe.jpg";
+        picture = "paa\axe.paa";
 		requirement[] = {};
     };
     class plank {
@@ -112,7 +112,7 @@
         description = "The high quality bits have been designed for an improved, long-lasting life, while the built-in bolster allows for additional leverage and torque.";
         weight = 0.2;
         nbusage = -1;
-        picture = "pictures\screwdriver.jpg";
+        picture = "paa\screwdriver.paa";
         requirement[] = {};
     };
     class aquatablet {
@@ -121,7 +121,7 @@
         description = "Potable Aqua Water Purification Tablets.";
         weight = 0.2;
         nbusage = 10;
-        picture = "pictures\aquatablet.jpg";
+        picture = "paa\aquatablet.paa";
         requirement[] = {"bottlewaterunverified"};
     };
      class emptybottle {
@@ -130,7 +130,7 @@
         description = "A Plastic empty bottle.";
         weight = 0.1;
         nbusage = 1;
-        picture = "pictures\emptybottle.jpg";
+        picture = "paa\emptybottle.paa";
         requirement[] = {};
     };
      class tinopener {

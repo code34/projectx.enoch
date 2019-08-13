@@ -31,7 +31,7 @@
         description = "Ultimate Survival Technologies 5-Year Emergency Food Ration Bar.";
         weight = 0.2;
         nbusage = 1;
-        picture = "pictures\survivalration.jpg";
+        picture = "paa\survivalration.paa";
         requirement[] = {};
     };
     class medicalkit {
@@ -39,7 +39,7 @@
         title = "Medical Kit";
         description = "First aid kit.";
         weight = 2;
-        nbusage = 3;
-        picture = "pictures\medicalkit.jpg";
+        nbusage = 1;
+        picture = "paa\medicalkit.paa";
         requirement[] = {};
     };

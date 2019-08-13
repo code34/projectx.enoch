@@ -51,7 +51,7 @@
         description = "Blueberries are sweet, nutritious and wildly popular.";
         weight = 0.3;
         nbusage = 1;
-        picture = "pictures\blueberries.jpg";
+        picture = "paa\blueberries.paa";
         requirement[] = {};
     };
     class gooseberries {

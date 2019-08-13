@@ -31,7 +31,7 @@
         description = "A Plastic mineral water bottle.";
         weight = 1;
         nbusage = 1;
-        picture = "pictures\bottle.jpg";
+        picture = "paa\waterbottle.paa";
         requirement[] = {};
     };
      class potatoe {
@@ -76,7 +76,7 @@
         description = "Tender slices of lean 100% beef are lightly seasoned with a unique blend of spices, and then cooked in a smoke oven.";
         weight = 0.2;
         nbusage = 1;
-        picture = "pictures\beefjerky.jpg";
+        picture = "paa\beefjerky.paa";
         requirement[] = {};
     };
      class whitemushrooms {

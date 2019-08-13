@@ -22,7 +22,7 @@
         description = "The versatile radio enables users to send information up and down the chain of command as well as across the battlefield network backbone";
         weight = 1;
         nbusage = -1;
-        picture = "pictures\armyradio.jpg";
+        picture = "paa\armyradio.paa";
         requirement[] = {};
     };
     class radioamplifier {
