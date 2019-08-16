@@ -1,4 +1,8 @@
 	// Mission Military casern
+	militarycasernposition = [];
+	callMilitaryCasernMission = {
+		militarycasernposition = _this select 0;
+	};
 
 	private _missionplan = missionNamespace getVariable ["missionplan", 0];
 	while { !(_missionplan isEqualTo 1) } do {
