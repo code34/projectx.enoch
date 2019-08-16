@@ -29,5 +29,5 @@
     	//_flag = ["checkMissionDone", "sergent"] call missionloader;
     	["remoteSpawn", ["callSergentMission", [_position, _object], "client"]] call bmeclient;
     	diag_log format ["Tick: Send sergent mission infos"];
-    	sleep 60;
+    	sleep 240;
     };
