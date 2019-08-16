@@ -1,20 +1,28 @@
 #include "oop.h"
 
 CLASS("oo_Vitems")
-	PRIVATE UI_VARIABLE("control", "MainLayer");
-	PRIVATE UI_VARIABLE("control", "OOP_camera");
+	PRIVATE UI_VARIABLE("control", "OOP_fond");
 	PRIVATE UI_VARIABLE("control", "OOP_Listbox_Capacities");
 	PRIVATE UI_VARIABLE("control", "OOP_Listbox_Proximity");
-	PRIVATE UI_VARIABLE("control", "OOP_MainLayer_100");
 	PRIVATE UI_VARIABLE("control", "OOP_Text_Capacities");
 	PRIVATE UI_VARIABLE("control", "OOP_Text_Description");
-	PRIVATE UI_VARIABLE("control", "OOP_Text_Fond");
 	PRIVATE UI_VARIABLE("control", "OOP_Text_Inventory");
 	PRIVATE UI_VARIABLE("control", "OOP_Text_proximity");
+	PRIVATE UI_VARIABLE("control", "OOP_cap_menu");
 	PRIVATE UI_VARIABLE("control", "OOP_pic_primaryweapon");
 	PRIVATE UI_VARIABLE("control", "OOP_pic_secondaryweapon");
 	PRIVATE UI_VARIABLE("control", "OOP_pic_gunweapon");
-	PRIVATE UI_VARIABLE("control", "OOP_btn_menu");
+	PRIVATE UI_VARIABLE("control", "OOP_pic_binocular");
+	PRIVATE UI_VARIABLE("control", "OOP_pic_magprimaryweapon");
+	PRIVATE UI_VARIABLE("control", "OOP_pic_maggunweapon");
+	PRIVATE UI_VARIABLE("control", "OOP_pic_magsecondaryweapon");
+	PRIVATE UI_VARIABLE("control", "OOP_pic_opticprimaryweapon");
+	PRIVATE UI_VARIABLE("control", "OOP_pic_opticgunweapon");
+	PRIVATE UI_VARIABLE("control", "OOP_pic_opticsecondaryweapon");
+	PRIVATE UI_VARIABLE("control", "OOP_pic_head");
+	PRIVATE UI_VARIABLE("control", "OOP_pic_uniform");
+	PRIVATE UI_VARIABLE("control", "OOP_pic_vest");
+	PRIVATE UI_VARIABLE("control", "OOP_pic_bag");
 	PRIVATE UI_VARIABLE("display", "Display");
 	PRIVATE UI_VARIABLE("array", "destination");
 	PRIVATE UI_VARIABLE("array", "source");
@@ -23,27 +31,34 @@ CLASS("oo_Vitems")
 	PUBLIC FUNCTION("display", "constructor"){
 		disableSerialization;
 		MEMBER("Display", _this);
-		MEMBER("MainLayer", _this displayCtrl 100);
-		MEMBER("OOP_Listbox_Capacities", _this displayCtrl 103);
+		MEMBER("OOP_fond", _this displayCtrl 99);
 		MEMBER("OOP_Listbox_Proximity", _this displayCtrl 102);
-		MEMBER("OOP_MainLayer_100", _this displayCtrl 100);
+		MEMBER("OOP_Listbox_Capacities", _this displayCtrl 103);
 		MEMBER("OOP_Text_Capacities", _this displayCtrl 105);
 		MEMBER("OOP_Text_Description", _this displayCtrl 107);
-		MEMBER("OOP_Text_Fond", _this displayCtrl 101);
 		MEMBER("OOP_Text_Inventory", _this displayCtrl 106);
 		MEMBER("OOP_Text_proximity", _this displayCtrl 104);
-		MEMBER("OOP_btn_menu", _this displayCtrl 108);
+		MEMBER("OOP_cap_menu", _this displayCtrl 108);
 		MEMBER("OOP_pic_primaryweapon", _this displayCtrl 109);
 		MEMBER("OOP_pic_secondaryweapon", _this displayCtrl 110);
 		MEMBER("OOP_pic_gunweapon", _this displayCtrl 111);
-		MEMBER("OOP_camera", _this displayCtrl 99);
-
+		MEMBER("OOP_pic_binocular", _this displayCtrl 112);
+		MEMBER("OOP_pic_magprimaryweapon", _this displayCtrl 113);
+		MEMBER("OOP_pic_maggunweapon", _this displayCtrl 114);
+		MEMBER("OOP_pic_magsecondaryweapon", _this displayCtrl 115);
+		MEMBER("OOP_pic_opticprimaryweapon", _this displayCtrl 116);
+		MEMBER("OOP_pic_opticgunweapon", _this displayCtrl 117);
+		MEMBER("OOP_pic_opticsecondaryweapon", _this displayCtrl 118);
+		MEMBER("OOP_pic_head", _this displayCtrl 119);
+		MEMBER("OOP_pic_uniform", _this displayCtrl 120);
+		MEMBER("OOP_pic_vest", _this displayCtrl 121);
+		MEMBER("OOP_pic_bag", _this displayCtrl 122);
 		MEMBER("selectindex", -1);
 		private _array = [];
 		MEMBER("source", _array);
 		private _array = [];
 		MEMBER("destination", _array);
-		MEMBER("OOP_btn_menu", nil) ctrlShow false;
+		MEMBER("OOP_cap_menu", nil) ctrlShow false;
 		//MEMBER("OOP_Text_Description",nil) ctrlShow false;
 		//MEMBER("OOP_Listbox_Capacities", nil) ctrlShow false;
 		MEMBER("initWeapons", nil);
@@ -72,204 +87,85 @@ CLASS("oo_Vitems")
 		radioSlot = "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_radio_gs.paa";
 		gpsSlot = "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_gps_gs.paa";*/
 
+	PUBLIC FUNCTION("array", "setItemPicture") {
+		private _class = _this select 0;
+		private _control = _this select 1;
+		private _type = _this select 2;
+		private _picture = _this select 3;
+		
+		if(_class isEqualTo "") then {
+			MEMBER(_control, nil) ctrlSetText _picture;
+		} else {
+			private _picture = getText(configfile >> _type >> _class >> "picture");
+			private _name = getText(configfile >> _type >> _class >> "displayName");
+			MEMBER(_control, nil) ctrlSetText _picture;
+			MEMBER(_control, nil) ctrlSetTooltip _name;
+		};
+	};
+
 	PUBLIC FUNCTION("", "initWeapons") {
-		private _ctrl = MEMBER("Display", nil) displayCtrl 109;
-		private _pw = primaryWeapon player;
-		if(_pw isEqualTo "") then {
-			_ctrl ctrlSetText "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_primary_gs.paa";
-		} else {
-			private _picture = getText(configfile >> "cfgWeapons" >> _pw >> "picture");
-			private _name = getText(configfile >> "cfgWeapons" >> _pw >> "displayName");
-			_ctrl ctrlSetText _picture;
-			_ctrl ctrlSetTooltip _name;
-		};
-
-		private _ctrl = MEMBER("Display", nil) displayCtrl 110;
-		private _pw = secondaryWeapon player;
-		if(_pw isEqualTo "") then {
-			_ctrl ctrlSetText "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_secondary_gs.paa";
-		} else {
-			private _picture = getText(configfile >> "cfgWeapons" >> _pw >> "picture");
-			private _name = getText(configfile >> "cfgWeapons" >> _pw >> "displayName");
-			_ctrl ctrlSetText _picture;
-			_ctrl ctrlSetTooltip _name;
-		};
-
-		private _ctrl = MEMBER("Display", nil) displayCtrl 111;
-		private _pw = handgunWeapon player;
-		if(_pw isEqualTo "") then {
-			_ctrl ctrlSetText "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_hgun_gs.paa";
-		} else {
-			private _picture = getText(configfile >> "cfgWeapons" >> _pw >> "picture");
-			private _name = getText(configfile >> "cfgWeapons" >> _pw >> "displayName");
-			_ctrl ctrlSetText _picture;
-			_ctrl ctrlSetTooltip _name;
-		};
-
-		private _ctrl = MEMBER("Display", nil) displayCtrl 112;
-		private _pw = binocular player;
-		if(_pw isEqualTo "") then {
-			_ctrl ctrlSetText "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_binocular_gs.paa";
-		} else {
-			private _picture = getText(configfile >> "cfgWeapons" >> _pw >> "picture");
-			private _name = getText(configfile >> "cfgWeapons" >> _pw >> "displayName");
-			_ctrl ctrlSetText _picture;
-			_ctrl ctrlSetTooltip _name;
-		};
 
 		private _gear = "new" call OO_ARMAGEAR;
 		private _weaponsitems = "weaponsItems" call _gear;
-
     	private _primaryoptic = (_weaponsitems select 0) select 3;
     	private _secondaryoptic = (_weaponsitems select 1) select 3;
     	private _gunoptic = (_weaponsitems select 2) select 3;
     	private _primarymag = ((_weaponsitems select 0) select 4) select 0;
     	private _secondarymag = ((_weaponsitems select 1) select 4) select 0;
     	private _gunmag = ((_weaponsitems select 2) select 4) select 0;
-		private _ctrl = MEMBER("Display", nil) displayCtrl 113;
+    	private _headgear = headgear player;
+    	private _uniform = uniform player;
+		private _vest = vest player;
+		private _bag = backpack player;
 
-		if(_primarymag isEqualTo "") then {
-			_ctrl ctrlSetText "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_magazine_gs.paa";
-		} else {
-			private _picture = getText(configfile >> "CfgMagazines" >> _primarymag >> "picture");
-			private _name = getText(configfile >> "CfgMagazines" >> _primarymag >> "displayName");
-			_ctrl ctrlSetText _picture;
-			_ctrl ctrlSetTooltip _name;
-		};
-
-		private _ctrl = MEMBER("Display", nil) displayCtrl 114;
-		if(_gunmag isEqualTo "") then {
-			_ctrl ctrlSetText "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_magazine_gs.paa";
-		} else {
-			private _picture = getText(configfile >> "CfgMagazines" >> _gunmag >> "picture");
-			private _name = getText(configfile >> "CfgMagazines" >> _gunmag >> "displayName");
-			_ctrl ctrlSetText _picture;
-			_ctrl ctrlSetTooltip _name;
-		};
-
-		private _ctrl = MEMBER("Display", nil) displayCtrl 115;
-		if(_secondarymag isEqualTo "") then {
-			_ctrl ctrlSetText "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_magazine_gs.paa";
-		} else {
-			private _picture = getText(configfile >> "CfgMagazines" >> _secondarymag >> "picture");
-			private _name = getText(configfile >> "CfgMagazines" >> _secondarymag >> "displayName");
-			_ctrl ctrlSetText _picture;
-			_ctrl ctrlSetTooltip _name;
-		};
-
-		private _ctrl = MEMBER("Display", nil) displayCtrl 116;
-		if(_primaryoptic isEqualTo "") then {
-			_ctrl ctrlSetText "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_top_gs.paa";
-		} else {
-			private _picture = getText(configfile >> "CfgWeapons" >> _primaryoptic >> "picture");
-			private _name = getText(configfile >> "CfgWeapons" >> _primaryoptic >> "displayName");
-			_ctrl ctrlSetText _picture;
-			_ctrl ctrlSetTooltip _name;
-		};
-
-		private _ctrl = MEMBER("Display", nil) displayCtrl 117;
-		if(_gunoptic isEqualTo "") then {
-			_ctrl ctrlSetText "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_top_gs.paa";
-		} else {
-			private _picture = getText(configfile >> "CfgWeapons" >> _gunoptic >> "picture");
-			private _name = getText(configfile >> "CfgWeapons" >> _gunoptic >> "displayName");
-			_ctrl ctrlSetText _picture;
-			_ctrl ctrlSetTooltip _name;
-		};
-
-		private _ctrl = MEMBER("Display", nil) displayCtrl 118;
-		if(_secondaryoptic isEqualTo "") then {
-			_ctrl ctrlSetText "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_top_gs.paa";
-		} else {
-			private _picture = getText(configfile >> "CfgWeapons" >> _secondaryoptic >> "picture");
-			private _name = getText(configfile >> "CfgWeapons" >> _secondaryoptic >> "displayName");
-			_ctrl ctrlSetText _picture;
-			_ctrl ctrlSetTooltip _name;
-		};
-
-		_headgear = headgear player;
-		private _ctrl = MEMBER("Display", nil) displayCtrl 119;
-		if(_headgear isEqualTo "") then {
-			_ctrl ctrlSetText "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_helmet_gs.paa";
-		} else {
-			private _picture = getText(configfile >> "CfgWeapons" >> _headgear >> "picture");
-			private _name = getText(configfile >> "CfgWeapons" >> _headgear >> "displayName");
-			_ctrl ctrlSetText _picture;
-			_ctrl ctrlSetTooltip _name;
-		};
-
-		_uniform = uniform player;
-		private _ctrl = MEMBER("Display", nil) displayCtrl 120;
-		if(_uniform isEqualTo "") then {
-			_ctrl ctrlSetText "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_uniform_gs.paa";
-		} else {
-			private _picture = getText(configfile >> "CfgWeapons" >> _uniform >> "picture");
-			private _name = getText(configfile >> "CfgWeapons" >> _uniform >> "displayName");
-			_ctrl ctrlSetText _picture;
-			_ctrl ctrlSetTooltip _name;
-		};
-
-		_vest = vest player;
-		private _ctrl = MEMBER("Display", nil) displayCtrl 121;
-		if(_vest isEqualTo "") then {
-			_ctrl ctrlSetText "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_vest_gs.paa";
-		} else {
-			private _picture = getText(configfile >> "CfgWeapons" >> _vest >> "picture");
-			private _name = getText(configfile >> "CfgWeapons" >> _vest >> "displayName");
-			_ctrl ctrlSetText _picture;
-			_ctrl ctrlSetTooltip _name;
-		};
-
-		_bag = backpack player;
-		private _ctrl = MEMBER("Display", nil) displayCtrl 122;
-		if(_bag isEqualTo "") then {
-			_ctrl ctrlSetText "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_backpack_gs.paa";
-		} else {
-			private _picture = getText(configfile >> "CfgVehicles" >> _bag >> "picture");
-			private _name = getText(configfile >> "CfgVehicles" >> _bag >> "displayName");
-			_ctrl ctrlSetText _picture;
-			_ctrl ctrlSetTooltip _name;
-		};
-
+		private _array = [(primaryWeapon player), "OOP_pic_primaryweapon", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_primary_gs.paa"];
+		MEMBER("setItemPicture", _array);
+		_array = [(secondaryWeapon player), "OOP_pic_secondaryweapon", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_secondary_gs.paa"];
+		MEMBER("setItemPicture", _array);
+		_array = [(handgunWeapon player), "OOP_pic_gunweapon", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_hgun_gs.paa"];
+		MEMBER("setItemPicture", _array);
+		_array = [(binocular player), "OOP_pic_binocular", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_binocular_gs.paa"];
+		MEMBER("setItemPicture", _array);
+		_array = [_primarymag, "OOP_pic_magprimaryweapon", "CfgMagazines", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_magazine_gs.paa"];
+		MEMBER("setItemPicture", _array);
+		_array = [_gunmag, "OOP_pic_maggunweapon", "CfgMagazines", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_magazine_gs.paa"];
+		MEMBER("setItemPicture", _array);
+		_array = [_secondarymag, "OOP_pic_magsecondaryweapon", "CfgMagazines", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_magazine_gs.paa"];
+		MEMBER("setItemPicture", _array);
+		_array  = [_primaryoptic, "OOP_pic_opticprimaryweapon", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_top_gs.paa"];
+		MEMBER("setItemPicture", _array);
+		_array = [_gunoptic, "OOP_pic_opticgunweapon", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_top_gs.paa"];
+		MEMBER("setItemPicture", _array);
+		_array = [_secondaryoptic, "OOP_pic_opticsecondaryweapon", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_top_gs.paa"];
+		MEMBER("setItemPicture", _array);
+		_array = [_headgear, "OOP_pic_head", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_helmet_gs.paa"];
+		MEMBER("setItemPicture", _array);
+		_array = [_uniform, "OOP_pic_uniform", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_uniform_gs.paa"];
+		MEMBER("setItemPicture", _array);
+		_array = [_vest, "OOP_pic_vest", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_vest_gs.paa"];
+		MEMBER("setItemPicture", _array);
+		_array = [_bag, "OOP_pic_bag", "CfgVehicles", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_backpack_gs.paa"];
+		MEMBER("setItemPicture", _array);
 	};
 
-/*	PUBLIC FUNCTION("", "createGrid") {
-		private _newx = 0.75;
-		private _newy = 0.04;
-		for "_z" from 0 to 18 step 1 do {
-			for "_i" from 0 to 7 step 1 do {
-				private _ctrl = MEMBER("Display",nil) ctrlCreate ["RscPicture", -1, MEMBER("Display",nil)  displayCtrl 100];
-				_myx = (safezoneW * _newx);
-				_myy = (safezoneH * _newy);
-				_myw = (safezoneW * 0.03);
-				_myh = (safezoneH * 0.05);
-				_ctrl ctrlSetPosition [_myx,_myy,_myw,_myh];
-				_ctrl ctrlSetBackgroundColor [0, 0, 0, 1];
-				if(random 1 > 0.5) then {
-					_ctrl ctrlSetText "pictures\cannedravioli.jpg";
-				};
-				_ctrl ctrlCommit 0;
-				_newx = _newx + 0.03;
-			};
-			_newy = _newy + 0.05;
-			_newx = 0.75;
-		};
-	};*/
+	PUBLIC FUNCTION("", "removeItem") {
+
+	};
 
 	PUBLIC FUNCTION("array", "setMenu") {
 		if((_this select 1) isEqualTo 1) then {
 			private _pos = [(getMousePosition select 0) + (safezoneX * -1), (getMousePosition select 1) + (safezoneY * -1)];
-			MEMBER("OOP_btn_menu", nil) ctrlShow true;
-			MEMBER("OOP_btn_menu", nil) ctrlSetPosition _pos;
-			MEMBER("OOP_btn_menu", nil) ctrlCommit 0;
-			ctrlSetFocus MEMBER("OOP_btn_menu", nil);
+			MEMBER("OOP_cap_menu", nil) ctrlShow true;
+			MEMBER("OOP_cap_menu", nil) ctrlSetPosition _pos;
+			MEMBER("OOP_cap_menu", nil) ctrlCommit 0;
+			ctrlSetFocus MEMBER("OOP_cap_menu", nil);
 		};
 	};
 
 	PUBLIC FUNCTION("array", "closeMenu") {
 		if((_this select 1) isEqualTo 0) then {
-			MEMBER("OOP_btn_menu", nil) ctrlShow false;
-			MEMBER("OOP_btn_menu", nil) ctrlCommit 0;
+			MEMBER("OOP_cap_menu", nil) ctrlShow false;
+			MEMBER("OOP_cap_menu", nil) ctrlCommit 0;
 		};
 	};
 
@@ -574,36 +470,6 @@ CLASS("oo_Vitems")
 
 	};
 
-
-	PUBLIC FUNCTION("", "getDisplay") FUNC_GETVAR("Display");
-	PUBLIC FUNCTION("", "getMainLayer") FUNC_GETVAR("MainLayer");
-	PUBLIC FUNCTION("", "getOOP_Listbox_Capacities") FUNC_GETVAR("OOP_Listbox_Capacities");
-	PUBLIC FUNCTION("", "getOOP_Listbox_Proximity") FUNC_GETVAR("OOP_Listbox_Proximity");
-	PUBLIC FUNCTION("", "getOOP_MainLayer_100") FUNC_GETVAR("OOP_MainLayer_100");
-	PUBLIC FUNCTION("", "getOOP_Text_Capacities") FUNC_GETVAR("OOP_Text_Capacities");
-	PUBLIC FUNCTION("", "getOOP_Text_Description") FUNC_GETVAR("OOP_Text_Description");
-	PUBLIC FUNCTION("", "getOOP_Text_Fond") FUNC_GETVAR("OOP_Text_Fond");
-	PUBLIC FUNCTION("", "getOOP_Text_Inventory") FUNC_GETVAR("OOP_Text_Inventory");
-	PUBLIC FUNCTION("", "getOOP_Text_proximity") FUNC_GETVAR("OOP_Text_proximity");
-	PUBLIC FUNCTION("", "getOOP_pic_primaryweapon") FUNC_GETVAR("OOP_pic_primaryweapon");
-	PUBLIC FUNCTION("", "getOOP_pic_secondaryweapon") FUNC_GETVAR("OOP_pic_secondaryweapon");
-	PUBLIC FUNCTION("", "getOOP_pic_gunweapon") FUNC_GETVAR("OOP_pic_gunweapon");
-	PUBLIC FUNCTION("", "getOOP_btn_menu") FUNC_GETVAR("OOP_btn_menu");
-	PUBLIC FUNCTION("control", "setMainLayer"){ MEMBER("MainLayer", _this); };
-	PUBLIC FUNCTION("control", "setOOP_Listbox_Capacities"){ MEMBER("OOP_Listbox_Capacities", _this); };
-	PUBLIC FUNCTION("control", "setOOP_Listbox_Proximity"){ MEMBER("OOP_Listbox_Proximity", _this); };
-	PUBLIC FUNCTION("control", "setOOP_MainLayer_100"){ MEMBER("OOP_MainLayer_100", _this); };
-	PUBLIC FUNCTION("control", "setOOP_Text_Capacities"){ MEMBER("OOP_Text_Capacities", _this); };
-	PUBLIC FUNCTION("control", "setOOP_Text_Description"){ MEMBER("OOP_Text_Description", _this); };
-	PUBLIC FUNCTION("control", "setOOP_Text_Fond"){ MEMBER("OOP_Text_Fond", _this); };
-	PUBLIC FUNCTION("control", "setOOP_Text_Inventory"){ MEMBER("OOP_Text_Inventory", _this); };
-	PUBLIC FUNCTION("control", "setOOP_Text_proximity"){ MEMBER("OOP_Text_proximity", _this); };
-	PUBLIC FUNCTION("control", "setOOP_pic_primaryweapon"){ MEMBER("OOP_pic_primaryweapon", _this); };
-	PUBLIC FUNCTION("control", "setOOP_pic_secondaryweapon"){ MEMBER("OOP_pic_secondaryweapon", _this); };
-	PUBLIC FUNCTION("control", "setOOP_pic_gunweapon"){ MEMBER("OOP_pic_gunweapon", _this); };
-	PUBLIC FUNCTION("control", "setOOP_btn_menu"){ MEMBER("OOP_btn_menu", _this); };
-	PUBLIC FUNCTION("display", "setDisplay"){ MEMBER("Display", _this); };
-	
 	PUBLIC FUNCTION("", "deconstructor"){
 		DEBUG(#, "OO_VITEMS::deconstructor")
 		"save" call proxcontainer;
@@ -622,19 +488,27 @@ CLASS("oo_Vitems")
 		};
 		//["delete", capcontainer] call OO_CONTAINER;
 		["delete", proxcontainer] call OO_CONTAINER;
-		DELETE_UI_VARIABLE("MainLayer");
 		DELETE_UI_VARIABLE("OOP_Listbox_Capacities");
 		DELETE_UI_VARIABLE("OOP_Listbox_Proximity");
-		DELETE_UI_VARIABLE("OOP_MainLayer_100");
 		DELETE_UI_VARIABLE("OOP_Text_Capacities");
 		DELETE_UI_VARIABLE("OOP_Text_Description");
-		DELETE_UI_VARIABLE("OOP_Text_Fond");
 		DELETE_UI_VARIABLE("OOP_Text_Inventory");
 		DELETE_UI_VARIABLE("OOP_Text_proximity");
+		DELETE_UI_VARIABLE("OOP_cap_menu");
 		DELETE_UI_VARIABLE("OOP_pic_primaryweapon");		
 		DELETE_UI_VARIABLE("OOP_pic_secondaryweapon");
 		DELETE_UI_VARIABLE("OOP_pic_gunweapon");
-		DELETE_UI_VARIABLE("OOP_btn_menu");
+		DELETE_UI_VARIABLE("OOP_pic_binocular");
+		DELETE_UI_VARIABLE("OOP_pic_magprimaryweapon");
+		DELETE_UI_VARIABLE("OOP_pic_maggunweapon");
+		DELETE_UI_VARIABLE("OOP_pic_magsecondaryweapon");
+		DELETE_UI_VARIABLE("OOP_pic_opticprimaryweapon");
+		DELETE_UI_VARIABLE("OOP_pic_opticgunweapon");
+		DELETE_UI_VARIABLE("OOP_pic_opticsecondaryweapon");
+		DELETE_UI_VARIABLE("OOP_pic_head");
+		DELETE_UI_VARIABLE("OOP_pic_uniform");
+		DELETE_UI_VARIABLE("OOP_pic_vest");
+		DELETE_UI_VARIABLE("OOP_pic_bag");
 		DELETE_UI_VARIABLE("Display");
 		DELETE_VARIABLE("source");
 		DELETE_VARIABLE("destination");
