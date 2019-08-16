@@ -195,6 +195,7 @@
                     default {
                         _position = _ref getRelPos [50 + (random 100), random 360];
                     };
+                    sleep 0.5;
                 };  
 
                 _type = format["%1%2", (selectRandom _array),"Opfor"];
