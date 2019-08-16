@@ -1,4 +1,11 @@
     // extraction point
+	extractionposition = [];
+	extractionvehicle = objNull;
+	callExtractionMission = {
+		extractionposition = _this select 0;
+		extractionvehicle = _this select 1;
+	};
+   
     while { extractionposition isEqualTo []} do { sleep 1;};
 
     private _position = extractionposition;
