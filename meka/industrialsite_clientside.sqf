@@ -1,4 +1,8 @@
 	// Mission Industrial site
+	industrialsiteposition = [];
+	callIndustrialSiteMission = {
+		industrialsiteposition = _this select 0;
+	};
 
 	private _missionplan = missionNamespace getVariable ["missionplan", 0];
 	while { !(_missionplan isEqualTo 1) } do {
@@ -31,5 +35,5 @@
 
 	while { player distance _position > 100 } do { sleep 10;};
 
-	["setPages", ["meka\story\industrialsite.html"]] call tabnote;
+	["setPages", ["meka\story\industrialsite1.html"]] call tabnote;
 	["showFile", true] call hud;
