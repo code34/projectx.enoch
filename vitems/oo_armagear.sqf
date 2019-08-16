@@ -34,6 +34,32 @@
 			MEMBER("magazines", _array);			
 		};
 
+		PUBLIC FUNCTION("","weaponsItems") { 
+			private _wp = weaponsItems player;
+			private _p = primaryWeapon player;
+			private _s = secondaryWeapon player;
+			private _g = handgunWeapon player;
+	
+			private _primary = "";
+			private _secondary = "";
+			private _gun = "";
+
+			{
+				switch (_x select 0) do { 
+					case _p : { _primary = _x;}; 
+					case _s : { _secondary = _x;}; 
+					case _g : { _gun = _x;}; 
+					default {}; 
+				};
+			} forEach _wp;
+
+			if(_primary isEqualTo "") then {_primary = ["","","","",[""],[],""];};
+			if(_secondary isEqualTo "") then {_secondary = ["","","","",[""],[],""];};
+			if(_gun isEqualTo "") then {_gun = ["","","","",[""],[],""];};
+
+			[_primary, _secondary, _gun];
+		};
+
 		PUBLIC FUNCTION("array","loadCfg") {
 			DEBUG(#, "OO_ARMAGEAR::loadCfg")
 			private _classid = _this select 0;
