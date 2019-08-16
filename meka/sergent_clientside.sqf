@@ -15,8 +15,6 @@
 	};
 	while {sergentposition isEqualTo []} do {sleep 1;};
 	
-	sleep 300 + (random 240);
-
 	private _position = sergentposition;
 	private _object = sergentobject;
 
