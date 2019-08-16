@@ -1,6 +1,6 @@
 
     private _time = _this select 0;
-    private _position = player getRelPos [1,0];
+    private _position = player getRelPos [2,0];
     private _fire = "FirePlace_burning_F" createVehicle _position;
     _fire setpos _position;
         
