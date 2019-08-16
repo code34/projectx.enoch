@@ -9,13 +9,13 @@
         
 		private _id = random 65000;
 		private _name = format["radio_%1", _id];
-		_missionmarker = createMarker [_name, position (_radio select 0)];
-		_missionmarker setMarkerShape "ICON";
-		_missionmarker setMarkerType "selector_selectedMission";
-		_missionmarker setMarkerText "Radio Site";
-		_missionmarker setMarkerColor "ColorRed";
-		_missionmarker setMarkerSize [1,1];
-		_missionmarker setMarkerBrush "FDiagonal";
+		_missionmarker = createMarkerLocal [_name, position (_radio select 0)];
+		_missionmarker setMarkerShapeLocal "ICON";
+		_missionmarker setMarkerTypeLocal "selector_selectedMission";
+		_missionmarker setMarkerTextLocal "Radio Site";
+		_missionmarker setMarkerColorLocal "ColorRed";
+		_missionmarker setMarkerSizeLocal [1,1];
+		_missionmarker setMarkerBrushLocal "FDiagonal";
 
 		radiocenter = nearestObjects [(_radio select 0), ["Land_TBox_F"], 50];
 		sleep 2;    
@@ -65,4 +65,4 @@
 		missionNamespace setVariable["armyradiostate", 1];
 
 		playSound "whitenoise";
-		deleteMarker _missionmarker;	
+		deleteMarkerLocal _missionmarker;	
