@@ -42,6 +42,7 @@
 
 	fnc_weathers = compile preprocessFileLineNumbers "scripts\real_weather.sqf";
 	fnc_getnearestplayer = compile preprocessFileLineNumbers "scripts\fnc_getnearestplayer.sqf";
+	fnc_inventorycam = compile preprocessFileLineNumbers "scripts\fnc_inventorycam.sqf";
 
 	vitems_eating = compile preprocessFileLineNumbers "vitems\generic\eating.sqf";
 	vitems_drinking = compile preprocessFileLineNumbers "vitems\generic\drinking.sqf";
@@ -64,35 +65,13 @@
 
 	// Sergent mission handler
 	[] spawn fnc_sergent_clientside;
-
 	// Sergent mission handler
-	extractionposition = [];
-	extractionvehicle = objNull;
-	callExtractionMission = {
-		extractionposition = _this select 0;
-		extractionvehicle = _this select 1;
-	};
 	[] spawn fnc_extraction_clientside;
-
 	// Village mission handler
-	villageposition = [];
-	callVillageMission = {
-		villageposition = _this select 0;
-	};
 	[] spawn fnc_village_clientside;
-
 	// Military casern mission handler
-	militarycasernposition = [];
-	callMilitaryCasernMission = {
-		militarycasernposition = _this select 0;
-	};
 	[] spawn fnc_militarycasern_clientside;
-
 	// Military casern mission handler
-	industrialsiteposition = [];
-	callIndustrialSiteMission = {
-		industrialsiteposition = _this select 0;
-	};
 	[] spawn fnc_industrialsite_clientside;
 
 	callTabnote = {
@@ -133,7 +112,7 @@
 	// load inventory
 	capcontainer = ["new", [netId player, ((getModelInfo player) select 0)]] call OO_CONTAINER;
 	//private _content = 	[["armyradio",-1],["wrench",-1],["medicalkit",1],["survivalration",5],["arifle_MX_khk_F",1],["hgun_P07_khk_F",1],["Binocular",1],["30Rnd_65x39_caseless_khaki_mag",5],["16Rnd_9x21_Mag",2]];
-	private _content = 	[["armyradio",-1],["wrench",-1],["medicalkit",1],["survivalration",5], ["screwdriver", -1],["waterbottle",1]];
+	private _content = 	[["arifle_MSBS65_F",1], ["launch_RPG32_camo_F", 1],["armyradio",-1],["wrench",-1],["medicalkit",1],["survivalration",5], ["screwdriver", -1],["waterbottle",1]];
 	["overLoad", _content] call capcontainer;
 	"loadInventory" call capcontainer;
 	"save" call capcontainer;
@@ -174,6 +153,9 @@
 	["setPages", ["meka\story\introduction1.html","meka\story\introduction2.html"]] call tabnote;
 	["showFile", true] call hud;
 
+	_sound = "new" call OO_SOUND;
+	player addEventHandler ["killed", "closeDialog 0;"];
+
 /*	copyToClipboard format ["%1 %2", getText(configfile >> "cfgWeapons" >> "hgun_P07_khk_F">> "picture"), getText(configfile >> "cfgMagazines" >> "16Rnd_9x21_Mag" >> "picture")];*/
 
 /*	["arifle_MX_khk_F","hgun_P07_khk_F"] 
@@ -207,8 +189,6 @@
 		systemchat format ["%1", _position];
 		sleep 1;
 	};*/
-
-	_sound = "new" call OO_SOUND;
 
 /*	while { true } do {
 		hint format["%1 %2", typeOf cursorTarget, (getModelInfo cursorTarget) select 0];
