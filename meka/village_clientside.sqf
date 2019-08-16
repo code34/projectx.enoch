@@ -1,5 +1,9 @@
 	// Mission Village
-
+	villageposition = [];
+	callVillageMission = {
+		villageposition = _this select 0;
+	};
+	
 	private _missionplan = missionNamespace getVariable ["missionplan", 0];
 	while { !(_missionplan isEqualTo 1) } do {
 		_missionplan = missionNamespace getVariable ["missionplan", 0];
@@ -31,7 +35,7 @@
 
 	while { player distance _position > 100 } do { sleep 10;};
 
-	["setPages", ["meka\story\village.html"]] call tabnote;
+	["setPages", ["meka\story\village1.html","meka\story\village2.html"]] call tabnote;
 	["showFile", true] call hud;
 
 
