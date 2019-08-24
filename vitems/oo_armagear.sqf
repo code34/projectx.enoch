@@ -88,6 +88,14 @@
 					_requirement = [];
 					_armagear = true;
 				};
+				case MEMBER("isVehicle", _classid) : {
+					_title = getText(configfile >> "cfgVehicles" >> _classid >> "displayName");
+					_description = getText(configfile >> "cfgVehicles" >> _classid >> "descriptionShort");
+					_weight = 1;
+					_picture = getText(configfile >> "cfgVehicles" >> _classid >> "picture");
+					_requirement = [];
+					_armagear = true;
+				};
 				case MEMBER("isMagazine", _classid) : {
 					_title = getText(configfile >> "cfgMagazines" >> _classid >> "displayName");
 					_description = getText(configfile >> "cfgMagazines" >> _classid >> "descriptionShort");
@@ -100,6 +108,38 @@
 				default {};
 			};
 			[_classid, _title, _description, _weight, _nbusage, _picture,_requirement, _armagear];
+		};
+
+
+		PUBLIC FUNCTION("","loadItems") {
+				DEBUG(#, "OO_ARMAGEAR::loadItems")
+				private _items = [];
+				private _result = [];
+
+				_items pushBack (headgear player);
+				_items pushBack (goggles player);
+				_items pushBack (uniform player);				
+				{_items pushBack _x} foreach (UniformItems player);
+				_items pushBack (vest player);
+				{_items pushBack _x} foreach (VestItems player);
+				_items pushBack (backpack player);
+				{_items pushBack _x} foreach (backpackItems player);
+				{_items pushBack _x} foreach (primaryWeaponItems player);
+				{_items pushBack _x} foreach (secondaryWeaponItems player);
+				{_items pushBack _x} foreach (handgunItems player);
+				{_items pushBack _x}foreach (weapons player);
+				
+				private _blacklist = (weapons player);
+				{
+					if!(_x in _blacklist) then {_items pushBack _x};
+				} foreach (assignedItems player);
+				_items = _items - [""];
+
+				{
+					_param = [_x, 1];
+					_result pushBack MEMBER("loadCfg", _param);
+				} forEach _items;
+				_result;
 		};
 
 		PUBLIC FUNCTION("","loadWeapons") {
@@ -134,6 +174,10 @@
 			_magazines;
 		};
 
+		PUBLIC FUNCTION("string","isVehicle") {
+			(str(configfile >> "cfgVehicles" >> _this) != "");
+		};
+
 		PUBLIC FUNCTION("string","isWeapon") {
 			(str(configfile >> "cfgWeapons" >> _this) != "");
 		};
@@ -144,6 +188,93 @@
 
 		PUBLIC FUNCTION("string","isVitems") {
 			(str(missionConfigFile >> "cfgVitems" >> _this) != "");
+		};
+
+		PUBLIC FUNCTION("array","addItem") {
+			DEBUG(#, "OO_ARMAGEAR::addItem")
+			// type : head, backpack, vest, uniform
+			// item : arma class 
+			private _type = _this select 0;
+			private _item = _this select 1;
+			switch (_type) do { 
+				case "head" : {player addHeadgear _item;}; 
+				case "uniform" : {player addUniform _item;}; 
+				case "vest" : {player addVest _item;}; 
+				case "backpack" : {
+					player addBackpack _item;
+					clearAllItemsFromBackpack player;
+				}; 
+				case "primaryweapon" : {player addPrimaryWeaponItem _item;};
+				case "secondaryweapon" : {player addSecondaryWeaponItem _item;};
+				case "handgunweapon" : {player addHandgunItem _item;};
+				default {}; 
+			};
+		};
+
+		PUBLIC FUNCTION("array","getCargoItems") {
+			private _result = [];
+			private _items = [];
+			private _cargo = _this select 0;
+
+			switch (true) do {
+				case (_cargo isEqualTo (uniform player)) : {_items = uniformItems player;};
+				case (_cargo isEqualTo (vest player)) : {_items = vestItems player; };
+				case (_cargo isEqualTo (backpack player)): {_items = backpackItems player;};
+			};
+
+			{ _result pushBack [_x, 1];	} forEach _items;
+			_result;
+		};
+
+		PUBLIC FUNCTION("array","addWeapon") {
+			DEBUG(#, "OO_ARMAGEAR::addWeapon")
+			private _items = _this;
+			if(MEMBER("isWeapon",(_items select 0))) then {
+				player addweapon (_items select 0);
+			};
+		};
+
+		PUBLIC FUNCTION("array","addMagazines") {
+			DEBUG(#, "OO_ARMAGEAR::addMagazines")
+			private _type = _this select 0;
+			private _item = _this select 1;
+			private _mages = "";
+			private _wp = "";
+			private _items = "";
+			
+			if(MEMBER("isMagazine",(_item select 0))) then {
+				switch (_type) do { 
+					case "primaryweapon" : { 
+						_wp = (primaryWeapon player);
+						_mags = primaryWeaponMagazine player;
+						_items = primaryWeaponItems player;					
+						{player removeMagazines  _x;} forEach _mags;
+						player setAmmo [primaryWeapon player, 0];
+					}; 
+					case "secondaryweapon" : {
+						_wp = (secondaryWeapon player);
+						_mags = secondaryWeaponMagazine player;
+						_items = secondaryWeaponItems player;
+						{player removeMagazines  _x;} forEach _mags;
+						player setAmmo [secondaryWeapon player, 0];
+					}; 
+					case "handgunweapon" : {
+						_wp = (handgunWeapon player);
+						_mags = handgunMagazine player;
+						_items = handgunItems player;
+						{player removeMagazines  _x;} forEach _mags;
+						player setAmmo [handgunWeapon player, 0];
+					}; 
+					default {}; 
+				};
+
+				for "_i" from ((_item select 4) -1) to 0 step -1 do { 
+					player addMagazine (_item select 0);
+				};	
+				player addWeaponItem [_wp, [(_item select 0), 29, ""]];
+				player selectWeapon _wp;
+				reload player;
+			};
 		};
 
 		PUBLIC FUNCTION("array","addToInventory") {
@@ -171,9 +302,13 @@
 			};
 
 			if(MEMBER("isMagazine",(_items select 0))) then {
-				for "_i" from (_items select 4) to 0 step -1 do {
+				for "_i" from ((_items select 4) - 1) to 0 step -1 do {
 					player removeMagazine (_items select 0);									
 				};	
+			};
+
+			if((_items select 0) isEqualTo (backpack player)) then{
+				removeBackpack player;
 			};
 		};
 
