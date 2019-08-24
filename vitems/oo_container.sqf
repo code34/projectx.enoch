@@ -45,16 +45,8 @@
 		};
 
 		PUBLIC FUNCTION("","loadInventory") {
-			private _gear = "new" call OO_ARMAGEAR;
-			private _weapons = "loadWeapons" call _gear;
-			private _magazines = "loadMagazines" call _gear;
-			{
-				MEMBER("addItem", _x);
-			}foreach _weapons;
-
-			{
-				MEMBER("addItem", _x);
-			}foreach _magazines;
+			private _gear = "new" call OO_ARMAGEAR;		
+			{ MEMBER("addItem", _x);} forEach ("loadItems" call _gear);
 		};
 
 		PUBLIC FUNCTION("array","overLoad") {		
@@ -68,7 +60,6 @@
 			DEBUG(#, "OO_CONTAINER::fillInventory")
 			private _list = [];
 			private _gear = "new" call OO_ARMAGEAR;
-
 			{
 				private _result = ["loadCfg", _x] call _gear;
 				_list pushBack _result;
@@ -225,6 +216,35 @@
 			_index;
 		};
 
+		PUBLIC FUNCTION("array","useMag") {
+			DEBUG(#, "OO_CONTAINER::useMag")
+			private _content = +MEMBER("getContent", nil);
+			private _done = false;	
+			private _type = _this select 0;
+			private _ammos = _this select 1;
+			private _gear = "new" call OO_ARMAGEAR;
+
+			private _mags = magazines player;
+			private _count = 0;
+			{
+			  if (_x isEqualTo _type) then {_count = _count + 1;};
+			} forEach _mags;
+
+			{
+				if((_x select 0) isEqualTo _type) then {
+					_done = true;
+					if(_count > 0) then {
+						private _new = _x;
+						_new set [4, _count];
+						_content set[_forEachIndex, _new];
+					} else {
+						if(_nb isEqualTo 0) then { _content deleteAt _forEachIndex;};
+					};
+				};
+			} foreach MEMBER("getContent", nil);
+			MEMBER("setContent", _content);
+		};
+
 		// Get the properties of container with an array
 		PUBLIC FUNCTION("","getProperties") {
 			DEBUG(#, "OO_CONTAINER::getProperties")
@@ -306,18 +326,49 @@
 		};
 
 		// Add an item to the content of container
+		// param:  [["label", nbusage]]
 		PUBLIC FUNCTION("array","addItemsByLabel") {
-			DEBUG(#, "OO_CONTAINER::addItem")
-			//private _newweight = MEMBER("countWeight", nil) + ("getWeight" call _this);
-			//if( MEMBER("countSize", nil) <= MEMBER("limitsize", nil) && _newweight <= MEMBER("limitweight", nil)) exitWith {
-				private _content = MEMBER("getContent", nil);
-				private _list = MEMBER("fillInventory", _this);
+			DEBUG(#, "OO_CONTAINER::addItemsByLabel")
+			private _content = MEMBER("getContent", nil);
+			private _list = MEMBER("fillInventory", _this);
+			{
+				MEMBER("addItem", _x);
+			}foreach _list;
+			true;
+		};
+
+		// Add an item to the content of container
+		// param:  [["label", nbusage]]
+		PUBLIC FUNCTION("array","removeItemsByLabel") {
+			DEBUG(#, "OO_CONTAINER::removeItemsByLabel")
 				{
-					MEMBER("addItem", _x);
-				}foreach _list;
+					MEMBER("removeItemByLabel", _x);
+				}foreach _this;
 				true;
-			//};
-			//false;
+		};
+
+		// param:  [["label", nbusage]]
+		PUBLIC FUNCTION("array","removeItemByLabel") {
+			DEBUG(#, "OO_CONTAINER::removeItemByLabel")
+			private _content = +MEMBER("getContent", nil);
+			private _done = false;
+			private _type = _this select 0;
+			private _nbusage = _this select 1;
+			
+			{
+				if((_x select 0) isEqualTo _type) then {
+					_done = true;							
+					_count = (_x select 4) - _nbusage;
+					if(_count > 0) then {
+						private _new = _x;
+						_new set [4, _count];
+						_content set[_forEachIndex, _new];
+					} else {
+						_content deleteAt _forEachIndex;
+					};
+				};
+			} foreach MEMBER("getContent", nil);
+			MEMBER("setContent", _content);
 		};
 
 		// Delete an item of the content of container
