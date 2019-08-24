@@ -26,7 +26,6 @@
     //call compile preprocessFileLineNumbers "scripts\fnc_enumvillages.sqf";
 	fnc_weathers = compile preprocessFileLineNumbers "scripts\real_weather.sqf";
 	fnc_getnearestplayer = compile preprocessFileLineNumbers "scripts\fnc_getnearestplayer.sqf";
-	//fnc_infected = compile preprocessFileLineNumbers "scripts\fnc_infected.sqf";
 	
 	// mission files
 	fnc_extraction = compile preprocessFileLineNumbers "meka\extraction.sqf";
