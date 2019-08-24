@@ -18,7 +18,7 @@ class Vitems {
 			};
 	};
 	class controls {
-			class OOP_MainLayer_100_100 : OOP_MainLayer {
+			class OOP_MainLayer_100 : OOP_MainLayer {
 				idc = 100;
 				x = safeZoneX;
 				y = safeZoneY;
@@ -39,7 +39,6 @@ class Vitems {
 						canDrag = 1;
 						onLBDragging = "['setDestination', _this] call VITEMS";
 						onLBDrag = "['setSource', _this] call VITEMS";
-						//onMouseButtonClick = "['setMenu', _this] call VITEMS";
 						onLBDblClick = "['getDblClick', _this] call VITEMS";
 						colorBackground[] = {0, 0, 0, 0.6};
 					};
@@ -55,7 +54,7 @@ class Vitems {
 						onLBDragging = "['setDestination', _this] call VITEMS";
 						onLBDrag = "['setSource', _this] call VITEMS";
 						onLBDblClick = "['getDblClick', _this] call VITEMS";
-						onMouseButtonClick = "['setMenu', _this] call VITEMS";
+						onMouseButtonClick = "['setCapMenu', _this] call VITEMS";
 						colorBackground[] = {0, 0, 0, 0.6};
 					};
 					class OOP_Text_proximity_104: RscStructuredText {
@@ -113,15 +112,15 @@ class Vitems {
 						colorBackground[] = {0, 0, 0, 0.6};
 						size = (GUI_GRID_H * 1.15);
 					};					
-					class mymenu : ctrlMenu {
+					class capmenu : ctrlMenu {
 						idc = 108;
 						x = (safezoneW * 0.7);
 						y = (safezoneH * 0.2);
 						w = (safezoneW * 0.1);
 						h = (safezoneH * 0.02);
-						onMouseButtonClick = "['closeMenu', _this] call VITEMS";
+						onMouseButtonClick = "['closeCapMenu', _this] call VITEMS";
 						class Items {
-							items[] = {"Use","Shred","Drop","View"};
+							items[] = {"Use","Shred","Drop"};
 							class Default {
 								text = "";
 								data = "";
@@ -130,19 +129,40 @@ class Vitems {
 							};
 							class Use {
 								text = "Use";
-								action = "['actionMenu', 'use'] call VITEMS";
+								action = "['actionCapMenu', 'use'] call VITEMS";
 							};
 							class Shred  {
 								text = "Shred";
-								action = "['actionMenu', 'shred'] call VITEMS";
+								action = "['actionCapMenu', 'shred'] call VITEMS";
 							};
 							class Drop  {
 								text = "Drop";
-								action = "['actionMenu', 'drop'] call VITEMS";
+								action = "['actionCapMenu', 'drop'] call VITEMS";
 							};
-							class View  {
-								text = "View item";
-								action = "['actionMenu', 'View'] call VITEMS";
+						};
+					};
+					class invmenu : ctrlMenu {
+						idc = 123;
+						x = (safezoneW * 0.7);
+						y = (safezoneH * 0.2);
+						w = (safezoneW * 0.1);
+						h = (safezoneH * 0.02);
+						onMouseButtonClick = "['closeInvMenu', _this] call VITEMS";
+						class Items {
+							items[] = {"Loadout", "Drop"};
+							class Default {
+								text = "";
+								data = "";
+								enable = 0;
+								action = "";
+							};
+							class Loadout {
+								text = "Loadout";
+								action = "['actionInvMenu', 'loadout'] call VITEMS";
+							};
+							class Drop  {
+								text = "Drop";
+								action = "['actionInvMenu', 'drop'] call VITEMS";
 							};
 						};
 					};
@@ -170,8 +190,8 @@ class Vitems {
 						canDrag = 1;
 						onLBDragging = "['setDestination', _this] call VITEMS";
 						onLBDrag = "['setSource', _this] call VITEMS";
-						//onMouseButtonClick = "['setMenu', _this] call VITEMS";
-						onLBDblClick = "['getDblClick', _this] call VITEMS";
+						onMouseButtonDblClick = "['removeItem', 'head'] call VITEMS";
+						onMouseButtonClick = "['setInvMenu', _this] call VITEMS";
 					};
 
 					class uniformBackground : RscStructuredText {
@@ -198,8 +218,9 @@ class Vitems {
 						canDrag = 1;
 						onLBDragging = "['setDestination', _this] call VITEMS";
 						onLBDrag = "['setSource', _this] call VITEMS";
-						//onMouseButtonClick = "['setMenu', _this] call VITEMS";
 						onLBDblClick = "['getDblClick', _this] call VITEMS";
+						onMouseButtonDblClick = "['removeItem', 'uniform'] call VITEMS";
+						onMouseButtonClick = "['setInvMenu', _this] call VITEMS";
 					};
 
 					class vestBackground : RscStructuredText {
@@ -226,13 +247,14 @@ class Vitems {
 						canDrag = 1;
 						onLBDragging = "['setDestination', _this] call VITEMS";
 						onLBDrag = "['setSource', _this] call VITEMS";
-						//onMouseButtonClick = "['setMenu', _this] call VITEMS";
 						//onButtonClick = "hintc 'simple';";
 						//onButtonDown = "systemchat format['down: %1', _this];";
 						//onButtonUp = "systemchat format['up: %1', _this];";
+						onMouseButtonDblClick = "['removeItem', 'vest'] call VITEMS";
+						onMouseButtonClick = "['setInvMenu', _this] call VITEMS";
 					};
 
-					class bagBackground : RscStructuredText {
+					class backpackBackground : RscStructuredText {
 						idc = 1102;
 						x = (safezoneW * 0.605);
 						y = (safezoneH * 0.23);
@@ -240,7 +262,7 @@ class Vitems {
 						h = (safezoneH * 0.22);
 						colorBackground[] = {0.5,0.5,0.5,1};
 					};
-					class bag : RscActiveText {
+					class backpack : RscActiveText {
 						idc = 122;
 						x = (safezoneW * 0.605);
 						y = (safezoneH * 0.23);
@@ -256,8 +278,9 @@ class Vitems {
 						canDrag = 1;
 						onLBDragging = "['setDestination', _this] call VITEMS";
 						onLBDrag = "['setSource', _this] call VITEMS";
-						//onMouseButtonClick = "['setMenu', _this] call VITEMS";
 						onLBDblClick = "['getDblClick', _this] call VITEMS";
+						onMouseButtonClick = "['setInvMenu', _this] call VITEMS";
+						onMouseButtonDblClick = "['removeItem', 'backpack'] call VITEMS";
 					};
 
 					class primaryweaponBackground : RscStructuredText {
@@ -284,8 +307,8 @@ class Vitems {
 						canDrag = 1;
 						onLBDragging = "['setDestination', _this] call VITEMS";
 						onLBDrag = "['setSource', _this] call VITEMS";
-						//onMouseButtonClick = "['setMenu', _this] call VITEMS";
-						onLBDblClick = "['getDblClick', _this] call VITEMS";
+						onMouseButtonClick = "['setInvMenu', _this] call VITEMS";
+						onMouseButtonDblClick = "['removeItem', 'primaryweapon'] call VITEMS";
 					};
 					class gunweaponBackground : RscStructuredText {
 						idc = 1091;
@@ -311,8 +334,8 @@ class Vitems {
 						canDrag = 1;
 						onLBDragging = "['setDestination', _this] call VITEMS";
 						onLBDrag = "['setSource', _this] call VITEMS";
-						//onMouseButtonClick = "['setMenu', _this] call VITEMS";
-						onLBDblClick = "['getDblClick', _this] call VITEMS";
+						onMouseButtonClick = "['setInvMenu', _this] call VITEMS";
+						onMouseButtonDblClick = "['removeItem', 'handgunweapon'] call VITEMS";
 					};
 					class secondaryweaponBackground : RscStructuredText {
 						idc = 1090;
@@ -338,8 +361,8 @@ class Vitems {
 						canDrag = 1;
 						onLBDragging = "['setDestination', _this] call VITEMS";
 						onLBDrag = "['setSource', _this] call VITEMS";
-						//onMouseButtonClick = "['setMenu', _this] call VITEMS";
-						onLBDblClick = "['getDblClick', _this] call VITEMS";
+						onMouseButtonClick = "['setInvMenu', _this] call VITEMS";
+						onMouseButtonDblClick = "['removeItem', 'secondaryweapon'] call VITEMS";
 					};
 					class binocularBackground : RscStructuredText {
 						idc = 1092;
@@ -365,8 +388,8 @@ class Vitems {
 						canDrag = 1;
 						onLBDragging = "['setDestination', _this] call VITEMS";
 						onLBDrag = "['setSource', _this] call VITEMS";
-						//onMouseButtonClick = "['setMenu', _this] call VITEMS";
-						onLBDblClick = "['getDblClick', _this] call VITEMS";
+						onMouseButtonClick = "['setInvMenu', _this] call VITEMS";
+						onMouseButtonDblClick = "['removeItem', 'binocular'] call VITEMS";
 					};
 					class magprimaryweaponBackground : RscStructuredText {
 						idc = 1093;
@@ -392,7 +415,7 @@ class Vitems {
 						canDrag = 1;
 						onLBDragging = "['setDestination', _this] call VITEMS";
 						onLBDrag = "['setSource', _this] call VITEMS";
-						//onMouseButtonClick = "['setMenu', _this] call VITEMS";
+						onMouseButtonClick = "['setInvMenu', _this] call VITEMS";
 						onLBDblClick = "['getDblClick', _this] call VITEMS";
 					};					
 					class maggunweaponBackground : RscStructuredText {
@@ -419,7 +442,7 @@ class Vitems {
 						canDrag = 1;
 						onLBDragging = "['setDestination', _this] call VITEMS";
 						onLBDrag = "['setSource', _this] call VITEMS";
-						//onMouseButtonClick = "['setMenu', _this] call VITEMS";
+						onMouseButtonClick = "['setInvMenu', _this] call VITEMS";
 						onLBDblClick = "['getDblClick', _this] call VITEMS";
 					};					
 					class magsecondaryweaponBackground : RscStructuredText {
@@ -446,7 +469,7 @@ class Vitems {
 						canDrag = 1;
 						onLBDragging = "['setDestination', _this] call VITEMS";
 						onLBDrag = "['setSource', _this] call VITEMS";
-						//onMouseButtonClick = "['setMenu', _this] call VITEMS";
+						onMouseButtonClick = "['setInvMenu', _this] call VITEMS";
 						onLBDblClick = "['getDblClick', _this] call VITEMS";
 					};
 
@@ -474,7 +497,7 @@ class Vitems {
 						canDrag = 1;
 						onLBDragging = "['setDestination', _this] call VITEMS";
 						onLBDrag = "['setSource', _this] call VITEMS";
-						//onMouseButtonClick = "['setMenu', _this] call VITEMS";
+						onMouseButtonClick = "['setInvMenu', _this] call VITEMS";
 						onLBDblClick = "['getDblClick', _this] call VITEMS";
 					};					
 					class opticgunweaponBackground : RscStructuredText {
@@ -501,7 +524,7 @@ class Vitems {
 						canDrag = 1;
 						onLBDragging = "['setDestination', _this] call VITEMS";
 						onLBDrag = "['setSource', _this] call VITEMS";
-						//onMouseButtonClick = "['setMenu', _this] call VITEMS";
+						onMouseButtonClick = "['setInvMenu', _this] call VITEMS";
 						onLBDblClick = "['getDblClick', _this] call VITEMS";
 					};					
 					class opticsecondaryweaponBackground : RscStructuredText {
@@ -528,33 +551,96 @@ class Vitems {
 						canDrag = 1;
 						onLBDragging = "['setDestination', _this] call VITEMS";
 						onLBDrag = "['setSource', _this] call VITEMS";
-						//onMouseButtonClick = "['setMenu', _this] call VITEMS";
+						onMouseButtonClick = "['setInvMenu', _this] call VITEMS";
+						onLBDblClick = "['getDblClick', _this] call VITEMS";
+					};
+
+					class flashprimaryweaponBackground : RscStructuredText {
+						idc = 1104;
+						x = (safezoneW * 0.347);
+						y = (safezoneH * 0.72);
+						w = (safezoneW * 0.04);
+						h = (safezoneH * 0.05);
+						colorBackground[] = {0.5,0.5,0.5,1};
+					};
+					class flashprimaryweapon : RscActiveText {
+						idc = 124;
+						x = (safezoneW * 0.347);
+						y = (safezoneH * 0.72);
+						w = (safezoneW * 0.04);
+						h = (safezoneH * 0.05);
+						style = "0x30 + 0x800";
+						soundDoubleClick[] = {"",0.1,1};
+						color[] = {1,1,1,1};
+						colorBackground[] = {0,0,0,1};
+						colorBackgroundSelected[] = {1,1,1,1};
+						colorFocused[] = {0.0,0.0,0.0,0};
+						onLBSelChanged = "['onLBSelChanged_OOP_Listbox_Proximity', _this] call Vitems;";
+						canDrag = 1;
+						onLBDragging = "['setDestination', _this] call VITEMS";
+						onLBDrag = "['setSource', _this] call VITEMS";
+						onMouseButtonClick = "['setInvMenu', _this] call VITEMS";
+						onLBDblClick = "['getDblClick', _this] call VITEMS";
+					};
+
+					class flashhandgunweaponBackground : RscStructuredText {
+						idc = 1105;
+						x = (safezoneW * 0.482);
+						y = (safezoneH * 0.72);
+						w = (safezoneW * 0.04);
+						h = (safezoneH * 0.05);
+						colorBackground[] = {0.5,0.5,0.5,1};
+					};
+					class flashhandgunweapon : RscActiveText {
+						idc = 125;
+						x = (safezoneW * 0.482);
+						y = (safezoneH * 0.72);
+						w = (safezoneW * 0.04);
+						h = (safezoneH * 0.05);
+						style = "0x30 + 0x800";
+						soundDoubleClick[] = {"",0.1,1};
+						color[] = {1,1,1,1};
+						colorBackground[] = {0,0,0,1};
+						colorBackgroundSelected[] = {1,1,1,1};
+						colorFocused[] = {0.0,0.0,0.0,0};
+						onLBSelChanged = "['onLBSelChanged_OOP_Listbox_Proximity', _this] call Vitems;";
+						canDrag = 1;
+						onLBDragging = "['setDestination', _this] call VITEMS";
+						onLBDrag = "['setSource', _this] call VITEMS";
+						onMouseButtonClick = "['setInvMenu', _this] call VITEMS";
+						onLBDblClick = "['getDblClick', _this] call VITEMS";
+					};
+
+					class flashsecondaryweaponBackground : RscStructuredText {
+						idc = 1106;
+						x = (safezoneW * 0.617);
+						y = (safezoneH * 0.72);
+						w = (safezoneW * 0.04);
+						h = (safezoneH * 0.05);
+						colorBackground[] = {0.5,0.5,0.5,1};
+					};
+
+					class flashsecondaryweapon : RscActiveText {
+						idc = 126;
+						x = (safezoneW * 0.617);
+						y = (safezoneH * 0.72);
+						w = (safezoneW * 0.04);
+						h = (safezoneH * 0.05);
+						style = "0x30 + 0x800";
+						soundDoubleClick[] = {"",0.1,1};
+						color[] = {1,1,1,1};
+						colorBackground[] = {0,0,0,1};
+						colorBackgroundSelected[] = {1,1,1,1};
+						colorFocused[] = {0.0,0.0,0.0,0};
+						onLBSelChanged = "['onLBSelChanged_OOP_Listbox_Proximity', _this] call Vitems;";
+						canDrag = 1;
+						onLBDragging = "['setDestination', _this] call VITEMS";
+						onLBDrag = "['setSource', _this] call VITEMS";
+						onMouseButtonClick = "['setInvMenu', _this] call VITEMS";
 						onLBDblClick = "['getDblClick', _this] call VITEMS";
 					};
 
 				};	
 			};			
-/*				class OOP_btn_use_110: OOP_Button {
-						idc = 110;
-						x = 90 * pixelGrid * pixelW;
-						y = 27.7333 * pixelGrid * pixelH;
-						w = 16 * pixelGrid * pixelW;
-						h = 5.2 * pixelGrid * pixelH;
-						text = "Use";
-						action = "'btnAction_OOP_btn_use' call Vitems;";
-					};
-				class OOP_btn_weapons_111: OOP_Button {
-					idc = 111;
-					x = 90 * pixelGrid * pixelW;
-					y = 20.8 * pixelGrid * pixelH;
-					w = 16 * pixelGrid * pixelW;
-					h = 5.2 * pixelGrid * pixelH;
-					text = "Weapons";
-					action = "'btnAction_OOP_btn_weapons' call Vitems;";
-				};*/
 	};
 };
-
-/*
-["Vitems",1000,[[[["35.9269 * pixelGrid * pixelW","17.3333 * pixelGrid * pixelH","72.0731 * pixelGrid * pixelW","52 * pixelGrid * pixelH"],"text","OOP_Text_Fond","","OOP_Text",true,[],[-1,-1,-1,-1],[0,0,0,0.7],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]],[[["37.9228 * pixelGrid * pixelW","20.8 * pixelGrid * pixelH","23.9513 * pixelGrid * pixelW","32.9333 * pixelGrid * pixelH"],"","OOP_Listbox_Proximity","","OOP_Listbox",true,["onLBSelChanged","onLBDragging","onLBDrag"],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]],[[["63.87 * pixelGrid * pixelW","20.8 * pixelGrid * pixelH","23.9513 * pixelGrid * pixelW","32.9333 * pixelGrid * pixelH"],"","OOP_Listbox_Capacities","","OOP_Listbox",true,["onLBSelChanged","onLBDrag","onLBDragging"],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]],[[["37.9228 * pixelGrid * pixelW","19.0667 * pixelGrid * pixelH","9.97969 * pixelGrid * pixelW","1.73333 * pixelGrid * pixelH"],"Proximity","OOP_Text_proximity","","OOP_Text",true,[],[1,1,1,1],[0,0,0,0],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]],[[["63.87 * pixelGrid * pixelW","19.0667 * pixelGrid * pixelH","9.97969 * pixelGrid * pixelW","1.73333 * pixelGrid * pixelH"],"Capacities","OOP_Text_Capacities","","OOP_Text",true,[],[1,1,1,1],[0,0,0,0],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]],[[["35.9269 * pixelGrid * pixelW","13.8667 * pixelGrid * pixelH","72.0731 * pixelGrid * pixelW","3.46663 * pixelGrid * pixelH"],"Inventory","OOP_Text_Inventory","","OOP_Text",true,[],[1,1,1,1],[0,0.3,0,1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]],[[["37.9228 * pixelGrid * pixelW","55.4667 * pixelGrid * pixelH","49.8984 * pixelGrid * pixelW","12.1333 * pixelGrid * pixelH"],"Description","OOP_Text_Description","","OOP_StructuredText",true,[],[-1,-1,-1,-1],[1,1,1,0.1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]],[[["90 * pixelGrid * pixelW","27.7333 * pixelGrid * pixelH","16 * pixelGrid * pixelW","5.2 * pixelGrid * pixelH"],"Use","OOP_btn_use","","OOP_Button",true,[],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]],[[["90 * pixelGrid * pixelW","20.8 * pixelGrid * pixelH","16 * pixelGrid * pixelW","5.2 * pixelGrid * pixelH"],"Weapons","OOP_btn_weapons","","OOP_Button",true,[],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]]]]]
-*/
