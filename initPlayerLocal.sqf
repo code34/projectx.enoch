@@ -100,7 +100,13 @@
 	player addEventHandler ["Reloaded", {
 		params ["_unit", "_weapon", "_muzzle", "_newMagazine", "_oldMagazine"];
 		if!(_oldMagazine isEqualTo "") then {
-			["useMag", _oldMagazine] call capcontainer;
+			private _type = _oldMagazine select 0;
+			private _mags = magazines player;
+			private _count = 0;
+			{
+				if (_x isEqualTo _type) then {_count = _count + 1;};
+			} forEach _mags;
+			["setItemCount", [_type, _count]] call capcontainer;
 		};
 	}];
 
