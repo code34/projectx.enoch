@@ -217,34 +217,72 @@ CLASS("oo_Vitems")
 				};
 			};
 			case "drop" : {
-				private _item = "";
-				switch (true) do { 
+				private _type = "";
+				private _count = 1;
+				switch (true) do {
 					case (_target isEqualTo MEMBER("OOP_pic_head",nil)) : {
-						_item = [headgear player,1];
+						_type = headgear player;
 					};
 					case (_target isEqualTo MEMBER("OOP_pic_vest",nil)) : {
-						_item = [vest player,1];
+						_type = vest player;
 					};
 					case (_target isEqualTo MEMBER("OOP_pic_uniform",nil)) : {
-						_item = [uniform player,1];
+						_type = uniform player;
 					};
 					case (_target isEqualTo MEMBER("OOP_pic_backpack",nil)) : {
-						_item = [backpack player,1];
+						_type = backpack player;
 					};
 					default {}; 
 				};
-				MEMBER("transfertItemCapToProx", _item);
+				private _transfert = [capcontainer, proxcontainer, _type, _count];
+				MEMBER("transfertItem2", _transfert);
 			};
 		};
 	};
 
-	PUBLIC FUNCTION("array", "transfertItemCapToProx") {
+	// Transfert an Item and all its content from an other
+	// L'objet item doit être entier (array de 7)
+	PUBLIC FUNCTION("array", "transfertItem") {
+		private _source = _this select 0;
+		private _destination = _this select 1;
+		private _item = _this select 3;
+
 		private _gear = "new" call OO_ARMAGEAR;
 		private _items = ["getCargoItems", _item] call _gear;
-		["removeItemsByLabel", _items] call capcontainer;
-		["addItemsByLabel", _items] call proxcontainer;
+		_items pushBack _item;
+		
 		["removeToInventory", _item] call _gear;
+		["removeItemsByLabel", _items] call _source;
+		["addItemsByLabel", _items] call _destination;
+		MEMBER("refresh", nil);
 	};
+
+	// Transfert an Item and all its content from an other
+	// L'objet item doit être entier (array de 7)
+	PUBLIC FUNCTION("array", "transfertItem2") {
+		private _source = _this select 0;
+		private _destination = _this select 1;
+		private _type = _this select 2;
+		private _count = _this select 3;
+		private _items = [[_type, _count]];
+
+		// De l'inventaire vers le sol
+		if((_source isEqualTo capcontainer) and (_destination isEqualTo proxcontainer)) then {
+			private _gear = "new" call OO_ARMAGEAR;
+			_items append (["getCargoItems2", _type] call _gear);
+			["removeCargo", _type] call _gear;
+		};
+
+		// Du sol vers l'inventaire
+		if((_source isEqualTo proxcontainer) and (_destination isEqualTo capcontainer)) then {
+			["addToInventory2", [_type, _count]] call _gear;
+		};
+
+		["removeItemsByLabel", _items] call _source;
+		["addItemsByLabel", _items] call _destination;
+		MEMBER("refresh", nil);
+	};
+
 
 	PUBLIC FUNCTION("array", "setCapMenu") {
 		if((_this select 1) isEqualTo 1) then {
@@ -332,11 +370,14 @@ CLASS("oo_Vitems")
 			};
 
 			private _index = (((_this select 4) select 0) select 1);
-			private _item = ["getItem", _index] call _scontainer;
+			private _item = ["popItem", _index] call _scontainer;
+			// Si l'item provient d'Arma
 			if(_item select 7) then {
+				// Si l'item vient de l'inventaire et va sur le sol
 				if((_scontainer isEqualTo capcontainer) and (_dcontainer isEqualTo proxcontainer)) then { 
-					MEMBER("transfertItemCapToProx", _item);
+					MEMBER("transfertItem", _item);
 				} else {
+					// Si l'item vient du sol et va dans l'inventaire
 					if((_scontainer isEqualTo proxcontainer) and(_dcontainer isEqualTo capcontainer)) then {
 						["addToInventory", _item] call _gear;
 					};
@@ -351,7 +392,7 @@ CLASS("oo_Vitems")
 					private _gear = "new" call OO_ARMAGEAR;
 					["addItem", ["head",_class]] call _gear;
 					if(_scontainer isEqualTo proxcontainer) then {
-						private _item = ["getItem", _index] call proxcontainer;
+						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
 					};
 				};
@@ -362,7 +403,7 @@ CLASS("oo_Vitems")
 					private _gear = "new" call OO_ARMAGEAR;
 					["addItem", ["vest",_class]] call _gear;
 					if(_scontainer isEqualTo proxcontainer) then {
-						private _item = ["getItem", _index] call proxcontainer;
+						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
 					};
 				};
@@ -373,7 +414,7 @@ CLASS("oo_Vitems")
 					private _gear = "new" call OO_ARMAGEAR;
 					["addItem", ["uniform",_class]] call _gear;
 					if(_scontainer isEqualTo proxcontainer) then {
-						private _item = ["getItem", _index] call proxcontainer;
+						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
 					};
 				};
@@ -384,7 +425,7 @@ CLASS("oo_Vitems")
 					private _gear = "new" call OO_ARMAGEAR;
 					["addItem", ["backpack",_class]] call _gear;
 					if(_scontainer isEqualTo proxcontainer) then {
-						private _item = ["getItem", _index] call proxcontainer;
+						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
 					};
 				};
@@ -396,7 +437,7 @@ CLASS("oo_Vitems")
 					private _gear = "new" call OO_ARMAGEAR;
 					["addWeapon", _object] call _gear;
 					if(_scontainer isEqualTo proxcontainer) then {
-						private _item = ["getItem", _index] call proxcontainer;
+						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
 					};
 					player selectWeapon (_object select 0);
@@ -408,7 +449,7 @@ CLASS("oo_Vitems")
 					private _gear = "new" call OO_ARMAGEAR;
 					["addWeapon", _object] call _gear;
 					if(_scontainer isEqualTo proxcontainer) then {
-						private _item = ["getItem", _index] call proxcontainer;
+						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
 					};
 					player selectWeapon (_object select 0);
@@ -420,7 +461,7 @@ CLASS("oo_Vitems")
 					private _gear = "new" call OO_ARMAGEAR;
 					["addWeapon", _object] call _gear;
 					if(_scontainer isEqualTo proxcontainer) then {
-						private _item = ["getItem", _index] call proxcontainer;
+						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
 					};
 					player selectWeapon (_object select 0);
@@ -432,7 +473,7 @@ CLASS("oo_Vitems")
 					private _gear = "new" call OO_ARMAGEAR;
 					["addMagazines", ["primaryweapon", _object]] call _gear;
 					if(_scontainer isEqualTo proxcontainer) then {
-						private _item = ["getItem", _index] call proxcontainer;
+						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
 					};
 				};
@@ -443,7 +484,7 @@ CLASS("oo_Vitems")
 					private _gear = "new" call OO_ARMAGEAR;
 					["addMagazines", ["secondaryweapon", _object]] call _gear;
 					if(_scontainer isEqualTo proxcontainer) then {
-						private _item = ["getItem", _index] call proxcontainer;
+						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
 					};
 				};
@@ -454,7 +495,7 @@ CLASS("oo_Vitems")
 					private _gear = "new" call OO_ARMAGEAR;
 					["addMagazines", ["handgunweapon", _object]] call _gear;
 					if(_scontainer isEqualTo proxcontainer) then {
-						private _item = ["getItem", _index] call proxcontainer;
+						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
 					};
 				};
@@ -465,7 +506,7 @@ CLASS("oo_Vitems")
 					private _gear = "new" call OO_ARMAGEAR;
 					["addItem", ["primaryweapon", _object select 0]] call _gear;
 					if(_scontainer isEqualTo proxcontainer) then {
-						private _item = ["getItem", _index] call proxcontainer;
+						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
 					};
 				};
@@ -476,7 +517,7 @@ CLASS("oo_Vitems")
 					private _gear = "new" call OO_ARMAGEAR;
 					["addItem", ["handgunweapon", _object select 0]] call _gear;
 					if(_scontainer isEqualTo proxcontainer) then {
-						private _item = ["getItem", _index] call proxcontainer;
+						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
 					};
 				};
@@ -487,7 +528,7 @@ CLASS("oo_Vitems")
 					private _gear = "new" call OO_ARMAGEAR;
 					["addItem", ["secondaryweapon", _object select 0]] call _gear;
 					if(_scontainer isEqualTo proxcontainer) then {
-						private _item = ["getItem", _index] call proxcontainer;
+						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
 					};
 				};

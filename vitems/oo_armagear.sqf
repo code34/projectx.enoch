@@ -31,7 +31,7 @@
 			private _array = [];
 			MEMBER("weapons", _array);
 			private _array = [];
-			MEMBER("magazines", _array);			
+			MEMBER("magazines", _array);
 		};
 
 		PUBLIC FUNCTION("","weaponsItems") { 
@@ -118,7 +118,7 @@
 
 				_items pushBack (headgear player);
 				_items pushBack (goggles player);
-				_items pushBack (uniform player);				
+				_items pushBack (uniform player);
 				{_items pushBack _x} foreach (UniformItems player);
 				_items pushBack (vest player);
 				{_items pushBack _x} foreach (VestItems player);
@@ -226,6 +226,21 @@
 			_result;
 		};
 
+		PUBLIC FUNCTION("string","getCargoItems2") {
+			private _result = [];
+			private _items = [];
+			private _cargo = _this;
+
+			switch (true) do {
+				case (_cargo isEqualTo (uniform player)) : {_items = uniformItems player;};
+				case (_cargo isEqualTo (vest player)) : {_items = vestItems player; };
+				case (_cargo isEqualTo (backpack player)): {_items = backpackItems player;};
+			};
+
+			{ _result pushBack [_x, 1];	} forEach _items;
+			_result;
+		};
+
 		PUBLIC FUNCTION("array","addWeapon") {
 			DEBUG(#, "OO_ARMAGEAR::addWeapon")
 			private _items = _this;
@@ -247,7 +262,7 @@
 					case "primaryweapon" : { 
 						_wp = (primaryWeapon player);
 						_mags = primaryWeaponMagazine player;
-						_items = primaryWeaponItems player;					
+						_items = primaryWeaponItems player;
 						{player removeMagazines  _x;} forEach _mags;
 						player setAmmo [primaryWeapon player, 0];
 					}; 
@@ -287,8 +302,24 @@
 
 			if(MEMBER("isMagazine",(_items select 0))) then {
 				for "_i" from ((_items select 4) -1) to 0 step -1 do {
-					player addMagazine (_items select 0);									
+					player addMagazine (_items select 0);
 				};	
+			};
+		};
+
+		PUBLIC FUNCTION("array","addToInventory2") {
+			DEBUG(#, "OO_ARMAGEAR::addToInventory2")
+			private _item = _this select 0;
+			private _count = _this select 1;
+
+			if(MEMBER("isWeapon",_item)) then {
+				player addweapon _item;
+			};
+
+			if(MEMBER("isMagazine",_item)) then {
+				for "_i" from (_count -1) to 0 step -1 do {
+					player addMagazine _item;
+				};
 			};
 		};
 
@@ -303,15 +334,25 @@
 
 			if(MEMBER("isMagazine",(_items select 0))) then {
 				for "_i" from ((_items select 4) - 1) to 0 step -1 do {
-					player removeMagazine (_items select 0);									
+					player removeMagazine (_items select 0);
 				};	
-			};
-
-			if((_items select 0) isEqualTo (backpack player)) then{
-				removeBackpack player;
 			};
 		};
 
+		// create default container properties according class of 3d object container
+		PUBLIC FUNCTION("string","removeCargo") {
+			DEBUG(#, "OO_ARMAGEAR::removeCargo")
+			private _cargo = _this;
+			if(_cargo isEqualTo (backpack player)) then{
+				removeBackpack player;
+			};
+			if(_cargo isEqualTo (vest player)) then{
+				removeVest player;
+			};
+			if(_cargo isEqualTo (uniform player)) then{
+				removeUniform player;
+			};
+		};
 
 		PUBLIC FUNCTION("","deconstructor") {
 			DEBUG(#, "OO_ARMAGEAR::deconstructor")

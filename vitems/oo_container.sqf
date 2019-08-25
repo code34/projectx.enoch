@@ -25,7 +25,7 @@
 		PRIVATE VARIABLE("string","netId");
 		PRIVATE VARIABLE("string","model");
 		PRIVATE VARIABLE("array", "properties");
-		PRIVATE VARIABLE("array", "inventory");
+		PRIVATE VARIABLE("array", "content");
 
 		PUBLIC FUNCTION("array","constructor") { 
 			DEBUG(#, "OO_CONTAINER::constructor")
@@ -40,20 +40,20 @@
 			private _properties = ["remoteCall", ["vitems_getProperties",  _netId, 2, []]] call bmeclient;
 			private _inventory = ["remoteCall", ["vitems_getInventory",  _netId, 2, []]] call bmeclient;
 			private _list = MEMBER("fillInventory", _inventory);
-			MEMBER("inventory", _list);
+			MEMBER("content", _list);
 			MEMBER("properties", _properties);
 		};
 
 		PUBLIC FUNCTION("","loadInventory") {
-			private _gear = "new" call OO_ARMAGEAR;		
+			private _gear = "new" call OO_ARMAGEAR;
 			{ MEMBER("addItem", _x);} forEach ("loadItems" call _gear);
 		};
 
-		PUBLIC FUNCTION("array","overLoad") {		
+		PUBLIC FUNCTION("array","overLoad") {
 			private _list = MEMBER("fillInventory", _this);
 			private _properties = ["", 0,0];
 			MEMBER("properties", _properties);
-			MEMBER("inventory", _list);
+			MEMBER("content", _list);
 		};
 
 		PUBLIC FUNCTION("array","fillInventory") {
@@ -70,14 +70,13 @@
 		PUBLIC FUNCTION("","save") {
 			DEBUG(#, "OO_CONTAINER::save")
 			private _netId = MEMBER("netId", nil);
-			private _inventory = MEMBER("inventory", nil);
 			private _list = [];
 
 			{
 				_classid = _x select 0;
 				_nbusage = _x select 4;
 				_list pushBack [_classid, _nbusage];
-			} forEach _inventory;
+			} forEach MEMBER("getContent", nil);
 
 			private _properties = MEMBER("properties", nil);
 			["remoteSpawn", ["vitems_setInventory",  [_netId,_list], "server"]] call bmeclient;
@@ -123,9 +122,9 @@
 		// Set the name of container
 		PUBLIC FUNCTION("string","setName") {
 			DEBUG(#, "OO_CONTAINER::setName")
-			private _content = MEMBER("getProperties", nil);
-			_content set[0, _this];
-			MEMBER("setProperties", _content);
+			private _properties = MEMBER("getProperties", nil);
+			_properties set[0, _this];
+			MEMBER("setProperties", _properties);
 		};
 
 		// Return the limit size of container
@@ -137,9 +136,9 @@
 		// Set the limit size of container
 		PUBLIC FUNCTION("scalar","setLimitSize") {
 			DEBUG(#, "OO_CONTAINER::setLimitSize")
-			private _content = MEMBER("getProperties", nil);
-			_content set[1, _this];
-			MEMBER("setProperties", _content);
+			private _properties = MEMBER("getProperties", nil);
+			_properties set[1, _this];
+			MEMBER("setProperties", _properties);
 		};
 
 		// Return the limit weight of container
@@ -151,9 +150,9 @@
 		// Set the limit weight of container
 		PUBLIC FUNCTION("scalar","setLimitWeight") {
 			DEBUG(#, "OO_CONTAINER::setLimitWeight")
-			private _content = MEMBER("getProperties", nil);
-			_content set[2, _this];
-			MEMBER("setProperties", _content);
+			private _properties = MEMBER("getProperties", nil);
+			_properties set[2, _this];
+			MEMBER("setProperties", _properties);
 		};
 
 		// Count the occuped size in container
@@ -166,7 +165,7 @@
 				} else {
 					_size = _size + 1;
 				};
-			} foreach MEMBER("inventory", nil);
+			} foreach MEMBER("getContent", nil);
 			_size;
 		};
 
@@ -174,7 +173,6 @@
 		PUBLIC FUNCTION("","countWeight") {
 			DEBUG(#, "OO_CONTAINER::countWeight")
 			private _weight = 0;
-			private _inventory = MEMBER("inventory", nil);
 
 			{
 				if((_x select 4) > 0) then {
@@ -182,16 +180,13 @@
 				} else {
 					_weight = _weight + (_x select 3);
 				};
-			} forEach _inventory;
+			} forEach MEMBER("getContent", nil);
 			_weight;
 		};
 
 		// Set the properties of container from an array
 		PUBLIC FUNCTION("array","setProperties") {
 			DEBUG(#, "OO_CONTAINER::setProperties")
-			//MEMBER("object", nil) setVariable ["properties", _this, true];
-			//missionNamespace setVariable [format["properties_%1", MEMBER("netId", nil)], _this, true];
-			private _netId = MEMBER("netId", nil);
 			MEMBER("properties", _this);
 		};
 
@@ -216,33 +211,44 @@
 			_index;
 		};
 
-		PUBLIC FUNCTION("array","useMag") {
-			DEBUG(#, "OO_CONTAINER::useMag")
-			private _content = +MEMBER("getContent", nil);
-			private _done = false;	
+
+		// Consume Item
+		// [type, nbusage]
+		PUBLIC FUNCTION("array","consumeItem") {
 			private _type = _this select 0;
-			private _ammos = _this select 1;
-			private _gear = "new" call OO_ARMAGEAR;
+			private _nbusage = _this select 1;
+			private _content = MEMBER("getContent", nil);
+			private _index = MEMBER("findItemIndex", _type);
+			private _item = _content select _index;
+			private _count = (_item select 4) - _nbusage;
+			if(_count > 0) then {
+				_item set [4, _count];
+				_content set [_index, _item];
+			} else {
+				_content deleteAt _index;
+			};
+		};
 
-			private _mags = magazines player;
-			private _count = 0;
-			{
-			  if (_x isEqualTo _type) then {_count = _count + 1;};
-			} forEach _mags;
+		// set Item count
+		// [type, count]
+		PUBLIC FUNCTION("array","setItemCount") {
+			DEBUG(#, "OO_CONTAINER::setItemCount")
+			private _type = _this select 0;
+			private _count = _this select 1;
+			private _content = MEMBER("getContent", nil);
+			private _index = MEMBER("findItemIndex", _type);
+			private _item = _content select _index;
+			_item set [4, _count];
+			_content set [_index, _item];
+		};
 
+		PUBLIC FUNCTION("string","findItemIndex") {
+			DEBUG(#, "OO_CONTAINER::findItemIndex")
+			private _index = -1;
 			{
-				if((_x select 0) isEqualTo _type) then {
-					_done = true;
-					if(_count > 0) then {
-						private _new = _x;
-						_new set [4, _count];
-						_content set[_forEachIndex, _new];
-					} else {
-						if(_nb isEqualTo 0) then { _content deleteAt _forEachIndex;};
-					};
-				};
-			} foreach MEMBER("getContent", nil);
-			MEMBER("setContent", _content);
+				if((_x select 0) isEqualTo _this) exitWith {_index = _forEachIndex;};
+			} forEach MEMBER("getContent", nil);
+			_index;
 		};
 
 		// Get the properties of container with an array
@@ -271,65 +277,53 @@
 		// Return the content of container (items in array format)
 		PUBLIC FUNCTION("","getContent") {
 			DEBUG(#, "OO_CONTAINER::getContent")
-			MEMBER("inventory", nil);
+			MEMBER("content", nil);
 		};
 
 		// Set the content of container (items in array format)
 		PUBLIC FUNCTION("array","setContent") {
 			DEBUG(#, "OO_CONTAINER::setContent")
-			MEMBER("inventory", _this);
+			MEMBER("content", _this);
 		};
 
 		// Add x elements to container (items in array format)
 		PUBLIC FUNCTION("array","addContent") {
 			DEBUG(#, "OO_CONTAINER::addContent")
-			private _inventory = MEMBER("inventory", nil);
+			private _content = MEMBER("content", nil);
 			{
-				_inventory pushBack _x;
+				_content pushBack _x;
 			} foreach _this;
 		};
 
 		PUBLIC FUNCTION("string","containsItem") {
 			DEBUG(#, "OO_CONTAINER::containsItem")
-			private _content = MEMBER("getContent", nil);
-			private _list = [];
-			{_list pushBack (_x select 0);} forEach _content;
-			private _searchindex = _list find _this;
-			//systemChat format ["%1 %2", _list, _searchindex];
-			if(_searchindex > -1) exitWith {true;};
+			private _index = MEMBER("findItemIndex", _this);
+			if(_index > -1) exitWith {true;};
 			false;
 		};
 
 		// Add an item to the content of container
 		PUBLIC FUNCTION("array","addItem") {
 			DEBUG(#, "OO_CONTAINER::addItem")
-			//private _newweight = MEMBER("countWeight", nil) + ("getWeight" call _this);
-			//if( MEMBER("countSize", nil) <= MEMBER("limitsize", nil) && _newweight <= MEMBER("limitweight", nil)) exitWith {
-				private _content = MEMBER("getContent", nil);
-				private _flag = false;
-				// if object is already declare in content, add new quantity to already existing object
-				{
-					if((_x select 0) isEqualTo (_this select 0)) then {
-						private _array = _x;
-						if(((_array select 4) > -1) and !(_flag)) then {
-							_array set [4, ((_x select 4) + (_this select 4))];
-							_content set [_forEachIndex, _array];
-							_flag = true;
-						};
-					};
-				} foreach _content;
-				if!(_flag) then { 	_content pushBack _this;};
-				MEMBER("setContent", _content);
-				true;
-			//};
-			//false;
+			private _type = _this select 0;
+			private _count = _this select 4;
+			private _content = MEMBER("getContent", nil);
+			private _index = MEMBER("findItemIndex", _type);
+			if(_index > -1) then {
+				private _item = _content select _index;
+				_count = _count + (_item select 4);
+				_item set [4, _count];
+				 _content set [_index, _item];
+			} else {
+				_content pushBack _this;
+			};
+			true;
 		};
 
 		// Add an item to the content of container
 		// param:  [["label", nbusage]]
 		PUBLIC FUNCTION("array","addItemsByLabel") {
 			DEBUG(#, "OO_CONTAINER::addItemsByLabel")
-			private _content = MEMBER("getContent", nil);
 			private _list = MEMBER("fillInventory", _this);
 			{
 				MEMBER("addItem", _x);
@@ -341,43 +335,25 @@
 		// param:  [["label", nbusage]]
 		PUBLIC FUNCTION("array","removeItemsByLabel") {
 			DEBUG(#, "OO_CONTAINER::removeItemsByLabel")
-				{
-					MEMBER("removeItemByLabel", _x);
-				}foreach _this;
-				true;
-		};
-
-		// param:  [["label", nbusage]]
-		PUBLIC FUNCTION("array","removeItemByLabel") {
-			DEBUG(#, "OO_CONTAINER::removeItemByLabel")
-			private _content = +MEMBER("getContent", nil);
-			private _done = false;
-			private _type = _this select 0;
-			private _nbusage = _this select 1;
-			
 			{
-				if((_x select 0) isEqualTo _type) then {
-					_done = true;							
-					_count = (_x select 4) - _nbusage;
-					if(_count > 0) then {
-						private _new = _x;
-						_new set [4, _count];
-						_content set[_forEachIndex, _new];
-					} else {
-						_content deleteAt _forEachIndex;
-					};
-				};
-			} foreach MEMBER("getContent", nil);
-			MEMBER("setContent", _content);
+				MEMBER("consumeItem", _x);
+			}foreach _this;
+			true;
 		};
 
 		// Delete an item of the content of container
+		PUBLIC FUNCTION("scalar","popItem") {
+			DEBUG(#, "OO_CONTAINER::popItem")
+			private _content = MEMBER("getContent", nil);
+			private _item = _content deleteAt _this;
+			MEMBER("setContent", _content);
+			_item;
+		};
+
+		// Retrieve an item
 		PUBLIC FUNCTION("scalar","getItem") {
 			DEBUG(#, "OO_CONTAINER::getItem")
-			private _content = MEMBER("getContent", nil);
-			private _return = _content deleteAt _this;
-			MEMBER("setContent", _content);
-			_return;
+			MEMBER("getContent", nil) select _this;
 		};
 
 		// Delete an item of the content of container
@@ -411,6 +387,6 @@
 			DELETE_VARIABLE("netId");
 			DELETE_VARIABLE("model");
 			DELETE_VARIABLE("properties");
-			DELETE_VARIABLE("inventory");
+			DELETE_VARIABLE("content");
 		};
 	ENDCLASS;
