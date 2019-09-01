@@ -368,22 +368,10 @@ CLASS("oo_Vitems")
 			} else {
 				_dcontainer = proxcontainer;
 			};
-
 			private _index = (((_this select 4) select 0) select 1);
-			private _item = ["popItem", _index] call _scontainer;
-			// Si l'item provient d'Arma
-			if(_item select 7) then {
-				// Si l'item vient de l'inventaire et va sur le sol
-				if((_scontainer isEqualTo capcontainer) and (_dcontainer isEqualTo proxcontainer)) then { 
-					MEMBER("transfertItem", _item);
-				} else {
-					// Si l'item vient du sol et va dans l'inventaire
-					if((_scontainer isEqualTo proxcontainer) and(_dcontainer isEqualTo capcontainer)) then {
-						["addToInventory", _item] call _gear;
-					};
-				};
-			};
-			["addItem", _item] call _dcontainer;
+			private _item = ["getItem", _index] call _scontainer;
+			private _transfert = [_scontainer, _dcontainer, _item select 0, _item select 4];
+			MEMBER("transfertItem2", _transfert);
 		} else {
 			switch (true) do {
 				case (_destination isEqualTo MEMBER("OOP_pic_head", nil)) : {
