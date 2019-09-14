@@ -2,7 +2,7 @@ OnloadName="Projectx";
 Author="Code34";
 loadscreen="splash\splash.jpg";
 OnLoadMission="When bullets are more valuable than humans";
-//showHUD = 0;
+showHUD = 0;
 
 #include "gui\define.hpp"
 #include "gui\style.hpp"
