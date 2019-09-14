@@ -124,5 +124,165 @@ class hud {
 				colorText[] = {1, 1, 1, 1};
 				tooltipColorText[] = {1, 1, 1, 1};
 			};
-		};
+			class weaponinfo: RscControlsGroup
+			{
+				idc = 2302;
+				x = "0 * 					(			((safezoneW / safezoneH) min 1.2) / 40) + 		(profilenamespace getvariable [""IGUI_GRID_WEAPON_X"",		((safezoneX + safezoneW) - 		(10 * 			(			((safezoneW / safezoneH) min 1.2) / 40)) - 4.3 * 			(			((safezoneW / safezoneH) min 1.2) / 40))])";
+				y = "0 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) + 		(profilenamespace getvariable [""IGUI_GRID_WEAPON_Y"",		(safezoneY + 0.5 * 			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25))])";
+				w = "10 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+				h = "6 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+				class controls
+				{
+					class CA_BackgroundWeapon: RscPicture
+					{
+						colorText[] = {"(profilenamespace getvariable ['IGUI_BCG_RGB_R',0])","(profilenamespace getvariable ['IGUI_BCG_RGB_G',1])","(profilenamespace getvariable ['IGUI_BCG_RGB_B',1])","(profilenamespace getvariable ['IGUI_BCG_RGB_A',0.8])"};
+						idc = 1202;
+						text = "\A3\ui_f\data\igui\rscingameui\rscunitinfo\gradient_ca.paa";
+						x = "0 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+						y = "1.2 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+						w = "10 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+						h = "2.5 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+					};
+					class CA_BackgroundWeaponTitle: RscText
+					{
+						colorBackground[] = {"(profilenamespace getvariable ['IGUI_BCG_RGB_R',0])","(profilenamespace getvariable ['IGUI_BCG_RGB_G',1])","(profilenamespace getvariable ['IGUI_BCG_RGB_B',1])","(profilenamespace getvariable ['IGUI_BCG_RGB_A',0.8])"};
+						idc = 1001;
+						x = "0 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+						y = "0 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+						w = "10 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+						h = "1 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+						sizeEx = "0.8 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+					};
+					class CA_BackgroundWeaponTitleDark: RscText
+					{
+						idc = 1008;
+						x = "0 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+						y = "0 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+						w = "10 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+						h = "1 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+						colorBackground[] = {0,0,0,0.1};
+						sizeEx = "0.8 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+					};
+					class CA_BackgroundWeaponMode: RscPicture
+					{
+						colorText[] = {"(profilenamespace getvariable ['IGUI_BCG_RGB_R',0])","(profilenamespace getvariable ['IGUI_BCG_RGB_G',1])","(profilenamespace getvariable ['IGUI_BCG_RGB_B',1])","(profilenamespace getvariable ['IGUI_BCG_RGB_A',0.8])"};
+						idc = 1203;
+						text = "\A3\ui_f\data\igui\rscingameui\rscunitinfo\mode_background_ca.paa";
+						x = "0 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+						y = "1 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+						w = "10 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+						h = "0.2 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+					};
+					class CA_Weapon: RscText
+					{
+						idc = 118;
+						colorText[] = {"(profilenamespace getvariable ['IGUI_TEXT_RGB_R',0])","(profilenamespace getvariable ['IGUI_TEXT_RGB_G',1])","(profilenamespace getvariable ['IGUI_TEXT_RGB_B',1])","(profilenamespace getvariable ['IGUI_TEXT_RGB_A',0.8])"};
+						style = 1;
+						x = "0 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+						y = "0 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+						w = "10 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+						h = "1 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+						sizeEx = "0.8 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+						text = "my weapon";
+					};
+					class CA_ModeTexture: RscPicture
+					{
+						idc = 187;
+						colorText[] = {"(profilenamespace getvariable ['IGUI_TEXT_RGB_R',0])","(profilenamespace getvariable ['IGUI_TEXT_RGB_G',1])","(profilenamespace getvariable ['IGUI_TEXT_RGB_B',1])","(profilenamespace getvariable ['IGUI_TEXT_RGB_A',0.8])"};
+						x = "0 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+						y = "1 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+						w = "10 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+						h = "0.2 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+					};
+					class CA_Mode: RscText
+					{
+						idc = -1;
+						colorText[] = {"(profilenamespace getvariable ['IGUI_TEXT_RGB_R',0])","(profilenamespace getvariable ['IGUI_TEXT_RGB_G',1])","(profilenamespace getvariable ['IGUI_TEXT_RGB_B',1])","(profilenamespace getvariable ['IGUI_TEXT_RGB_A',0.8])"};
+						y = -1;
+						x = "-5 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+						w = "4.5 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+						h = "1 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+						sizeEx = "0.8 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+					};
+					class CA_ValueReload: RscIGProgress
+					{
+						idc = 154;
+						colorBar[] = {"(profilenamespace getvariable ['IGUI_WARNING_RGB_R',0.8])","(profilenamespace getvariable ['IGUI_WARNING_RGB_G',0.5])","(profilenamespace getvariable ['IGUI_WARNING_RGB_B',0.0])",1};
+						colorFrame[] = {0,0,0,0};
+						style = 0;
+						x = "0 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+						y = "1 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+						w = "10 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+						h = "0.2 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+					};
+					class CA_AmmoCount: RscText
+					{
+						idc = 184;
+						style = 1;
+						colorText[] = {"(profilenamespace getvariable ['IGUI_TEXT_RGB_R',0])","(profilenamespace getvariable ['IGUI_TEXT_RGB_G',1])","(profilenamespace getvariable ['IGUI_TEXT_RGB_B',1])","(profilenamespace getvariable ['IGUI_TEXT_RGB_A',0.8])"};
+						x = "4.5 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+						y = "1 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+						w = "3.5 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+						h = "1.5 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+						sizeEx = "1.5 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+						text = "25";
+					};
+					class CA_MagCount: RscText
+					{
+						colorText[] = {"(profilenamespace getvariable ['IGUI_TEXT_RGB_R',0])","(profilenamespace getvariable ['IGUI_TEXT_RGB_G',1])","(profilenamespace getvariable ['IGUI_TEXT_RGB_B',1])","(profilenamespace getvariable ['IGUI_TEXT_RGB_A',0.8])"};
+						idc = 185;
+						x = "8 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+						y = "1.5 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+						w = "2 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+						h = "1 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+						sizeEx = "0.8 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+						text = "8";
+					};
+					class CA_AmmoType: RscText
+					{
+						idc = 155;
+						colorText[] = {"(profilenamespace getvariable ['IGUI_TEXT_RGB_R',0])","(profilenamespace getvariable ['IGUI_TEXT_RGB_G',1])","(profilenamespace getvariable ['IGUI_TEXT_RGB_B',1])","(profilenamespace getvariable ['IGUI_TEXT_RGB_A',0.8])"};
+						x = "0 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+						y = "1.5 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+						w = "4.5 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+						h = "1 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+						sizeEx = "0.8 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+					};
+					class CA_GrenadeType: RscText
+					{
+						colorText[] = {"(profilenamespace getvariable ['IGUI_TEXT_RGB_R',0])","(profilenamespace getvariable ['IGUI_TEXT_RGB_G',1])","(profilenamespace getvariable ['IGUI_TEXT_RGB_B',1])","(profilenamespace getvariable ['IGUI_TEXT_RGB_A',0.8])"};
+						style = 2;
+						idc = 152;
+						x = "3.5 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+						y = "2.5 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+						w = "4.5 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+						h = "1 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+						sizeEx = "0.8 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+					};
+					class CA_GrenadeCount: RscText
+					{
+						colorText[] = {"(profilenamespace getvariable ['IGUI_TEXT_RGB_R',0])","(profilenamespace getvariable ['IGUI_TEXT_RGB_G',1])","(profilenamespace getvariable ['IGUI_TEXT_RGB_B',1])","(profilenamespace getvariable ['IGUI_TEXT_RGB_A',0.8])"};
+						style = 1;
+						idc = 151;
+						x = "8 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+						y = "2.5 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+						w = "2 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+						h = "1 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+						sizeEx = "0.8 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+					};
+					class CA_GunnerWeapon: RscText
+					{
+						idc = 150;
+						colorText[] = {"(profilenamespace getvariable ['IGUI_TEXT_RGB_R',0])","(profilenamespace getvariable ['IGUI_TEXT_RGB_G',1])","(profilenamespace getvariable ['IGUI_TEXT_RGB_B',1])","(profilenamespace getvariable ['IGUI_TEXT_RGB_A',0.8])"};
+						colorBackground[] = {"(profilenamespace getvariable ['IGUI_BCG_RGB_R',0])","(profilenamespace getvariable ['IGUI_BCG_RGB_G',1])","(profilenamespace getvariable ['IGUI_BCG_RGB_B',1])","(profilenamespace getvariable ['IGUI_BCG_RGB_A',0.8])"};
+						style = 1;
+						x = "0 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+						y = "4 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+						w = "10 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
+						h = "1 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+						sizeEx = "0.8 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+					};
+				};
+			};	
+	};
 };
