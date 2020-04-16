@@ -8,18 +8,18 @@ class EditorData
 	toggles=513;
 	class ItemIDProvider
 	{
-		nextID=49;
+		nextID=52;
 	};
 	class MarkerIDProvider
 	{
-		nextID=2;
+		nextID=3;
 	};
 	class Camera
 	{
-		pos[]={11136.745,7.4603448,11424.178};
-		dir[]={0.21988676,-0.12757558,-0.96725118};
-		up[]={0.028297279,0.99179971,-0.12447651};
-		aside[]={-0.97520852,-8.1810867e-007,-0.2216958};
+		pos[]={11049.745,65.922699,11446.758};
+		dir[]={0.77802312,-0.4865011,-0.39749563};
+		up[]={0.43323374,0.8736797,-0.22134292};
+		aside[]={-0.45496726,-1.2317905e-006,-0.89051163};
 	};
 };
 binarizationWanted=0;
@@ -182,7 +182,7 @@ class Mission
 					flags=7;
 					class Attributes
 					{
-						isPlayer=1;
+						isPlayable=1;
 						class Inventory
 						{
 							class primaryWeapon
