@@ -86,19 +86,15 @@
 	};
 
 	checkTemperature = {
-		params ["_rain", "_fog", "_overcast", "_wind", "_date"];
 		private _basetemp = 22;
-		private _rainmalus = 10 * _rain;
-		private _fogmalus = 10 * _fog;
-		private _windmalus = 10 * windStr;
-		private _hour = _date select 3;
+		private _rainmalus = rain * 4;
+		private _fogmalus = fog * 4;
+		private _windmalus = 0;
+		private _hour = date select 3;
 		private _hourmalus = 0;
-		if((_hour >= 22) and (_hour <= 24)) then {
-			_hourmalus = 6;
-		};
-		if((_hour >=0) and(_hour <=6)) then {
-			_hourmalus = 10;
-		};
+		if((_hour >= 22) and (_hour <= 24)) then { _hourmalus = 4;};
+		if((_hour >=0) and(_hour <=6)) then {_hourmalus = 8;};
+		if((_hourmalus > 0) && (( _rainmalus > 0) || (_fogmalus > 0))) then { _windmalus = windStr * 4;};
 		floor(_basetemp - _rainmalus - _fogmalus - _windmalus - _hourmalus);
 	};
 
@@ -125,7 +121,7 @@
 				setwind (wcweather select 3);
 				setdate (wcweather select 4);
 			};
-			externaltemperature = wcweather call checkTemperature;
+			externaltemperature = call checkTemperature;
 		};
 	};
 
@@ -154,7 +150,7 @@
 		while { true } do {
 			wcweather set [4, date];
 			publicvariable "wcweather";
-			externaltemperature = wcweather call checkTemperature;
+			externaltemperature = call checkTemperature;
 			if(!_realtime) then { 
 				if((date select 3 > 16) or (date select 3 <6)) then {
 					setTimeMultiplier _nighttimeratio;
