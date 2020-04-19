@@ -33,11 +33,29 @@ class CfgDebriefing
 {  
     class End1
     {
-        title = "Mission Completed";
-        subtitle = "Finish as a cowardly, but alive (..)";
-        description = "You managed to escape from this desolated country. Maybe you left something behind you? Maybe that was the only solution? You will never know. But you will at least have a chance to see your friends alive again. But for how long (..).";
+        title = "Mission complétée";
+        subtitle = "Finir comme un lâche mais vivant (..)";
+        description = "Vous avez réussi à vous enfuir de ce pays dévasté. Peut etre avez vous oublié quelque chose derrière vous? Peut être y avait il d'autres solutions ? Vous ne le saurez jamais. Vous aurez au moins une chance de revoir vos amis mais pour combien de temps (..).";
         pictureBackground = "";
         picture = "paa\fear.paa";
+        pictureColor[] = {0.0,0.3,0.6,1};
+    };
+    class End2
+    {
+        title = "Mission échouée";
+        subtitle = "Finir abandonné";
+        description = "Votre équipe vous a abandonné sur ce territoire ravagé. Personne ne vous aidera plus. Le destin est fait";
+        pictureBackground = "";
+        picture = "paa\fear.paa";
+        pictureColor[] = {0.0,0.3,0.6,1};
+    };
+    class End3
+    {
+        title = "Mission réussie";
+        subtitle = "Finir comme un héro";
+        description = "Vous avez finalement découvert la vérité. Livionia est un pays en faillite mais les éléments que vous avez récupéré seront essentiels pour annoncer la vérité au monde. Peut être y aura-t-il un espoir de stopper le virus mais ceci est une autre histoire (..)";
+        pictureBackground = "";
+        picture = "paa\medalofhonor.paa";
         pictureColor[] = {0.0,0.3,0.6,1};
     };
 };
