@@ -33,12 +33,13 @@
 	call compile preprocessFileLineNumbers "gui\oo_uirequirement.sqf";
 	[] spawn compile preprocessFileLineNumbers "gui\cursor.sqf";
 
-	fnc_relayradio_clientside = compile preprocessFileLineNumbers "meka\relayradio_clientside.sqf";
-	fnc_sergent_clientside = compile preprocessFileLineNumbers "meka\sergent_clientside.sqf";
-	fnc_extraction_clientside = compile preprocessFileLineNumbers "meka\extraction_clientside.sqf";
-	fnc_village_clientside = compile preprocessFileLineNumbers "meka\village_clientside.sqf";
-	fnc_militarycasern_clientside = compile preprocessFileLineNumbers "meka\militarycasern_clientside.sqf";
-	fnc_industrialsite_clientside = compile preprocessFileLineNumbers "meka\industrialsite_clientside.sqf";
+	fnc_extraction_clientside = compile preprocessFileLineNumbers "meka\m0_extraction_clientside.sqf";
+	fnc_relayradio_clientside = compile preprocessFileLineNumbers "meka\m2_relayradio_clientside.sqf";
+	fnc_sergent_clientside = compile preprocessFileLineNumbers "meka\m3_sergent_clientside.sqf";
+	fnc_village_clientside = compile preprocessFileLineNumbers "meka\m5_village_clientside.sqf";
+	fnc_industrialsite_clientside = compile preprocessFileLineNumbers "meka\m6_industrialsite_clientside.sqf";
+	fnc_militarycasern_clientside = compile preprocessFileLineNumbers "meka\m7_militarycasern_clientside.sqf";
+	fnc_sitex_clientside = compile preprocessFileLineNumbers "meka\m8_sitex_clientside.sqf";
 
 	fnc_weathers = compile preprocessFileLineNumbers "scripts\real_weather.sqf";
 	fnc_getnearestplayer = compile preprocessFileLineNumbers "scripts\fnc_getnearestplayer.sqf";
@@ -73,6 +74,9 @@
 	[] spawn fnc_militarycasern_clientside;
 	// Military casern mission handler
 	[] spawn fnc_industrialsite_clientside;
+	// Military site x
+	[] spawn fnc_sitex_clientside;
+
 
 	callTabnote = {
 		["setPages", _this] call tabnote;
@@ -89,10 +93,9 @@
 	systemchat "BME 2.0 is initialized";
 
 	// Random respawn position
-/*	private _position = position player;
+	private _position = position player;
 	_position = ["remoteCall", ["getSpawnPosition", "" , 2, _position]] call bmeclient;
 	player setpos _position;
-	player setpos(player getRelPos [random 250,random 360]);*/
 
 	player addEventHandler ["InventoryOpened", {execVM "gui\loading.sqf";true;}];
 	player addEventHandler ["InventoryClosed", {player addEventHandler ["InventoryOpened", {execVM "gui\loading.sqf";true;}];}];
@@ -115,7 +118,7 @@
 	health = "new" call OO_HEALTH;
 	healthresume = "new" call OO_HEALTHRESUME;
 
-	player setAnimSpeedCoef 1.40;
+	player setAnimSpeedCoef 1;
 	player enableFatigue false; 
 	player enableStamina false;
 	player allowSprint true;
@@ -123,13 +126,23 @@
 	keyhandler = "new" call OO_KEYHANDLER;
 
 	// load inventory
-	capcontainer = ["new", [netId player, ((getModelInfo player) select 0)]] call OO_CONTAINER;
-	//private _content = 	[["armyradio",-1],["wrench",-1],["medicalkit",1],["survivalration",5],["arifle_MX_khk_F",1],["hgun_P07_khk_F",1],["Binocular",1],["30Rnd_65x39_caseless_khaki_mag",5],["16Rnd_9x21_Mag",2]];
-	private _content = 	[["arifle_MSBS65_F",1], ["launch_RPG32_camo_F", 1],["armyradio",-1],["wrench",-1],["medicalkit",1],["survivalration",5], ["screwdriver", -1],["waterbottle",1],["30Rnd_65x39_caseless_mag_Tracer", 5]];
+	// inventaire de base
+	//["armyradio","wrench","medicalkit","survivalration","H_HelmetB_tna_F","U_B_T_Soldier_F","30Rnd_65x39_caseless_khaki_mag","V_PlateCarrier1_tna_F","16Rnd_9x21_Mag","B_Carryall_oli_BTAmmo_F","acc_pointer_IR","optic_Aco","arifle_MX_khk_F","hgun_P07_khk_F","Binocular","ItemMap","ItemCompass","ItemWatch"];
+	//private _content = [["arifle_MSBS65_F",1], ["launch_RPG32_camo_F", 1],["armyradio",-1],["wrench",-1],["medicalkit",1],["survivalration",5], ["screwdriver", -1],["waterbottle",1],["30Rnd_65x39_caseless_mag_Tracer", 5]];
 
+	capcontainer = ["new", [netId player, ((getModelInfo player) select 0)]] call OO_CONTAINER;
+	private _content = [["armyradio",-1],["wrench",-1],["medicalkit",1],["survivalration",5],["screwdriver",-1]];
 	["overLoad", _content] call capcontainer;
 	"loadInventory" call capcontainer;
 	"save" call capcontainer;
+
+/*	_test = "getContent" call capcontainer;
+	_print = [];
+	{
+		_print pushBack (_x select 0);
+	} forEach _test;
+	copyToClipboard format ["%1", _print];*/
+
 	systemchat "Inventory load";
 
 	// initialize ui requirement
@@ -141,22 +154,13 @@
 		while { true } do {
 			_weight = "countWeight" call capcontainer;
 			switch (true) do { 
-				case (_weight > 60) : { 
-					player setAnimSpeedCoef 0.1;
-				}; 
-				case (_weight > 40) : { 
-					player setAnimSpeedCoef 0.7;
-				}; 
-				case (_weight > 30) : { 
-					player setAnimSpeedCoef 0.8;
-				};
-				case (_weight > 20) : { 
-					player setAnimSpeedCoef 1;
-				};
-				case (_weight > 10) : { 
-					player setAnimSpeedCoef 1.2;
-				};
-				default { player setAnimSpeedCoef 1.4; }; 
+				case (_weight < 10) : { player setAnimSpeedCoef 1.2;};
+				case (_weight < 20) : { player setAnimSpeedCoef 1.15;};				
+				case (_weight < 30) : { player setAnimSpeedCoef 1.1;};
+				case (_weight < 40) : { player setAnimSpeedCoef 1;}; 
+				case (_weight < 50) : { player setAnimSpeedCoef 0.8;}; 
+				case (_weight < 60) : { player setAnimSpeedCoef 0.6;};
+				default { player setAnimSpeedCoef 1;}; 
 			};
 			sleep 1;
 		};
@@ -164,7 +168,7 @@
 
 	// initialize mission tab
 	tabnote = "new" call OO_TABNOTE;
-	["setPages", ["meka\story\introduction1.html","meka\story\introduction2.html"]] call tabnote;
+	["setPages", ["meka\story\m1_introduction1.html","meka\story\m1_introduction2.html"]] call tabnote;
 	["showFile", true] call hud;
 
 	_sound = "new" call OO_SOUND;
@@ -208,6 +212,9 @@
 		hint format["%1 %2", typeOf cursorTarget, (getModelInfo cursorTarget) select 0];
 		copyToClipboard format ["%1 %2", typeOf cursorTarget, (getModelInfo cursorTarget) select 0];
 		sleep 1;
-	};
+	};*/
 
-	Land_ConcreteWell_02_F*/
+
+	/*Land_ConcreteWell_02_F*/
+
+	//copyToClipboard format ["%1", getMarkerPos "sitex"];
