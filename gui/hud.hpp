@@ -183,7 +183,7 @@ class hud {
 						w = "10 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
 						h = "1 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
 						sizeEx = "0.8 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
-						text = "my weapon";
+						text = "Welcome on ProjectX";
 					};
 					class CA_ModeTexture: RscPicture
 					{
