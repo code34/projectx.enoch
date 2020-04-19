@@ -23,15 +23,10 @@
 	CLASS("OO_ARMAGEAR")
 		PRIVATE VARIABLE("code","this");
 		PRIVATE VARIABLE("string","type");
-		PRIVATE VARIABLE("array","weapons");
-		PRIVATE VARIABLE("array","magazines");
-
+		
 		PUBLIC FUNCTION("","constructor") { 
 			DEBUG(#, "OO_ARMAGEAR::constructor")
-			private _array = [];
-			MEMBER("weapons", _array);
-			private _array = [];
-			MEMBER("magazines", _array);
+
 		};
 
 		PUBLIC FUNCTION("","weaponsItems") { 
@@ -249,6 +244,29 @@
 			};
 		};
 
+		PUBLIC FUNCTION("","reloadWeapon") {
+			private _type = "";
+			private _mag = "";
+			if((currentWeapon player) isEqualTo (primaryWeapon player)) then {
+				_type = "primaryweapon";
+				_mag = (primaryWeaponMagazine player) select 0;
+			};
+			if((currentWeapon player) isEqualTo (secondaryWeapon player)) then {
+				_type = "secondaryweapon";
+				_mag = (secondaryWeaponMagazine player) select 0;
+			};
+			if((currentWeapon player) isEqualTo (handgunWeapon player)) then {
+				_type = "handgunweapon";
+				_mag = (handgunMagazine player) select 0;
+			};
+			if(isNil "_mag") then {_mag = "";};
+			if(["containsItem", _mag] call capcontainer) then {
+				["consumeItem", [_mag,1]] call capcontainer;
+				private _array = [_type, _mag];
+				MEMBER("addMagazines", _array);
+			};
+		};
+
 		PUBLIC FUNCTION("array","addMagazines") {
 			DEBUG(#, "OO_ARMAGEAR::addMagazines")
 			private _type = _this select 0;
@@ -257,49 +275,65 @@
 			private _wp = "";
 			private _items = "";
 			
-			if(MEMBER("isMagazine",(_item select 0))) then {
+			if(MEMBER("isMagazine",_item)) then {
 				switch (_type) do { 
 					case "primaryweapon" : { 
 						_wp = (primaryWeapon player);
 						_mags = primaryWeaponMagazine player;
 						_items = primaryWeaponItems player;
-						{player removeMagazines  _x;} forEach _mags;
-						player setAmmo [primaryWeapon player, 0];
+						{
+							player removeMagazines  _x;
+							player removePrimaryWeaponItem _x;
+						} forEach _mags;
 					}; 
 					case "secondaryweapon" : {
 						_wp = (secondaryWeapon player);
 						_mags = secondaryWeaponMagazine player;
 						_items = secondaryWeaponItems player;
-						{player removeMagazines  _x;} forEach _mags;
+						{
+							player removeMagazines  _x;
+							player removeSecondaryWeaponItem _x;
+						} forEach _mags;
 						player setAmmo [secondaryWeapon player, 0];
 					}; 
 					case "handgunweapon" : {
 						_wp = (handgunWeapon player);
 						_mags = handgunMagazine player;
 						_items = handgunItems player;
-						{player removeMagazines  _x;} forEach _mags;
+						{
+							player removeMagazines  _x;
+							player removeHandgunItem _x;
+						} forEach _mags;
 						player setAmmo [handgunWeapon player, 0];
 					}; 
 					default {}; 
 				};
-
-				for "_i" from ((_item select 4) -1) to 0 step -1 do { 
-					player addMagazine (_item select 0);
-				};	
-				player addWeaponItem [_wp, [(_item select 0), 29, ""]];
 				player selectWeapon _wp;
+				player addMagazine _item;
 				reload player;
 			};
 		};
 
+		// utilisé lors du transfert du sol vers l'inventaire
 		PUBLIC FUNCTION("array","addToInventory") {
 			DEBUG(#, "OO_ARMAGEAR::addToInventory")
 			private _items = _this;
 
-			if(MEMBER("isWeapon",(_items select 0))) then {
-				player addweapon (_items select 0);
+			if(MEMBER("isWeapon",(_items select 0))) then {		
+				private _parents = [(configFile >> "CfgWeapons" >> (_items select 0)),true ] call BIS_fnc_returnParents;
+				switch (true) do {
+					case ("Uniform_Base" in _parents) : {player addUniform (_items select 0);};
+					case ("Vest_Camo_Base" in _parents) : {player addVest (_items select 0);};
+					default { player addweapon (_items select 0);};
+				};
 			};
 
+			if(MEMBER("isVehicle",(_items select 0))) then {
+				private _temp = ["head", (_items select 0)];
+				MEMBER("addItem", _temp);
+				player addBackpack (_items select 0);
+				clearAllItemsFromBackpack player;
+			};
 			if(MEMBER("isMagazine",(_items select 0))) then {
 				for "_i" from ((_items select 4) -1) to 0 step -1 do {
 					player addMagazine (_items select 0);
@@ -314,6 +348,13 @@
 
 			if(MEMBER("isWeapon",_item)) then {
 				player addweapon _item;
+			};
+
+			if(MEMBER("isVehicle", _item)) then {
+				private _temp = ["head", _item];
+				MEMBER("addItem", _temp);
+				player addBackpack _item;
+				clearAllItemsFromBackpack player;
 			};
 
 			if(MEMBER("isMagazine",_item)) then {
@@ -332,6 +373,11 @@
 				player removeWeapon (_items select 0);
 			};
 
+			// Bag
+			if(MEMBER("isVehicle",(_items select 0))) then {
+				removeBackpack player;
+			};
+
 			if(MEMBER("isMagazine",(_items select 0))) then {
 				for "_i" from ((_items select 4) - 1) to 0 step -1 do {
 					player removeMagazine (_items select 0);
@@ -343,6 +389,9 @@
 		PUBLIC FUNCTION("string","removeCargo") {
 			DEBUG(#, "OO_ARMAGEAR::removeCargo")
 			private _cargo = _this;
+			if(_cargo isEqualTo (headgear player)) then{
+				removeHeadgear player;
+			};
 			if(_cargo isEqualTo (backpack player)) then{
 				removeBackpack player;
 			};
@@ -351,6 +400,21 @@
 			};
 			if(_cargo isEqualTo (uniform player)) then{
 				removeUniform player;
+			};
+			if(_cargo isEqualTo (primaryWeapon player)) then{
+				player removeWeaponGlobal _cargo;
+			};
+			if(_cargo isEqualTo (secondaryWeapon player)) then{
+				player removeWeaponGlobal _cargo;
+			};
+			if(_cargo isEqualTo (handgunWeapon player)) then{
+				player removeWeaponGlobal _cargo;
+			};
+			if(_cargo isEqualTo (binocular player)) then{
+				player removeWeapon _cargo;
+			};
+			if(_cargo isEqualTo (headgear player)) then{
+				removeHeadgear player;
 			};
 		};
 

@@ -35,6 +35,8 @@
 		PRIVATE STATIC_VARIABLE("array", "neutre");
 		PRIVATE STATIC_VARIABLE("array", "man");
 		PRIVATE STATIC_VARIABLE("array", "reserved");
+		PRIVATE STATIC_VARIABLE("array", "armaweapon");
+		PRIVATE STATIC_VARIABLE("array", "armaammo");
 
 		PUBLIC FUNCTION("string","constructor") { 
 			DEBUG(#, "OO_RANDOMSTUFF::constructor")
@@ -65,6 +67,10 @@
 			MEMBER("man", _array);
 			private _array = [];
 			MEMBER("reserved", _array);
+			private _array = [];
+			MEMBER("armaweapon", _array);
+			private _array = [];
+			MEMBER("armaammo", _array);
 
 			private _entry = missionConfigFile >> "cfgVitems";
 			for "_i" from 0 to (count _entry - 1) do {
@@ -75,6 +81,30 @@
 				MEMBER(_x, nil) pushBack [_name, _nbusage];
 				} forEach _type;
 			};
+
+			_weapons = "getNumber (_x >> 'scope') == 2 && getText (_x >> 'displayname') != '' && getText(_x >> 'picture') != '' " configClasses (configFile >> "cfgWeapons");
+			{
+				_name = configName(_x);
+				_type = "armaweapon";
+				_nbusage = 1;
+				MEMBER(_type, nil) pushBack [_name, _nbusage];
+			} forEach _weapons;
+
+			_mags = "getNumber (_x >> 'scope') == 2 && getText (_x >> 'displayname') != '' && getText(_x >> 'picture') != ''" configClasses (configFile >> "cfgMagazines");
+			{
+				_name = configName(_x);
+				_type = "armaweapon";
+				_nbusage = 1;
+				MEMBER(_type, nil) pushBack [_name, _nbusage];
+			} forEach _mags;
+			
+			_ammo = ["30Rnd_65x39_caseless_mag_Tracer","30Rnd_65x39_caseless_khaki_mag","16Rnd_9x21_Mag"];
+			{
+			  	_name = _x;
+				_type = "armaammo";
+				_nbusage = 1;
+				MEMBER(_type, nil) pushBack [_name, _nbusage];
+			} forEach _ammo;
 			true;
 		};
 
@@ -128,6 +158,11 @@
 			MEMBER("reserved", _this);
 		};
 
+		PUBLIC FUNCTION("array","setArmaWeapon") {
+			DEBUG(#, "OO_RANDOMSTUFF::setArmaWeapon")
+			MEMBER("armaweapon", _this);
+		};
+
 		PUBLIC FUNCTION("string", "getType") {
 			DEBUG(#, "OO_RANDOMSTUFF::getType")
 			private _model = _this;
@@ -154,7 +189,7 @@
 				case (_model in _zombietype) : {_type = "zombie";};
 				default { _type = "default"; }; 
 			};
-			systemChat format ["%1 %2", _type, _model];
+			//systemChat format ["%1 %2", _type, _model];
 			_type;
 		};
 
@@ -193,10 +228,10 @@
 					case "wall" : {_kindofloot = "wall";};
 					case "neutre" : {_kindofloot = "neutre";};
 					case "house" : {
-						_kindofloot = ["stuff", "food", "military"] selectRandomWeighted [0.3,0.7,0.01];
+						_kindofloot = ["stuff", "food", "military", "armaweapon", "armaammo"] selectRandomWeighted [0.1,0.2,0.1,0.3,0.3];
 					};
 					case "zombie" : {
-						_kindofloot = ["man", "military"] selectRandomWeighted [0.97,0.03];
+						_kindofloot = ["man", "military", "armaweapon", "armaammo","food"] selectRandomWeighted [0.3,0.1,0.1,0.1,0.4];
 					};
 					default {
 						_kindofloot = ["stuff", "military"] selectRandomWeighted [0.97,0.03];

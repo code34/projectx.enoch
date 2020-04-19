@@ -1,2 +1,2 @@
-		["setPages", ["meka\story\medicalnote1.html","meka\story\medicalnote2.html"]] call tabnote;
+		["setPages", ["meka\story\m5_medicalnote1.html","meka\story\m5_medicalnote2.html"]] call tabnote;
 		"keyF1" call keyhandler;
