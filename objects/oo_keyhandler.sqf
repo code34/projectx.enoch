@@ -63,6 +63,8 @@
 			// _this select 2 = shift stroke
 			// _this select 3 = ctrl stroke
 			// _this select 4 = alt stroke
+			private _reload = (actionKeys "ReloadMagazine") select 0;
+
 			switch (_this select 1) do { 
 				case DIK_UP : { MEMBER("keyUp", nil); }; 
 				case DIK_DOWN : { MEMBER("keyDown", nil); }; 
@@ -70,6 +72,11 @@
 				case DIK_RIGHT : { MEMBER("keyRight", nil); }; 
 				case DIK_F1 : { MEMBER("keyF1", nil); }; 
 				case DIK_F2 : { MEMBER("keyF2", nil); }; 
+				case _reload : {
+					//player action ["loadmagazine", player, player, 0, 1 ,"vbs2_us_m16a2_iron_gla", "vbs2_us_m16a2_iron_gla"];
+					private _gear = "new" call OO_ARMAGEAR;
+					"reloadWeapon" call _gear;
+				};
 				default {  /*...code...*/ }; 
 			};
 			false;
