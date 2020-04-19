@@ -34,6 +34,7 @@
 		PRIVATE VARIABLE("scalar","bonusvirus");
 		PRIVATE VARIABLE("scalar","nausea");
 		PRIVATE VARIABLE("scalar","stomac");
+		PRIVATE VARIABLE("scalar","checktime");
 
 		PUBLIC FUNCTION("","constructor") { 
 			DEBUG(#, "OO_HEALTH::constructor")
@@ -50,6 +51,7 @@
 			MEMBER("bonusvirus", 0);
 			MEMBER("nausea", 0);
 			MEMBER("stomac", 0);
+			MEMBER("checktime", 15);
 			SPAWN_MEMBER("checkLife", nil);
 			SPAWN_MEMBER("checkFood", nil);
 			SPAWN_MEMBER("checkDrink", nil);
@@ -264,7 +266,7 @@
 			while { true } do {
 				_stomac = MEMBER("stomac", nil);
 				if(_stomac > 0) then { _stomac = _stomac - 1; };
-				sleep 10;
+				sleep MEMBER("checktime", nil);
 			};
 		};
 
@@ -275,12 +277,15 @@
 			private _virus = 0;
 			private _change = false;
 			private _wind = 0;
+			private _inwater = false;
 
 			while { true } do {
 				_change = false;
 				_temperature = MEMBER("temperature", nil);
 				_virus = MEMBER("virus", nil);
 				_nausea = MEMBER("nausea", nil);
+				_inwater = surfaceIsWater (position player);
+
 				systemChat format ["External Temperature: %1", externaltemperature];
 				if((_virus > 0) or (_nausea > 0)) then {
 						MEMBER("addTemperature", 0.1);
@@ -291,13 +296,14 @@
 						sleep 0.1;
 						if(count _buildings isEqualTo 0) then { MEMBER("delTemperature", 0.1); _change = true;};
 					};
+					if(_inwater) then { MEMBER("delTemperature", 0.1); _change = true;};
 				};
 				if!(_change) then {
 					if(_temperature < 37) then { MEMBER("addTemperature", 0.1);};
 					if(_temperature > 37) then { MEMBER("delTemperature", 0.1);};
 				};
 				systemChat format ["Body Temperature: %1", MEMBER("temperature", nil)];
-				sleep 10;
+				sleep MEMBER("checktime", nil);
 			};
 		};
 
@@ -318,7 +324,7 @@
 					if(_virus > 0) then {_virus = _virus - 1;};
 					MEMBER("setVirus", _virus);
 				};
-				sleep 10;
+				sleep MEMBER("checktime", nil);
 			};
 		};
 
@@ -342,7 +348,7 @@
 					if(_food < 0) then {_food = 0;};
 					MEMBER("setFood", _food);
 				};
-				sleep 10;
+				sleep MEMBER("checktime", nil);
 			};
 		};
 
@@ -366,7 +372,7 @@
 					if(_drink < 0) then {_drink = 0;};
 					MEMBER("setDrink", _drink);
 				};
-				sleep 10;
+				sleep MEMBER("checktime", nil);
 			};
 		};
 
