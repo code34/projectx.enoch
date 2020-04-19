@@ -17,6 +17,10 @@ CLASS("oo_hud")
 	PRIVATE UI_VARIABLE("control", "OOP_Text_virus");
 	PRIVATE UI_VARIABLE("control", "OOP_Text_zombie");
 	PRIVATE UI_VARIABLE("control", "OOP_Text_file");
+	PRIVATE UI_VARIABLE("control", "OOP_Text_weapon");
+	PRIVATE UI_VARIABLE("control", "OOP_Text_nbmags");
+	PRIVATE UI_VARIABLE("control", "OOP_Text_nbammos");
+
 	PRIVATE UI_VARIABLE("display", "Display");
 	PRIVATE VARIABLE("bool", "isshowfile");
 	PRIVATE VARIABLE("bool", "isshowzombie");
@@ -40,15 +44,34 @@ CLASS("oo_hud")
 		MEMBER("OOP_Text_virus", _this displayCtrl 109);
 		MEMBER("OOP_Text_zombie", _this displayCtrl 113);		
 		MEMBER("OOP_Text_file", _this displayCtrl 114);
-		MEMBER("Init", nil);
+		MEMBER("OOP_Text_weapon", _this displayCtrl 118);
+		MEMBER("OOP_Text_nbmags", _this displayCtrl 185);
+		MEMBER("OOP_Text_nbammos", _this displayCtrl 184);
+		SPAWN_MEMBER("Init", nil);
 	};
 
 	PUBLIC FUNCTION("", "Init"){
 		//Add your content here to init display
+		sleep 5;
 		MEMBER("OOP_Picture_file", nil) ctrlShow false;
 		SPAWN_MEMBER("hintFile", nil);
 		SPAWN_MEMBER("hintBlood", nil);
 		SPAWN_MEMBER("hintZombie", nil);
+		SPAWN_MEMBER("hintWeapon", nil);
+	};
+
+	PUBLIC FUNCTION("","hintWeapon"){
+		while { true } do {
+			private _name = getText(configfile >> "cfgWeapons" >> (currentWeapon player) >> "displayName");
+			MEMBER("OOP_Text_weapon", nil) ctrlSetText _name;
+			private _nbammos = player ammo (currentWeapon player);
+			MEMBER("OOP_Text_nbammos", nil) ctrlSetText str(_nbammos);
+			private _index = ["findItemIndex", currentMagazine player] call capcontainer;
+			private _nbmags = 0;
+			if(_index > -1) then {_nbmags = (["getItem", _index] call capcontainer) select 4;} else {_nbmags = 0;};
+			MEMBER("OOP_Text_nbmags", nil) ctrlSetText str(_nbmags);
+			sleep 0.5;
+		};
 	};
 
 	PUBLIC FUNCTION("", "hintFile"){
@@ -181,6 +204,10 @@ CLASS("oo_hud")
 		DELETE_UI_VARIABLE("OOP_Text_virus");
 		DELETE_UI_VARIABLE("OOP_Text_zombie");
 		DELETE_UI_VARIABLE("OOP_Text_file");
+		DELETE_UI_VARIABLE("OOP_Text_weapon");
+		DELETE_UI_VARIABLE("OOP_Text_nbmags");
+		DELETE_UI_VARIABLE("OOP_Text_nbammos");
+
 		DELETE_UI_VARIABLE("Display");
 		DELETE_VARIABLE("isshowfile");
 		DELETE_VARIABLE("isshowzombie");
