@@ -28,6 +28,7 @@ class Vitems {
 				//onMouseButtonDown	= "[1,_this] call myEventFunction";
 				//onMouseButtonUp		= "[2,_this] call myEventFunction";
 				class controls{
+					// Liste à gauche du menu inventaire
 					class OOP_Listbox_Proximity_102: OOP_Listbox {
 						idc = 102;
 						x = (safezoneW * 0);
@@ -42,6 +43,7 @@ class Vitems {
 						onLBDblClick = "['getDblClick', _this] call VITEMS";
 						colorBackground[] = {0, 0, 0, 0.6};
 					};
+					// Liste à droite du menu inventaire
 					class OOP_Listbox_Capacities_103: OOP_Listbox {
 						idc = 103;
 						x = (safezoneW * 0.75);
@@ -70,7 +72,7 @@ class Vitems {
 						tooltipColorText[] = {1, 1, 1, 1};
 						class Attributes {
 							align = "center";
-						};						
+						};
 					};
 					class OOP_Text_Capacities_105: RscStructuredText {
 						idc = 105;
@@ -85,7 +87,7 @@ class Vitems {
 						tooltipColorText[] = {1, 1, 1, 1};
 						class Attributes {
 							align = "center";
-						};						
+						};	
 					};
 					class OOP_Text_Inventory_106: RscStructuredText {
 						idc = 106;
@@ -100,7 +102,7 @@ class Vitems {
 						tooltipColorText[] = {1, 1, 1, 1};
 						class Attributes {
 							align = "center";
-						};					
+						};	
 					};
 					class OOP_Text_Description_107: RscStructuredText {
 						idc = 107;
@@ -111,74 +113,21 @@ class Vitems {
 						text = "Description";
 						colorBackground[] = {0, 0, 0, 0.6};
 						size = (GUI_GRID_H * 1.15);
-					};					
-					class capmenu : ctrlMenu {
-						idc = 108;
-						x = (safezoneW * 0.7);
-						y = (safezoneH * 0.2);
-						w = (safezoneW * 0.1);
-						h = (safezoneH * 0.02);
-						onMouseButtonClick = "['closeCapMenu', _this] call VITEMS";
-						class Items {
-							items[] = {"Use","Shred","Drop"};
-							class Default {
-								text = "";
-								data = "";
-								enable = 0;
-								action = "";
-							};
-							class Use {
-								text = "Use";
-								action = "['actionCapMenu', 'use'] call VITEMS";
-							};
-							class Shred  {
-								text = "Shred";
-								action = "['actionCapMenu', 'shred'] call VITEMS";
-							};
-							class Drop  {
-								text = "Drop";
-								action = "['actionCapMenu', 'drop'] call VITEMS";
-							};
-						};
 					};
-					class invmenu : ctrlMenu {
-						idc = 123;
-						x = (safezoneW * 0.7);
-						y = (safezoneH * 0.2);
-						w = (safezoneW * 0.1);
-						h = (safezoneH * 0.02);
-						onMouseButtonClick = "['closeInvMenu', _this] call VITEMS";
-						class Items {
-							items[] = {"Loadout", "Drop"};
-							class Default {
-								text = "";
-								data = "";
-								enable = 0;
-								action = "";
-							};
-							class Loadout {
-								text = "Loadout";
-								action = "['actionInvMenu', 'loadout'] call VITEMS";
-							};
-							class Drop  {
-								text = "Drop";
-								action = "['actionInvMenu', 'drop'] call VITEMS";
-							};
-						};
-					};
+
 					class headBackground : RscStructuredText {
 						idc = 1099;
-						x = (safezoneW * 0.45);
+						x = (safezoneW * 0.265);
 						y = (safezoneH * 0.12);
-						w = (safezoneW * 0.1);
+						w = (safezoneW * 0.05);
 						h = (safezoneH * 0.1);
 						colorBackground[] = {0.5,0.5,0.5,1};
 					};
 					class head : RscActiveText {
 						idc = 119;
-						x = (safezoneW * 0.45);
+						x = (safezoneW * 0.265);
 						y = (safezoneH * 0.12);
-						w = (safezoneW * 0.1);
+						w = (safezoneW * 0.05);
 						h = (safezoneH * 0.1);
 						style = "0x30 + 0x800";
 						soundDoubleClick[] = {"",0.1,1};
@@ -198,16 +147,16 @@ class Vitems {
 						idc = 1100;
 						x = (safezoneW * 0.265);
 						y = (safezoneH * 0.23);
-						w = (safezoneW * 0.13);
-						h = (safezoneH * 0.22);
+						w = (safezoneW * 0.05);
+						h = (safezoneH * 0.1);
 						colorBackground[] = {0.5,0.5,0.5,1};
 					};
 					class uniform : RscActiveText {
 						idc = 120;
 						x = (safezoneW * 0.265);
 						y = (safezoneH * 0.23);
-						w = (safezoneW * 0.13);
-						h = (safezoneH * 0.22);
+						w = (safezoneW * 0.05);
+						h = (safezoneH * 0.1);
 						style = "0x30 + 0x800";
 						soundDoubleClick[] = {"",0.1,1};
 						color[] = {1,1,1,1};
@@ -222,21 +171,20 @@ class Vitems {
 						onMouseButtonDblClick = "['removeItem', 'uniform'] call VITEMS";
 						onMouseButtonClick = "['setInvMenu', _this] call VITEMS";
 					};
-
 					class vestBackground : RscStructuredText {
 						idc = 1101;
-						x = (safezoneW * 0.435);
-						y = (safezoneH * 0.23);
-						w = (safezoneW * 0.13);
-						h = (safezoneH * 0.22);
+						x = (safezoneW * 0.265);
+						y = (safezoneH * 0.34);
+						w = (safezoneW * 0.05);
+						h = (safezoneH * 0.1);
 						colorBackground[] = {0.5,0.5,0.5,1};
 					};
 					class vest : RscActiveText {
 						idc = 121;
-						x = (safezoneW * 0.435);
-						y = (safezoneH * 0.23);
-						w = (safezoneW * 0.13);
-						h = (safezoneH * 0.22);
+						x = (safezoneW * 0.265);
+						y = (safezoneH * 0.34);
+						w = (safezoneW * 0.05);
+						h = (safezoneH * 0.1);
 						style = "0x30 + 0x800";
 						soundDoubleClick[] = {"",0.1,1};
 						color[] = {1,1,1,1};
@@ -256,18 +204,18 @@ class Vitems {
 
 					class backpackBackground : RscStructuredText {
 						idc = 1102;
-						x = (safezoneW * 0.605);
-						y = (safezoneH * 0.23);
-						w = (safezoneW * 0.13);
-						h = (safezoneH * 0.22);
+						x = (safezoneW * 0.265);
+						y = (safezoneH * 0.45);
+						w = (safezoneW * 0.05);
+						h = (safezoneH * 0.1);
 						colorBackground[] = {0.5,0.5,0.5,1};
 					};
 					class backpack : RscActiveText {
 						idc = 122;
-						x = (safezoneW * 0.605);
-						y = (safezoneH * 0.23);
-						w = (safezoneW * 0.13);
-						h = (safezoneH * 0.22);
+						x = (safezoneW * 0.265);
+						y = (safezoneH * 0.45);
+						w = (safezoneW * 0.05);
+						h = (safezoneH * 0.1);
 						style = "0x30 + 0x800";
 						soundDoubleClick[] = {"",0.1,1};
 						color[] = {1,1,1,1};
@@ -317,7 +265,7 @@ class Vitems {
 						w = (safezoneW * 0.13);
 						h = (safezoneH * 0.11);
 						colorBackground[] = {0.5,0.5,0.5,1};
-					};					
+					};
 					class gunweapon : RscActiveText {
 						idc = 111;
 						x = (safezoneW * 0.4);
@@ -444,7 +392,7 @@ class Vitems {
 						onLBDrag = "['setSource', _this] call VITEMS";
 						onMouseButtonClick = "['setInvMenu', _this] call VITEMS";
 						onLBDblClick = "['getDblClick', _this] call VITEMS";
-					};					
+					};
 					class magsecondaryweaponBackground : RscStructuredText {
 						idc = 1095;
 						x = (safezoneW * 0.535);
@@ -640,7 +588,62 @@ class Vitems {
 						onLBDblClick = "['getDblClick', _this] call VITEMS";
 					};
 
-				};	
-			};			
+					class capmenu : ctrlMenu {
+						idc = 108;
+						x = (safezoneW * 0.7);
+						y = (safezoneH * 0.2);
+						w = (safezoneW * 0.1);
+						h = (safezoneH * 0.02);
+						onMouseButtonClick = "['closeCapMenu', _this] call VITEMS";
+						class Items {
+							items[] = {"Use","Shred","Drop"};
+							class Default {
+								text = "";
+								data = "";
+								enable = 0;
+								action = "";
+							};
+							class Use {
+								text = "Use";
+								action = "['actionCapMenu', 'use'] call VITEMS";
+							};
+							class Shred  {
+								text = "Shred";
+								action = "['actionCapMenu', 'shred'] call VITEMS";
+							};
+							class Drop  {
+								text = "Drop";
+								action = "['actionCapMenu', 'drop'] call VITEMS";
+							};
+						};
+					};
+					class invmenu : ctrlMenu {
+						idc = 123;
+						x = (safezoneW * 0.7);
+						y = (safezoneH * 0.2);
+						w = (safezoneW * 0.1);
+						h = (safezoneH * 0.02);
+						onMouseButtonClick = "['closeInvMenu', _this] call VITEMS";
+						class Items {
+							items[] = {"Loadout", "Drop"};
+							class Default {
+								text = "";
+								data = "";
+								enable = 0;
+								action = "";
+							};
+							class Loadout {
+								text = "Loadout";
+								action = "['actionInvMenu', 'loadout'] call VITEMS";
+							};
+							class Drop  {
+								text = "Drop";
+								action = "['actionInvMenu', 'drop'] call VITEMS";
+							};
+						};
+					};
+
+				};
+			};
 	};
 };
