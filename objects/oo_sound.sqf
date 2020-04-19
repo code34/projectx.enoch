@@ -42,17 +42,13 @@
 
 		PUBLIC FUNCTION("","playSound") {
 			while { true } do {
-				private _location = MEMBER("localizePlayer", nil);
+				sleep (480 + random 240);
+                private _location = MEMBER("localizePlayer", nil);
 				switch (_location) do {
-					case "village" : {
-
-					}:
-					case "forest" : {
-						MEMBER("getExpBack", nil);
-					};
+					case "village" : { };
+					case "forest" : { MEMBER("getExpBack", nil); };
 					default {};
 				};
-				sleep (480 + random 240);
 			};
 		};
 
