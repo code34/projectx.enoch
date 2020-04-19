@@ -62,8 +62,8 @@
             private _roads = MEMBER("position", nil) nearRoads MEMBER("sectorsize", nil);
             private _vehicles = [];
             {
-                if(random 1 > 0.90) then {
-                    private _position = _x getRelPos [4, 90];
+                if(random 1 > 0.95) then {
+                    private _position = _x getRelPos [random (10), 90];
                     private _dir = random 360;
                     private _type = [];
                     if(random 1 > 0.95) then {
