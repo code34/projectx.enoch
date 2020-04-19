@@ -4,7 +4,7 @@
 		description = "Simple keys for unknow usage.";
 		weight = 0.1;
 		nbusage = -1;
-		picture = "pictures\keys.jpg";
+		picture = "paa\keys.paa";
 		requirement[] = {};
 	};
 	class identitycard {
@@ -13,7 +13,7 @@
 		description = "A Livonia national identity card";
 		weight = 0.1;
 		nbusage = -1;
-		picture = "pictures\identitycard.jpg";
+		picture = "paa\identitycard.paa";
 		requirement[] = {};
 	};
 	class swissknife {
@@ -58,7 +58,7 @@
 		description = "Light allow carabiner, hot forged with ample aperture, ideal for sport climbing and for intense use.";
 		weight = 0.1;
 		nbusage = -1;
-		picture = "pictures\carabiner.jpg";
+		picture = "paa\carabiner.paa";
 		requirement[] = {};
 	};
 	class watch {
@@ -76,7 +76,7 @@
 		description = "Pain and fever, as prophylaxis of myocardial infarction and stroke under physical supervision.";
 		weight = 0.1;
 		nbusage = 10;
-		picture = "pictures\aspirin.jpg";
+		picture = "paa\aspirin.paa";
 		requirement[] = {};
 	};
 	class cardiacpills {
@@ -85,7 +85,7 @@
 		description = "Cardiac glycoside drug for treatment pathologies of heart and blood vessels.";
 		weight = 0.1;
 		nbusage = 10;
-		picture = "pictures\cardiacpills.jpg";
+		picture = "paa\cardiacpills.paa";
 		requirement[] = {};
 	};
 	class humanworms {

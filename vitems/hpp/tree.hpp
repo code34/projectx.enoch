@@ -5,7 +5,7 @@
         weight = 1;
         nbusage = 1;
         code = "vitems\items\woodbranch.sqf";
-        picture = "pictures\woodbranch.jpg";
+        picture = "paa\woodbranch.paa";
         requirement[] = {"lighter"}; 
     };
     class barkofwood {
@@ -15,6 +15,6 @@
         weight = 0.5;
         nbusage = 1;
         code = "vitems\items\barkofwood.sqf";
-        picture = "pictures\barkofwood.jpg";
+        picture = "paa\barkofwood.paa";
         requirement[] = {"lighter"};
     };

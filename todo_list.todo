@@ -1,0 +1,45 @@
+
+
+
+
+bug à fixer:
+- corriger le probleme des slots qui disparaissent quand un joueur meurt
+- corriger le probleme de boite qui se crée alors qu'il y en a peut etre une autre existante, et qui se déplace quand on ajoute ou ouvre.
+
+------------------------------------
+
+options à prioriser :
+- ameliorer la gestion de l'inventaire en ajoutant des categories / par objets
+- systeme de soins :
+	- on comprend par pourquoi la temperature, la santée: augmente par exemple, la nature des soins à réaliser
+
+todo: 
+- voir pour ajouter les crédits
+- ajouter la gestion des puits / gourdes
+- ajouter le splashscreen
+- ajouter la viande de zombie
+- factoriser les maxi hordes
+- ajouter un son pour avaler des objets
+- voir si ça un interet de rajouter le systeme de craft à côté du menu inventaire
+- ajouter la temperature dans le health resume
+- ajouter la gestion de l'energie avec les aliments
+
+options a reverifier
+- ventiler les zombies différents en utilisant la position dans createunit
+- ajouter un system de knowledge dans la gestion des pre requis
+
+option non prioritaire:
+- ajouter la gestion du coef speed avec la souris
+- rajouter une boite conserve vide pour faire plaisir à netarion
+- ameliorer la gestion du poids des armes et des magazines
+- ameliorer la gestion de la vitesse en fonction du poid
+- identifier l'ensemble des bornes de secours surveymarker_01_cover_f.p3d
+- ajouter la gestion de l'energie pour le sprint
+- voir pour ajouter un sac de couchage
+
+options hardcore & non prioritaire
+- boutons du pad qui marchent pas
+- voir si ça a un interet de rajouter un menu raccourci
+- voir s'il est possible de deplacer les objets dans l'inventaire en fonction de la position du curseur
+- ajouter la gestion des batiments pour l'inventaire en fonction des pièces
+- voir pour gerer le remplissage d'un item

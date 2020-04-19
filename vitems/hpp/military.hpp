@@ -13,7 +13,7 @@
         description = "a small black leather briefcase quite light. It is locked with an electronic code.It is impossible to open it without destroying its contents";
         weight = 5;
         nbusage = 1;
-        picture = "pictures\briefcase.jpg";
+        picture = "paa\briefcase.paa";
 		requirement[] = {};        
     };
     class gpstracker {
@@ -22,7 +22,7 @@
         description = "A gps tracker that could be useful to us. The source of energy is a mystery.";
         weight = 0.2;
         nbusage = -1;
-        picture = "pictures\gpstracker.jpg";
+        picture = "paa\gpstracker.paa";
         requirement[] = {};
     };
     class survivalration {

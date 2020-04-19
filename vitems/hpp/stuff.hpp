@@ -76,7 +76,7 @@
         description = "A packet of french cigarettes.";
         weight = 0.2;
         nbusage = 20;
-        picture = "pictures\cigarettes.jpg";
+        picture = "paa\cigarettes.paa";
 		requirement[] = {"lighter"};
     };
     class mace {
@@ -85,7 +85,7 @@
         description = "Mace with fiberglass handle";
         weight = 4;
         nbusage = -1;
-        picture = "pictures\mace.jpg";
+        picture = "paa\mace.paa";
 		requirement[] = {};
     };
     class hose {

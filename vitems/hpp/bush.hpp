@@ -4,7 +4,7 @@
         description = "A small wooden stick with moss";
         weight = 0.3;
         nbusage = 1;
-        picture = "pictures\woodenstick.jpg";
+        picture = "paa\woodenstick.paa";
         requirement[] = {"lighter"};
     };
     class pileofleaves {
@@ -23,7 +23,7 @@
         weight = 0.1;
         nbusage = 1;
         code = "vitems\items\nymphbug.sqf";
-        picture = "pictures\nymphbug.jpg";
+        picture = "paa\nymphbug.paa";
         requirement[] = {};
     };
     class pileofcompost {
@@ -42,7 +42,7 @@
         description = "Some smalls yellow mushrooms.";
         weight = 0.3;
         nbusage = 1;
-        picture = "pictures\yellowmushrooms.jpg";
+        picture = "paa\yellowmushrooms.paa";
         requirement[] = {};
     };
     class blueberries {
@@ -60,7 +60,7 @@
         description = "Fresh, delicious, sweet gooseberries.";
         weight = 0.3;
         nbusage = 1;
-        picture = "pictures\gooseberries.jpg";
+        picture = "paa\gooseberries.paa";
         requirement[] = {};
     };
     class nettle {

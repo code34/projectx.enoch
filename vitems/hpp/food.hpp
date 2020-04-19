@@ -22,7 +22,7 @@
         description = "Corona Extra is a pilsner-type Mexican beer with a slightly sweet taste and a dash of citrus.";
         weight = 1;
         nbusage = 1;
-        picture = "pictures\corona.jpg";
+        picture = "paa\corona.paa";
         requirement[] = {};
     };
      class waterbottle {
@@ -49,7 +49,7 @@
         description = "A nice great red apple.";
         weight = 0.2;
         nbusage = 1;
-        picture = "pictures\redapple.jpg";
+        picture = "paa\redapple.paa";
         requirement[] = {};
     };
      class tincanmaxigaz {
@@ -94,7 +94,7 @@
         description = "Beef Ravioli in Meat Sauce.";
         weight = 1;
         nbusage = 1;
-        picture = "pictures\cannedravioli.jpg";
+        picture = "paa\cannedravioli.paa";
 		requirement[] = {"tinopener"};
     };
      class russianvodka {
