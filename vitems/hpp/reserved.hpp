@@ -4,6 +4,6 @@
         description = "A Plastic mineral unfiltred and unpure water bottle with nasty odor.";
         weight = 1;
         nbusage = 1;
-        picture = "paa\bottlewaterunverified.jpg";
+        picture = "paa\bottlewaterunverified.paa";
         requirement[] = {};
     };
