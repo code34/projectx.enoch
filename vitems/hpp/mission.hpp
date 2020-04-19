@@ -91,7 +91,16 @@
     class medicalnote {
         type[] = {"mission"};
         title = "Medical note";
-        description = "A medical note that has been distributed in the mailboxes of surrounding houses.";
+        description = "A synthesis medical note that has been produce during Z pandemia.";
+        weight = 0.1;
+        nbusage = 1;
+        picture = "pictures\medicalnote.jpg";
+        requirement[] = {};
+    };
+    class bk18researchreport {
+        type[] = {"mission"};
+        title = "BK18 Research report";
+        description = "A research report about the BK18 medecine.";
         weight = 0.1;
         nbusage = 1;
         picture = "pictures\medicalnote.jpg";
@@ -99,10 +108,28 @@
     };
     class am212 {
         type[] = {"mission"};
-        title = "Am212";
+        title = "AM212";
         description = "Am212 Isotop product";
+        weight = 100;
+        nbusage = 1;
+        picture = "paa\am212.paa";
+        requirement[] = {};
+    };
+    class shippingnote {
+        type[] = {"mission"};
+        title = "Am212 Shipping note";
+        description = "A shipping note with the address of the supplier";
         weight = 0.1;
         nbusage = 1;
-        picture = "pictures\am212.jpg";
+        picture = "pictures\shippingnote.jpg";
+        requirement[] = {};
+    };
+    class xsitereport {
+        type[] = {"mission"};
+        title = "X Site Report";
+        description = "A top secret X Site Report";
+        weight = 0.1;
+        nbusage = 1;
+        picture = "paa\xsitereport.paa";
         requirement[] = {};
     };
