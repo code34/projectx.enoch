@@ -3,7 +3,7 @@
 			_size = 0;
 			_canbeprint = false;
 			if ((typeof cursorObject) isKindOf "House_F") then {
-				_size = ((2 boundingBoxReal cursorObject) select 2) - 4;
+				_size = ((2 boundingBoxReal cursorObject) select 2) - 1;
 			} else {
 				_size = ((2 boundingBoxReal cursorObject) select 2) + 2;
 			};
