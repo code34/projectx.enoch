@@ -70,7 +70,7 @@ CLASS("oo_hud")
 			private _nbmags = 0;
 			if(_index > -1) then {_nbmags = (["getItem", _index] call capcontainer) select 4;} else {_nbmags = 0;};
 			MEMBER("OOP_Text_nbmags", nil) ctrlSetText str(_nbmags);
-			sleep 0.5;
+			sleep 0.01;
 		};
 	};
 
@@ -79,6 +79,8 @@ CLASS("oo_hud")
 			if(MEMBER("isshowfile", nil)) then {
 				MEMBER("OOP_Picture_file", nil) ctrlShow true;
 				MEMBER("OOP_Text_file", nil) ctrlShow true;
+				MEMBER("OOP_Picture_file", nil) ctrlSetText "paa\file.paa";
+				MEMBER("OOP_Text_file", nil) ctrlSetText "F1";
 				sleep 1;
 				MEMBER("OOP_Picture_file", nil) ctrlShow false;
 				MEMBER("OOP_Text_file", nil) ctrlShow false;
@@ -103,6 +105,7 @@ CLASS("oo_hud")
 			if(MEMBER("isshowzombie", nil)) then {
 				MEMBER("OOP_Picture_zombie", nil) ctrlShow true;
 				MEMBER("OOP_Text_zombie", nil) ctrlShow true;
+				MEMBER("OOP_Picture_zombie", nil) ctrlSetText "paa\zombie1.paa";
 			} else {
 				MEMBER("OOP_Picture_zombie", nil) ctrlShow false;
 				MEMBER("OOP_Text_zombie", nil) ctrlShow false;
@@ -125,29 +128,51 @@ CLASS("oo_hud")
 	PUBLIC FUNCTION("scalar", "setFood"){
 		private _text = format ["%1", _this]+'%';
 		MEMBER("OOP_Text_food", nil) ctrlSetText _text;
+		if(_this > 20) then {
+			MEMBER("OOP_Picture_food", nil) ctrlSetText "paa\food2.paa";
+		} else {
+			MEMBER("OOP_Picture_food", nil) ctrlSetText "paa\food3.paa";
+		};
 	};
 
 	PUBLIC FUNCTION("scalar", "setDrink"){
 		private _text = format ["%1", _this]+'%';
 		MEMBER("OOP_Text_drink",nil)  ctrlSetText _text;
+		if(_this > 20) then {
+			MEMBER("OOP_Picture_drink", nil) ctrlSetText "paa\drink2.paa";
+		} else {
+			MEMBER("OOP_Picture_drink", nil) ctrlSetText "paa\drink3.paa";
+		};
 	};
 
 	PUBLIC FUNCTION("scalar", "setLife"){
 		private _text = format ["%1", _this]+'%';
 		MEMBER("OOP_Text_life", nil) ctrlSetText _text;
+		if(_this > 20) then {
+			MEMBER("OOP_Picture_life", nil) ctrlSetText "paa\life2.paa";
+		} else {
+			if(_this > 0) then {
+				MEMBER("OOP_Picture_life", nil) ctrlSetText "paa\life3.paa";
+			};
+		};
 	};
 
 	PUBLIC FUNCTION("scalar", "setVirus"){
 		private _text = format ["%1", _this]+'%';
 		MEMBER("OOP_Text_virus", nil) ctrlSetText _text;
+		//if(_this > 50) then {
+			MEMBER("OOP_Picture_virus", nil) ctrlSetText "paa\virus1.paa";
+		//} else {
+		//	MEMBER("OOP_Picture_virus", nil) ctrlSetText "paa\virus.paa";
+		//};
 	};
 
 	PUBLIC FUNCTION("scalar", "setZombie"){
-		private _text = format ["%1", _this]+'%';
-		MEMBER("OOP_Text_zombie", nil) ctrlSetText _text;
 		if(_this isEqualTo 0) then {
 			MEMBER("setShowzombie", false);
 		} else {
+			private _text = format ["%1", _this]+'%';
+			MEMBER("OOP_Text_zombie", nil) ctrlSetText _text;
 			MEMBER("setShowzombie", true);
 		};
 	};
