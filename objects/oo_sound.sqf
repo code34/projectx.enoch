@@ -29,9 +29,12 @@
         PUBLIC FUNCTION("","constructor") { 
             DEBUG(#, "OO_SOUND::constructor")
             MEMBER("setMode", "exploration");
-            private _array = [];
+            
+            private _array = ["microwave.ogg","cookiepan.ogg", "lullaby.ogg", "ghostlyvoices.ogg", "cough.ogg", "razor.ogg", "evacuation.ogg"];
             MEMBER("village", _array);
-            private _array = ["wscreaming.ogg"];
+            
+
+            private _array = ["wscreaming.ogg", "aliengate.ogg", "screechy.ogg", "comeback.ogg", "whisper.ogg"];
             MEMBER("forest", _array);
             SPAWN_MEMBER("playSound", nil);
         };
@@ -45,7 +48,7 @@
 				sleep (480 + random 240);
                 private _location = MEMBER("localizePlayer", nil);
 				switch (_location) do {
-					case "village" : { };
+					case "village" : { MEMBER("getExpHouse", nil); };
 					case "forest" : { MEMBER("getExpBack", nil); };
 					default {};
 				};
@@ -61,6 +64,15 @@
 			if (count _trees > 20) exitWith {"forest";};
 			"undefined";
 		};
+
+        PUBLIC FUNCTION("","getExpHouse") {
+            private _screamers = nearestTerrainObjects [player, ["House_F", "House"], 100];
+            sleep 0.2;
+            private _object = selectRandom _screamers;
+            private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
+            private _sound = _path + "sounds\" + (selectRandom MEMBER("village", nil));
+            playSound3D [_sound, _object, false, getPosASL _object, 2, 1, 150];
+        };
 
 		PUBLIC FUNCTION("","getExpBack") {
 	        private _screamers = nearestTerrainObjects [player, ["Tree","Bush"], 100];
