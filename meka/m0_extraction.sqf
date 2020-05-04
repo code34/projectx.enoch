@@ -19,7 +19,7 @@
     _marker2 setMarkerBrush "FDiagonal";
 
     // Require RHS - USA SOCOM
-    private _vehicle = createVehicle ["RHS_MELB_AH6M", _position, [], 0, "NONE"];
+    private _vehicle = createVehicle ["C_Heli_Light_01_civil_F", _position, [], 0, "NONE"];
     private _container = ["new", [netId _vehicle, ((getModelInfo _vehicle) select 0)]] call OO_CONTAINER;
     private _content = [["failurehelicopterengine", 1]];
     ["overLoad", _content] call _container;

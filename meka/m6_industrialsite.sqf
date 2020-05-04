@@ -66,8 +66,6 @@
         _gc;
     };
 
-    player setpos _position;
-
     private _camion = "B_Truck_01_ammo_F" createVehicleLocal _position;   
     _position = _camion getRelPos [25, 180];
     _gc = _gc + ([_position select 0, _position select 1, (getPosASL _camion) select 2] call createbk18stock);

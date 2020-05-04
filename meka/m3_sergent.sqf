@@ -26,17 +26,15 @@
     ["delete", _container] call OO_CONTAINER;
 
     // on attend que l'antenne radio soit activée
-    private _radiostate = missionNamespace getVariable ["armyradiostate", 0];
-    while { !(_radiostate isEqualTo 1) } do {
-        _radiostate = missionNamespace getVariable ["armyradiostate", 0];
+    private _radioactive = missionNamespace getVariable ["radioactive",false];
+    while { !_radioactive } do {
+        _radioactive = missionNamespace getVariable ["radioactive", false];
         sleep 1;
     };
 
     sleep 10;
 
    	["remoteSpawn", ["callSergentMission", [_position, _object], "client"]] call bmeclient;
-   	diag_log format ["Tick: Send sergent mission infos"];
-
     private _name = "sergent_zone";
     private _marker = createMarker [_name, _position];
     _marker setMarkerShape  "ELLIPSE";

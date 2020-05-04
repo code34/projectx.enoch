@@ -8,9 +8,9 @@
 		sergentobject = _this select 1;
 	};
 
-	private _radiostate = missionNamespace getVariable ["armyradiostate", 0];
-	while { !(_radiostate isEqualTo 1) } do {
-		_radiostate = missionNamespace getVariable ["armyradiostate", 0];
+	private _radiostate = missionNamespace getVariable ["radioactive", false];
+	while { !_radiostate } do {
+		_radiostate = missionNamespace getVariable ["radioactive", false];
 		sleep 1;
 	};
 	while {sergentposition isEqualTo []} do {sleep 1;};
@@ -23,6 +23,19 @@
 	["setPages", ["meka\story\m3_sergentradiocom.html"]] call tabnote;
 	["showFile", true] call hud;
 
+	addMissionEventHandler ["Draw3D", {
+	    private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
+	    private _paa = _path + "paa\target.paa";
+		    
+		private _posx = (getpos sergentobject) select 0;
+		private _posy = (getpos sergentobject) select 1;
+		private _posz = 0;
+		private _distance = player distance sergentobject;
+	    if(_distance < 100) then { _distance = 1 - (_distance / 100);}else{_distance = 0;};
+	    drawIcon3D [_paa, [1,1,1,_distance], [_posx, _posy, _posz] , 1, 1, 2, "Sergent Cache", 0, 0.03, "TahomaB", "center", true];
+	}];
+
+
 	// joue une musique quand le joueur retrouve le sergent
     _position spawn {
         private _position = _this;
@@ -34,6 +47,8 @@
         	sleep 1;
 		};
 		playMusic "stressante";
+		["setPages", ["meka\story\m3_cachesergent.html"]] call tabnote;
+		["showFile", true] call hud;
     };
 
     // lance un son en boucle dans une souche tant qu'un joueur
@@ -52,6 +67,5 @@
 			playSound3D [_sound, _object, false, getPosASL _object, 2, 1, 20];
             sleep 2;
         };
-		["setPages", ["meka\story\m3_cachesergent.html"]] call tabnote;
-		["showFile", true] call hud;
+        removeAllMissionEventHandlers "Draw3D";
     };

@@ -14,5 +14,7 @@
 
     while { player distance (getMarkerPos "labox_point") > 40 } do { sleep 5;}; 
 
+    playMusic "ambientmusic";
+
     ["setPages", ["meka\story\m8_sitex2.html"]] call tabnote;
     ["showFile", true] call hud; 

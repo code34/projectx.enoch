@@ -5,7 +5,7 @@
 	while { player distance (getMarkerPos "extraction_point") > 25} do { sleep 1;};
 
     _position = getMarkerPos "extraction_point";
-    _vehicle  = (nearestObjects [_position, ["RHS_MELB_AH6M"], 50]) select 0;
+    _vehicle  = (nearestObjects [_position, ["C_Heli_Light_01_civil_F"], 50]) select 0;
 
 	playMusic "stressante";
 	sleep 5;
