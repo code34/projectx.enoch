@@ -59,19 +59,19 @@
 			SPAWN_MEMBER("analysis", nil);
 
 			while { count (units MEMBER("group", nil)) > 0 } do {
-				systemChat format ["Something happen %1...", time];
+				//systemChat format ["Something happen %1...", time];
 				switch (MEMBER("event", nil)) do {
 					case "alert": {
-						systemChat "Engaging ...";
+						//systemChat "Engaging ...";
 						MEMBER("getNextTarget", nil);
 						MEMBER("engageTarget", nil);
 					};
 					case "city": {
-						systemChat "Walking in city ...";
+						//systemChat "Walking in city ...";
 						MEMBER("walkInBuildings", nil);
 					};
 					default{
-						systemChat "Walking ...";
+						//systemChat "Walking ...";
 						MEMBER("guard", _array);
 					};
 				};
@@ -324,17 +324,17 @@
 			_wp setWaypointSpeed "FULL";
 			_group setCurrentWaypoint _wp;
 
-			private _name = format["target_%1", groupId _group];
-			private _marker = createMarkerLocal [_name,_position];
-			_marker setMarkerShapeLocal "ICON";
-			_marker setMarkerTypeLocal "waypoint";
-			_marker setMarkerText _name;
-			_marker setMarkerColor "ColorRed";
+			//private _name = format["target_%1", groupId _group];
+			//private _marker = createMarkerLocal [_name,_position];
+			//_marker setMarkerShapeLocal "ICON";
+			//_marker setMarkerTypeLocal "waypoint";
+			//_marker setMarkerText _name;
+			//_marker setMarkerColor "ColorRed";
 
 			sleep 30;
 
 			MEMBER("event", "");
-			deleteMarker _marker;
+			//deleteMarker _marker;
 			deletewaypoint _wp;
 		};
 
@@ -396,12 +396,12 @@
 			_wp setWaypointStatements ["true", "this setvariable ['complete', true]; false"];
 			_group setCurrentWaypoint _wp;
 
-			private _name = format["target_%1", groupId _group];
+/*			private _name = format["target_%1", groupId _group];
 			private _marker = createMarkerLocal [_name,_position];
 			_marker setMarkerShapeLocal "ICON";
 			_marker setMarkerTypeLocal "waypoint";
 			_marker setMarkerText _name;
-			_marker setMarkerColor "ColorRed";
+			_marker setMarkerColor "ColorRed";*/
 
 			_counter = 0;
 			while { _counter < _maxtime } do {
@@ -412,7 +412,7 @@
 				sleep 1;
 			};
 
-			deleteMarker _marker;
+			//deleteMarkerLocal _marker;
 			deletewaypoint _wp;
 		};
 
