@@ -41,6 +41,7 @@
 	fnc_militarycasern_clientside = compile preprocessFileLineNumbers "meka\m7_militarycasern_clientside.sqf";
 	fnc_sitex_clientside = compile preprocessFileLineNumbers "meka\m8_sitex_clientside.sqf";
 
+	fnc_fileexist = compile preprocessFileLineNumbers "scripts\fnc_fileexist.sqf";
 	fnc_weathers = compile preprocessFileLineNumbers "scripts\real_weather.sqf";
 	fnc_getnearestplayer = compile preprocessFileLineNumbers "scripts\fnc_getnearestplayer.sqf";
 	fnc_inventorycam = compile preprocessFileLineNumbers "scripts\fnc_inventorycam.sqf";
@@ -64,6 +65,8 @@
 		["End1", true, 5, true] spawn BIS_fnc_endMission;
 	};
 
+	// Relai Radio Mission
+	[] spawn fnc_relayradio_clientside;
 	// Sergent mission handler
 	[] spawn fnc_sergent_clientside;
 	// Sergent mission handler
@@ -131,7 +134,7 @@
 	//private _content = [["arifle_MSBS65_F",1], ["launch_RPG32_camo_F", 1],["armyradio",-1],["wrench",-1],["medicalkit",1],["survivalration",5], ["screwdriver", -1],["waterbottle",1],["30Rnd_65x39_caseless_mag_Tracer", 5]];
 
 	capcontainer = ["new", [netId player, ((getModelInfo player) select 0)]] call OO_CONTAINER;
-	private _content = [["armyradio",-1],["wrench",-1],["medicalkit",1],["survivalration",5],["screwdriver",-1]];
+	private _content = [["armyradio",-1],["medicalkit",1],["survivalration",2]];
 	["overLoad", _content] call capcontainer;
 	"loadInventory" call capcontainer;
 	"save" call capcontainer;
@@ -166,55 +169,35 @@
 		};
 	};
 
-	// initialize mission tab
-	tabnote = "new" call OO_TABNOTE;
-	["setPages", ["meka\story\m1_introduction1.html","meka\story\m1_introduction2.html"]] call tabnote;
-	["showFile", true] call hud;
-
 	_sound = "new" call OO_SOUND;
 	player addEventHandler ["killed", "closeDialog 0;"];
+
 
 /*	copyToClipboard format ["%1 %2", getText(configfile >> "cfgWeapons" >> "hgun_P07_khk_F">> "picture"), getText(configfile >> "cfgMagazines" >> "16Rnd_9x21_Mag" >> "picture")];*/
 
 /*	["arifle_MX_khk_F","hgun_P07_khk_F"] 
 	["30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag"]*/
 
-/*	addMissionEventHandler ["Draw3D", {
-		    if((typeOf cursorObject) isEqualTo "House_F") then {
-			    private _object = cursorObject;
-			    private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
-			    private _paa = _path + "paa\radiocenter.paa";
-			    
-			    private _index = 0;
-			    private _positions = [];
-				while { !((_object buildingPos _index) isEqualTo [0,0,0]) } do {
-					_positions pushBack (_object buildingPos _index);
-					_index = _index + 1;
-				};
-
-				{
-					drawIcon3D [_paa, [1,1,1,10], _x , 1, 1, 2, "Radio Amplifier", 0, 0.03, "TahomaB", "center", true];
-				}foreach _positions;
-			};
-	}];*/
-
 	// splash screen
 	//["Paste",["Enoch",[554.372,1133.97,17.4291],67.7519,0.75,[-9.87417,0],0,0,600,0.3,0,1,0,1]] call bis_fnc_camera;
 
-/*	while { true } do {
-		private _position = (lineIntersectsSurfaces [getPosASL player, getPosASL cursorObject, objNull, objNull, false, -1]);
-		//private _distance = player distance _position;
-		systemchat format ["%1", _position];
-		sleep 1;
-	};*/
+	playMusic "ambientmusic2";
+	titleText ["<t size='5'>Project</t><t color='#ff9d00' size='6'>X</t><br/>by Code34", "PLAIN", -1, true, true];
 
-/*	while { true } do {
-		hint format["%1 %2", typeOf cursorTarget, (getModelInfo cursorTarget) select 0];
-		copyToClipboard format ["%1 %2", typeOf cursorTarget, (getModelInfo cursorTarget) select 0];
-		sleep 1;
-	};*/
+/*	sleep 20;
 
+	[ "Somewhere on Liviona", format ["Year %1", date select 0]] spawn BIS_fnc_infoText;
 
-	/*Land_ConcreteWell_02_F*/
+	sleep 20;
 
-	//copyToClipboard format ["%1", getMarkerPos "sitex"];
+	"Instructions" hintC [
+	"Bienvenue dans la version Beta de ProjectX. Ceci est une version en développement plusieurs bugs peuvent apparaitre.",
+	"Press I to search",
+	"Press F1 to chech your roadmap",
+	"Jouez en coopération et bon courage à vous - Code34 :)"
+	];*/
+
+	// initialize mission tab
+	tabnote = "new" call OO_TABNOTE;
+	["setPages", ["meka\story\m1_introduction1.html","meka\story\m1_introduction2.html"]] call tabnote;
+	["showFile", true] call hud;
