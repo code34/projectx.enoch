@@ -63,7 +63,6 @@ CLASS("oo_Vitems")
 		MEMBER("OOP_pic_flashprimaryweapon", _this displayCtrl 124);
 		MEMBER("OOP_pic_flashhandgunweapon", _this displayCtrl 125);
 		MEMBER("OOP_pic_flashsecondaryweapon", _this displayCtrl 126);
-
 		MEMBER("selectindex", -1);
 		private _array = [];
 		MEMBER("source", _array);
@@ -81,6 +80,13 @@ CLASS("oo_Vitems")
 	PUBLIC FUNCTION("", "Init"){
 		//MEMBER("Display", nil) displayAddEventHandler ["KeyDown", "if (_this select 1 isEqualTo 1) then {true} else {false};"];
 		// print ground/object listbox
+		// on place la selection sur le premier objet du proxy
+		if(("countSize" call proxcontainer) > 0) then {
+			private _content = ("getContent" call proxcontainer) select 0;
+			MEMBER("OOP_Listbox_Capacities",nil) lbSetCurSel -1;
+			//"name", "description", "category", "price","weight", "owner", "life"
+			MEMBER("OOP_Text_Description", nil) ctrlSetStructuredText parseText format ["%1<br/>", _content select 2];
+		};
 		MEMBER("refresh", nil);
 	};
 
@@ -145,9 +151,10 @@ CLASS("oo_Vitems")
 		private _array = [[(primaryWeapon player), "OOP_pic_primaryweapon", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_primary_gs.paa"],[(secondaryWeapon player), "OOP_pic_secondaryweapon", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_secondary_gs.paa"],[(handgunWeapon player), "OOP_pic_gunweapon", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_hgun_gs.paa"],[(binocular player), "OOP_pic_binocular", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_binocular_gs.paa"],[_primarymag, "OOP_pic_magprimaryweapon", "CfgMagazines", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_magazine_gs.paa"],[_handgunmag, "OOP_pic_maggunweapon", "CfgMagazines", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_magazine_gs.paa"],[_secondarymag, "OOP_pic_magsecondaryweapon", "CfgMagazines", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_magazine_gs.paa"],[_primaryoptic, "OOP_pic_opticprimaryweapon", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_top_gs.paa"],[_handgunoptic, "OOP_pic_optichandgunweapon", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_top_gs.paa"],[_secondaryoptic, "OOP_pic_opticsecondaryweapon", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_top_gs.paa"],[_headgear, "OOP_pic_head", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_helmet_gs.paa"],[_uniform, "OOP_pic_uniform", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_uniform_gs.paa"],[_vest, "OOP_pic_vest", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_vest_gs.paa"],[_bag, "OOP_pic_backpack", "CfgVehicles", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_backpack_gs.paa"],[_primaryflash, "OOP_pic_flashprimaryweapon", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_side_gs.paa"],[_secondaryflash, "OOP_pic_flashsecondaryweapon", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_side_gs.paa"],[_handgunflash, "OOP_pic_flashhandgunweapon", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_side_gs.paa"]];
 		{MEMBER("setItemPicture", _x);} forEach _array;
 		
+
+		// toLower(_primarymag), toLower(_secondarymag), toLower(_handgunmag)
 		private _alreadyshow = [toLower(_headgear),toLower(_uniform), toLower(_vest), toLower(_bag),
 		toLower(_primaryoptic), toLower(_secondaryoptic), toLower(_handgunoptic),
-		toLower(_primarymag), toLower(_secondarymag), toLower(_handgunmag),
 		toLower(_primaryflash), toLower(_secondaryflash),toLower(_handgunflash),
 		toLower(primaryWeapon player), toLower(secondaryWeapon player),
 		toLower(handgunWeapon player), toLower(binocular player)];
@@ -346,17 +353,19 @@ CLASS("oo_Vitems")
 	};
 
 	PUBLIC FUNCTION("string", "actionCapMenu") {
+		private _index = lbCurSel  MEMBER("OOP_Listbox_Capacities", nil);
+		private _array = [capcontainer, _index];
 		switch(_this) do {
 			case "use" : {
-				private _index = lbCurSel  MEMBER("OOP_Listbox_Capacities", nil);
 				if(_index > -1) then {
+					_index = MEMBER("count_Indexwithoutfilter", _array);
 					_index = ["useItem", _index] call capcontainer;
+					_index = lbCurSel  MEMBER("OOP_Listbox_Capacities", nil);
 					MEMBER("selectindex", _index);
 					MEMBER("refresh", nil);
 				};
 			};
 			case "drop" : {
-				private _index = lbCurSel  MEMBER("OOP_Listbox_Capacities", nil);
 				if(_index > -1) then {
 					private _array = [MEMBER("OOP_Listbox_Capacities", nil), _index];
 					MEMBER("getDblClick", _array);
@@ -364,9 +373,12 @@ CLASS("oo_Vitems")
 			};
 
 			case "shred" : {
-				private _index = lbCurSel  MEMBER("OOP_Listbox_Capacities", nil);
 				if(_index > -1) then {
-
+					_index = MEMBER("count_Indexwithoutfilter", _array);
+					_index = ["shredItem", _index] call capcontainer;					
+					_index = lbCurSel  MEMBER("OOP_Listbox_Capacities", nil);
+					MEMBER("selectindex", _index);
+					MEMBER("refresh", nil);
 				};
 			};
 		};
@@ -411,8 +423,10 @@ CLASS("oo_Vitems")
 				_dcontainer = capcontainer;
 			} else {
 				_dcontainer = proxcontainer;
-			};
+			};	
 			private _index = (((_this select 4) select 0) select 1);
+			private _array = [_scontainer, _index];
+			_index = MEMBER("count_Indexwithoutfilter", _array);
 			private _item = ["getItem", _index] call _scontainer;
 			private _transfert = [_scontainer, _dcontainer, _item select 0, _item select 4];
 			MEMBER("transfertItem2", _transfert);
@@ -420,6 +434,8 @@ CLASS("oo_Vitems")
 			switch (true) do {
 				case (_destination isEqualTo MEMBER("OOP_pic_head", nil)) : {
 					private _index = (((_this select 4) select 0) select 1);
+					private _array = [_scontainer, _index];
+					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _class = (("getContent" call _scontainer) select _index) select 0;
 					private _gear = "new" call OO_ARMAGEAR;
 					["addItem", ["head",_class]] call _gear;
@@ -431,6 +447,8 @@ CLASS("oo_Vitems")
 
 				case (_destination isEqualTo MEMBER("OOP_pic_vest", nil)) : {
 					private _index = (((_this select 4) select 0) select 1);
+					private _array = [_scontainer, _index];
+					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _class = (("getContent" call _scontainer) select _index) select 0;
 					private _gear = "new" call OO_ARMAGEAR;
 					["addItem", ["vest",_class]] call _gear;
@@ -442,6 +460,8 @@ CLASS("oo_Vitems")
 
 				case (_destination isEqualTo MEMBER("OOP_pic_uniform", nil)) : {
 					private _index = (((_this select 4) select 0) select 1);
+					private _array = [_scontainer, _index];
+					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _class = (("getContent" call _scontainer) select _index) select 0;
 					private _gear = "new" call OO_ARMAGEAR;
 					["addItem", ["uniform",_class]] call _gear;
@@ -453,6 +473,8 @@ CLASS("oo_Vitems")
 
 				case (_destination isEqualTo MEMBER("OOP_pic_backpack", nil)) : {
 					private _index = (((_this select 4) select 0) select 1);
+					private _array = [_scontainer, _index];
+					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _class = (("getContent" call _scontainer) select _index) select 0;
 					private _gear = "new" call OO_ARMAGEAR;
 					["addItem", ["backpack",_class]] call _gear;
@@ -465,6 +487,8 @@ CLASS("oo_Vitems")
 
 				case (_destination isEqualTo MEMBER("OOP_pic_primaryweapon", nil)) : {
 					private _index = (((_this select 4) select 0) select 1);
+					private _array = [_scontainer, _index];
+					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
 					private _gear = "new" call OO_ARMAGEAR;
 					["addWeapon", _object] call _gear;
@@ -477,6 +501,8 @@ CLASS("oo_Vitems")
 
 				case (_destination isEqualTo MEMBER("OOP_pic_secondaryweapon", nil)) : {
 					private _index = (((_this select 4) select 0) select 1);
+					private _array = [_scontainer, _index];
+					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
 					private _gear = "new" call OO_ARMAGEAR;
 					["addWeapon", _object] call _gear;
@@ -489,6 +515,8 @@ CLASS("oo_Vitems")
 
 				case (_destination isEqualTo MEMBER("OOP_pic_gunweapon", nil)) : {
 					private _index = (((_this select 4) select 0) select 1);
+					private _array = [_scontainer, _index];
+					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
 					private _gear = "new" call OO_ARMAGEAR;
 					["addWeapon", _object] call _gear;
@@ -501,6 +529,8 @@ CLASS("oo_Vitems")
 
 				case (_destination isEqualTo MEMBER("OOP_pic_magprimaryweapon", nil)) : {
 					private _index = (((_this select 4) select 0) select 1);
+					private _array = [_scontainer, _index];
+					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
 					private _gear = "new" call OO_ARMAGEAR;
 					["addMagazines", ["primaryweapon", _object select 0]] call _gear;
@@ -512,6 +542,8 @@ CLASS("oo_Vitems")
 
 				case (_destination isEqualTo MEMBER("OOP_pic_magsecondaryweapon", nil)) : {
 					private _index = (((_this select 4) select 0) select 1);
+					private _array = [_scontainer, _index];
+					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
 					private _gear = "new" call OO_ARMAGEAR;
 					["addMagazines", ["secondaryweapon", _object select 0]] call _gear;
@@ -523,6 +555,8 @@ CLASS("oo_Vitems")
 
 				case (_destination isEqualTo MEMBER("OOP_pic_maggunweapon", nil)) : {
 					private _index = (((_this select 4) select 0) select 1);
+					private _array = [_scontainer, _index];
+					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
 					private _gear = "new" call OO_ARMAGEAR;
 					["addMagazines", ["handgunweapon", _object select 0]] call _gear;
@@ -534,6 +568,8 @@ CLASS("oo_Vitems")
 
 				case (_destination isEqualTo MEMBER("OOP_pic_opticprimaryweapon", nil)) : {
 					private _index = (((_this select 4) select 0) select 1);
+					private _array = [_scontainer, _index];
+					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
 					private _gear = "new" call OO_ARMAGEAR;
 					["addItem", ["primaryweapon", _object select 0]] call _gear;
@@ -545,6 +581,8 @@ CLASS("oo_Vitems")
 
 				case (_destination isEqualTo MEMBER("OOP_pic_optichandgunweapon", nil)) : {
 					private _index = (((_this select 4) select 0) select 1);
+					private _array = [_scontainer, _index];
+					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
 					private _gear = "new" call OO_ARMAGEAR;
 					["addItem", ["handgunweapon", _object select 0]] call _gear;
@@ -556,6 +594,8 @@ CLASS("oo_Vitems")
 
 				case (_destination isEqualTo MEMBER("OOP_pic_opticsecondaryweapon", nil)) : {
 					private _index = (((_this select 4) select 0) select 1);
+					private _array = [_scontainer, _index];
+					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
 					private _gear = "new" call OO_ARMAGEAR;
 					["addItem", ["secondaryweapon", _object select 0]] call _gear;
@@ -567,6 +607,8 @@ CLASS("oo_Vitems")
 
 				case (_destination isEqualTo MEMBER("OOP_pic_flashprimaryweapon", nil)) : {
 					private _index = (((_this select 4) select 0) select 1);
+					private _array = [_scontainer, _index];
+					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
 					private _gear = "new" call OO_ARMAGEAR;
 					["addItem", ["primaryweapon", _object select 0]] call _gear;
@@ -578,6 +620,8 @@ CLASS("oo_Vitems")
 
 				case (_destination isEqualTo MEMBER("OOP_pic_flashsecondaryweapon", nil)) : {
 					private _index = (((_this select 4) select 0) select 1);
+					private _array = [_scontainer, _index];
+					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
 					private _gear = "new" call OO_ARMAGEAR;
 					["addItem", ["secondaryweapon", _object select 0]] call _gear;
@@ -589,6 +633,8 @@ CLASS("oo_Vitems")
 
 				case (_destination isEqualTo MEMBER("OOP_pic_flashhandgunweapon", nil)) : {
 					private _index = (((_this select 4) select 0) select 1);
+					private _array = [_scontainer, _index];
+					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
 					private _gear = "new" call OO_ARMAGEAR;
 					["addItem", ["handgunweapon", _object select 0]] call _gear;
@@ -597,8 +643,7 @@ CLASS("oo_Vitems")
 						["addItem", _item] call capcontainer;
 					};
 				};
-
-				default { hint "other";	};
+				default { hint "other";};
 			};
 		};
 		MEMBER("refresh", nil);
@@ -618,6 +663,9 @@ CLASS("oo_Vitems")
 			_scontainer = proxcontainer;
 			_dcontainer = capcontainer;
 		};
+
+		private _array = [_scontainer, _index];
+		_index = MEMBER("count_Indexwithoutfilter", _array);
 
 		private _item = ["getItemUnitary", _index] call _scontainer;
 		if(_item select 7) then {
@@ -659,6 +707,26 @@ CLASS("oo_Vitems")
 		_newcontent;
 	};
 
+
+	// recalcule l'index sans filtre
+	PUBLIC FUNCTION("array", "count_Indexwithoutfilter") {
+		private _alreadyshow = MEMBER("alreadyshow", nil);
+		private _container = _this select 0;
+		private _index = _this select 1;
+		private _oldindex = _this select 1;
+		private _content = "getContent" call _container;
+
+		{
+			if((_index isEqualTo _forEachIndex) && !(toLower(_x select 0) in _alreadyshow)) exitWith {
+				_index;
+			};
+			if(toLower(_x select 0) in _alreadyshow) then {
+				_index = _index + 1;
+			};
+		} forEach _content;
+		_index;
+	};
+
 	PUBLIC FUNCTION("array", "refresh_LISTBOX") {
 		DEBUG(#, "OO_VITEMS::refresh_LISTBOX")
 		private _control = _this select 0;
@@ -673,15 +741,15 @@ CLASS("oo_Vitems")
 		private _limitweight = "getLimitWeight" call _container;
 		private _content = "getContent" call _container;
 		
-		//_content = MEMBER("filter_Content", _content);
+		_content = MEMBER("filter_Content", _content);
 		{
-				if((_x select 4) > -1) then {
-					_control lbAdd format["%1x %2",(_x select 4), (_x select 1)];
-				} else {
-					_control lbAdd format["%1",(_x select 1)];
-				};
-				_control lbSetPicture [_forEachIndex, (_x select 5)];
-				_control lbSetValue[_forEachIndex, _forEachIndex];
+			if((_x select 4) > -1) then {
+				_control lbAdd format["%1x %2",(_x select 4), (_x select 1)];
+			} else {
+				_control lbAdd format["%1",(_x select 1)];
+			};
+			_control lbSetPicture [_forEachIndex, (_x select 5)];
+			_control lbSetValue[_forEachIndex, _forEachIndex];
 		}foreach _content;
 
 		private _indexlast =  ("countSize" call _container) - 1;
@@ -707,10 +775,32 @@ CLASS("oo_Vitems")
 		DEBUG(#, "OO_VITEMS::onLBSelChanged_OOP_Listbox_Proximity")
 		private _control = _this select 0;
 		private _index = _this select 1;
+		private _array = [proxcontainer, _index];
+		_index = MEMBER("count_Indexwithoutfilter", _array);
 		if(_index >= ("countSize" call proxcontainer)) exitWith {};
 		if(_index > -1) then {
 			private _content = ("getContent" call proxcontainer) select _index;
-			MEMBER("OOP_Listbox_Capacities",nil) lbSetCurSel -1;
+			//MEMBER("OOP_Listbox_Capacities",nil) lbSetCurSel -1;
+			//"name", "description", "category", "price","weight", "owner", "life"
+			MEMBER("OOP_Text_Description", nil) ctrlSetStructuredText parseText format ["%1<br/>", _content select 2];
+		};
+	};
+
+	/*
+	*	onLBSelChanged:
+	*		The selection in a listbox is changed. The left mouse button has been released and the new selection is fully made.
+	*		Returns the control and the selected element index.
+	*/
+	PUBLIC FUNCTION("array", "onLBSelChanged_OOP_Listbox_Capacities") {
+		DEBUG(#, "OO_VITEMS::onLBSelChanged_OOP_Listbox_Capacities")
+		private _control = _this select 0;
+		private _index = _this select 1;
+		private _array = [capcontainer, _index];
+		_index = MEMBER("count_Indexwithoutfilter", _array);
+		if(_index >= ("countSize" call capcontainer)) exitWith {};
+		if(_index > -1) then {
+			private _content = ("getContent" call capcontainer) select _index;
+			//MEMBER("OOP_Listbox_Proximity",nil) lbSetCurSel -1;
 			//"name", "description", "category", "price","weight", "owner", "life"
 			MEMBER("OOP_Text_Description", nil) ctrlSetStructuredText parseText format ["%1<br/>", _content select 2];
 		};
@@ -739,24 +829,6 @@ CLASS("oo_Vitems")
 		private _control = _this select 0;
 		private _index = _this select 1;
 
-	};
-
-	/*
-	*	onLBSelChanged:
-	*		The selection in a listbox is changed. The left mouse button has been released and the new selection is fully made.
-	*		Returns the control and the selected element index.
-	*/
-	PUBLIC FUNCTION("array", "onLBSelChanged_OOP_Listbox_Capacities") {
-		DEBUG(#, "OO_VITEMS::onLBSelChanged_OOP_Listbox_Capacities")
-		private _control = _this select 0;
-		private _index = _this select 1;
-		if(_index >= ("countSize" call capcontainer)) exitWith {};
-		if(_index > -1) then {
-			private _content = ("getContent" call capcontainer) select _index;
-			MEMBER("OOP_Listbox_Proximity",nil) lbSetCurSel -1;
-			//"name", "description", "category", "price","weight", "owner", "life"
-			MEMBER("OOP_Text_Description", nil) ctrlSetStructuredText parseText format ["%1<br/>", _content select 2];
-		};
 	};
 
 	/*
