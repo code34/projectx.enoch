@@ -68,6 +68,16 @@ class CfgMusic
 		name	= "stressante";
 		sound[]	= { "\sounds\stressante.ogg", db + 0, 1.0 };
 	};
+    class ambientmusic
+    {
+        name    = "ambientmusic";
+        sound[] = { "\sounds\ambientmusic.ogg", db +0, 1.0 };
+    };
+    class ambientmusic2
+    {
+        name    = "ambientmusic2";
+        sound[] = { "\sounds\ambientmusic2.ogg", db +0, 1.0 };
+    };
 };
 
 class CfgSounds
