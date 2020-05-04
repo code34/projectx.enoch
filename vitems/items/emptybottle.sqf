@@ -1,6 +1,7 @@
 	private _result = true;
-
-	if(((typeof cursorTarget) isEqualTo "Land_ConcreteWell_02_F") and (cursorTarget distance player < 5)) then {
+		
+	_count = count(nearestObjects [player, ["Land_ConcreteWell_02_F","Land_StoneWell_01_F", "Land_Water_source_F"], 10]);
+	if(_count > 0) then {
 			player playActionNow "PutDown";
         	private _object = cursorTarget;
         	private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
