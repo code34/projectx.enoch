@@ -54,7 +54,7 @@
 	[] spawn fnc_weathers;
 
 	//Ryan zombie settings
-	ryanzombiesinfectedchance = 50;
+	ryanzombiesinfectedchance = 5;
 	ryanzombiesinfectedrate = 0.1;
 	ryanzombiesinfectedsymptoms = 0.9;
 	ryanzombiesinfecteddeath = 0.9;
@@ -96,11 +96,19 @@
 	};
 
 	vitems_getInventory = { 
-		missionNamespace getVariable [format["inventory_%1", _this], []];
+		private _lock = missionNamespace getVariable [format["lock_%1", _this], false];
+		private _return = [false, []];
+		if(!_lock) then {
+			missionNamespace setVariable [format["lock_%1", _this], true, false];
+			private _value = missionNamespace getVariable [format["inventory_%1", _this], []];
+			_return = [true, _value];
+		};
+		_return;
 	};
 	
-	vitems_setInventory = { 
+	vitems_setInventory = {
 		missionNamespace setVariable [format["inventory_%1", _this select 0], _this select 1, false];true;
+		missionNamespace setVariable [format["lock_%1", _this select 0], false, false];
 	};
 	
 	vitems_getProperties = {
@@ -143,8 +151,18 @@
 		};*/
 	};
 
+    for "_i" from 1 to 49 step 1 do {
+    	private _markername = "enemy" + str(_i);
+    	private _militarized = false;
+    	if(random 1 > 0.25) then {_militarized = true;};
+  		_position = getMarkerPos _markername;
+   		_size = (getMarkerSize _markername) select 0;
+		_location = ["new", [_position, _size, _militarized]] call OO_SECTOR_RUSSIAN;
+		"check" spawn _location;
+		deleteMarker _markername;
+    };
+
 	// debug industrialize mission
-	//missionplan = 1;
 	//player setpos getMarkerPos "industrialsite_point";
 
 	// debug sitex
@@ -159,15 +177,4 @@
 
     /// unites russes RHS - VV 
     // vehicules : rhs_btr70_vv, rhs_brm1k_vv,rhs_uaz_open_vv, RHS_Ural_Open_Flat_VV_01
-    // chopper: RHS_Mi8mt_Cargo_vv
-
-    for "_i" from 1 to 39 step 1 do {
-    	private _markername = "enemy" + str(_i);
-    	if(random 1 > 0.25) then {
-    		_position = getMarkerPos _markername;
-    		_size = (getMarkerSize _markername) select 0;
-			_location = ["new", [_position, _size]] call OO_SECTOR_RUSSIAN;
-			"check" spawn _location;
-		};
-		deleteMarker _markername;
-    };
+    // chopper: RHS_Mi8mt_Cargo_vv    
