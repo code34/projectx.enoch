@@ -72,6 +72,7 @@
 				case DIK_RIGHT : { MEMBER("keyRight", nil); }; 
 				case DIK_F1 : { MEMBER("keyF1", nil); }; 
 				case DIK_F2 : { MEMBER("keyF2", nil); }; 
+				case DIK_F5 : { MEMBER("keyF5", nil); }; 
 				case _reload : {
 					//player action ["loadmagazine", player, player, 0, 1 ,"vbs2_us_m16a2_iron_gla", "vbs2_us_m16a2_iron_gla"];
 					private _gear = "new" call OO_ARMAGEAR;
@@ -82,10 +83,10 @@
 			false;
 		};
 
-		PUBLIC FUNCTION("","keyUp") { hint "UP"; };
+		/* PUBLIC FUNCTION("","keyUp") { hint "UP"; };
 		PUBLIC FUNCTION("","keyDown") { hint "DOWN"; };
 		PUBLIC FUNCTION("","keyLeft") { hint "LEFT"; };
-		PUBLIC FUNCTION("","keyRight") { hint "RIGHT"; };
+		PUBLIC FUNCTION("","keyRight") { hint "RIGHT"; };*/
 		
 		PUBLIC FUNCTION("","keyF1") {
 			private _exit = false;
@@ -113,6 +114,11 @@
 				["setMode", "F2"] call tabnote;
 				"createDialog" call tabnote;	
 			};
+		};
+
+		PUBLIC FUNCTION("","keyF5") { 
+			private _exit = false;
+			copyToClipboard format ["%1", (getModelInfo cursorObject) select 0];
 		};
 
 		PUBLIC FUNCTION("","deconstructor") { 
