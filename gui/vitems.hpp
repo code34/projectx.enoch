@@ -596,7 +596,7 @@ class Vitems {
 						h = (safezoneH * 0.02);
 						onMouseButtonClick = "['closeCapMenu', _this] call VITEMS";
 						class Items {
-							items[] = {"Use","Shred","Drop"};
+							items[] = {"Use","Drop"};
 							class Default {
 								text = "";
 								data = "";
