@@ -25,6 +25,7 @@
         PRIVATE VARIABLE("array","position");
         PRIVATE VARIABLE("bool","active");
         PRIVATE VARIABLE("bool","monitor");
+        PRIVATE VARIABLE("bool","militarized");
         PRIVATE VARIABLE("array","russians");
         PRIVATE VARIABLE("array","vehicles");
         PRIVATE VARIABLE("string","zonetype");
@@ -35,6 +36,7 @@
             DEBUG(#, "OO_SECTOR::constructor")
             MEMBER("position", _this select 0);
             MEMBER("sectorsize", _this select 1);
+            MEMBER("militarized", _this select 2);
             MEMBER("active", false);
             MEMBER("monitor", false);
             private _array = [];
@@ -67,7 +69,11 @@
                     private _dir = random 360;
                     private _type = [];
                     if(random 1 > 0.95) then {
-                        _type = selectRandom ["rhs_btr70_vv","rhs_brm1k_vv","rhs_uaz_open_vv","RHS_Ural_Open_Flat_VV_01"];
+                        if(random 1 > 0.95) then {
+                            _type = selectRandom ["rhs_btr70_vv","rhs_brm1k_vv","rhs_uaz_open_vv","RHS_Ural_Open_Flat_VV_01"];
+                        } else {
+                            _type = selectRandom ["rhs_brm1k_vv","rhs_uaz_open_vv","RHS_Ural_Open_Flat_VV_01"];
+                        };
                     } else {                    
                         _type = selectRandom ["RHS_UAZ_MSV_01","rhs_uaz_open_MSV_01","RHS_Ural_VMF_01","RHS_Ural_Civ_01","RHS_Ural_Open_Civ_03", "C_Truck_02_transport_F","C_Truck_02_covered_F"];
                     }; 
@@ -93,12 +99,12 @@
                 if((west countside _list > 0) and !MEMBER("active",nil)) then {
                     systemChat "Spawn Russian location";
                     MEMBER("active", true);
-                    MEMBER("popRussians", nil);
+                    MEMBER("popSector", nil);
                 };
                 if((west countside _list isEqualTo 0) and MEMBER("active", nil)) then {
                     systemChat "Unspawn Russian location";
                     MEMBER("active", false);
-                    MEMBER("unpopRussians", nil);
+                    MEMBER("unpopSector", nil);
                 };
                 sleep 30;
             };
@@ -116,14 +122,15 @@
             MEMBER("russianstype", _array);
         };
 
-		PUBLIC FUNCTION("","popRussians") {
+		PUBLIC FUNCTION("","popSector") {
     		DEBUG(#, "OO_SECTOR::popRussians")
             MEMBER("spawnVehicle", nil);
+            if!(MEMBER("militarized",nil)) exitWith {};
             private _position = MEMBER("position", nil);
             private _group = createGroup resistance;
             private _temp = createGroup east;
-
             private _count = 5 + ceil(random 5);
+
     		for "_i" from 0 to _count do {
                 _type = selectRandom (MEMBER("russianstype", nil));
     			_unit = _temp createUnit [_type, _position, [], 0, "NONE"];
@@ -158,7 +165,7 @@
             ["patrol", [_position, MEMBER("sectorsize", nil)]] spawn _patrol;
 		};
 
-        PUBLIC FUNCTION("","unpopRussians") {
+        PUBLIC FUNCTION("","unpopSector") {
             DEBUG(#, "OO_SECTOR::unpopRussians")
             private _russians = MEMBER("russians", nil);
             private _vehicles = MEMBER("vehicles", nil);
@@ -169,10 +176,17 @@
                 deleteVehicle _x;
             } forEach _russians;
 
-
             {
                 _x spawn {
-                    while {count (crew _this) > 0} do { sleep 240;};
+                    private _credit = 60;
+                    while { _credit > 0 } do {
+                        if(count(crew _this) isEqualTo 0) then {
+                            _credit = _credit - 1;
+                        } else {
+                            _credit = 60;
+                        };
+                        sleep 10;
+                    };
                     deleteVehicle _this;
                 };
                 sleep 0.1;
@@ -190,7 +204,7 @@
             DEBUG(#, "OO_SECTOR::deconstructor")
             MEMBER("monitor", false);
             sleep 60;
-            MEMBER("unpopRussians", nil);
+            MEMBER("unpopSector", nil);
             DELETE_VARIABLE("this");
             DELETE_VARIABLE("position");
             DELETE_VARIABLE("active");
