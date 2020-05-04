@@ -238,6 +238,26 @@
                 _type = format["%1%2", (selectRandom _array),"Opfor"];
     			_unit = _group createUnit [_type, _position, [], 0, "NONE"];
     			_unit setpos _position;
+                
+                _unit spawn {
+                    private _unit = _this;
+                    private _movpos = _unit getRelPos [random 300, random 360];
+                    private _flag = true;
+                    while { alive _unit && _flag } do {                        
+                        if(moveToCompleted _unit) then {
+                            _movpos = _unit getRelPos [random 300, random 360];
+                        };
+                        _enemy = (_unit findNearestEnemy _unit);
+                        if(_unit knowsAbout _enemy > 1) then {
+                            _unit domove (position _enemy);
+                            _flag = false;
+                        } else {
+                            _unit domove _movpos;
+                            sleep 10;
+                        };
+                        sleep 1;
+                    };
+                };
                 _group deleteGroupWhenEmpty true;
                 MEMBER("zombies", nil) pushBack _unit;
 
@@ -270,10 +290,12 @@
 
         PUBLIC FUNCTION("","unpopZombies") {
             private _zombies = MEMBER("zombies", nil);
-            {
+            {                
                 _x setDamage 1;
                 hideBody _x;
                 sleep 0.1;
+                private _waypoints = waypoints _x;
+                {deleteWaypoint _x;} forEach _waypoints;
                 deleteVehicle _x;
             } forEach _zombies;
             private _array = [];
