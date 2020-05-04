@@ -46,7 +46,7 @@ class hud {
 				y = (safezoneH * 0.60) + safezoneY;
 				w = 6 * pixelGrid * pixelW;
 				h = 5.2 * pixelGrid * pixelH;
-				text = "paa\blood.paa";
+				text = "";
 			};	
 			class OOP_Picture_zombie_112: OOP_Picture {
 				idc = 112;
@@ -54,7 +54,7 @@ class hud {
 				y = (safezoneH * 0.68) + safezoneY;
 				w = 6 * pixelGrid * pixelW;
 				h = 5.2 * pixelGrid * pixelH;
-				text = "paa\zombie.paa";
+				text = "";
 			};	
 			class OOP_Picture_file_110: OOP_Picture {
 				idc = 110;
@@ -62,7 +62,7 @@ class hud {
 				y = (safezoneH * 0.76) + safezoneY;
 				w = 6 * pixelGrid * pixelW;
 				h = 5.2 * pixelGrid * pixelH;
-				text = "paa\file.paa";
+				text = "";
 			};						
 			class OOP_Text_drink_106: OOP_Text {
 				idc = 106;
@@ -110,7 +110,7 @@ class hud {
 				y = (safezoneH * 0.68) + safezoneY;
 				w = 6 * pixelGrid * pixelW;
 				h = 3.46667 * pixelGrid * pixelH;
-				text = "100%";
+				text = "";
 				colorText[] = {1, 1, 1, 1};
 				tooltipColorText[] = {1, 1, 1, 1};
 			};
@@ -120,7 +120,7 @@ class hud {
 				y = (safezoneH * 0.76) + safezoneY;
 				w = 6 * pixelGrid * pixelW;
 				h = 3.46667 * pixelGrid * pixelH;
-				text = "F1";
+				text = "";
 				colorText[] = {1, 1, 1, 1};
 				tooltipColorText[] = {1, 1, 1, 1};
 			};
@@ -225,7 +225,7 @@ class hud {
 						w = "3.5 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
 						h = "1.5 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
 						sizeEx = "1.5 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
-						text = "25";
+						text = "0";
 					};
 					class CA_MagCount: RscText
 					{
@@ -236,7 +236,7 @@ class hud {
 						w = "2 * 					(			((safezoneW / safezoneH) min 1.2) / 40)";
 						h = "1 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
 						sizeEx = "0.8 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
-						text = "8";
+						text = "0";
 					};
 					class CA_AmmoType: RscText
 					{
