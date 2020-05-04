@@ -169,21 +169,25 @@
 	while {true} do {
 		_overcast = random 1;
 		if((overcast > 0.7) and (_overcast > overcast)) then {
-			_rain = random 1;
+			_rain = 0.3 + random 0.7;
 		} else {
-			_rain = 0;
+			_rain = random 0.3;
 		};
 		if((date select 3 > 2) and (date select 3 <6)) then {
 			if(random 1 > 0.75) then {
-				_fog = 0.4 + (random 0.6);
+				_fog = 0.3 + (random 0.2);
 			} else {
-				_fog = 0.1 + (random 0.3);
+				_fog = 0.2 + (random 0.2);
 			};
 		} else {
 			if((_lastrain > 0.6) and (_rain < 0.2)) then {
-				_fog = random 0.3;
+				_fog = 0.2 + random 0.2;
 			} else {
-				_fog = 0;
+				if(random 1 > 0.80) then {
+					_fog = 0.15 + random 0.05;
+				} else {
+					_fog = 0.15 + random 0.15;					
+				};
 			};
 		};
 		if(random 1 > 0.95) then {
