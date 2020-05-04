@@ -13,7 +13,7 @@
         description = "A deflated spare wheel";
         weight = 10;
         nbusage = 1;
-        picture = "pictures\wheel.jpg";
+        picture = "paa\wheel.paa";
 		requirement[] = {"wrench"};        
     }; 
     class lighter {
@@ -40,7 +40,7 @@
         description = "A figure of mia kalifa completely naked. She had, in all appearances, forgotten the whole epilation.";
         weight = 0.5;
         nbusage = -1;
-        picture = "pictures\mia.jpg";
+        picture = "paa\mia.paa";
         requirement[] = {};
     };
     class antibiotic {
@@ -48,7 +48,7 @@
         title = "Antibiotic";
         description = "A box full of antibiotic in an acceptable state";
         weight = 0.1;
-        nbusage = 10;
+        nbusage = 1;
         picture = "paa\antibiotic.paa";
         requirement[] = {};
     };
@@ -67,7 +67,7 @@
         description = "A pine wood plank of 6 to 8 feet";
         weight = 1;
         nbusage = 1;
-        picture = "pictures\plank.jpg";
+        picture = "paa\plank.paa";
 		requirement[] = {};
     };
     class cigarettespacket {
@@ -75,7 +75,7 @@
         title = "Cigarettes packet";
         description = "A packet of french cigarettes.";
         weight = 0.2;
-        nbusage = 20;
+        nbusage = 1;
         picture = "paa\cigarettes.paa";
 		requirement[] = {"lighter"};
     };
@@ -94,7 +94,7 @@
         description = "Tube has been upgraded to meet changes in fuel characteristics and resists heat and oil.";
         weight = 0.2;
         nbusage = 1;
-        picture = "pictures\hose.jpg";
+        picture = "paa\hose.paa";
         requirement[] = {};
     };
     class checkvalve {
@@ -103,7 +103,7 @@
         description = "Aluminum alloy check valve, one-way diesel fuel for cars, helicopters, motorcycles, fuel pumps.";
         weight = 0.1;
         nbusage = 1;
-        picture = "pictures\checkvalve.jpg";
+        picture = "paa\checkvalve.paa";
         requirement[] = {"hose"};
     };
     class screwdriver {
@@ -120,7 +120,7 @@
         title = "Potable aqua";
         description = "Potable Aqua Water Purification Tablets.";
         weight = 0.2;
-        nbusage = 10;
+        nbusage = 1;
         picture = "paa\aquatablet.paa";
         requirement[] = {"bottlewaterunverified"};
     };
@@ -139,6 +139,15 @@
         description = "Swedish tin opener.";
         weight = 0.1;
         nbusage = -1;
-        picture = "pictures\tinopener.jpg";
+        picture = "paa\tinopener.paa";
+        requirement[] = {};
+    };
+    class briefcase {
+        type[] = {"stuff"};
+        title = "A little briefcase";
+        description = "a small black leather briefcase quite light. It is locked with an electronic code.It is impossible to open it without destroying its contents";
+        weight = 5;
+        nbusage = 1;
+        picture = "paa\briefcase.paa";
         requirement[] = {};
     };

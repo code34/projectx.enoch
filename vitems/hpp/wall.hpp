@@ -5,6 +5,6 @@
         weight = 0.5;
         nbusage = 1;
         code = "vitems\items\stone.sqf";
-        picture = "pictures\stone.jpg";
+        picture = "paa\stone.paa";
         requirement[] = {};
     };

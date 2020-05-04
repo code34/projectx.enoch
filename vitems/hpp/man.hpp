@@ -22,7 +22,7 @@
 		description = "Swiss made pocket knife with 8 functions";
 		weight = 0.2;
 		nbusage = -1;
-		picture = "pictures\swissknife.jpg";
+		picture = "paa\swissknife.paa";
 		requirement[] = {};
 	};
 	class smartphone {
@@ -31,7 +31,7 @@
 		description = "A smartphone that seems to no longer work";
 		weight = 0.2;
 		nbusage = -1;
-		picture = "pictures\smartphone.jpg";
+		picture = "paa\smartphone.paa";
 		requirement[] = {};
 	};
 	class tissues {
@@ -39,8 +39,8 @@
 		title = "Tissues";
 		description = "Tissues are made with a mix of bamboo and sugarcane";
 		weight = 0.2;
-		nbusage = 10;
-		picture = "pictures\tissues.jpg";
+		nbusage = 1;
+		picture = "paa\tissues.paa";
 		requirement[] = {};
 	};
 	class wallet {
@@ -49,7 +49,7 @@
 		description = "This Man wallet is neatly designed and made with SOFT and FIRM genuine leather and twill fabric on the inside.";
 		weight = 0.2;
 		nbusage = -1;
-		picture = "pictures\wallet.jpg";
+		picture = "paa\wallet.paa";
 		requirement[] = {};
 	};
 	class carabiner {
@@ -67,7 +67,7 @@
 		description = "An analog simple watch";
 		weight = 0.1;
 		nbusage = -1;
-		picture = "pictures\watch.jpg";
+		picture = "paa\watch.paa";
 		requirement[] = {};
 	};
 	class aspirin {
@@ -75,7 +75,7 @@
 		title = "Aspirin";
 		description = "Pain and fever, as prophylaxis of myocardial infarction and stroke under physical supervision.";
 		weight = 0.1;
-		nbusage = 10;
+		nbusage = 1;
 		picture = "paa\aspirin.paa";
 		requirement[] = {};
 	};
@@ -84,7 +84,7 @@
 		title = "Cardiac pills";
 		description = "Cardiac glycoside drug for treatment pathologies of heart and blood vessels.";
 		weight = 0.1;
-		nbusage = 10;
+		nbusage = 1;
 		picture = "paa\cardiacpills.paa";
 		requirement[] = {};
 	};
@@ -93,7 +93,16 @@
 		title = "Human worms";
 		description = "Parasitic worms emerging from an infected wound.";
 		weight = 0.1;
-		nbusage = -1;
-		picture = "pictures\humanworms.jpg";
+		nbusage = 1;
+		picture = "paa\humanworms.paa";
+		requirement[] = {};
+	};
+	class zombiemeat {
+		type[] = {"man"};
+		title = "Zombie meat";
+		description = "Infected, disgusting Zombie meat.";
+		weight = 0.1;
+		nbusage = 1;
+		picture = "paa\zombiemeat.paa";
 		requirement[] = {};
 	};

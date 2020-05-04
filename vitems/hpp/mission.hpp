@@ -2,18 +2,18 @@
         type[] = {"mission"};
         title = "Failure helicopter engine";
         description = "An old failure Lycoming 235 Series Four-Cylinder Engine.";
-        weight = 110;
+        weight = 400;
         nbusage = 1;
-        picture = "pictures\helicopterengine.jpg";
+        picture = "paa\helicopterengine.paa";
         requirement[] = {"wrench", "helicoptergears", "helicoptercandle", "helicopterhose"};
     };
  	class helicopterengine {
         type[] = {"mission"};
         title = "Helicopter engine";
         description = "The Lycoming 235 Series Four-Cylinder Engine is a Popular Choice for Homebuilt and Original Aircraft";
-        weight = 110;
+        weight = 400;
         nbusage = 1;
-        picture = "pictures\helicopterengine.jpg";
+        picture = "paa\helicopterengine.paa";
         requirement[] = {};
     };
     class armyradio {
@@ -31,7 +31,7 @@
         description = "A working military amplifier";
         weight = 10;
         nbusage = -1;
-        picture = "pictures\radioamplifier.jpg";
+        picture = "paa\radioamplifier.paa";
         requirement[] = {"wrench", "screwdriver"};
     };
     class missionplan {
@@ -40,7 +40,7 @@
         description = "Secret Defense - This information should not be disclosed to the enemy - Bring in sector c124535 the contents of this briefcase. Ask for colonel Jackson Bro";
         weight = 0.05;
         nbusage = 1;
-		picture = "pictures\missionplan.jpg";
+		picture = "paa\missionplan.paa";
 		requirement[] = {};
 	};
     class medal {
@@ -49,7 +49,7 @@
         description = "A military medal of bravery";
         weight = 0.05;
         nbusage = -1;
-        picture = "pictures\medal.jpg";
+        picture = "paa\medal.paa";
         requirement[] = {};
     };
     class helicoptergears {
@@ -58,7 +58,7 @@
         description = "Two accurately manufactured gears in mesh behave like the two circular wheels.";
         weight = 2;
         nbusage = 1;
-        picture = "pictures\helicoptergears.jpg";
+        picture = "paa\helicoptergears.paa";
         requirement[] = {};
     };
     class helicoptercandle {
@@ -67,7 +67,7 @@
         description = "Internal combustion engine candle.";
         weight = 0.1;
         nbusage = 1;
-        picture = "pictures\helicoptercandle.jpg";
+        picture = "paa\helicoptercandle.paa";
         requirement[] = {};
     };
     class helicopterhose {
@@ -76,13 +76,13 @@
         description = "A hose for the Lycoming 235 Series Four-Cylinder Engine";
         weight = 0.1;
         nbusage = 1;
-        picture = "pictures\helicopterhose.jpg";
+        picture = "paa\helicopterhose.paa";
         requirement[] = {};
     };
     class bk18 {
         type[] = {"mission"};
         title = "BK18 syringe";
-        description = "BK18 is a nuclear serum single dose product";
+        description = "BK18 is a nuclear serum single dose product. This product should be administrated by the patient himself.";
         weight = 0.1;
         nbusage = 1;
         picture = "paa\bk18.paa";
@@ -94,7 +94,7 @@
         description = "A synthesis medical note that has been produce during Z pandemia.";
         weight = 0.1;
         nbusage = 1;
-        picture = "pictures\medicalnote.jpg";
+        picture = "paa\medicalnote.paa";
         requirement[] = {};
     };
     class bk18researchreport {
@@ -103,7 +103,7 @@
         description = "A research report about the BK18 medecine.";
         weight = 0.1;
         nbusage = 1;
-        picture = "pictures\medicalnote.jpg";
+        picture = "paa\medicalnote.paa";
         requirement[] = {};
     };
     class am212 {
@@ -121,7 +121,7 @@
         description = "A shipping note with the address of the supplier";
         weight = 0.1;
         nbusage = 1;
-        picture = "pictures\shippingnote.jpg";
+        picture = "paa\shippingnote.paa";
         requirement[] = {};
     };
     class xsitereport {
