@@ -34,6 +34,7 @@
 		PRIVATE VARIABLE("scalar","bonusvirus");
 		PRIVATE VARIABLE("scalar","nausea");
 		PRIVATE VARIABLE("scalar","stomac");
+		PRIVATE VARIABLE("bool","infected");
 		PRIVATE VARIABLE("scalar","checktime");
 
 		PUBLIC FUNCTION("","constructor") { 
@@ -51,12 +52,14 @@
 			MEMBER("bonusvirus", 0);
 			MEMBER("nausea", 0);
 			MEMBER("stomac", 0);
-			MEMBER("checktime", 15);
+			MEMBER("infected", false);
+			MEMBER("checktime", 30);
 			SPAWN_MEMBER("checkLife", nil);
 			SPAWN_MEMBER("checkFood", nil);
 			SPAWN_MEMBER("checkDrink", nil);
 			SPAWN_MEMBER("checkDamage", nil);
 			SPAWN_MEMBER("checkVirus", nil);
+			SPAWN_MEMBER("checkZombie", nil);
 			SPAWN_MEMBER("checkStomac", nil);
 			SPAWN_MEMBER("checkTemperature", nil);
 		};
@@ -118,6 +121,38 @@
 			["setZombie", _infection] call hud;
 		};
 
+		PUBLIC FUNCTION("","cureZombie") {
+			DEBUG(#, "OO_HEALTH::cureZombie")
+			MEMBER("infected", false);
+			player setvariable ["ryanzombiesinfected",0,true];
+		};
+
+		PUBLIC FUNCTION("","checkZombie") {
+			DEBUG(#, "OO_HEALTH::checkZombie")
+			private _rate = 0;
+			while { true } do {
+				private _infection = floor((player getvariable ["ryanzombiesinfected",0]) * 100);
+				if((_infection > 1) and (MEMBER("infected",nil) isEqualTo false)) then {
+					_rate = _rate + 1;
+					player setvariable ["ryanzombiesinfected",0, true];
+					if(_rate > 5) then {MEMBER("infected", true); _rate = 0;};
+				};
+				MEMBER("setZombie", nil);
+				sleep 1;
+			};
+		};
+
+		PUBLIC FUNCTION("scalar","slowZombie") {
+			DEBUG(#, "OO_HEALTH::setZombie")
+			private _time = _this;
+			while { _time > 0} do {
+				ryanzombiesinfectedrate = 0.001;
+				_time = _time - 1;
+				sleep 1;
+			};
+			ryanzombiesinfectedrate = 0.1;
+		};
+
 		PUBLIC FUNCTION("","initZombie") {
 			DEBUG(#, "OO_HEALTH::initZombie")
 			ryanzombiesinfectedchance = 100;
@@ -127,7 +162,7 @@
 		};
 
 		PUBLIC FUNCTION("","slowZombie") {
-			ryanzombiesinfectedrate = 0.01;
+			ryanzombiesinfectedrate = 0.1;
 		};
 
 		PUBLIC FUNCTION("scalar","setVirus") {
@@ -173,21 +208,22 @@
 		};
 
 		PUBLIC FUNCTION("","beNauseous") {
-				DEBUG(#, "OO_HEALTH::beNauseous")
-				private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
-				private _sound = _path + "sounds\vomit.ogg";
-				playSound3D [_sound, player, false, getPosASL player, 5, 1, 10];
-				private _food = floor(MEMBER("food", nil) * 0.75);
-				private _drink = floor(MEMBER("drink", nil) * 0.75);
-				private _stomac = floor(MEMBER("stomac", nil) * 0.75);
-				MEMBER("setNausea", 20);
-				MEMBER("setFood", _food);
-				MEMBER("setDrink", _drink);
-				MEMBER("setStomac", _stomac);
-				MEMBER("bonusfood", 0);
-				MEMBER("bonusdrink", 0);
-				private _temperature = MEMBER("temperature", nil) - floor(random (1));
-				MEMBER("setTemperature", _temperature);
+			DEBUG(#, "OO_HEALTH::beNauseous")
+			private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
+			private _sound = _path + "sounds\vomit.ogg";
+			playSound3D [_sound, player, false, getPosASL player, 5, 1, 10];
+			systemChat "You are sick";
+			private _food = floor(MEMBER("food", nil) * 0.75);
+			private _drink = floor(MEMBER("drink", nil) * 0.75);
+			private _stomac = floor(MEMBER("stomac", nil) * 0.75);
+			MEMBER("setNausea", 20);
+			MEMBER("setFood", _food);
+			MEMBER("setDrink", _drink);
+			MEMBER("setStomac", _stomac);
+			MEMBER("bonusfood", 0);
+			MEMBER("bonusdrink", 0);
+			private _temperature = MEMBER("temperature", nil) - floor(random (1));
+			MEMBER("setTemperature", _temperature);
 		};
 
 		PUBLIC FUNCTION("scalar","addStomac") {
@@ -302,6 +338,7 @@
 					if(_temperature < 37) then { MEMBER("addTemperature", 0.1);};
 					if(_temperature > 37) then { MEMBER("delTemperature", 0.1);};
 				};
+
 				systemChat format ["Body Temperature: %1", MEMBER("temperature", nil)];
 				sleep MEMBER("checktime", nil);
 			};
@@ -348,6 +385,14 @@
 					if(_food < 0) then {_food = 0;};
 					MEMBER("setFood", _food);
 				};
+				if(_food < 30) then {
+					if(random 1 > 0.7) then {
+						private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
+						private _sound = _path + "sounds\stomac.ogg";
+						playSound3D [_sound, player, false, getPosASL player, 5, 1, 10];
+						systemChat "You are hungry";
+					};
+				};				
 				sleep MEMBER("checktime", nil);
 			};
 		};
@@ -371,6 +416,11 @@
 					_drink = _drink - 1;
 					if(_drink < 0) then {_drink = 0;};
 					MEMBER("setDrink", _drink);
+				};
+				if(_drink < 30) then {
+					if(random 1 > 0.7) then {
+						systemChat "You are thirsty";
+					};
 				};
 				sleep MEMBER("checktime", nil);
 			};
@@ -412,8 +462,6 @@
 				_level = 0;
 				_bonuslife = 0;
 				_temperature = MEMBER("temperature", nil);
-				MEMBER("setZombie", nil);
-
 				_nausea = MEMBER("nausea", nil);
 				if(_nausea > 0) then {
 					_nausea = _nausea - 1;
@@ -425,6 +473,11 @@
 						_level = -100;
 					} else {
 						_level = _level - 1;
+					};
+					if(random 1 > 0.7) then {
+						private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
+						private _sound = _path + "sounds\cold.ogg";
+						playSound3D [_sound, player, false, getPosASL player, 5, 1, 10];
 					};
 				};
 
@@ -482,5 +535,7 @@
 			DELETE_VARIABLE("bonusdrink");
 			DELETE_VARIABLE("bonuslife");
 			DELETE_VARIABLE("nausea");
+			DELETE_VARIABLE("stomac");
+			DELETE_VARIABLE("infected");
 		};
 	ENDCLASS;
