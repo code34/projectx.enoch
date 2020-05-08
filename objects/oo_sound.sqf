@@ -22,6 +22,7 @@
 
     CLASS("OO_SOUND")
         PRIVATE VARIABLE("code","this");
+        PRIVATE VARIABLE("string","path");
         PRIVATE VARIABLE("string","mode");
         PRIVATE VARIABLE("array","forest");
         PRIVATE VARIABLE("array","village");
@@ -29,21 +30,33 @@
         PUBLIC FUNCTION("","constructor") { 
             DEBUG(#, "OO_SOUND::constructor")
             MEMBER("setMode", "exploration");
+            private _path = ([(str missionConfigFile), 0, -15] call BIS_fnc_trimString) + "sounds\";
+            MEMBER("path", _path);
             
             private _array = ["microwave.ogg","cookiepan.ogg", "lullaby.ogg", "ghostlyvoices.ogg", "cough.ogg", "razor.ogg", "evacuation.ogg"];
             MEMBER("village", _array);
             
-
             private _array = ["wscreaming.ogg", "aliengate.ogg", "screechy.ogg", "comeback.ogg", "whisper.ogg"];
             MEMBER("forest", _array);
-            SPAWN_MEMBER("playSound", nil);
+            SPAWN_MEMBER("playAmbientSounds", nil);
         };
 
         PUBLIC FUNCTION("string","setMode") {
         	MEMBER("mode", "exploration");
         };
 
-		PUBLIC FUNCTION("","playSound") {
+        // ["playSound", ["eat.ogg", player, false, 5, 1, 10]] call mysound;
+        PUBLIC FUNCTION("array","playSound") {
+            private _sound = MEMBER("path",nil) + (_this select 0);
+            private _object = _this select 1;
+            private _inside = _this select 2;
+            private _volume = _this select 3;
+            private _pitch = _this select 4;
+            private _distance = _this select 5;
+            playSound3D [_sound, _object, _inside, getPosASL _object, _volume, _pitch, _distance];
+        };
+
+		PUBLIC FUNCTION("","playAmbientSounds") {
 			while { true } do {
 				sleep (480 + random 240);
                 private _location = MEMBER("localizePlayer", nil);
@@ -86,6 +99,7 @@
         PUBLIC FUNCTION("","deconstructor") {
 			DEBUG(#, "OO_SOUND::deconstructor")
 			DELETE_VARIABLE("this");
+            DELETE_VARIABLE("path");
 			DELETE_VARIABLE("mode");
 			DELETE_VARIABLE("village");
 			DELETE_VARIABLE("forest");
