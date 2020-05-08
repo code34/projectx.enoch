@@ -54,14 +54,15 @@
 			MEMBER("stomac", 0);
 			MEMBER("infected", false);
 			MEMBER("checktime", 30);
-			SPAWN_MEMBER("checkLife", nil);
-			SPAWN_MEMBER("checkFood", nil);
-			SPAWN_MEMBER("checkDrink", nil);
-			SPAWN_MEMBER("checkDamage", nil);
-			SPAWN_MEMBER("checkVirus", nil);
-			SPAWN_MEMBER("checkZombie", nil);
-			SPAWN_MEMBER("checkStomac", nil);
-			SPAWN_MEMBER("checkTemperature", nil);
+			SPAWN_MEMBER("checkFood", 30);
+			SPAWN_MEMBER("checkDrink", 30);
+			SPAWN_MEMBER("checkStomac", 5);
+			SPAWN_MEMBER("checkHealth", 5);
+			SPAWN_MEMBER("checkDamage", 1);
+			SPAWN_MEMBER("checkVirus", 30);
+			SPAWN_MEMBER("checkZombie", 1);
+			SPAWN_MEMBER("checkTemperature", 30);
+			SPAWN_MEMBER("computeLife", 5);
 		};
 
 		PUBLIC FUNCTION("","getNausea") {
@@ -117,6 +118,15 @@
 		PUBLIC FUNCTION("","setZombie") {
 			DEBUG(#, "OO_HEALTH::setZombie")
 			private _infection = floor((player getvariable ["ryanzombiesinfected",0]) * 100);
+			if(_infection > MEMBER("zombie", nil)) then {
+				["setZombieState", "up"] call hud;
+			} else {
+				if(_infection isEqualTo 0 ) then {
+					["setZombieState", ""] call hud;
+				} else {
+					["setZombieState", "down"] call hud;
+				};
+			};
 			MEMBER("zombie", _infection);
 			["setZombie", _infection] call hud;
 		};
@@ -127,9 +137,10 @@
 			player setvariable ["ryanzombiesinfected",0,true];
 		};
 
-		PUBLIC FUNCTION("","checkZombie") {
+		PUBLIC FUNCTION("scalar","checkZombie") {
 			DEBUG(#, "OO_HEALTH::checkZombie")
 			private _rate = 0;
+			private _checktime = _this;
 			while { true } do {
 				private _infection = floor((player getvariable ["ryanzombiesinfected",0]) * 100);
 				if((_infection > 1) and (MEMBER("infected",nil) isEqualTo false)) then {
@@ -138,7 +149,7 @@
 					if(_rate > 5) then {MEMBER("infected", true); _rate = 0;};
 				};
 				MEMBER("setZombie", nil);
-				sleep 1;
+				sleep _checktime;
 			};
 		};
 
@@ -204,18 +215,15 @@
 		PUBLIC FUNCTION("scalar","setNausea") {
 			DEBUG(#, "OO_HEALTH::setNausea")
 			MEMBER("nausea", _this);
-			systemChat format ["Nausea: %1", _this];
 		};
 
 		PUBLIC FUNCTION("","beNauseous") {
 			DEBUG(#, "OO_HEALTH::beNauseous")
-			private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
-			private _sound = _path + "sounds\vomit.ogg";
-			playSound3D [_sound, player, false, getPosASL player, 5, 1, 10];
 			systemChat "You are sick";
+			["playSound", ["vomit.ogg", player, false, 5, 1, 10]] call mysound;
 			private _food = floor(MEMBER("food", nil) * 0.75);
 			private _drink = floor(MEMBER("drink", nil) * 0.75);
-			private _stomac = floor(MEMBER("stomac", nil) * 0.75);
+			private _stomac = floor(MEMBER("stomac", nil) * 0.75);		
 			MEMBER("setNausea", 20);
 			MEMBER("setFood", _food);
 			MEMBER("setDrink", _drink);
@@ -286,7 +294,6 @@
 			MEMBER("temperature", _temperature);
 		};
 
-
 		PUBLIC FUNCTION("scalar","addVirus") {
 			DEBUG(#, "OO_HEALTH::addVirus")
 			private _bonusvirus = MEMBER("bonusvirus", nil);
@@ -296,17 +303,27 @@
 			MEMBER("bonusvirus", _bonusvirus);
 		};
 
-		PUBLIC FUNCTION("","checkStomac") {
+		PUBLIC FUNCTION("scalar","checkStomac") {
 			DEBUG(#, "OO_HEALTH::checkStomac")
 			private _stomac = 0;
+			private _checktime = _this;
+			private _nausea = MEMBER("nausea", nil);
 			while { true } do {
 				_stomac = MEMBER("stomac", nil);
-				if(_stomac > 0) then { _stomac = _stomac - 1; };
-				sleep MEMBER("checktime", nil);
+				if(_stomac > 0) then { 
+					_stomac = _stomac - 1; 
+					MEMBER("stomac", _stomac);
+				};
+				_nausea = MEMBER("nausea", nil);
+				if(_nausea > 0) then {
+					_nausea = _nausea - 1;
+					MEMBER("setNausea", _nausea);
+				};
+				sleep _checktime;
 			};
 		};
 
-		PUBLIC FUNCTION("","checkTemperature") {
+		PUBLIC FUNCTION("scalar","checkTemperature") {
 			DEBUG(#, "OO_HEALTH::checkTemperature")
 			private _temperature = 0;
 			private _rain = true;
@@ -314,6 +331,7 @@
 			private _change = false;
 			private _wind = 0;
 			private _inwater = false;
+			private _checktime = _this;
 
 			while { true } do {
 				_change = false;
@@ -340,34 +358,76 @@
 				};
 
 				systemChat format ["Body Temperature: %1", MEMBER("temperature", nil)];
-				sleep MEMBER("checktime", nil);
+				sleep _checktime;
 			};
 		};
 
-		PUBLIC FUNCTION("","checkVirus") {
+		PUBLIC FUNCTION("scalar","checkVirus") {
 			DEBUG(#, "OO_HEALTH::checkVirus")
 			private _virus = 0;
 			private _bonusvirus = 0;
+			private _checktime = _this;
 			while { true } do {
 				_virus = MEMBER("virus", nil);
 				_bonusvirus = MEMBER("bonusvirus", nil);
-				if((getDammage player > 0) and (_bonusvirus isEqualTo 0)) then { _bonusvirus = _bonusvirus + 1;};
 				if(_bonusvirus > 0) then {
 					_bonusvirus = _bonusvirus - 1;
 					MEMBER("bonusvirus", _bonusvirus);
 					if(_virus < 100) then { _virus = _virus  + 1;};
 					MEMBER("setVirus", _virus);
+					["setVirusState", "up"] call hud;
 				} else {
-					if(_virus > 0) then {_virus = _virus - 1;};
+					if(_virus > 0) then {
+						_virus = _virus - 1;
+						["setVirusState", "down"] call hud;
+					} else {
+						["setVirusState", ""] call hud;
+					};
 					MEMBER("setVirus", _virus);
 				};
-				sleep MEMBER("checktime", nil);
+				sleep _checktime;
 			};
 		};
 
-		PUBLIC FUNCTION("","checkFood") {
+		PUBLIC FUNCTION("scalar","checkHealth") {
+			DEBUG(#, "OO_HEALTH::checkHealth")
+			private _life = MEMBER("life", nil);
+			private _oldlife = _life;
+			private _time = 0;
+			private _checktime = _this;
+			private _timelimitbeforeinfection = floor((10 * 60) / _this);
+			while { true } do {	
+				_life = MEMBER("life", nil);
+				_virus = MEMBER("virus", nil);
+				if(_life < 100) then {
+					if(_virus isEqualTo 0) then {
+						_time = _time + 1;
+						if(_time > _timelimitbeforeinfection) then {
+							["addVirus", _virus] call health;
+							_time = 0;
+						};
+					};
+				} else { 
+					_time = 0;
+				};
+				if(_life > _oldlife) then {
+					["setLifeState", "up"] call hud;
+				} else {
+					if(_life isEqualTo _oldlife) then {
+						["setLifeState", ""] call hud;
+					} else {
+						["setLifeState", "down"] call hud;
+					};
+				};
+				_oldlife = _life;
+				sleep _checktime;
+			};
+		};
+
+		PUBLIC FUNCTION("scalar","checkFood") {
 			DEBUG(#, "OO_HEALTH::checkFood")
 			private _food = 0;
+			private _checktime = _this;
 
 			while { true } do {
 				private _bonusfood = MEMBER("bonusfood",nil);
@@ -379,27 +439,28 @@
 					_food = _food + 1;
 					if(_food > 100) then {_food = 100;};
 					MEMBER("setFood", _food);
+					["setFoodState", "up"] call hud;
 				} else {
 					_food = MEMBER("food", nil);
 					_food = _food - 1;
 					if(_food < 0) then {_food = 0;};
 					MEMBER("setFood", _food);
+					["setFoodState", "down"] call hud;
 				};
 				if(_food < 30) then {
 					if(random 1 > 0.7) then {
-						private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
-						private _sound = _path + "sounds\stomac.ogg";
-						playSound3D [_sound, player, false, getPosASL player, 5, 1, 10];
+						["playSound", ["stomac.ogg", player, false, 5, 1, 10]] call mysound;
 						systemChat "You are hungry";
 					};
 				};				
-				sleep MEMBER("checktime", nil);
+				sleep _checktime;
 			};
 		};
 
-		PUBLIC FUNCTION("","checkDrink") {
+		PUBLIC FUNCTION("scalar","checkDrink") {
 			DEBUG(#, "OO_HEALTH::checkDrink")
 			private _drink = 0;
+			private _checktime = _this;
 
 			while { true } do {
 				private _bonusdrink = MEMBER("bonusdrink",nil);
@@ -411,25 +472,26 @@
 					_drink = _drink + 1;
 					if(_drink > 100) then {_drink = 100;};
 					MEMBER("setDrink", _drink);
+					["setDrinkState", "up"] call hud;
 				} else {
 					_drink = MEMBER("drink", nil);
 					_drink = _drink - 1;
 					if(_drink < 0) then {_drink = 0;};
 					MEMBER("setDrink", _drink);
+					["setDrinkState", "down"] call hud;
 				};
 				if(_drink < 30) then {
-					if(random 1 > 0.7) then {
-						systemChat "You are thirsty";
-					};
+					if(random 1 > 0.7) then { systemChat "You are thirsty";};
 				};
-				sleep MEMBER("checktime", nil);
+				sleep _checktime;
 			};
 		};
 
-		PUBLIC FUNCTION("","checkDamage") {
+		PUBLIC FUNCTION("scalar","checkDamage") {
 			DEBUG(#, "OO_HEALTH::checkDamage")
 			private _physicallife = 0;
 			private _virtuallife = 0;
+			private _checktime = _this;
 			while { true } do {
 				_physicallife = 100 - ((getDammage player) * 100);
 				_virtuallife = MEMBER("life", nil);
@@ -444,29 +506,26 @@
 					_damage = (100 - _physicallife) / 100;
 					player setDamage _damage;
 				};
-				sleep 1;
+				sleep _checktime;
 			};
 		};
 
-		PUBLIC FUNCTION("","checkLife") {
+		PUBLIC FUNCTION("scalar", "computeLife") {
 			DEBUG(#, "OO_HEALTH::checkLife")
 			private _life = 0;
+			private _oldlife = 0;
 			private _temperature = 0;
 			private _level = 0;
 			private _bonuslife = 0;
 			private _damage = getDammage player;
-			private _nausea = 0;
+			private _checktime = _this;
 
 			while { true } do {
+				_oldlife = MEMBER("life", nil);
 				_life = 0;
 				_level = 0;
 				_bonuslife = 0;
 				_temperature = MEMBER("temperature", nil);
-				_nausea = MEMBER("nausea", nil);
-				if(_nausea > 0) then {
-					_nausea = _nausea - 1;
-					MEMBER("setNausea", _nausea);
-				};
 
 				if((_temperature < 36) or (_temperature > 38)) then {
 					if((_temperature > 41.8) or (_temperature < 28)) then {
@@ -475,9 +534,7 @@
 						_level = _level - 1;
 					};
 					if(random 1 > 0.7) then {
-						private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
-						private _sound = _path + "sounds\cold.ogg";
-						playSound3D [_sound, player, false, getPosASL player, 5, 1, 10];
+						["playSound", ["cold.ogg", player, false, 5, 1, 10]] call mysound;
 					};
 				};
 
@@ -519,7 +576,7 @@
 				if(_life < 0) then {_life = 0;};
 				if(_life > 100) then {_life = 100;};
 				MEMBER("setLife", _life);
-				sleep 5;
+				sleep _checktime;
 			};
 		};
 
