@@ -25,12 +25,14 @@
 		PRIVATE VARIABLE("code","this");
 		PRIVATE VARIABLE("scalar","handler");
 		PRIVATE VARIABLE("scalar","mousehandler");
+		PRIVATE VARIABLE("scalar","drinktime");
 
 		PUBLIC FUNCTION("","constructor") { 
 			DEBUG(#, "OO_KEYHANDLER::constructor")
 			waitUntil {!(isNull (findDisplay 46))};
 			MEMBER("addKeyHandler", nil);
 			MEMBER("addZMouseHandler", nil);
+			MEMBER("drinktime", time);
 		};
 
 		PUBLIC FUNCTION("","addZMouseHandler") { 
@@ -73,6 +75,7 @@
 				case DIK_F1 : { MEMBER("keyF1", nil); }; 
 				case DIK_F2 : { MEMBER("keyF2", nil); }; 
 				case DIK_F5 : { MEMBER("keyF5", nil); }; 
+				case DIK_SPACE : { MEMBER("keySpace", nil); }; 
 				case _reload : {
 					//player action ["loadmagazine", player, player, 0, 1 ,"vbs2_us_m16a2_iron_gla", "vbs2_us_m16a2_iron_gla"];
 					private _gear = "new" call OO_ARMAGEAR;
@@ -121,6 +124,20 @@
 			copyToClipboard format ["%1", (getModelInfo cursorObject) select 0];
 		};
 
+		PUBLIC FUNCTION("","keySpace") { 
+			private _exit = false;
+			private _pump = ["stonewell_01_f.p3d","concretewell_02_f.p3d"];
+			if(((getModelInfo cursorObject) select 0) in _pump) then {
+				if(time - MEMBER("drinktime",nil) > 2) then {
+					MEMBER("drinktime", time);
+					player playActionNow "PutDown";
+					[20,true] call vitems_drinking;
+    				[20] call vitems_digesting;
+    			};
+			};
+		};
+
+
 		PUBLIC FUNCTION("","deconstructor") { 
 			DEBUG(#, "OO_KEYHANDLER::deconstructor")
 			MEMBER("removeKeyHandler", nil);
@@ -128,5 +145,6 @@
 			DELETE_VARIABLE("this");
 			DELETE_VARIABLE("handler");
 			DELETE_VARIABLE("mousehandler");
+			DELETE_VARIABLE("drinktime");
 		};
 	ENDCLASS;
