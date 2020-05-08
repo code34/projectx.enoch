@@ -241,19 +241,26 @@
                 
                 _unit spawn {
                     private _unit = _this;
-                    private _movpos = _unit getRelPos [random 300, random 360];
+                    private _unitmov = position _unit;
                     private _flag = true;
+                    private _arraypos = [];                    
+                    for "_i" from 0 to 5 do {
+                        _arraypos pushBack (_unit getRelPos [random 300, random 360]);
+                    };
+                    private _movpos = (selectRandom _arraypos);
+
                     while { alive _unit && _flag } do {                        
-                        if(moveToCompleted _unit) then {
-                            _movpos = _unit getRelPos [random 300, random 360];
+                        if(_unitmov distance (position _unit) < 5) then {
+                            _movpos = (selectRandom _arraypos);
                         };
+                        _unitmov = position _unit;
                         _enemy = (_unit findNearestEnemy _unit);
                         if(_unit knowsAbout _enemy > 1) then {
                             _unit domove (position _enemy);
                             _flag = false;
                         } else {
                             _unit domove _movpos;
-                            sleep 10;
+                            sleep 15 + floor(random 15);
                         };
                         sleep 1;
                     };
@@ -262,7 +269,7 @@
                 MEMBER("zombies", nil) pushBack _unit;
 
                 // mark les zombies pour le debugage
-/*                private _id = random 65000;
+ /*               private _id = random 65000;
                 private _name = format["%1_%2", _zonetype, _id];
                 private _marker = createMarker [_name, _position];
                 _marker setMarkerShape "ICON";
