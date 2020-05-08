@@ -1,3 +1,6 @@
-    [0,true] call vitems_eating;
-    [200] call vitems_digesting;
+	
+	["playSound", ["eat.ogg", player, false, 5, 1, 10]] call mysound;
+	private _virus = floor (random 100);
+	["addVirus", _virus] call health;
+    [100] call vitems_digesting;
 	true;
