@@ -16,6 +16,14 @@ class hud {
 				h = 5.2 * pixelGrid * pixelH;
 				text = "paa\drink.paa";
 			};
+			class OOP_Picture_drinkstate_1020: OOP_Picture {
+				idc = 1020;
+				x = (safezoneW * 0.905) + safezoneX;
+				y = (safezoneH * 0.28) + safezoneY;
+				h = 1 * pixelGrid * pixelH;
+				w = 1 * pixelGrid * pixelW;
+				text = "paa\uparrow.paa";
+			};
 			class OOP_Picture_food_103: OOP_Picture {
 				idc = 103;
 				x = (safezoneW * 0.9) + safezoneX;
@@ -23,6 +31,14 @@ class hud {
 				w = 6 * pixelGrid * pixelW;
 				h = 5.2 * pixelGrid * pixelH;
 				text = "paa\food.paa";
+			};
+			class OOP_Picture_foodstate_1030: OOP_Picture {
+				idc = 1030;
+				x = (safezoneW * 0.905) + safezoneX;
+				y = (safezoneH * 0.36) + safezoneY;
+				w = 1 * pixelGrid * pixelW;
+				h = 1 * pixelGrid * pixelH;
+				text = "paa\uparrow.paa";
 			};
 			class OOP_Picture_life_104: OOP_Picture {
 				idc = 104;
@@ -32,6 +48,14 @@ class hud {
 				h = 5.2 * pixelGrid * pixelH;
 				text = "paa\life.paa";
 			};
+			class OOP_Picture_lifestate_1040: OOP_Picture {
+				idc = 1040;
+				x = (safezoneW * 0.905) + safezoneX;
+				y = (safezoneH * 0.44) + safezoneY;
+				w = 1 * pixelGrid * pixelW;
+				h = 1 * pixelGrid * pixelH;
+				text = "paa\uparrow.paa";
+			};			
 			class OOP_Picture_virus_105: OOP_Picture {
 				idc = 105;
 				x = (safezoneW * 0.9) + safezoneX;
@@ -39,6 +63,14 @@ class hud {
 				w = 6 * pixelGrid * pixelW;
 				h = 5.2 * pixelGrid * pixelH;
 				text = "paa\virus.paa";
+			};
+			class OOP_Picture_virusstate_1050: OOP_Picture {
+				idc = 1050;
+				x = (safezoneW * 0.905) + safezoneX;
+				y = (safezoneH * 0.52) + safezoneY;
+				w = 1 * pixelGrid * pixelW;
+				h = 1 * pixelGrid * pixelH;
+				text = "paa\uparrow.paa";
 			};
 			class OOP_Picture_blood_110: OOP_Picture {
 				idc = 111;
@@ -55,7 +87,15 @@ class hud {
 				w = 6 * pixelGrid * pixelW;
 				h = 5.2 * pixelGrid * pixelH;
 				text = "";
-			};	
+			};
+			class OOP_Picture_zombiestate_1120: OOP_Picture {
+				idc = 1120;
+				x = (safezoneW * 0.9) + safezoneX;
+				y = (safezoneH * 0.68) + safezoneY;
+				w = 1 * pixelGrid * pixelW;
+				h = 1 * pixelGrid * pixelH;
+				text = "";
+			};		
 			class OOP_Picture_file_110: OOP_Picture {
 				idc = 110;
 				x = (safezoneW * 0.9) + safezoneX;
