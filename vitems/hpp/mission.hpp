@@ -133,3 +133,12 @@
         picture = "paa\xsitereport.paa";
         requirement[] = {};
     };
+    class computetab {
+        type[] = {"mission"};
+        title = "Military Tab";
+        description = "Your military mission tab";
+        weight = 0.5;
+        nbusage = -1;
+        picture = "paa\computetab2.paa";
+        requirement[] = {};
+    };
