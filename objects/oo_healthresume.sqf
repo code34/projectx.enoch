@@ -30,7 +30,7 @@
 
 		PUBLIC FUNCTION("","resume") { 
 			DEBUG(#, "OO_HEALTHRESUME::resume")
-			private _result = "<t size='1.2'>Medical Statement</t><br/>";
+			private _result = "<img image='paa\caduceus.paa'/><t size='1.2'>Medical Statement</t><br/>";
 			_result = _result + "<br/>" +  MEMBER("resumeLife", nil);
 			_result = _result + "<br/>" +  MEMBER("resumeInjury", nil);
 			_result = _result + "<br/>" +  MEMBER("resumeTemperature", nil);
@@ -39,6 +39,7 @@
 			_result = _result + "<br/>" +  MEMBER("resumeDrink", nil);
 			_result = _result +  MEMBER("resumeBonusDrink", nil);
 			_result = _result + "<br/>" +  MEMBER("resumeNausea", nil);
+			_result = _result + "<br/>" +  MEMBER("resumeVirus", nil);
 			_result = _result + "<br/>" +  MEMBER("resumeZombie", nil);
 			parseText _result;
 		};
@@ -64,6 +65,28 @@
 			};
 			 _result;
 		};
+
+		PUBLIC FUNCTION("", "resumeVirus") {
+			private _virus = "getVirus" call health;
+			private _result = "";
+			
+			switch (true) do {
+				case (_virus > 15) : {
+					_result = "Vous avez une septicemie";
+				};
+				case (_virus > 10) : {
+					_result ="Vous avez une grosse infection";
+				};
+				case (_virus > 0) : {
+					_result ="Vous avez une petite infection";
+				};
+				default{
+					_result ="Vous n'avez pas d'infection.";
+				};
+			};
+			 _result;
+		};
+
 
 		PUBLIC FUNCTION("", "resumeZombie") {
 			private _zombie = "getZombie" call health;
