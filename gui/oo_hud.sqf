@@ -7,9 +7,14 @@ CLASS("oo_hud")
 	PRIVATE UI_VARIABLE("control", "OOP_Picture_food");
 	PRIVATE UI_VARIABLE("control", "OOP_Picture_life");
 	PRIVATE UI_VARIABLE("control", "OOP_Picture_virus");
+	PRIVATE UI_VARIABLE("control", "OOP_Picture_zombie");
+	PRIVATE UI_VARIABLE("control", "OOP_Picture_drinkstate");
+	PRIVATE UI_VARIABLE("control", "OOP_Picture_foodstate");
+	PRIVATE UI_VARIABLE("control", "OOP_Picture_lifestate");
+	PRIVATE UI_VARIABLE("control", "OOP_Picture_virusstate");
+	PRIVATE UI_VARIABLE("control", "OOP_Picture_zombiestate");
 	PRIVATE UI_VARIABLE("control", "OOP_Picture_file");
 	PRIVATE UI_VARIABLE("control", "OOP_Picture_blood");
-	PRIVATE UI_VARIABLE("control", "OOP_Picture_zombie");
 	PRIVATE UI_VARIABLE("control", "OOP_SubLayer_101");
 	PRIVATE UI_VARIABLE("control", "OOP_Text_drink");
 	PRIVATE UI_VARIABLE("control", "OOP_Text_food");
@@ -34,9 +39,14 @@ CLASS("oo_hud")
 		MEMBER("OOP_Picture_food", _this displayCtrl 103);
 		MEMBER("OOP_Picture_life", _this displayCtrl 104);
 		MEMBER("OOP_Picture_virus", _this displayCtrl 105);
+		MEMBER("OOP_Picture_zombie", _this displayCtrl 112);
+		MEMBER("OOP_Picture_drinkstate", _this displayCtrl 1020);
+		MEMBER("OOP_Picture_foodstate", _this displayCtrl 1030);
+		MEMBER("OOP_Picture_lifestate", _this displayCtrl 1040);
+		MEMBER("OOP_Picture_virusstate", _this displayCtrl 1050);
+		MEMBER("OOP_Picture_zombiestate", _this displayCtrl 1120);
 		MEMBER("OOP_Picture_file", _this displayCtrl 110);
 		MEMBER("OOP_Picture_blood", _this displayCtrl 111);
-		MEMBER("OOP_Picture_zombie", _this displayCtrl 112);		
 		MEMBER("OOP_SubLayer_101", _this displayCtrl 101);
 		MEMBER("OOP_Text_drink", _this displayCtrl 106);
 		MEMBER("OOP_Text_food", _this displayCtrl 107);
@@ -125,6 +135,25 @@ CLASS("oo_hud")
 		MEMBER("isshowfile", _this);
 	};
 
+	PUBLIC FUNCTION("scalar", "setDrink"){
+		private _text = format ["%1", _this]+'%';
+		MEMBER("OOP_Text_drink",nil)  ctrlSetText _text;
+		if(_this > 20) then {
+			MEMBER("OOP_Picture_drink", nil) ctrlSetText "paa\drink2.paa";
+		} else {
+			MEMBER("OOP_Picture_drink", nil) ctrlSetText "paa\drink3.paa";
+		};
+	};
+
+	PUBLIC FUNCTION("string", "setDrinkState"){
+	private _state = _this;
+		switch (_state) do { 
+			case "up" : {MEMBER("OOP_Picture_drinkstate", nil) ctrlSetText "paa\uparrow.paa";}; 
+			case "down" : {MEMBER("OOP_Picture_drinkstate", nil) ctrlSetText "paa\downarrow.paa";}; 
+			default {MEMBER("OOP_Picture_drinkstate", nil) ctrlSetText "";}; 
+		};
+	};
+
 	PUBLIC FUNCTION("scalar", "setFood"){
 		private _text = format ["%1", _this]+'%';
 		MEMBER("OOP_Text_food", nil) ctrlSetText _text;
@@ -135,15 +164,15 @@ CLASS("oo_hud")
 		};
 	};
 
-	PUBLIC FUNCTION("scalar", "setDrink"){
-		private _text = format ["%1", _this]+'%';
-		MEMBER("OOP_Text_drink",nil)  ctrlSetText _text;
-		if(_this > 20) then {
-			MEMBER("OOP_Picture_drink", nil) ctrlSetText "paa\drink2.paa";
-		} else {
-			MEMBER("OOP_Picture_drink", nil) ctrlSetText "paa\drink3.paa";
+	PUBLIC FUNCTION("string", "setFoodState"){
+	private _state = _this;
+		switch (_state) do { 
+			case "up" : {MEMBER("OOP_Picture_foodstate", nil) ctrlSetText "paa\uparrow.paa";}; 
+			case "down" : {MEMBER("OOP_Picture_foodstate", nil) ctrlSetText "paa\downarrow.paa";}; 
+			default {MEMBER("OOP_Picture_foodstate", nil) ctrlSetText "";}; 
 		};
 	};
+
 
 	PUBLIC FUNCTION("scalar", "setLife"){
 		private _text = format ["%1", _this]+'%';
@@ -157,6 +186,15 @@ CLASS("oo_hud")
 		};
 	};
 
+	PUBLIC FUNCTION("string", "setLifeState"){
+	private _state = _this;
+		switch (_state) do { 
+			case "up" : {MEMBER("OOP_Picture_lifestate", nil) ctrlSetText "paa\uparrow.paa";}; 
+			case "down" : {MEMBER("OOP_Picture_lifestate", nil) ctrlSetText "paa\downarrow.paa";}; 
+			default {MEMBER("OOP_Picture_lifestate", nil) ctrlSetText "";}; 
+		};
+	};
+
 	PUBLIC FUNCTION("scalar", "setVirus"){
 		private _text = format ["%1", _this]+'%';
 		MEMBER("OOP_Text_virus", nil) ctrlSetText _text;
@@ -167,6 +205,16 @@ CLASS("oo_hud")
 		//};
 	};
 
+	PUBLIC FUNCTION("string", "setVirusState"){
+	private _state = _this;
+		switch (_state) do { 
+			case "up" : {MEMBER("OOP_Picture_virusstate", nil) ctrlSetText "paa\uparrow.paa";}; 
+			case "down" : {MEMBER("OOP_Picture_virusstate", nil) ctrlSetText "paa\downarrow.paa";}; 
+			default {MEMBER("OOP_Picture_virusstate", nil) ctrlSetText "";}; 
+		};
+	};
+
+
 	PUBLIC FUNCTION("scalar", "setZombie"){
 		if(_this isEqualTo 0) then {
 			MEMBER("setShowzombie", false);
@@ -174,6 +222,15 @@ CLASS("oo_hud")
 			private _text = format ["%1", _this]+'%';
 			MEMBER("OOP_Text_zombie", nil) ctrlSetText _text;
 			MEMBER("setShowzombie", true);
+		};
+	};
+
+	PUBLIC FUNCTION("string", "setZombieState"){
+	private _state = _this;
+		switch (_state) do { 
+			case "up" : {MEMBER("OOP_Picture_zombiestate", nil) ctrlSetText "paa\uparrow.paa";}; 
+			case "down" : {MEMBER("OOP_Picture_zombiestate", nil) ctrlSetText "paa\downarrow.paa";}; 
+			default {MEMBER("OOP_Picture_zombiestate", nil) ctrlSetText "";}; 
 		};
 	};
 
