@@ -91,7 +91,7 @@
 	class humanworms {
 		type[] = {"man"};
 		title = "Human worms";
-		description = "Parasitic worms emerging from an infected wound.";
+		description = "Parasitic worms emerging from an infected wound.<br/><br/>Drink: <t color='#cc0000'>0</t> <br/>Food: <t color='#cc0000'>0</t><br/>Illness: <t color='#cc0000'>+100%</t>";
 		weight = 0.1;
 		nbusage = 1;
 		picture = "paa\humanworms.paa";
@@ -100,7 +100,7 @@
 	class zombiemeat {
 		type[] = {"man"};
 		title = "Zombie meat";
-		description = "Infected, disgusting Zombie meat.";
+		description = "Infected, disgusting Zombie meat.<br/><br/>Drink: <t color='#cc0000'>0</t> <br/>Food: <t color='#ff9d00'>+20</t><br/>Illness: <t color='#cc0000'>+0-70%</t>";
 		weight = 0.1;
 		nbusage = 1;
 		picture = "paa\zombiemeat.paa";
