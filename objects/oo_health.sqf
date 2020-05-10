@@ -19,6 +19,7 @@
 	*/
 
 	#include "oop.h"
+	#define DEBUGHEALTH true
 
 	CLASS("OO_HEALTH")
 		PRIVATE VARIABLE("code","this");
@@ -26,7 +27,7 @@
 		PRIVATE VARIABLE("scalar","food");
 		PRIVATE VARIABLE("scalar","life");
 		PRIVATE VARIABLE("scalar","virus");
-		PRIVATE VARIABLE("scalar","zombie");		
+		PRIVATE VARIABLE("scalar","zombie");
 		PRIVATE VARIABLE("scalar","temperature");
 		PRIVATE VARIABLE("scalar","bonusfood");
 		PRIVATE VARIABLE("scalar","bonusdrink");
@@ -156,12 +157,13 @@
 		PUBLIC FUNCTION("scalar","slowZombie") {
 			DEBUG(#, "OO_HEALTH::setZombie")
 			private _time = _this;
+			private _rate = player getvariable ["ryanzombiesinfected",0];
 			while { _time > 0} do {
-				ryanzombiesinfectedrate = 0.001;
+				player setvariable ["ryanzombiesinfected", _rate];
 				_time = _time - 1;
 				sleep 1;
 			};
-			ryanzombiesinfectedrate = 0.1;
+			player setvariable ["ryanzombiesinfected",_rate, true];
 		};
 
 		PUBLIC FUNCTION("","initZombie") {
@@ -170,10 +172,6 @@
 			ryanzombiesinfectedrate = 0.1;
 			ryanzombiesinfectedsymptoms = 0.9;
 			ryanzombiesinfecteddeath = 0.9;
-		};
-
-		PUBLIC FUNCTION("","slowZombie") {
-			ryanzombiesinfectedrate = 0.1;
 		};
 
 		PUBLIC FUNCTION("scalar","setVirus") {
@@ -203,7 +201,9 @@
 		PUBLIC FUNCTION("scalar","setTemperature") {
 			DEBUG(#, "OO_HEALTH::setTemperature")
 			MEMBER("temperature", _this);
+			#ifdef DEBUGHEALTH
 			systemChat format ["Temperature: %1", _this];
+			#endif
 			//["setTemperature", _this] call hud;
 		};
 
@@ -219,11 +219,13 @@
 
 		PUBLIC FUNCTION("","beNauseous") {
 			DEBUG(#, "OO_HEALTH::beNauseous")
+			#ifdef DEBUGHEALTH
 			systemChat "You are sick";
+			#endif
 			["playSound", ["vomit.ogg", player, false, 5, 1, 10]] call mysound;
 			private _food = floor(MEMBER("food", nil) * 0.75);
 			private _drink = floor(MEMBER("drink", nil) * 0.75);
-			private _stomac = floor(MEMBER("stomac", nil) * 0.75);		
+			private _stomac = floor(MEMBER("stomac", nil) * 0.75);
 			MEMBER("setNausea", 20);
 			MEMBER("setFood", _food);
 			MEMBER("setDrink", _drink);
@@ -339,8 +341,11 @@
 				_virus = MEMBER("virus", nil);
 				_nausea = MEMBER("nausea", nil);
 				_inwater = surfaceIsWater (position player);
-
+				
+				#ifdef DEBUGHEALTH
 				systemChat format ["External Temperature: %1", externaltemperature];
+				#endif
+
 				if((_virus > 0) or (_nausea > 0)) then {
 						MEMBER("addTemperature", 0.1);
 						_change = true;
@@ -356,8 +361,9 @@
 					if(_temperature < 37) then { MEMBER("addTemperature", 0.1);};
 					if(_temperature > 37) then { MEMBER("delTemperature", 0.1);};
 				};
-
+				#ifdef DEBUGHEALTH
 				systemChat format ["Body Temperature: %1", MEMBER("temperature", nil)];
+				#endif
 				sleep _checktime;
 			};
 		};
@@ -450,7 +456,9 @@
 				if(_food < 30) then {
 					if(random 1 > 0.7) then {
 						["playSound", ["stomac.ogg", player, false, 5, 1, 10]] call mysound;
+						#ifdef DEBUGHEALTH
 						systemChat "You are hungry";
+						#endif
 					};
 				};				
 				sleep _checktime;
@@ -480,9 +488,11 @@
 					MEMBER("setDrink", _drink);
 					["setDrinkState", "down"] call hud;
 				};
+				#ifdef DEBUGHEALTH
 				if(_drink < 30) then {
 					if(random 1 > 0.7) then { systemChat "You are thirsty";};
 				};
+				#endif
 				sleep _checktime;
 			};
 		};
