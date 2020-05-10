@@ -1,29 +1,19 @@
+	/*
+	Author: code34 nicolas_boiteux@yahoo.fr
+	Copyright (C) 2020 Nicolas BOITEUX
 
-	TRAME PRINCIPALE: 	
-		server
-			- lancement de la mission principale
-			- generation des objets coté server
-			- suivi de la progression de la mission
+	PROJECTX
 
-		client
-			- affichage des messages
-			- lancement des sons
-
-	TRAME SECONDAIRE:
-		client
-			- lancement des missions côté client
-			- generation des objets coté client
-			- suivi de la progression de la mission
-			- lancement des sons côté client
-			- affichage des messages côté client
-
-		** trame principale: extraction => mission qui peut etre lancé qu'une fois
-		** trame principale: sergent => mission qui peut etre lancé qu'une fois
-		** trame principale: village => mission qui peut etre lancé qu'une fois
-		** trame principale: site industriel => mission qui peut etre lancé qu'une fois
-		** trame principale: casern militaire => mission qui peut etre lancé qu'une fois
-
-		** trame secondaire: relayradio => mission qui peut etre lancé plusieurs fois en //
-		
-		trame secondaire: mission candle => logic qui distribue du stuff
-		trame secondaire: mission gears => logic qui distribue du stuff
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+	
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+	
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+	*/
