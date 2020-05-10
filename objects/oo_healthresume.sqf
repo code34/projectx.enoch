@@ -19,6 +19,7 @@
 	*/
 
 	#include "oop.h"
+	#undef DEBUGHEALTHRESUME
 
 	CLASS("OO_HEALTHRESUME")
 		PRIVATE VARIABLE("code","this");
@@ -48,7 +49,9 @@
 		PUBLIC FUNCTION("", "resumeNausea") {
 			private _nausea = "getNausea" call health;
 			private _result = "";
-			
+			#ifdef DEBUGHEALTHRESUME
+			systemChat format ["Nausea: %1", _nausea];
+			#endif
 			switch (true) do {
 				case (_nausea > 15) : {
 					_result = "Votre nausée est intense";
@@ -69,7 +72,9 @@
 		PUBLIC FUNCTION("", "resumeVirus") {
 			private _virus = "getVirus" call health;
 			private _result = "";
-			
+			#ifdef DEBUGHEALTHRESUME
+			systemChat format ["Virus: %1", _virus];
+			#endif
 			switch (true) do {
 				case (_virus > 15) : {
 					_result = "Vous avez une septicemie";
@@ -91,7 +96,9 @@
 		PUBLIC FUNCTION("", "resumeZombie") {
 			private _zombie = "getZombie" call health;
 			private _result = "";
-		
+			#ifdef DEBUGHEALTHRESUME
+			systemChat format ["Zombie infection : %1", _zombie];
+			#endif
 			switch (true) do {
 				case (_zombie > 60) : {
 					_result = "Vous ne vous vous sentez plus vous même.";
@@ -112,9 +119,9 @@
 		PUBLIC FUNCTION("", "resumeBonusFood") {
 			private _food = "getBonusFood" call health;
 			private _result = "";
-
-			//systemChat format ["food: %1", _food];
-			
+			#ifdef DEBUGHEALTHRESUME
+			systemChat format ["Bonus food: %1", _food];
+			#endif
 			switch (true) do {
 				case (_food > 60) : {
 					_result = "vous avez trop mangé.";
@@ -135,9 +142,9 @@
 		PUBLIC FUNCTION("", "resumeBonusDrink") {
 			private _drink = "getBonusDrink" call health;
 			private _result = "";
-
-			//systemChat format ["drink: %1", _drink];
-			
+			#ifdef DEBUGHEALTHRESUME
+			systemChat format ["Bonus drink: %1", _drink];
+			#endif
 			switch (true) do {
 				case (_drink > 60) : {
 					_result = "vous avez trop bu.";
@@ -158,7 +165,9 @@
 		PUBLIC FUNCTION("", "resumeDrink") {
 			private _drink = "getDrink" call health;
 			private _result = "";
-			
+			#ifdef DEBUGHEALTHRESUME
+			systemChat format ["Drink: %1", _drink];
+			#endif
 			switch (true) do {
 				case (_drink > 60) : {
 					_result = "Votre corps est hydraté et ";
@@ -179,7 +188,9 @@
 		PUBLIC FUNCTION("", "resumeFood") {
 			private _food = "getFood" call health;
 			private _result = "";
-			
+			#ifdef DEBUGHEALTHRESUME
+			systemChat format ["Food: %1", _food];
+			#endif
 			switch (true) do {
 				case (_food > 60) : {
 					_result = "Vous êtes bien nourri et ";
@@ -201,7 +212,9 @@
 			DEBUG(#, "OO_HEALTHRESUME::resumeTemperature")
 			private _temperature = ("getTemperature" call health) - 37;
 			private _result = "";
-			
+			#ifdef DEBUGHEALTHRESUME
+			systemChat format ["Temperature: %1", _temperature];
+			#endif
 			switch (true) do {
 				case (_temperature > 2) : {
 					_result = "Vous avez une fievre terrible.";
@@ -227,7 +240,9 @@
 			DEBUG(#, "OO_HEALTHRESUME::resumeInjury")
 			private _injury = 100 - (getDammage player * 100);
 			private _result = "";
-			
+			#ifdef DEBUGHEALTHRESUME
+			systemChat format ["Injury: %1", _injury];
+			#endif
 			switch (true) do {
 				case (_injury > 95) : {
 					_result = "Vous n'avez aucune blessure.";
@@ -248,7 +263,9 @@
 		PUBLIC FUNCTION("", "resumeLife") {
 			private _life = "getLife" call health;
 			private _result = "";
-			
+			#ifdef DEBUGHEALTHRESUME
+			systemChat format ["Life: %1", _life];
+			#endif
 			switch (true) do {
 				case (_life > 90) : {
 					_result = "Votre santé est excellente.";
