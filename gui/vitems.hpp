@@ -474,7 +474,7 @@ class Vitems {
 						onLBDrag = "['setSource', _this] call VITEMS";
 						onMouseButtonClick = "['setInvMenu', _this] call VITEMS";
 						onLBDblClick = "['getDblClick', _this] call VITEMS";
-					};					
+					};
 					class opticsecondaryweaponBackground : RscStructuredText {
 						idc = 1098;
 						x = (safezoneW * 0.576);
@@ -586,6 +586,34 @@ class Vitems {
 						onLBDrag = "['setSource', _this] call VITEMS";
 						onMouseButtonClick = "['setInvMenu', _this] call VITEMS";
 						onLBDblClick = "['getDblClick', _this] call VITEMS";
+					};
+
+					class muzzleBackground : RscStructuredText {
+						idc = 1107;
+						x = (safezoneW * 0.67);
+						y = (safezoneH * 0.72);
+						w = (safezoneW * 0.06);
+						h = (safezoneH * 0.05);
+						colorBackground[] = {0.5,0.5,0.5,1};
+					};
+					class muzzle : RscActiveText {
+						idc = 127;
+						x = (safezoneW * 0.67);
+						y = (safezoneH * 0.72);
+						w = (safezoneW * 0.06);
+						h = (safezoneH * 0.05);
+						style = "0x30 + 0x800";
+						soundDoubleClick[] = {"",0.1,1};
+						color[] = {1,1,1,1};
+						colorBackground[] = {0,0,0,1};
+						colorBackgroundSelected[] = {1,1,1,1};
+						colorFocused[] = {0.0,0.0,0.0,0};
+						onLBSelChanged = "['onLBSelChanged_OOP_Listbox_Proximity', _this] call Vitems;";
+						canDrag = 1;
+						onLBDragging = "['setDestination', _this] call VITEMS";
+						onLBDrag = "['setSource', _this] call VITEMS";
+						onMouseButtonClick = "['setInvMenu', _this] call VITEMS";
+						onMouseButtonDblClick = "['removeItem', 'binocular'] call VITEMS";
 					};
 
 					class capmenu : ctrlMenu {
