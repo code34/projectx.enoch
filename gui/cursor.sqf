@@ -29,5 +29,5 @@
 				5010 cutText ["", "PLAIN"];
 				_active = false;
 			};
-			sleep 0.1;
+			sleep 1;
 		};
