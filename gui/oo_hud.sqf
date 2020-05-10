@@ -52,7 +52,7 @@ CLASS("oo_hud")
 		MEMBER("OOP_Text_food", _this displayCtrl 107);
 		MEMBER("OOP_Text_life", _this displayCtrl 108);
 		MEMBER("OOP_Text_virus", _this displayCtrl 109);
-		MEMBER("OOP_Text_zombie", _this displayCtrl 113);		
+		MEMBER("OOP_Text_zombie", _this displayCtrl 113);
 		MEMBER("OOP_Text_file", _this displayCtrl 114);
 		MEMBER("OOP_Text_weapon", _this displayCtrl 118);
 		MEMBER("OOP_Text_nbmags", _this displayCtrl 185);
@@ -80,7 +80,7 @@ CLASS("oo_hud")
 			private _nbmags = 0;
 			if(_index > -1) then {_nbmags = (["getItem", _index] call capcontainer) select 4;} else {_nbmags = 0;};
 			MEMBER("OOP_Text_nbmags", nil) ctrlSetText str(_nbmags);
-			sleep 0.01;
+			sleep 0.1;
 		};
 	};
 
