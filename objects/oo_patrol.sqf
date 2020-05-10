@@ -19,6 +19,7 @@
 	*/
 
 	#include "oop.h"
+	#undef DEBUGPATROL
 
 	CLASS("OO_PATROL")
 		PRIVATE VARIABLE("scalar","areasize");
@@ -59,19 +60,27 @@
 			SPAWN_MEMBER("analysis", nil);
 
 			while { count (units MEMBER("group", nil)) > 0 } do {
-				//systemChat format ["Something happen %1...", time];
+				#ifdef DEBUGPATROL
+				systemChat format ["Something happen %1...", time];
+				#endif
 				switch (MEMBER("event", nil)) do {
 					case "alert": {
-						//systemChat "Engaging ...";
+						#ifdef DEBUGPATROL
+						systemChat "Engaging ...";
+						#endif
 						MEMBER("getNextTarget", nil);
 						MEMBER("engageTarget", nil);
 					};
 					case "city": {
-						//systemChat "Walking in city ...";
+						#ifdef DEBUGPATROL
+						systemChat "Walking in city ...";
+						#endif
 						MEMBER("walkInBuildings", nil);
 					};
 					default{
-						//systemChat "Walking ...";
+						#ifdef DEBUGPATROL
+						systemChat "Walking ...";
+						#endif
 						MEMBER("guard", _array);
 					};
 				};
@@ -324,17 +333,19 @@
 			_wp setWaypointSpeed "FULL";
 			_group setCurrentWaypoint _wp;
 
-			//private _name = format["target_%1", groupId _group];
-			//private _marker = createMarkerLocal [_name,_position];
-			//_marker setMarkerShapeLocal "ICON";
-			//_marker setMarkerTypeLocal "waypoint";
-			//_marker setMarkerText _name;
-			//_marker setMarkerColor "ColorRed";
-
+			#ifdef DEBUGPATROL
+			private _name = format["target_%1", groupId _group];
+			private _marker = createMarkerLocal [_name,_position];
+			_marker setMarkerShapeLocal "ICON";
+			_marker setMarkerTypeLocal "waypoint";
+			_marker setMarkerTextLocal _name;
+			_marker setMarkerColorLocal "ColorRed";
+			#endif
 			sleep 30;
-
+			#ifdef DEBUGPATROL
+			deleteMarkerLocal _marker;
+			#endif
 			MEMBER("event", "");
-			//deleteMarker _marker;
 			deletewaypoint _wp;
 		};
 
@@ -396,12 +407,14 @@
 			_wp setWaypointStatements ["true", "this setvariable ['complete', true]; false"];
 			_group setCurrentWaypoint _wp;
 
-/*			private _name = format["target_%1", groupId _group];
+			#ifdef DEBUGPATROL
+			private _name = format["target_%1", groupId _group];
 			private _marker = createMarkerLocal [_name,_position];
 			_marker setMarkerShapeLocal "ICON";
 			_marker setMarkerTypeLocal "waypoint";
-			_marker setMarkerText _name;
-			_marker setMarkerColor "ColorRed";*/
+			_marker setMarkerTextLocal _name;
+			_marker setMarkerColorLocal "ColorRed";*/
+			#endif
 
 			_counter = 0;
 			while { _counter < _maxtime } do {
@@ -411,8 +424,9 @@
 				_counter = _counter + 1;
 				sleep 1;
 			};
-
-			//deleteMarkerLocal _marker;
+			#ifdef DEBUGPATROL
+			deleteMarkerLocal _marker;
+			#endif
 			deletewaypoint _wp;
 		};
 
