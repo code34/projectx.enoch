@@ -28,6 +28,7 @@ CLASS("oo_Vitems")
 	PRIVATE UI_VARIABLE("control", "OOP_pic_uniform");
 	PRIVATE UI_VARIABLE("control", "OOP_pic_vest");
 	PRIVATE UI_VARIABLE("control", "OOP_pic_backpack");
+	PRIVATE UI_VARIABLE("control", "OOP_pic_muzzle");
 	PRIVATE UI_VARIABLE("display", "Display");
 	PRIVATE UI_VARIABLE("array", "destination");
 	PRIVATE UI_VARIABLE("array", "source");
@@ -63,6 +64,7 @@ CLASS("oo_Vitems")
 		MEMBER("OOP_pic_flashprimaryweapon", _this displayCtrl 124);
 		MEMBER("OOP_pic_flashhandgunweapon", _this displayCtrl 125);
 		MEMBER("OOP_pic_flashsecondaryweapon", _this displayCtrl 126);
+		MEMBER("OOP_pic_muzzle", _this displayCtrl 127);
 		MEMBER("selectindex", -1);
 		private _array = [];
 		MEMBER("source", _array);
@@ -130,27 +132,46 @@ CLASS("oo_Vitems")
 
 	// Rempli le centre de l'inventaire avec l'uniforme, les armes ,le casque etc.
 	PUBLIC FUNCTION("", "refreshInventory") {
-		private _gear = "new" call OO_ARMAGEAR;
-		private _weaponsitems = "weaponsItems" call _gear;
-    	private _primaryoptic = (_weaponsitems select 0) select 3;
-    	private _secondaryoptic = (_weaponsitems select 1) select 3;
-    	private _handgunoptic = (_weaponsitems select 2) select 3;
-    	private _primarymag = ((_weaponsitems select 0) select 4) select 0;
-    	private _secondarymag = ((_weaponsitems select 1) select 4) select 0;
-    	private _handgunmag = ((_weaponsitems select 2) select 4) select 0;
-    	
-    	private _primaryflash = (_weaponsitems select 0) select 2;
-    	private _secondaryflash = (_weaponsitems select 1) select 2;
-    	private _handgunflash = (_weaponsitems select 2) select 2;
+		private _weaponsitems = "weaponsItems" call mygear;
+		private _primaryoptic = (_weaponsitems select 0) select 3;
+		private _secondaryoptic = (_weaponsitems select 1) select 3;
+		private _handgunoptic = (_weaponsitems select 2) select 3;
+		private _primarymag = ((_weaponsitems select 0) select 4) select 0;
+		private _secondarymag = ((_weaponsitems select 1) select 4) select 0;
+		private _handgunmag = ((_weaponsitems select 2) select 4) select 0;
+		
+		private _primaryflash = (_weaponsitems select 0) select 2;
+		private _secondaryflash = (_weaponsitems select 1) select 2;
+		private _handgunflash = (_weaponsitems select 2) select 2;
 
-    	private _headgear = headgear player;
-    	private _uniform = uniform player;
+		private _headgear = headgear player;
+		private _uniform = uniform player;
 		private _vest = vest player;
 		private _bag = backpack player;
+		private _muzzle = (player weaponAccessories (primaryWeapon player)) select 0;
 
-		private _array = [[(primaryWeapon player), "OOP_pic_primaryweapon", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_primary_gs.paa"],[(secondaryWeapon player), "OOP_pic_secondaryweapon", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_secondary_gs.paa"],[(handgunWeapon player), "OOP_pic_gunweapon", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_hgun_gs.paa"],[(binocular player), "OOP_pic_binocular", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_binocular_gs.paa"],[_primarymag, "OOP_pic_magprimaryweapon", "CfgMagazines", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_magazine_gs.paa"],[_handgunmag, "OOP_pic_maggunweapon", "CfgMagazines", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_magazine_gs.paa"],[_secondarymag, "OOP_pic_magsecondaryweapon", "CfgMagazines", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_magazine_gs.paa"],[_primaryoptic, "OOP_pic_opticprimaryweapon", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_top_gs.paa"],[_handgunoptic, "OOP_pic_optichandgunweapon", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_top_gs.paa"],[_secondaryoptic, "OOP_pic_opticsecondaryweapon", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_top_gs.paa"],[_headgear, "OOP_pic_head", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_helmet_gs.paa"],[_uniform, "OOP_pic_uniform", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_uniform_gs.paa"],[_vest, "OOP_pic_vest", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_vest_gs.paa"],[_bag, "OOP_pic_backpack", "CfgVehicles", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_backpack_gs.paa"],[_primaryflash, "OOP_pic_flashprimaryweapon", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_side_gs.paa"],[_secondaryflash, "OOP_pic_flashsecondaryweapon", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_side_gs.paa"],[_handgunflash, "OOP_pic_flashhandgunweapon", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_side_gs.paa"]];
+		private _array = [
+		[(primaryWeapon player), "OOP_pic_primaryweapon", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_primary_gs.paa"],
+		[(secondaryWeapon player), "OOP_pic_secondaryweapon", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_secondary_gs.paa"],
+		[(handgunWeapon player), "OOP_pic_gunweapon", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_hgun_gs.paa"],
+		[(binocular player), "OOP_pic_binocular", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_binocular_gs.paa"],
+		[_primarymag, "OOP_pic_magprimaryweapon", "CfgMagazines", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_magazine_gs.paa"],
+		[_handgunmag, "OOP_pic_maggunweapon", "CfgMagazines", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_magazine_gs.paa"],
+		[_secondarymag, "OOP_pic_magsecondaryweapon", "CfgMagazines", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_magazine_gs.paa"],
+		[_primaryoptic, "OOP_pic_opticprimaryweapon", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_top_gs.paa"],
+		[_handgunoptic, "OOP_pic_optichandgunweapon", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_top_gs.paa"],
+		[_secondaryoptic, "OOP_pic_opticsecondaryweapon", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_top_gs.paa"],
+		[_headgear, "OOP_pic_head", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_helmet_gs.paa"],
+		[_uniform, "OOP_pic_uniform", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_uniform_gs.paa"],
+		[_vest, "OOP_pic_vest", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_vest_gs.paa"],
+		[_bag, "OOP_pic_backpack", "CfgVehicles", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_backpack_gs.paa"],
+		[_primaryflash, "OOP_pic_flashprimaryweapon", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_side_gs.paa"],
+		[_secondaryflash, "OOP_pic_flashsecondaryweapon", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_side_gs.paa"],
+		[_handgunflash, "OOP_pic_flashhandgunweapon", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_side_gs.paa"],
+		[_muzzle, "OOP_pic_muzzle", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_muzzle_gs.paa"]
+		];
 		{MEMBER("setItemPicture", _x);} forEach _array;
-		
+
 
 		// toLower(_primarymag), toLower(_secondarymag), toLower(_handgunmag)
 		private _alreadyshow = [toLower(_headgear),toLower(_uniform), toLower(_vest), toLower(_bag),
@@ -162,7 +183,7 @@ CLASS("oo_Vitems")
 	};
 
 	PUBLIC FUNCTION("string", "removeItem") {
-		switch (_this) do { 			
+		switch (_this) do {
 			case "head" : { removeHeadgear player; };
 			case "backpack" : { removeBackpack player; };
 			case "uniform" : {removeUniform player; };
@@ -297,12 +318,9 @@ CLASS("oo_Vitems")
 		private _source = _this select 0;
 		private _destination = _this select 1;
 		private _item = _this select 3;
-
-		private _gear = "new" call OO_ARMAGEAR;
-		private _items = ["getCargoItems", _item] call _gear;
+		private _items = ["getCargoItems", _item] call mygear;
 		_items pushBack _item;
-		
-		["removeToInventory", _item] call _gear;
+		["removeToInventory", _item] call mygear;
 		["removeItemsByLabel", _items] call _source;
 		["addItemsByLabel", _items] call _destination;
 		MEMBER("refresh", nil);
@@ -319,14 +337,12 @@ CLASS("oo_Vitems")
 
 		// De l'inventaire vers le sol
 		if((_source isEqualTo capcontainer) and (_destination isEqualTo proxcontainer)) then {
-			private _gear = "new" call OO_ARMAGEAR;
-			//_items append (["getCargoItems2", _type] call _gear);
-			["removeCargo", _type] call _gear;
+			["removeCargo", _type] call mygear;
 		};
 
 		// Du sol vers l'inventaire
 		if((_source isEqualTo proxcontainer) and (_destination isEqualTo capcontainer)) then {
-			["addToInventory2", [_type, _count]] call _gear;
+			["addToInventory2", [_type, _count]] call mygear;
 		};
 
 		["removeItemsByLabel", _items] call _source;
@@ -375,7 +391,7 @@ CLASS("oo_Vitems")
 			case "shred" : {
 				if(_index > -1) then {
 					_index = MEMBER("count_Indexwithoutfilter", _array);
-					_index = ["shredItem", _index] call capcontainer;					
+					_index = ["shredItem", _index] call capcontainer;
 					_index = lbCurSel  MEMBER("OOP_Listbox_Capacities", nil);
 					MEMBER("selectindex", _index);
 					MEMBER("refresh", nil);
@@ -406,7 +422,6 @@ CLASS("oo_Vitems")
 	};
 
 	PUBLIC FUNCTION("array", "dragDrop") {
-		private _gear = "new" call OO_ARMAGEAR;
 		private _source = MEMBER("source", nil) select 0;
 		private _destination = MEMBER("destination", nil) select 0;
 		private _scontainer = "";
@@ -437,8 +452,7 @@ CLASS("oo_Vitems")
 					private _array = [_scontainer, _index];
 					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _class = (("getContent" call _scontainer) select _index) select 0;
-					private _gear = "new" call OO_ARMAGEAR;
-					["addItem", ["head",_class]] call _gear;
+					["addItem", ["head",_class]] call mygear;
 					if(_scontainer isEqualTo proxcontainer) then {
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
@@ -450,8 +464,7 @@ CLASS("oo_Vitems")
 					private _array = [_scontainer, _index];
 					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _class = (("getContent" call _scontainer) select _index) select 0;
-					private _gear = "new" call OO_ARMAGEAR;
-					["addItem", ["vest",_class]] call _gear;
+					["addItem", ["vest",_class]] call mygear;
 					if(_scontainer isEqualTo proxcontainer) then {
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
@@ -463,8 +476,7 @@ CLASS("oo_Vitems")
 					private _array = [_scontainer, _index];
 					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _class = (("getContent" call _scontainer) select _index) select 0;
-					private _gear = "new" call OO_ARMAGEAR;
-					["addItem", ["uniform",_class]] call _gear;
+					["addItem", ["uniform",_class]] call mygear;
 					if(_scontainer isEqualTo proxcontainer) then {
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
@@ -476,8 +488,7 @@ CLASS("oo_Vitems")
 					private _array = [_scontainer, _index];
 					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _class = (("getContent" call _scontainer) select _index) select 0;
-					private _gear = "new" call OO_ARMAGEAR;
-					["addItem", ["backpack",_class]] call _gear;
+					["addItem", ["backpack",_class]] call mygear;
 					if(_scontainer isEqualTo proxcontainer) then {
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
@@ -490,8 +501,7 @@ CLASS("oo_Vitems")
 					private _array = [_scontainer, _index];
 					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
-					private _gear = "new" call OO_ARMAGEAR;
-					["addWeapon", _object] call _gear;
+					["addWeapon", _object] call mygear;
 					if(_scontainer isEqualTo proxcontainer) then {
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
@@ -504,8 +514,7 @@ CLASS("oo_Vitems")
 					private _array = [_scontainer, _index];
 					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
-					private _gear = "new" call OO_ARMAGEAR;
-					["addWeapon", _object] call _gear;
+					["addWeapon", _object] call mygear;
 					if(_scontainer isEqualTo proxcontainer) then {
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
@@ -518,8 +527,7 @@ CLASS("oo_Vitems")
 					private _array = [_scontainer, _index];
 					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
-					private _gear = "new" call OO_ARMAGEAR;
-					["addWeapon", _object] call _gear;
+					["addWeapon", _object] call mygear;
 					if(_scontainer isEqualTo proxcontainer) then {
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
@@ -532,8 +540,7 @@ CLASS("oo_Vitems")
 					private _array = [_scontainer, _index];
 					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
-					private _gear = "new" call OO_ARMAGEAR;
-					["addMagazines", ["primaryweapon", _object select 0]] call _gear;
+					["addMagazines", ["primaryweapon", _object select 0]] call mygear;
 					if(_scontainer isEqualTo proxcontainer) then {
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
@@ -545,8 +552,7 @@ CLASS("oo_Vitems")
 					private _array = [_scontainer, _index];
 					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
-					private _gear = "new" call OO_ARMAGEAR;
-					["addMagazines", ["secondaryweapon", _object select 0]] call _gear;
+					["addMagazines", ["secondaryweapon", _object select 0]] call mygear;
 					if(_scontainer isEqualTo proxcontainer) then {
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
@@ -558,8 +564,7 @@ CLASS("oo_Vitems")
 					private _array = [_scontainer, _index];
 					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
-					private _gear = "new" call OO_ARMAGEAR;
-					["addMagazines", ["handgunweapon", _object select 0]] call _gear;
+					["addMagazines", ["handgunweapon", _object select 0]] call mygear;
 					if(_scontainer isEqualTo proxcontainer) then {
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
@@ -571,8 +576,7 @@ CLASS("oo_Vitems")
 					private _array = [_scontainer, _index];
 					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
-					private _gear = "new" call OO_ARMAGEAR;
-					["addItem", ["primaryweapon", _object select 0]] call _gear;
+					["addItem", ["primaryweapon", _object select 0]] call mygear;
 					if(_scontainer isEqualTo proxcontainer) then {
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
@@ -584,8 +588,7 @@ CLASS("oo_Vitems")
 					private _array = [_scontainer, _index];
 					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
-					private _gear = "new" call OO_ARMAGEAR;
-					["addItem", ["handgunweapon", _object select 0]] call _gear;
+					["addItem", ["handgunweapon", _object select 0]] call mygear;
 					if(_scontainer isEqualTo proxcontainer) then {
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
@@ -597,8 +600,7 @@ CLASS("oo_Vitems")
 					private _array = [_scontainer, _index];
 					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
-					private _gear = "new" call OO_ARMAGEAR;
-					["addItem", ["secondaryweapon", _object select 0]] call _gear;
+					["addItem", ["secondaryweapon", _object select 0]] call mygear;
 					if(_scontainer isEqualTo proxcontainer) then {
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
@@ -610,8 +612,7 @@ CLASS("oo_Vitems")
 					private _array = [_scontainer, _index];
 					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
-					private _gear = "new" call OO_ARMAGEAR;
-					["addItem", ["primaryweapon", _object select 0]] call _gear;
+					["addItem", ["primaryweapon", _object select 0]] call mygear;
 					if(_scontainer isEqualTo proxcontainer) then {
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
@@ -623,8 +624,7 @@ CLASS("oo_Vitems")
 					private _array = [_scontainer, _index];
 					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
-					private _gear = "new" call OO_ARMAGEAR;
-					["addItem", ["secondaryweapon", _object select 0]] call _gear;
+					["addItem", ["secondaryweapon", _object select 0]] call mygear;
 					if(_scontainer isEqualTo proxcontainer) then {
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
@@ -636,13 +636,25 @@ CLASS("oo_Vitems")
 					private _array = [_scontainer, _index];
 					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
-					private _gear = "new" call OO_ARMAGEAR;
-					["addItem", ["handgunweapon", _object select 0]] call _gear;
+					["addItem", ["muzzle", _object select 0]] call mygear;
 					if(_scontainer isEqualTo proxcontainer) then {
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
 					};
 				};
+
+				case (_destination isEqualTo MEMBER("OOP_pic_fmuzzle", nil)) : {
+					private _index = (((_this select 4) select 0) select 1);
+					private _array = [_scontainer, _index];
+					_index = MEMBER("count_Indexwithoutfilter", _array);
+					private _object = ("getContent" call _scontainer) select _index;
+					["addItem", ["handgunweapon", _object select 0]] call mygear;
+					if(_scontainer isEqualTo proxcontainer) then {
+						private _item = ["popItem", _index] call proxcontainer;
+						["addItem", _item] call capcontainer;
+					};
+				};
+
 				default { hint "other";};
 			};
 		};
@@ -650,7 +662,6 @@ CLASS("oo_Vitems")
 	};
 
 	PUBLIC FUNCTION("array", "getDblClick") {
-		private _gear = "new" call OO_ARMAGEAR;
 		private _control = _this select 0;
 		private _index = _this select 1;
 		private _scontainer = "";
@@ -670,10 +681,10 @@ CLASS("oo_Vitems")
 		private _item = ["getItemUnitary", _index] call _scontainer;
 		if(_item select 7) then {
 			if((_scontainer isEqualTo capcontainer) and (_dcontainer isEqualTo proxcontainer)) then { 
-				["removeToInventory", _item] call _gear;
+				["removeToInventory", _item] call mygear;
 			} else {
 				if((_scontainer isEqualTo proxcontainer) and(_dcontainer isEqualTo capcontainer)) then {
-					["addToInventory", _item] call _gear;
+					["addToInventory", _item] call mygear;
 				};
 			};
 		};
@@ -683,12 +694,12 @@ CLASS("oo_Vitems")
 
 	PUBLIC FUNCTION("", "refresh_title") {
 		DEBUG(#, "OO_VITEMS::refresh_title")
-		private _name = "getName" call capcontainer;
 		private _weight = "countWeight" call capcontainer;
 		private _size = "countSize" call capcontainer;
-		private _limitsize = "getLimitSize" call capcontainer;
-		private _limitweight = "getLimitWeight" call capcontainer;
-		MEMBER("OOP_Text_Inventory", nil) ctrlSetText format["%1 inventory | Items: %2 | Total Weight: %4 Kg", _name, _size, _limitsize, _weight, _limitweight];
+		private _capacity = "getCapacity" call mygear;
+		//private _limitsize = "getLimitSize" call capcontainer;
+		//private _limitweight = "getLimitWeight" call capcontainer;
+		MEMBER("OOP_Text_Inventory", nil) ctrlSetText format["Description | Items: %1 | Total Weight: %2/%3 Kg", _size, _weight, _capacity];
 	};
 
 	// filtre les equipements déjà montré au centre hormis les munitions
