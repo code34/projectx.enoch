@@ -31,7 +31,6 @@
 			DEBUG(#, "OO_CONTAINER::constructor")
 			MEMBER("netId", _this select 0);
 			MEMBER("model", _this select 1);
-			MEMBER("load", nil);
 		};
 
 		PUBLIC FUNCTION("","load") {
@@ -39,12 +38,14 @@
 			private _netId = MEMBER("netId", nil);
 			private _properties = ["remoteCall", ["vitems_getProperties",  _netId, 2, []]] call bmeclient;
 			private _inventory = ["remoteCall", ["vitems_getInventory",  _netId, 2, []]] call bmeclient;
-			private _list = MEMBER("fillInventory", _inventory);
+			private _list = MEMBER("fillInventory", _inventory select 1);
 			MEMBER("content", _list);
 			MEMBER("properties", _properties);
+			(_inventory select 0);
 		};
 
 		PUBLIC FUNCTION("","loadInventory") {
+			DEBUG(#, "OO_CONTAINER::loadInventory")
 			private _gear = "new" call OO_ARMAGEAR;
 			{ MEMBER("addItem", _x);} forEach ("loadItems" call _gear);
 		};
@@ -58,8 +59,8 @@
 
 		PUBLIC FUNCTION("array","fillInventory") {
 			DEBUG(#, "OO_CONTAINER::fillInventory")
+			private _gear = "new" call OO_ARMAGEAR; 
 			private _list = [];
-			private _gear = "new" call OO_ARMAGEAR;
 			{
 				private _result = ["loadCfg", _x] call _gear;
 				_list pushBack _result;
@@ -195,7 +196,35 @@
 			private _index = _this;
 			private _content = MEMBER("getContent", nil);
 			private _object = _content select _index;
-			private _code = compile preprocessFileLineNumbers format["vitems\items\%1.sqf", _object select 0];
+			private _exist = ((_object select 0)+".sqf") call fnc_fileexist;
+			if(_exist) then {
+				private _filename = format["vitems\items\%1.sqf", _object select 0];
+				private _code = compile preprocessFileLineNumbers _filename;
+				private _requirement = +(_object select 6);
+				_requirement pushBack (_object select 0);
+				private _result = ["checkStuffRequirement", _requirement] call uirequirement;
+				if!(_result select 0) then {
+					"createDialog" call uirequirement;
+					["refreshListBox", (_result select 1)] call uirequirement;
+				} else {
+					if(call _code) then {
+						_content = ["useRequirement", _requirement] call uirequirement;
+						MEMBER("setContent", _content);
+					};
+				};
+			};
+			_index;
+		};
+
+		// pour le moment ne fait pas plus que useitem
+		PUBLIC FUNCTION("scalar","shredItem") {
+			DEBUG(#, "OO_CONTAINER::shredItem")
+			private _index = _this;
+			private _content = MEMBER("getContent", nil);
+			private _object = _content select _index;
+			private _filename = format["vitems\items\%1.sqf", _object select 0];
+			//if ((loadFile _filename) isEqualTo "") exitWith {_index;};
+			private _code = compile preprocessFileLineNumbers _filename;
 			private _requirement = +(_object select 6);
 			_requirement pushBack (_object select 0);
 			private _result = ["checkStuffRequirement", _requirement] call uirequirement;
