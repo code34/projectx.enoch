@@ -1,7 +1,13 @@
 
     private _time = _this select 0;
-    if(isnull cursorObject) exitWith {false;};
-    if(cursorObject distance player > 10) exitWith {false;};
+    if(isnull cursorObject) exitWith {
+        hint "You must point to an object";
+        false;
+    };
+    if(cursorObject distance player > 10) exitWith {
+        hint "You must point to an object";
+        false;
+    };
 
     private _object = cursorObject;
     private _c4 = "DemoCharge_Remote_Ammo_Scripted" createVehicle position _object; 
@@ -16,5 +22,4 @@
         };
         _c4 setDamage 1;
     };
-
     true;
