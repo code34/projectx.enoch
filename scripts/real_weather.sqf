@@ -171,7 +171,7 @@
 		if((overcast > 0.7) and (_overcast > overcast)) then {
 			_rain = 0.3 + random 0.7;
 		} else {
-			_rain = random 0.3;
+			_rain = 0.1 + (random 0.3);
 		};
 		if((date select 3 > 2) and (date select 3 <6)) then {
 			if(random 1 > 0.75) then {
@@ -186,7 +186,7 @@
 				if(random 1 > 0.80) then {
 					_fog = 0.15 + random 0.05;
 				} else {
-					_fog = 0.15 + random 0.15;					
+					_fog = 0.15 + random 0.15;
 				};
 			};
 		};
