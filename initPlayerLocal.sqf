@@ -24,10 +24,11 @@
 	call compile preprocessFileLineNumbers "vitems\oo_bme.sqf";
 	call compile preprocessFileLineNumbers "vitems\oo_model.sqf";
 	call compile preprocessFileLineNumbers "objects\oo_health.sqf";
-	call compile preprocessFileLineNumbers "objects\oo_healthresume.sqf";	
+	call compile preprocessFileLineNumbers "objects\oo_healthresume.sqf";
 	call compile preprocessFileLineNumbers "objects\oo_tabnote.sqf";
 	call compile preprocessFileLineNumbers "objects\oo_camera.sqf";
 	call compile preprocessFileLineNumbers "objects\oo_keyhandler.sqf";
+	//call compile preprocessFileLineNumbers "objects\oo_optimizefps.sqf";
 	call compile preprocessFileLineNumbers "objects\oo_sound.sqf";
 	call compile preprocessFileLineNumbers "gui\oo_hud.sqf";
 	call compile preprocessFileLineNumbers "gui\oo_vitems.sqf";
@@ -107,6 +108,17 @@
 	player addEventHandler ["InventoryOpened", {execVM "gui\loading.sqf";true;}];
 	player addEventHandler ["InventoryClosed", {player addEventHandler ["InventoryOpened", {execVM "gui\loading.sqf";true;}];}];
 
+	// Turn off button move to player position
+	addMissionEventHandler ["Map", {
+		params ["_mapIsOpened", "_mapIsForced"];
+		private _display = uiNamespace getVariable "RSCDiary";
+		private _ctrl = _display displayCtrl 1202;
+		_ctrl ctrlEnable false;
+		_ctrl ctrlsettextcolor [0,0,0,0];
+		_ctrl ctrlSetTooltip "";
+		_ctrl ctrlCommit 0;
+	}];
+
 	player addEventHandler ["Reloaded", {
 		params ["_unit", "_weapon", "_muzzle", "_newMagazine", "_oldMagazine"];
 		if!(_oldMagazine isEqualTo "") then {
@@ -124,12 +136,15 @@
 	1000 cutRsc ["hud", "PLAIN"];
 	health = "new" call OO_HEALTH;
 	healthresume = "new" call OO_HEALTHRESUME;
+	keyhandler = "new" call OO_KEYHANDLER;
+	mygear = "new" call OO_ARMAGEAR;
+	tabnote = "new" call OO_TABNOTE;
+	//optimizefps = "new" call OO_OPTIMIZEFPS;
+
 	player setAnimSpeedCoef 1;
 	player enableFatigue false; 
 	player enableStamina false;
 	player allowSprint true;
-
-	keyhandler = "new" call OO_KEYHANDLER;
 
 	// load inventory
 	// inventaire de base
@@ -137,7 +152,7 @@
 	//private _content = [["arifle_MSBS65_F",1], ["launch_RPG32_camo_F", 1],["armyradio",-1],["wrench",-1],["medicalkit",1],["survivalration",5], ["screwdriver", -1],["waterbottle",1],["30Rnd_65x39_caseless_mag_Tracer", 5]];
 
 	capcontainer = ["new", [netId player, ((getModelInfo player) select 0)]] call OO_CONTAINER;
-	private _content = [["lighter", -1], ["woodbranch", -1],["antibiotic", -1],["computetab", -1],["armyradio",-1],["medicalkit",1],["survivalration",2]];
+	private _content = [["computetab", -1],["armyradio",-1],["medicalkit",1],["survivalration",2]];
 	["overLoad", _content] call capcontainer;
 	"loadInventory" call capcontainer;
 	"save" call capcontainer;
@@ -160,15 +175,9 @@
 		private _hadbackpack = (unitBackpack player);
 		private _hadvest = vest player;
 		private _haduniform = uniform player;
-		private _capacity = 10;
+		private _capacity = 0;
 		while { true } do {
-			_capacity = 10;
-			_hadbackpack = if(isnull (unitBackpack player)) then {false;}else{true;};
-			_hadvest = if((vest player) isEqualTo "") then {false;}else{true;};
-			_haduniform = if((uniform player) isEqualTo "") then {false;}else{true;};
-			if(_hadbackpack) then {_capacity = _capacity + 20};
-			if(_hadvest) then {_capacity = _capacity + 7};
-			if(_haduniform) then {_capacity = _capacity + 7};
+			_capacity = "getCapacity" call mygear;
 			_overload = floor(_capacity - ("countWeight" call capcontainer));
 			switch (true) do { 
 				case (_overload > 20) : { player setAnimSpeedCoef 1.2;};
@@ -191,8 +200,12 @@
 		hint format ["%1", _damage];
 	}];*/
 
-
-/*	copyToClipboard format ["%1 %2", getText(configfile >> "cfgWeapons" >> "hgun_P07_khk_F">> "picture"), getText(configfile >> "cfgMagazines" >> "16Rnd_9x21_Mag" >> "picture")];*/
+/*	[] spawn {
+		while { true } do {
+			systemChat format ["diag: %1 %2 %3", diag_deltaTime, diag_fps, floor(player distance cursorObject)];
+			sleep 0.01;
+		};
+	};*/
 
 /*	["arifle_MX_khk_F","hgun_P07_khk_F"] 
 	["30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag"]*/
@@ -203,20 +216,15 @@
 	playMusic "ambientmusic2";
 	titleText ["<t size='5'>Project</t><t color='#ff9d00' size='6'>X</t><br/>by Code34", "PLAIN", -1, true, true];
 
+	//diag_captureSlowFrame ['total',0.03];
+
 	sleep 20;
 
 	[ "Somewhere on Liviona", format ["Year %1", date select 0]] spawn BIS_fnc_infoText;
 
 	sleep 20;
 
-	"Instructions" hintC [
-	"Bienvenue dans la version Beta de ProjectX. Ceci est une version en développement plusieurs bugs peuvent apparaitre.",
-	"Press I to search",
-	"Press F1 to chech your roadmap",
-	"Jouez en coopération et bon courage à vous - Code34 :)"
-	];
-
+	hintSilent parseText "<t size='1.4' color='#ff0000' align='left'>Instructions:</t><t size='1.20' align='left'><br/><br/>Bienvenue dans la version Beta de ProjectX. Ceci est une version en développement plusieurs bugs peuvent encore apparaitre<br/><br/>- Press I to search<br/>- Press F1 to chech your roadmap<br/><br/>Jouez en coopération et amusez vous<br/><br/>Code34 :)</t>";
 	// initialize mission tab
-	tabnote = "new" call OO_TABNOTE;
 	["setPages", ["meka\story\m1_introduction1.html","meka\story\m1_introduction2.html"]] call tabnote;
 	["showFile", true] call hud;

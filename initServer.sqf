@@ -18,17 +18,19 @@
 
 	call compile preprocessFileLineNumbers "vitems\oo_container.sqf";
 	call compile preprocessFileLineNumbers "vitems\oo_randomstuff.sqf";
-	call compile preprocessFileLineNumbers "vitems\oo_armagear.sqf";	
+	call compile preprocessFileLineNumbers "vitems\oo_armagear.sqf";
 	call compile preprocessFileLineNumbers "vitems\oo_bme.sqf";
+	call compile preprocessFileLineNumbers "objects\oo_grid.sqf";
 	call compile preprocessFileLineNumbers "objects\oo_sector.sqf";
 	call compile preprocessFileLineNumbers "objects\oo_sector_russian.sqf";
 	call compile preprocessFileLineNumbers "objects\oo_patrol.sqf";
-	call compile preprocessFileLineNumbers "objects\oo_missionloader.sqf";
-   
-    //call compile preprocessFileLineNumbers "scripts\fnc_enumvillages.sqf";
+	//call compile preprocessFileLineNumbers "objects\oo_missionloader.sqf";
+
+	//call compile preprocessFileLineNumbers "scripts\fnc_enumvillages.sqf";
 	fnc_weathers = compile preprocessFileLineNumbers "scripts\real_weather.sqf";
 	fnc_getnearestplayer = compile preprocessFileLineNumbers "scripts\fnc_getnearestplayer.sqf";
 	fnc_setskill = compile preprocessFileLineNumbers "scripts\fnc_setskill.sqf";
+	fnc_requirement = compile preprocessFileLineNumbers "scripts\fnc_requirement.sqf";
 	
 	// mission files
 	fnc_extraction = compile preprocessFileLineNumbers "meka\m0_extraction.sqf";
@@ -45,13 +47,17 @@
 	getSpawnPosition = {playerstartatpos;};
 
 	if((isServer) and (isDedicated)) then { 
-        bmeclient = "new" call OO_BME;
-        diag_log "BME Server 2.0 is initialized";
-    };
+		bmeclient = "new" call OO_BME;
+		diag_log "BME Server 2.0 is initialized";
+	};
 	BmeIsAlive = { true;};
 	while { isNil "bmeclient" } do {sleep 1;};
 
 	[] spawn fnc_weathers;
+
+	_size = getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");
+	_sectorsize = 250;
+	mygrid = ["new", [0,0, _size, _size,_sectorsize,_sectorsize]] call OO_GRID;
 
 	//Ryan zombie settings
 	ryanzombiesinfectedchance = 5;
@@ -73,7 +79,7 @@
 	west setFriend [resistance, 0];
 
 	// Server missions
-	missionloader = "new" call oo_missionloader;
+	//missionloader = "new" call oo_missionloader;
 	[] spawn fnc_relayradio;
 	[] spawn fnc_sergent;
 	[] spawn fnc_extraction;
@@ -133,15 +139,23 @@
 	private _list = [];
 	_stuff = ["new", ""] call OO_RANDOMSTUFF;
 	["setNeutre", _list] call _stuff;
-    "preload" call _stuff;
+	"preload" call _stuff;
 
-    private _size = 250;
+	private _size = 250;
+	private _count = 0;
 	for "_myx" from _size to (12500-_size) step (_size*2) do {
 		for "_myy" from _size to (12500-_size) step (_size*2) do {
 			_location = ["new", [[_myx, _myy], _size]] call OO_SECTOR;
 			"check" spawn _location;
 		};
 	};
+
+/*	_sectors = ["getSectorsAroundPos", position player] call mygrid;
+	{
+		_position = ["getPosFromSector", _x] call mygrid;
+		_location = ["new", [_position, 250]] call OO_SECTOR;
+		"check" spawn _location;
+	} forEach _sectors;*/
 
 	onPlayerConnected {
 		/*params ["_id", "_uid", "_name", "_jip", "_owner", "_idstr"];
@@ -151,16 +165,16 @@
 		};*/
 	};
 
-    for "_i" from 1 to 49 step 1 do {
-    	private _markername = "enemy" + str(_i);
-    	private _militarized = false;
-    	if(random 1 > 0.25) then {_militarized = true;};
-  		_position = getMarkerPos _markername;
-   		_size = (getMarkerSize _markername) select 0;
+	for "_i" from 1 to 68 step 1 do {
+		private _markername = "enemy" + str(_i);
+		private _militarized = false;
+		if(random 1 > 0.25) then {_militarized = true;};
+		_position = getMarkerPos _markername;
+		_size = (getMarkerSize _markername) select 0;
 		_location = ["new", [_position, _size, _militarized]] call OO_SECTOR_RUSSIAN;
 		"check" spawn _location;
 		deleteMarker _markername;
-    };
+	};
 
 	// debug industrialize mission
 	//player setpos getMarkerPos "industrialsite_point";
@@ -168,13 +182,13 @@
 	// debug sitex
 	// sitex = 1;
 	//_building = (nearestObjects [[7277.76,2910.65,0], ["Land_DPP_01_mainFactory_old_F"], 50]) select 0;
-    //_position = _building getRelPos [30, random 360];
-    //player setpos _position;
+	//_position = _building getRelPos [30, random 360];
+	//player setpos _position;
 
-    //labox = 1;
-    //_position = [7475.38,2541.66,0];
-    //player setPos _position;
+	//labox = 1;
+	//_position = [7475.38,2541.66,0];
+	//player setPos _position;
 
-    /// unites russes RHS - VV 
-    // vehicules : rhs_btr70_vv, rhs_brm1k_vv,rhs_uaz_open_vv, RHS_Ural_Open_Flat_VV_01
-    // chopper: RHS_Mi8mt_Cargo_vv    
+	/// unites russes RHS - VV 
+	// vehicules : rhs_btr70_vv, rhs_brm1k_vv,rhs_uaz_open_vv, RHS_Ural_Open_Flat_VV_01
+	// chopper: RHS_Mi8mt_Cargo_vv    
