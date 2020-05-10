@@ -46,7 +46,7 @@
 			MEMBER("missionactive", _this);
 		};
 
-		PUBLIC FUNCTION("string", "abortMission") {		
+		PUBLIC FUNCTION("string", "abortMission") {
 			{
 				if((_x select 1) isEqualTo _this) then {
 					// to be completed
