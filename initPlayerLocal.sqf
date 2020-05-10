@@ -200,12 +200,15 @@
 		hint format ["%1", _damage];
 	}];*/
 
-/*	[] spawn {
+	#undef DEBUGFPS
+	#ifdef DEBUGFPS
+	[] spawn {
 		while { true } do {
 			systemChat format ["diag: %1 %2 %3", diag_deltaTime, diag_fps, floor(player distance cursorObject)];
 			sleep 0.01;
 		};
-	};*/
+	};
+	#endif
 
 /*	["arifle_MX_khk_F","hgun_P07_khk_F"] 
 	["30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag"]*/
