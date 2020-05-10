@@ -193,7 +193,7 @@
 			private _item = _this select 1;
 			switch (_type) do { 
 				case "head" : {player addHeadgear _item;}; 
-				case "uniform" : {player addUniform _item;}; 
+				case "uniform" : {player forceAddUniform _item;}; 
 				case "vest" : {player addVest _item;}; 
 				case "backpack" : {
 					player addBackpack _item;
@@ -202,8 +202,21 @@
 				case "primaryweapon" : {player addPrimaryWeaponItem _item;};
 				case "secondaryweapon" : {player addSecondaryWeaponItem _item;};
 				case "handgunweapon" : {player addHandgunItem _item;};
+				case "muzzle" : {player addPrimaryWeaponItem _item;};
 				default {}; 
 			};
+		};
+
+		// Calcul la capacité de porter du joueur
+		PUBLIC FUNCTION("","getCapacity") {
+			private _capacity = 10;
+			private _hadbackpack = if(isnull (unitBackpack player)) then {false;}else{true;};
+			private _hadvest = if((vest player) isEqualTo "") then {false;}else{true;};
+			private _haduniform = if((uniform player) isEqualTo "") then {false;}else{true;};
+			if(_hadbackpack) then {_capacity = _capacity + 20};
+			if(_hadvest) then {_capacity = _capacity + 7};
+			if(_haduniform) then {_capacity = _capacity + 7};
+			_capacity;
 		};
 
 		PUBLIC FUNCTION("array","getCargoItems") {
@@ -245,32 +258,42 @@
 		};
 
 		PUBLIC FUNCTION("","reloadWeapon") {
+			DEBUG(#, "OO_ARMAGEAR::reloadWeapon")
 			private _type = "";
 			private _mag = "";
+			private _count = 0;
 			if((currentWeapon player) isEqualTo (primaryWeapon player)) then {
 				_type = "primaryweapon";
 				_mag = (primaryWeaponMagazine player) select 0;
+				_count = player ammo (primaryWeapon player);
 			};
 			if((currentWeapon player) isEqualTo (secondaryWeapon player)) then {
 				_type = "secondaryweapon";
 				_mag = (secondaryWeaponMagazine player) select 0;
+				_count =  player ammo (secondaryWeapon player);
 			};
 			if((currentWeapon player) isEqualTo (handgunWeapon player)) then {
 				_type = "handgunweapon";
 				_mag = (handgunMagazine player) select 0;
+				_count =  player ammo (handgunWeapon player);
 			};
 			if(isNil "_mag") then {_mag = "";};
 			if(["containsItem", _mag] call capcontainer) then {
-				["consumeItem", [_mag,1]] call capcontainer;
-				private _array = [_type, _mag];
+				if(_count isEqualTo 0) then {
+					["consumeItem", [_mag,1]] call capcontainer;
+				};
+				private _array = [_type, _mag, _count];
 				MEMBER("addMagazines", _array);
 			};
 		};
+
 
 		PUBLIC FUNCTION("array","addMagazines") {
 			DEBUG(#, "OO_ARMAGEAR::addMagazines")
 			private _type = _this select 0;
 			private _item = _this select 1;
+			private _count = _this select 2;
+			if(isNil "_count") then {_count = 1000;};
 			private _mages = "";
 			private _wp = "";
 			private _items = "";
@@ -285,6 +308,7 @@
 							player removeMagazines  _x;
 							player removePrimaryWeaponItem _x;
 						} forEach _mags;
+						player setAmmo [primaryWeapon player, 0];
 					}; 
 					case "secondaryweapon" : {
 						_wp = (secondaryWeapon player);
@@ -309,7 +333,8 @@
 					default {}; 
 				};
 				player selectWeapon _wp;
-				player addMagazine _item;
+				if(_count isEqualTo 0) then {_count = 10000;};
+				player addMagazine [_item, _count];
 				reload player;
 			};
 		};
@@ -319,10 +344,10 @@
 			DEBUG(#, "OO_ARMAGEAR::addToInventory")
 			private _items = _this;
 
-			if(MEMBER("isWeapon",(_items select 0))) then {		
+			if(MEMBER("isWeapon",(_items select 0))) then {
 				private _parents = [(configFile >> "CfgWeapons" >> (_items select 0)),true ] call BIS_fnc_returnParents;
 				switch (true) do {
-					case ("Uniform_Base" in _parents) : {player addUniform (_items select 0);};
+					case ("Uniform_Base" in _parents) : {player forceAddUniform (_items select 0);};
 					case ("Vest_Camo_Base" in _parents) : {player addVest (_items select 0);};
 					default { player addweapon (_items select 0);};
 				};
