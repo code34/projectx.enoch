@@ -78,8 +78,7 @@
 				case DIK_SPACE : { MEMBER("keySpace", nil); }; 
 				case _reload : {
 					//player action ["loadmagazine", player, player, 0, 1 ,"vbs2_us_m16a2_iron_gla", "vbs2_us_m16a2_iron_gla"];
-					private _gear = "new" call OO_ARMAGEAR;
-					"reloadWeapon" call _gear;
+					"reloadWeapon" call mygear;
 				};
 				default {  /*...code...*/ }; 
 			};
@@ -93,15 +92,17 @@
 		
 		PUBLIC FUNCTION("","keyF1") {
 			private _exit = false;
-			if("isDisplay" call tabnote) then {	 
-				closeDialog 0;
-				if(("getMode" call tabnote) isEqualTo "F1") then {_exit = true;};
-			};
-			if(_exit) then {
-				["setMode", ""] call tabnote;
-			} else {
-				["setMode", "F1"] call tabnote;
-				"createDialog" call tabnote;	
+			if(["findItemIndex","computetab"] call capcontainer > -1) then {
+				if("isDisplay" call tabnote) then {
+					closeDialog 0;
+					if(("getMode" call tabnote) isEqualTo "F1") then {_exit = true;};
+				};
+				if(_exit) then {
+					["setMode", ""] call tabnote;
+				} else {
+					["setMode", "F1"] call tabnote;
+					"createDialog" call tabnote;	
+				};
 			};
 		};
 
