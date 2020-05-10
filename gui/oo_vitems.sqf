@@ -1,4 +1,25 @@
+	/*
+	Author: code34 nicolas_boiteux@yahoo.fr
+	Copyright (C) 2020 Nicolas BOITEUX
+
+	CLASS OO_VITEMS
+
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+	
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+	
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+	*/
+
 #include "oop.h"
+#undef DEBUGVITEMS
 
 CLASS("oo_Vitems")
 	PRIVATE UI_VARIABLE("control", "OOP_fond");
@@ -413,11 +434,16 @@ CLASS("oo_Vitems")
 	PUBLIC FUNCTION("array", "setDestination"){
 		//systemChat str ['onLBDrag', _this]; 
 		//private _control = MEMBER("Display", nil) displayCtrl (_this select 0);
-		//systemChat format ["%1", _this];
+		#ifdef DEBUGVITEMS
+		systemChat format ["Destination: %1", _this];
+		#endif
 		MEMBER("destination", _this);
 	};
 
 	PUBLIC FUNCTION("array", "setSource"){
+		#ifdef DEBUGVITEMS
+		systemChat format ["Source: %1", _this];
+		#endif
 		MEMBER("source", _this);
 	};
 
@@ -636,19 +662,19 @@ CLASS("oo_Vitems")
 					private _array = [_scontainer, _index];
 					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
-					["addItem", ["muzzle", _object select 0]] call mygear;
+					["addItem", ["handgunweapon", _object select 0]] call mygear;
 					if(_scontainer isEqualTo proxcontainer) then {
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
 					};
 				};
 
-				case (_destination isEqualTo MEMBER("OOP_pic_fmuzzle", nil)) : {
+				case (_destination isEqualTo MEMBER("OOP_pic_muzzle", nil)) : {
 					private _index = (((_this select 4) select 0) select 1);
 					private _array = [_scontainer, _index];
 					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
-					["addItem", ["handgunweapon", _object select 0]] call mygear;
+					["addItem", ["muzzle", _object select 0]] call mygear;
 					if(_scontainer isEqualTo proxcontainer) then {
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
