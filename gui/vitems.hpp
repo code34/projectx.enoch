@@ -363,9 +363,8 @@ class Vitems {
 						canDrag = 1;
 						onLBDragging = "['setDestination', _this] call VITEMS";
 						onLBDrag = "['setSource', _this] call VITEMS";
-						onMouseButtonClick = "['setInvMenu', _this] call VITEMS";
 						onLBDblClick = "['getDblClick', _this] call VITEMS";
-					};					
+					};
 					class maggunweaponBackground : RscStructuredText {
 						idc = 1094;
 						x = (safezoneW * 0.4);
@@ -390,7 +389,6 @@ class Vitems {
 						canDrag = 1;
 						onLBDragging = "['setDestination', _this] call VITEMS";
 						onLBDrag = "['setSource', _this] call VITEMS";
-						onMouseButtonClick = "['setInvMenu', _this] call VITEMS";
 						onLBDblClick = "['getDblClick', _this] call VITEMS";
 					};
 					class magsecondaryweaponBackground : RscStructuredText {
@@ -417,7 +415,6 @@ class Vitems {
 						canDrag = 1;
 						onLBDragging = "['setDestination', _this] call VITEMS";
 						onLBDrag = "['setSource', _this] call VITEMS";
-						onMouseButtonClick = "['setInvMenu', _this] call VITEMS";
 						onLBDblClick = "['getDblClick', _this] call VITEMS";
 					};
 
@@ -447,7 +444,7 @@ class Vitems {
 						onLBDrag = "['setSource', _this] call VITEMS";
 						onMouseButtonClick = "['setInvMenu', _this] call VITEMS";
 						onLBDblClick = "['getDblClick', _this] call VITEMS";
-					};					
+					};
 					class opticgunweaponBackground : RscStructuredText {
 						idc = 1097;
 						x = (safezoneW * 0.441);
