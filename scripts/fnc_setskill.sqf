@@ -50,8 +50,14 @@
 	}];
 
 	_unit addeventhandler ['Killed', {
-		private _unit = _this select 0;
-		removeAllWeapons _unit;
+		(_this select 0) spawn {
+			private _unit = _this;
+			_container = ["new", [netId _unit, ((getModelInfo _unit) select 0)]] call OO_CONTAINER;
+			["loadInventory", _unit] call _container;
+			"save" call _container;
+			removeAllWeapons _unit;
+			removeAllItems _unit;
+		};
 	}];
 
 	true;
