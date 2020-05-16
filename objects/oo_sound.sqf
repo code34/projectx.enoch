@@ -58,7 +58,7 @@
 
 		PUBLIC FUNCTION("","playAmbientSounds") {
 			while { true } do {
-				sleep (480 + random 240);
+				sleep (120 + random 480);
 				private _location = MEMBER("localizePlayer", nil);
 				switch (_location) do {
 					case "village" : { MEMBER("getExpHouse", nil); };
