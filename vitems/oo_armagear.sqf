@@ -106,28 +106,28 @@
 		};
 
 
-		PUBLIC FUNCTION("","loadItems") {
+		PUBLIC FUNCTION("object","loadItems") {
 				DEBUG(#, "OO_ARMAGEAR::loadItems")
 				private _items = [];
 				private _result = [];
 
-				_items pushBack (headgear player);
-				_items pushBack (goggles player);
-				_items pushBack (uniform player);
-				{_items pushBack _x} foreach (UniformItems player);
-				_items pushBack (vest player);
-				{_items pushBack _x} foreach (VestItems player);
-				_items pushBack (backpack player);
-				{_items pushBack _x} foreach (backpackItems player);
-				{_items pushBack _x} foreach (primaryWeaponItems player);
-				{_items pushBack _x} foreach (secondaryWeaponItems player);
-				{_items pushBack _x} foreach (handgunItems player);
-				{_items pushBack _x}foreach (weapons player);
+				_items pushBack (headgear _this);
+				_items pushBack (goggles _this);
+				_items pushBack (uniform _this);
+				{_items pushBack _x} foreach (UniformItems _this);
+				_items pushBack (vest _this);
+				{_items pushBack _x} foreach (VestItems _this);
+				_items pushBack (backpack _this);
+				{_items pushBack _x} foreach (backpackItems _this);
+				{_items pushBack _x} foreach (primaryWeaponItems _this);
+				{_items pushBack _x} foreach (secondaryWeaponItems _this);
+				{_items pushBack _x} foreach (handgunItems _this);
+				{_items pushBack _x}foreach (weapons _this);
 				
-				private _blacklist = (weapons player);
+				private _blacklist = (weapons _this);
 				{
 					if!(_x in _blacklist) then {_items pushBack _x};
-				} foreach (assignedItems player);
+				} foreach (assignedItems _this);
 				_items = _items - [""];
 
 				{
@@ -185,6 +185,11 @@
 			(str(missionConfigFile >> "cfgVitems" >> _this) != "");
 		};
 
+		PUBLIC FUNCTION("array","isMagazineOfWeapon") {
+			private _magazines = getArray (configFile >> "CfgWeapons" >> (_this select 0) >> "magazines");
+			if((_this select 1) in _magazines) then {true;}else{false;};
+		};
+		
 		PUBLIC FUNCTION("array","addItem") {
 			DEBUG(#, "OO_ARMAGEAR::addItem")
 			// type : head, backpack, vest, uniform
@@ -204,6 +209,42 @@
 				case "handgunweapon" : {player addHandgunItem _item;};
 				case "muzzle" : {player addPrimaryWeaponItem _item;};
 				default {}; 
+			};
+		};
+
+		PUBLIC FUNCTION("string","removeItem") {
+			switch (_this) do { 
+				case "primaryoptic" : {
+					private _weaponsitems = MEMBER("weaponsItems", nil);
+					private _primaryoptic = (_weaponsitems select 0) select 3;
+					player removePrimaryWeaponItem _primaryoptic;
+				};
+				case "secondaryoptic" : {
+					private _weaponsitems = MEMBER("weaponsItems", nil);
+					private _secondaryoptic = (_weaponsitems select 1) select 3;
+					player removeSecondaryWeaponItem _secondaryoptic;
+				};
+				case "handgunoptic" : {
+					private _weaponsitems = MEMBER("weaponsItems", nil);
+					private _handgunoptic = (_weaponsitems select 2) select 3;
+					player removeHandgunItem _handgunoptic;
+				};
+				case "primaryflash" : {
+					private _weaponsitems = MEMBER("weaponsItems", nil);
+					private _primaryflash = (_weaponsitems select 0) select 2;
+					player removePrimaryWeaponItem _primaryflash;
+				};
+				case "secondaryflash" : {
+					private _weaponsitems = MEMBER("weaponsItems", nil);
+					private _secondaryflash = (_weaponsitems select 1) select 2;
+					player removeSecondaryWeaponItem _secondaryflash;
+				};
+				case "handgunflash" : {
+					private _weaponsitems = MEMBER("weaponsItems", nil);
+					private _handgunflash = (_weaponsitems select 2) select 2;
+					player removeHandgunItem _handgunflash;
+				};
+				default {};
 			};
 		};
 
@@ -275,14 +316,14 @@
 			if((currentWeapon player) isEqualTo (handgunWeapon player)) then {
 				_type = "handgunweapon";
 				_mag = (handgunMagazine player) select 0;
-				_count =  player ammo (handgunWeapon player);
+				_count = player ammo (handgunWeapon player);
 			};
 			if(isNil "_mag") then {_mag = "";};
 			if(["containsItem", _mag] call capcontainer) then {
-				if(_count isEqualTo 0) then {
+				//if(_count isEqualTo 0) then {
 					["consumeItem", [_mag,1]] call capcontainer;
-				};
-				private _array = [_type, _mag, _count];
+				//};
+				private _array = [_type, _mag, 10000];
 				MEMBER("addMagazines", _array);
 			};
 		};
