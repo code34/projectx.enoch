@@ -1,3 +1,4 @@
+	player createDiaryRecord ["Diary", ["Music", "Kai Engel - Downfall"]];
 	player createDiaryRecord ["Diary", ["External ressources", "De nombreuses ressources ont été extraites des sites de ressources libres:<br/> freesound.org,<br/> freemusicarchive.org,<br/> thenounproject.com"]];
 	player createDiaryRecord ["Diary", ["External works", "Naught/Minipopov/Code34 - oop.h<br/>Ryan Zombies and Demons Mod<br/>Rhs AFRF"]];
 	player createDiaryRecord ["Diary", ["Author", "si vous appréciez cette mission, n'hésitez pas à me le faire savoir.<br/>Code34 - email: nicolas_boiteux@yahoo.fr"]];
