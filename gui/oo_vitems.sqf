@@ -160,11 +160,9 @@ CLASS("oo_Vitems")
 		private _primarymag = ((_weaponsitems select 0) select 4) select 0;
 		private _secondarymag = ((_weaponsitems select 1) select 4) select 0;
 		private _handgunmag = ((_weaponsitems select 2) select 4) select 0;
-		
 		private _primaryflash = (_weaponsitems select 0) select 2;
 		private _secondaryflash = (_weaponsitems select 1) select 2;
 		private _handgunflash = (_weaponsitems select 2) select 2;
-
 		private _headgear = headgear player;
 		private _uniform = uniform player;
 		private _vest = vest player;
@@ -215,24 +213,43 @@ CLASS("oo_Vitems")
 			case "binocular" : {player removeWeapon (binocular player);};
 			case "primarymag" : {
 				private _mags = (primaryWeaponMagazine player);
-				if(count _mags > 0) then {	
-					player removeMagazines (_mags select 0);
+				if(count _mags > 0) then {
+					// debug
+					//player removeMagazines (_mags select 0);
 					player setAmmo [primaryWeapon player, 0];
 				};
 			};
 			case "secondarymag" : {
 				private _mags = (secondaryWeaponMagazine player);
-				if(count _mags > 0) then {	
-					player removeMagazines (_mags select 0); 
+				if(count _mags > 0) then {
+					//player removeMagazines (_mags select 0); 
 					player setAmmo [secondaryWeapon player, 0];
 				};
 			};
 			case "gunmag" : {
 				private _mags = (handgunMagazine player);
 				if(count _mags > 0) then { 
-					player removeMagazines (_mags select 0); 
+					//player removeMagazines (_mags select 0); 
 					player setAmmo [handgunWeapon player, 0];
 				};
+			};
+			case "primaryoptic" : {
+				["removeItem", "primaryoptic"] call mygear;
+			};
+			case "secondaryoptic" : {
+				["removeItem", "secondaryoptic"] call mygear;
+			};
+			case "handgunoptic" : {
+				["removeItem", "handgunoptic"] call mygear;
+			};
+			case "primaryflash" : {
+				["removeItem", "primaryflash"] call mygear;
+			};
+			case "secondaryflash" : {
+				["removeItem", "secondaryflash"] call mygear;
+			};
+			case "handgunflash" : {
+				["removeItem", "handgunflash"] call mygear;
 			};
 			default {}; 
 		};
@@ -273,6 +290,12 @@ CLASS("oo_Vitems")
 					case (_target isEqualTo MEMBER("OOP_pic_magprimaryweapon",nil)) : { MEMBER("removeItem","primarymag");};
 					case (_target isEqualTo MEMBER("OOP_pic_magsecondaryweapon",nil)) : { MEMBER("removeItem","secondarymag");};
 					case (_target isEqualTo MEMBER("OOP_pic_maggunweapon",nil)) : { MEMBER("removeItem","gunmag");};
+					case (_target isEqualTo MEMBER("OOP_pic_opticprimaryweapon",nil)) : { MEMBER("removeItem","primaryoptic");};
+					case (_target isEqualTo MEMBER("OOP_pic_opticsecondaryweapon",nil)) : { MEMBER("removeItem","secondaryoptic");};
+					case (_target isEqualTo MEMBER("OOP_pic_optichandgunweapon",nil)) : { MEMBER("removeItem","handgunoptic");};
+					case (_target isEqualTo MEMBER("OOP_pic_flashprimaryweapon",nil)) : { MEMBER("removeItem","primaryflash");};
+					case (_target isEqualTo MEMBER("OOP_pic_flashsecondaryweapon",nil)) : { MEMBER("removeItem","secondaryflash");};
+					case (_target isEqualTo MEMBER("OOP_pic_flashhandgunweapon",nil)) : { MEMBER("removeItem","handgunflash");};
 					default {};
 				};
 			};
@@ -297,13 +320,13 @@ CLASS("oo_Vitems")
 					};
 					case (_target isEqualTo MEMBER("OOP_pic_magprimaryweapon",nil)) : {
 						_type = primaryWeapon player;
-					};					
+					};
 					case (_target isEqualTo MEMBER("OOP_pic_opticprimaryweapon",nil)) : {
 						_type = primaryWeapon player;
 					};
 					case (_target isEqualTo MEMBER("OOP_pic_flashprimaryweapon",nil)) : {
 						_type = primaryWeapon player;
-					};					
+					};
 					case (_target isEqualTo MEMBER("OOP_pic_secondaryweapon",nil)) : {
 						_type = secondaryWeapon player;
 					};
@@ -567,6 +590,10 @@ CLASS("oo_Vitems")
 					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
 					["addMagazines", ["primaryweapon", _object select 0]] call mygear;
+					if(_scontainer isEqualTo capcontainer) then {
+						private _result = ["isMagazineOfWeapon", [primaryWeapon player, _object select 0]] call mygear;
+						if(_result) then {["consumeItem", [_object select 0, 1]] call capcontainer;};
+					};
 					if(_scontainer isEqualTo proxcontainer) then {
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
@@ -579,6 +606,10 @@ CLASS("oo_Vitems")
 					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
 					["addMagazines", ["secondaryweapon", _object select 0]] call mygear;
+					if(_scontainer isEqualTo capcontainer) then {
+						private _result = ["isMagazineOfWeapon", [secondaryWeapon player, _object select 0]] call mygear;
+						if(_result) then {["consumeItem", [_object select 0, 1]] call capcontainer;};
+					};
 					if(_scontainer isEqualTo proxcontainer) then {
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
@@ -591,6 +622,10 @@ CLASS("oo_Vitems")
 					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
 					["addMagazines", ["handgunweapon", _object select 0]] call mygear;
+					if(_scontainer isEqualTo capcontainer) then {
+						private _result = ["isMagazineOfWeapon", [handgunWeapon player, _object select 0]] call mygear;
+						if(_result) then {["consumeItem", [_object select 0, 1]] call capcontainer;};
+					};
 					if(_scontainer isEqualTo proxcontainer) then {
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
@@ -920,7 +955,7 @@ CLASS("oo_Vitems")
 		DELETE_UI_VARIABLE("OOP_cap_menu");
 		DELETE_UI_VARIABLE("OOP_inv_menu");
 		DELETE_UI_VARIABLE("OOP_inv_target");
-		DELETE_UI_VARIABLE("OOP_pic_primaryweapon");		
+		DELETE_UI_VARIABLE("OOP_pic_primaryweapon");
 		DELETE_UI_VARIABLE("OOP_pic_secondaryweapon");
 		DELETE_UI_VARIABLE("OOP_pic_gunweapon");
 		DELETE_UI_VARIABLE("OOP_pic_binocular");
