@@ -154,7 +154,7 @@
 	capcontainer = ["new", [netId player, ((getModelInfo player) select 0)]] call OO_CONTAINER;
 	private _content = [["computetab", -1],["armyradio",-1],["medicalkit",1],["survivalration",2]];
 	["overLoad", _content] call capcontainer;
-	"loadInventory" call capcontainer;
+	["loadInventory", player] call capcontainer;
 	"save" call capcontainer;
 
 /*	_test = "getContent" call capcontainer;
