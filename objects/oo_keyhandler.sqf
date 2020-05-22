@@ -75,6 +75,8 @@
 				case DIK_F1 : { MEMBER("keyF1", nil); }; 
 				case DIK_F2 : { MEMBER("keyF2", nil); }; 
 				case DIK_F5 : { MEMBER("keyF5", nil); }; 
+				case DIK_F6 : { MEMBER("keyF6", nil); }; 
+				case DIK_F7 : { MEMBER("keyF7", nil); }; 
 				case DIK_SPACE : { MEMBER("keySpace", nil); }; 
 				case _reload : {
 					//player action ["loadmagazine", player, player, 0, 1 ,"vbs2_us_m16a2_iron_gla", "vbs2_us_m16a2_iron_gla"];
@@ -101,7 +103,7 @@
 					["setMode", ""] call tabnote;
 				} else {
 					["setMode", "F1"] call tabnote;
-					"createDialog" call tabnote;	
+					"createDialog" call tabnote;
 				};
 			};
 		};
@@ -116,13 +118,23 @@
 				["setMode", ""] call tabnote;
 			} else {
 				["setMode", "F2"] call tabnote;
-				"createDialog" call tabnote;	
+				"createDialog" call tabnote;
 			};
 		};
 
 		PUBLIC FUNCTION("","keyF5") { 
 			private _exit = false;
 			copyToClipboard format ["%1", (getModelInfo cursorObject) select 0];
+		};
+
+		PUBLIC FUNCTION("","keyF6") { 
+			private _exit = false;
+			copyToClipboard format ["%1", getpos player];
+		};
+
+		PUBLIC FUNCTION("","keyF7") { 
+			private _exit = false;
+			copyToClipboard str("getContent" call capcontainer);
 		};
 
 		PUBLIC FUNCTION("","keySpace") { 
