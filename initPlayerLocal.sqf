@@ -23,6 +23,7 @@
 	call compile preprocessFileLineNumbers "vitems\oo_armagear.sqf";
 	call compile preprocessFileLineNumbers "vitems\oo_bme.sqf";
 	call compile preprocessFileLineNumbers "vitems\oo_model.sqf";
+	//call compile preprocessFileLineNumbers "objects\oo_grid.sqf";
 	call compile preprocessFileLineNumbers "objects\oo_health.sqf";
 	call compile preprocessFileLineNumbers "objects\oo_healthresume.sqf";
 	call compile preprocessFileLineNumbers "objects\oo_tabnote.sqf";
@@ -62,6 +63,7 @@
 	vitems_banding = compile preprocessFileLineNumbers "vitems\generic\banding.sqf";
 
 	[] spawn fnc_weathers;
+	//optimizefps = "new" call OO_OPTIMIZEFPS;
 
 	// Initiliaze End
 	callEnd = {
@@ -103,6 +105,8 @@
 	private _position = position player;
 	_position = ["remoteCall", ["getSpawnPosition", "" , 2, _position]] call bmeclient;
 	player setpos _position;
+	//"initPosition" call optimizefps;
+
 	15203 cutText ["","PLAIN", 0];
 
 	player addEventHandler ["InventoryOpened", {execVM "gui\loading.sqf";true;}];
@@ -139,7 +143,6 @@
 	keyhandler = "new" call OO_KEYHANDLER;
 	mygear = "new" call OO_ARMAGEAR;
 	tabnote = "new" call OO_TABNOTE;
-	//optimizefps = "new" call OO_OPTIMIZEFPS;
 
 	player setAnimSpeedCoef 1;
 	player enableFatigue false; 
@@ -157,7 +160,7 @@
 	["loadInventory", player] call capcontainer;
 	"save" call capcontainer;
 
-/*	_test = "getContent" call capcontainer;
+	/*	_test = "getContent" call capcontainer;
 	_print = [];
 	{
 		_print pushBack (_x select 0);
@@ -180,13 +183,13 @@
 			_capacity = "getCapacity" call mygear;
 			_overload = floor(_capacity - ("countWeight" call capcontainer));
 			switch (true) do { 
-				case (_overload > 20) : { player setAnimSpeedCoef 1.2;};
-				case (_overload > 10) : { player setAnimSpeedCoef 1.1;};
-				case (_overload > 0) : { player setAnimSpeedCoef 1;};
-				case (_overload > -10) : { player setAnimSpeedCoef 0.8;};
-				case (_overload > -20) : { player setAnimSpeedCoef 0.7;};
-				case (_overload > -30) : { player setAnimSpeedCoef 0.6;};
-				case (_overload > -40) : { player setAnimSpeedCoef 0.5;};
+				case (_overload > 20) : { player setAnimSpeedCoef 1.3;};
+				case (_overload > 10) : { player setAnimSpeedCoef 1.2;};
+				case (_overload > 0) : { player setAnimSpeedCoef 1.1;};
+				case (_overload > -10) : { player setAnimSpeedCoef 0.9;};
+				case (_overload > -20) : { player setAnimSpeedCoef 0.8;};
+				case (_overload > -30) : { player setAnimSpeedCoef 0.7;};
+				case (_overload > -40) : { player setAnimSpeedCoef 0.6;};
 				default { player setAnimSpeedCoef 1;}; 
 			};
 			sleep 1;
@@ -195,7 +198,7 @@
 
 	mysound = "new" call OO_SOUND;
 	player addEventHandler ["killed", "closeDialog 0;"];
-/*	player addEventHandler ["Hit", {
+	/*	player addEventHandler ["Hit", {
 		params ["_unit", "_source", "_damage", "_instigator"];
 		hint format ["%1", _damage];
 	}];*/
@@ -210,16 +213,8 @@
 	};
 	#endif
 
-/*	["arifle_MX_khk_F","hgun_P07_khk_F"] 
-	["30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","30Rnd_65x39_caseless_khaki_mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag"]*/
-
-	// splash screen
-	//["Paste",["Enoch",[554.372,1133.97,17.4291],67.7519,0.75,[-9.87417,0],0,0,600,0.3,0,1,0,1]] call bis_fnc_camera;
-
 	playMusic "ambientmusic2";
 	titleText ["<t size='5'>Project</t><t color='#ff9d00' size='6'>X</t><br/>by Code34", "PLAIN", -1, true, true];
-
-	//diag_captureSlowFrame ['total',0.03];
 
 	sleep 20;
 
