@@ -31,12 +31,16 @@
 			DEBUG(#, "OO_CONTAINER::constructor")
 			MEMBER("netId", _this select 0);
 			MEMBER("model", _this select 1);
+			private _array = [];
+			MEMBER("content", _array);
+			private _array = ["", 0,0];
+			MEMBER("properties", _array);
 		};
 
 		PUBLIC FUNCTION("","load") {
 			DEBUG(#, "OO_CONTAINER::load")
 			private _netId = MEMBER("netId", nil);
-			private _properties = ["remoteCall", ["vitems_getProperties",  _netId, 2, []]] call bmeclient;
+			private _properties = ["remoteCall", ["vitems_getProperties",  _netId, 2, ["", 0,0]]] call bmeclient;
 			private _inventory = ["remoteCall", ["vitems_getInventory",  _netId, 2, []]] call bmeclient;
 			private _list = MEMBER("fillInventory", _inventory select 1);
 			MEMBER("content", _list);
@@ -44,10 +48,10 @@
 			(_inventory select 0);
 		};
 
-		PUBLIC FUNCTION("","loadInventory") {
+		PUBLIC FUNCTION("object","loadInventory") {
 			DEBUG(#, "OO_CONTAINER::loadInventory")
 			private _gear = "new" call OO_ARMAGEAR;
-			{ MEMBER("addItem", _x);} forEach ("loadItems" call _gear);
+			{ MEMBER("addItem", _x);} forEach (["loadItems", _this] call _gear);
 		};
 
 		PUBLIC FUNCTION("array","overLoad") {
@@ -250,6 +254,21 @@
 			private _index = MEMBER("findItemIndex", _type);
 			private _item = _content select _index;
 			private _count = (_item select 4) - _nbusage;
+			if(_count > 0) then {
+				_item set [4, _count];
+				_content set [_index, _item];
+			} else {
+				_content deleteAt _index;
+			};
+		};
+
+		// Consume Item by Index
+		// [type, nbusage]
+		PUBLIC FUNCTION("scalar","consumeOneItemByIndex") {
+			private _content = MEMBER("getContent", nil);
+			private _index = _this;
+			private _item = _content select _index;
+			private _count = (_item select 4) - 1;
 			if(_count > 0) then {
 				_item set [4, _count];
 				_content set [_index, _item];
