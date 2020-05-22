@@ -180,6 +180,7 @@
 			private _militarybase = ["garagerow_01_small_f.p3d", "workshop_03_f.p3d", "workshop_02_f.p3d", "woodencrate_01_stack_x5_f.p3d", "woodencrate_01_f.p3d", "controltower_01_f.p3d", "wreck_brdm2_f.p3d", "barracks_06_f.p3d", "barracks_03_f.p3d", "barracks_04_f.p3d", "workshop_05_f.p3d", "wreck_uaz_f.p3d", "workshop_02_f.p3d", "guardhouse_03_f.p3d", "controltower_02_f.p3d", "guardhouse_02_f.p3d", "bunker_02_light_double_f.p3d", "radar_01_kitchen_f.p3d","radar_01_hq_f.p3d", "guardtower_01_f.p3d", "deerstand_01_f.p3d", "deerstand_02_f.p3d", "factory_02_f.p3d", "barracks_02_f.p3d", "u_barracks_v2_f.p3d", "workshop_04_f.p3d"];
 			private _market = ["villagestore_01_f.p3d"];
 			private _mecha = ["combineharvester_01_wreck_f.p3d", "bulldozer_01_wreck_f.p3d"];
+			private _militaryunit = ["rhs_gorka_base.p3d","gorka_01_f.p3d"];
 
 			private _type = "default";
 			switch (true) do { 
@@ -197,6 +198,7 @@
 				case (_model in _market) : {_type = "market";};
 				case (_model in _militarybase) : {_type = "military";};
 				case (_model in _mecha) : {_type = "mecha";};
+				case (_model in _militaryunit) : {_type = "militaryunit";};
 				default { _type = "default"; }; 
 			};
 			_type;
