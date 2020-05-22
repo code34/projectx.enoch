@@ -169,9 +169,13 @@
 	while {true} do {
 		_overcast = random 1;
 		if((overcast > 0.7) and (_overcast > overcast)) then {
-			_rain = 0.5 + random 0.5;
+			_rain = 0.7 + random 0.3;
 		} else {
-			_rain = 0.2 + (random 0.5);
+			if(random 1 < 0.8) then {
+				_rain = 0.5 + (random 0.5);
+			} else {
+				_rain = 0.2 + (random 0.5);
+			};
 		};
 		if((date select 3 > 2) and (date select 3 <6)) then {
 			if(random 1 > 0.75) then {
