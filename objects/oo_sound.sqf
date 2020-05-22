@@ -33,7 +33,7 @@
 			private _path = ([(str missionConfigFile), 0, -15] call BIS_fnc_trimString) + "sounds\";
 			MEMBER("path", _path);
 			
-			private _array = ["microwave.ogg","cookiepan.ogg", "lullaby.ogg", "ghostlyvoices.ogg", "cough.ogg", "razor.ogg", "evacuation.ogg", "rustydoor.ogg","lockdoor.ogg"];
+			private _array = ["microwave.ogg","cookiepan.ogg", "lullaby.ogg", "ghostlyvoices.ogg", "cough.ogg", "razor.ogg", "evacuation.ogg", "rustydoor.ogg","lockdoor.ogg", "vanishroar.ogg"];
 			MEMBER("village", _array);
 			
 			private _array = ["wscreaming.ogg", "aliengate.ogg", "screechy.ogg", "comeback.ogg", "whisper.ogg", "wetfoot.ogg", "wildanimal.ogg", "boar.ogg"];
