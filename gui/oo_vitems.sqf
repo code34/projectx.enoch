@@ -396,6 +396,7 @@ CLASS("oo_Vitems")
 
 
 	PUBLIC FUNCTION("array", "setCapMenu") {
+		if(lbCurSel(_this select 0) isEqualTo -1) exitWith {false;};
 		if((_this select 1) isEqualTo 1) then {
 			private _pos = [(getMousePosition select 0) + (safezoneX * -1), (getMousePosition select 1) + (safezoneY * -1)];
 			MEMBER("OOP_cap_menu", nil) ctrlShow true;
@@ -407,7 +408,7 @@ CLASS("oo_Vitems")
 
 	PUBLIC FUNCTION("array", "closeCapMenu") {
 		//if((_this select 1) isEqualTo 0) then {
-			MEMBER("OOP_cap_menu", nil) ctrlShow false;
+			(MEMBER("OOP_cap_menu", nil)) ctrlShow false;
 			MEMBER("OOP_cap_menu", nil) ctrlCommit 0;
 		//};
 	};
