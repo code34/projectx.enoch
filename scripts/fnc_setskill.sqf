@@ -30,7 +30,7 @@
 	_unit setskill ["commanding", 1];	
 
 	_unit addeventhandler ['FiredNear', {
-		if(side(_this select 1) in [west, civilian]) then { 	
+		if(side(_this select 1) in [west, civilian]) then {
 			{
 				_x reveal (_this select 1); 
 			} forEach units (group (_this select 0));
