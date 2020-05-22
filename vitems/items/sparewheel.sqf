@@ -1,6 +1,5 @@
-	
 	if(isNull cursorObject && {!(cursorObject isKindOf "Car")}) exitWith { false;};
-	_hitpoint = ["HitLFWheel","HitLF2Wheel","HitLMWheel","HitLBWheel","HitRFWheel","HitRF2Wheel","HitRMWheel","HitRBWheel"];
+	private _hitpoint = ["HitLFWheel","HitLF2Wheel","HitLMWheel","HitLBWheel","HitRFWheel","HitRF2Wheel","HitRMWheel","HitRBWheel"];
 
 	private _max = 0;
 	private _selected = "";

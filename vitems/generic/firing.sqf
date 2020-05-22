@@ -1,4 +1,4 @@
-
+	if!(vehicle player isEqualTo player) exitWith {};
 	private _time = _this select 0;
 	player playActionNow "PutDown"; 
 	["playSound", ["makefire.ogg", player, false, 5, 1, 10]] call mysound;

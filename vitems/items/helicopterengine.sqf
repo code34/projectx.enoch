@@ -5,5 +5,4 @@
 
 	cursorObject setVariable ["enginerepaired", true, true];
 	playSound "wrench";
-
 	true;
