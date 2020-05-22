@@ -65,7 +65,7 @@
 			private _roads = MEMBER("position", nil) nearRoads MEMBER("sectorsize", nil);
 			private _vehicles = [];
 			{
-				if(random 1 > 0.95) then {
+				if(random 1 > 0.96) then {
 					private _position = _x getRelPos [random (10), 90];
 					private _dir = random 360;
 					private _type = [];
@@ -81,11 +81,19 @@
 							_type = selectRandom ["rhs_uaz_open_vv","RHS_Ural_Open_Flat_VV_01"];
 						};
 					} else {
-						_type = selectRandom ["RHS_UAZ_MSV_01","rhs_uaz_open_MSV_01","RHS_Ural_VMF_01","RHS_Ural_Civ_01","RHS_Ural_Open_Civ_03", "C_Truck_02_transport_F","C_Truck_02_covered_F"];
+						_type = selectRandom ["RHS_UAZ_MSV_01","rhs_uaz_open_MSV_01","RHS_Ural_VMF_01","RHS_Ural_Civ_01","RHS_Ural_Open_Civ_03", "C_Truck_02_transport_F","C_Truck_02_covered_F", "Land_Wreck_BMP2_F", "Land_Wreck_BRDM2_F", "Land_Wreck_Skodovka_F", "Land_Wreck_Slammer_F", "Land_Wreck_Slammer_hull_F", "Land_Wreck_T72_hull_F", "Land_Wreck_UAZ_F", "Land_Wreck_Ural_F"];
 					}; 
 					private _vehicle = _type createVehicle _position;
 					_vehicle setFuel (0.1 + random 0.3);
 					_vehicle setdir _dir;
+					if(random 1 > 0.7) then {
+						if(random 1 > 0.90) then {
+							_vehicle setdamage (random 1);
+						} else{
+							_hitpoint = selectRandom ["HitEngine", "HitLFWheel","HitLF2Wheel","HitLMWheel","HitLBWheel","HitRFWheel","HitRF2Wheel","HitRMWheel","HitRBWheel"];
+							_vehicle setHitPointDamage [_hitpoint, 1];
+						};
+					};
 					_vehicles pushBack _vehicle;
 					if (_requirement) then { _vehicle call fnc_requirement;};
 				};
