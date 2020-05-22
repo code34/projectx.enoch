@@ -1,45 +1,65 @@
+========================
+THE PROGRAM OF TONIGHT !
+========================
+========================
+
+fonctionnalité optionnelle
+- voir pour les optimisations de performance
+- tabnote gérer plusieurs missions en meme temps
+- voir pour la traduction eng
+- ajouter des nuages toxiques
+- verifier l'utilité de la classe OO_MODEL
+- voir s'il est possible d'utiliser les notes pour aussi afficher du texte autre que la mission
+	-> est il necessaire d ajotuer les objectifs sur la map
+- ajouter d'autres objets pour améliorer le lore 
+	=> les notes scientifiques, les journaux/avis dans les villages
 
 
+// grosse corrections
+- vérifier la pluviometrie - fix
+- ajouter les modeles des soldats RHS dans le randomstuff pour donner des armes - fix
+- ajouter du debug dans les objets OOP - fix
+- ajouter les zones de spawn dans la campagne - fix
+- ajouter le role de l aspirine - fix
+- ajouter les chargeurs avec les armes - fix
+- ajouter plus d'objets dans les objets - fix
+- ajouter l'ouverture de la tab conditionnée par l'inventaire - fix
+- probleme du sac à dos, qui sert à contenir les objets (voir quand on le depose) - fix
+- fixer le bug de l'infection - fix
+- voir pour ajouter les crédits - fix
+- ajouter des icones pour montrer les fluctuations des signaux de vie - fix
+- clarifier le bilan de santé - fix
+- ajouter la fonctionnalité pour boire directement à la fontaine - fix
+- ajouter tablette dans l'inventaire - fix
+- les objets dans le vehicule qui se rajoutent pas - fix
+- gps tracker - fix
+- corriger le probleme de la mission sergent qui s'est pas lancé - fix
+- corriger le probleme de la mission qui se lance - probleme de marker radio - fix
+- probleme de selection - fix
+- probleme de description dans l inventaire qui correspond à l'objet sur lequel on clique - fix
+- probleme de drag and drop à corriger - fix
+- gerer le fait que les objets soient en double dans l inventaire au centre et à droite - fix
+- bug du camion quand on ouvre l inventaire - fix
+- rallonger le temps de depop des camions - fix
+- bug du tp sur le site industrial - fix
+- ordre de mission du sergent qui s affichait pas - fix
+- bug de la roue qui repare tout le camion - fix
+- ajouter des objets militaire dans les batiments militaire - fix
+- probleme des objets qu'on peut ouvrir à deux en meme temps - fix
 
-
-bug à fixer:
-- corriger le probleme des slots qui disparaissent quand un joueur meurt
-- corriger le probleme de boite qui se crée alors qu'il y en a peut etre une autre existante, et qui se déplace quand on ajoute ou ouvre.
 
 ------------------------------------
 
-options à prioriser :
-- ameliorer la gestion de l'inventaire en ajoutant des categories / par objets
-- systeme de soins :
-	- on comprend par pourquoi la temperature, la santée: augmente par exemple, la nature des soins à réaliser
-
-todo: 
-- voir pour ajouter les crédits
-- ajouter la gestion des puits / gourdes
-- ajouter le splashscreen
-- ajouter la viande de zombie
-- factoriser les maxi hordes
-- ajouter un son pour avaler des objets
-- voir si ça un interet de rajouter le systeme de craft à côté du menu inventaire
-- ajouter la temperature dans le health resume
-- ajouter la gestion de l'energie avec les aliments
-
-options a reverifier
-- ventiler les zombies différents en utilisant la position dans createunit
-- ajouter un system de knowledge dans la gestion des pre requis
-
 option non prioritaire:
+- ajouter un systeme pour gerer les lunettes
 - ajouter la gestion du coef speed avec la souris
 - rajouter une boite conserve vide pour faire plaisir à netarion
 - ameliorer la gestion du poids des armes et des magazines
 - ameliorer la gestion de la vitesse en fonction du poid
-- identifier l'ensemble des bornes de secours surveymarker_01_cover_f.p3d
-- ajouter la gestion de l'energie pour le sprint
-- voir pour ajouter un sac de couchage
 
 options hardcore & non prioritaire
+- ameliorer la gestion de l'inventaire en ajoutant des categories / par objets
 - boutons du pad qui marchent pas
-- voir si ça a un interet de rajouter un menu raccourci
-- voir s'il est possible de deplacer les objets dans l'inventaire en fonction de la position du curseur
 - ajouter la gestion des batiments pour l'inventaire en fonction des pièces
 - voir pour gerer le remplissage d'un item
+- ajouter le nom de l'objet qui est fouillé <- pas possible car les objets arma sont pas déclarés dans le config
