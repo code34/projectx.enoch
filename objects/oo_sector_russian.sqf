@@ -208,6 +208,7 @@
 						sleep 10;
 					};
 					deleteVehicle _this;
+					systemChat "Sanitize vehicle";
 				};
 				sleep 0.1;
 			} forEach _vehicles;
