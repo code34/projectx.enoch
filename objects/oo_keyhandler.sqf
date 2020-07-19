@@ -77,6 +77,7 @@
 				case DIK_F5 : { MEMBER("keyF5", nil); }; 
 				case DIK_F6 : { MEMBER("keyF6", nil); }; 
 				case DIK_F7 : { MEMBER("keyF7", nil); }; 
+				case DIK_F8 : { MEMBER("keyF8", nil); };
 				case DIK_SPACE : { MEMBER("keySpace", nil); }; 
 				case _reload : {
 					//player action ["loadmagazine", player, player, 0, 1 ,"vbs2_us_m16a2_iron_gla", "vbs2_us_m16a2_iron_gla"];
@@ -135,6 +136,14 @@
 		PUBLIC FUNCTION("","keyF7") { 
 			private _exit = false;
 			copyToClipboard str("getContent" call capcontainer);
+		};
+
+		PUBLIC FUNCTION("","keyF8") {
+			private _exit = false;
+			private _counteast = resistance countSide allUnits;
+			private _countzombie = east countSide allUnits;
+			private _countvehicles = count vehicles;
+			copyToClipboard format["east: %1 zombie: %2 vehicles: %3", _counteast, _countzombie, _countvehicles];
 		};
 
 		PUBLIC FUNCTION("","keySpace") { 
