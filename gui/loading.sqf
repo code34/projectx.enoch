@@ -21,7 +21,7 @@
 	proxcontainer = ["new", [netId _object, ((getModelInfo _object) select 0)]] call OO_CONTAINER;
 	_result = "load" call proxcontainer;
 	if(_result) then {
-		[] call fnc_inventorycam;
+		//[] call fnc_inventorycam;
 		createDialog "VITEMS";
 	} else {
 		hint "Object is currently used by another player";

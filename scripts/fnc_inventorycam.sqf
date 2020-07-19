@@ -6,4 +6,3 @@
 		//invcam camSetTarget player;
 		invcam camcommitprepared 0;
 		showcinemaborder false;
-		if(vehicle player isEqualTo player) then { player switchaction "playerstand";};
