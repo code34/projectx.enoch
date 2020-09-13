@@ -38,6 +38,200 @@
 				<Original>Code34 :)</Original>
 				<French>Code34 :)</French>
 			</Key>
+			<Key ID="Str_nauseaintense">
+				<Original>Your nausea is intense.</Original>
+				<French>Votre nausée est intense.</French>
+			</Key>
+			<Key ID="Str_nauseaforte">
+				<Original>Your nausea is strong.</Original>
+				<French>Votre nausée est forte.</French>
+			</Key>
+			<Key ID="Str_nauseasimple">
+				<Original>You have nausea.</Original>
+				<French>Vous avez la nausée.</French>
+			</Key>
+			<Key ID="Str_nonausea">
+				<Original>You don't have nausea.</Original>
+				<French>Vous n'avez pas de nausée.</French>
+			</Key>
+			<Key ID="Str_septicemie">
+				<Original>You have septicemia.</Original>
+				<French>Vous avez une septicemie.</French>
+			</Key>
+			<Key ID="Str_biginfection">
+				<Original>You have a big infection.</Original>
+				<French>Vous avez une grosse infection.</French>
+			</Key>
+			<Key ID="Str_smallinfection">
+				<Original>You have a small infection.</Original>
+				<French>Vous avez une petite infection.</French>
+			</Key>
+			<Key ID="Str_noinfection">
+				<Original>You don't have an infection.</Original>
+				<French>Vous n'avez pas d'infection.</French>
+			</Key>
+			<Key ID="Str_becomezombie">
+				<Original>You no longer feel yourself.</Original>
+				<French>Vous ne vous vous sentez plus vous même.</French>
+			</Key>
+			<Key ID="Str_havevision">
+				<Original>You have visions.</Original>
+				<French>Vous avez des visions.</French>
+			</Key>
+			<Key ID="Str_feelweird">
+				<Original>You feel weird.</Original>
+				<French>Vous vous sentez bizarre.</French>
+			</Key>
+			<Key ID="Str_feelnormal">
+				<Original>You feel normal.</Original>
+				<French>Vous vous sentez normal.</French>
+			</Key>
+			<Key ID="Str_eattoomuch">
+				<Original>you have eaten too much.</Original>
+				<French>vous avez trop mangé.</French>
+			</Key>
+			<Key ID="Str_eatwell">
+				<Original>you ate well.</Original>
+				<French>vous avez bien mangé.</French>
+			</Key>
+			<Key ID="Str_eatabit">
+				<Original>you ate a little.</Original>
+				<French>vous avez mangé un peu.</French>
+			</Key>
+			<Key ID="Str_noteat">
+				<Original>you haven't eaten.</Original>
+				<French>vous n'avez pas mangé.</French>
+			</Key>
+			<Key ID="Str_drinktoomuch">
+				<Original>you drank too much.</Original>
+				<French>vous avez trop bu.</French>
+			</Key>
+
+			<Key ID="Str_drinkwell">
+				<Original>you drank well.</Original>
+				<French>vous avez bien bu.</French>
+			</Key>
+
+			<Key ID="Str_drinkalittle">
+				<Original>you drank a little.</Original>
+				<French>vous avez bu un petit peu.</French>
+			</Key>
+
+			<Key ID="Str_notdrink">
+				<Original>you haven't been drinking.</Original>
+				<French>vous n'avez pas bu.</French>
+			</Key>
+
+
+			<Key ID="Str_deshydrate">
+				<Original>Your body is hydrated and </Original>
+				<French>Votre corps est hydraté et </French>
+			</Key>
+
+			<Key ID="Str_slightydeshydrate">
+				<Original>Your body is slightly dehydrated and </Original>
+				<French>Votre corps est légèrement déshydraté et </French>
+			</Key>
+
+			<Key ID="Str_underdeshydrate">
+				<Original>Your body is dehydrated and </Original>
+				<French>Votre corps est déshydraté et </French>
+			</Key>
+
+			<Key ID="Str_totalydeshydrate">
+				<Original>Your body is completely dehydrated and </Original>
+				<French>Votre corps est complètement déshydraté et </French>
+			</Key>
+
+			<Key ID="Str_wellfed">
+				<Original>You are well fed and </Original>
+				<French>Vous êtes bien nourri et </French>
+			</Key>
+
+			<Key ID="Str_milddeficiences">
+				<Original>You have mild deficiencies and </Original>
+				<French>Vous avez de légères carences et </French>
+			</Key>
+
+			<Key ID="Str_severeanemia">
+				<Original>You have severe anemia and </Original>
+				<French>Vous souffrez d'une anémie sévère et </French>
+			</Key>
+
+			<Key ID="Str_extremeanemia">
+				<Original>You have extreme anemia and </Original>
+				<French>Vous souffrez d'une anémie extrême et </French>
+			</Key>
+
+			<Key ID="Str_terriblefever">
+				<Original>You have a terrible fever.</Original>
+				<French>Vous avez une fievre terrible.</French>
+			</Key>
+
+			<Key ID="Str_havetemperature">
+				<Original>You have a temperature.</Original>
+				<French>Vous avez de la temperature.</French>
+			</Key>
+
+			<Key ID="Str_notemperature">
+				<Original>You don't have a temperature.</Original>
+				<French>Vous n'avez pas de temperature.</French>
+			</Key>
+
+			<Key ID="Str_temperaturelow">
+				<Original>Your temperature is low.</Original>
+				<French>Votre temperature est basse.</French>
+			</Key>
+
+			<Key ID="Str_hypothermie">
+				<Original>You are hypothermic.</Original>
+				<French>Vous etes en hypothermie.</French>
+			</Key>
+
+			<Key ID="Str_noinjuries">
+				<Original>You have no injuries.</Original>
+				<French>Vous n'avez aucune blessure.</French>
+			</Key>
+
+			<Key ID="Str_minorinjuries">
+				<Original>You have some minor injuries.</Original>
+				<French>Vous avez quelques blessures mineures.</French>
+			</Key>
+
+			<Key ID="Str_majorinjuries">
+				<Original>You have major injuries.</Original>
+				<French>Vous avez des blessures majeures.</French>
+			</Key>
+
+			<Key ID="Str_criticalinjuries">
+				<Original>Your injuries are critical.</Original>
+				<French>Vos blessures sont critiques.</French>
+			</Key>
+
+			<Key ID="Str_excellenthealth">
+				<Original>Your health is excellent.</Original>
+				<French>Votre santé est excellente.</French>
+			</Key>
+			<Key ID="Str_goodhealth">
+				<Original>Your health is good.</Original>
+				<French>Votre santé est bonne.</French>
+			</Key>
+			<Key ID="Str_fragilehealth">
+				<Original>Your health is fragile.</Original>
+				<French>Votre santé est fragile.</French>
+			</Key>
+			<Key ID="Str_badhealth">
+				<Original>Your health is bad.</Original>
+				<French>Votre santé est mauvaise.</French>
+			</Key>
+			<Key ID="Str_verybadhealth">
+				<Original>Your health is very bad.</Original>
+				<French>Votre santé est très mauvaise.</French>
+			</Key>
+			<Key ID="Str_dead">
+				<Original>You are dead.</Original>
+				<French>Vous êtes mort.</French>
+			</Key>
 		</Container>
 	</Package>
 </Project>
