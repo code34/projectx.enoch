@@ -148,7 +148,7 @@
 			private _position = MEMBER("position", nil);
 			private _group = createGroup resistance;
 			private _temp = createGroup east;
-			private _count = 5 + ceil(random 5);
+			private _count = 3 + ceil(random 5);
 
 			for "_i" from 0 to _count do {
 				_type = selectRandom (MEMBER("russianstype", nil));
