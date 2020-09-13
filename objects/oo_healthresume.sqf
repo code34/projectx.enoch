@@ -54,16 +54,16 @@
 			#endif
 			switch (true) do {
 				case (_nausea > 15) : {
-					_result = "Votre nausée est intense";
+					_result = localize "Str_nauseaintense";
 				};
 				case (_nausea > 10) : {
-					_result ="Votre nausée est forte";
+					_result = localize "Str_nauseaforte";
 				};
 				case (_nausea > 0) : {
-					_result ="Vous avez la nausée";
+					_result = localize "Str_nauseasimple";
 				};
 				default{
-					_result ="Vous n'avez pas de nausée.";
+					_result = localize "Str_nonausea";
 				};
 			};
 			 _result;
@@ -77,16 +77,16 @@
 			#endif
 			switch (true) do {
 				case (_virus > 15) : {
-					_result = "Vous avez une septicemie";
+					_result = localize "Str_septicemie";
 				};
 				case (_virus > 10) : {
-					_result ="Vous avez une grosse infection";
+					_result = localize "Str_biginfection";
 				};
 				case (_virus > 0) : {
-					_result ="Vous avez une petite infection";
+					_result = localize "Str_smallinfection";
 				};
 				default{
-					_result ="Vous n'avez pas d'infection.";
+					_result = localize "Str_noinfection";
 				};
 			};
 			 _result;
@@ -101,16 +101,16 @@
 			#endif
 			switch (true) do {
 				case (_zombie > 60) : {
-					_result = "Vous ne vous vous sentez plus vous même.";
+					_result = localize "Str_becomezombie";
 				};
 				case (_zombie > 40) : {
-					_result ="Vous avez des visions.";
+					_result = localize "Str_havevision"
 				};
 				case (_zombie > 0) : {
-					_result ="Vous vous sentez bizarre.";
+					_result = localize "Str_feelweird";
 				};
 				default{
-					_result ="Vous vous sentez normal.";
+					_result = localize "Str_feelnormal";
 				};
 			};
 			 _result;
@@ -124,16 +124,16 @@
 			#endif
 			switch (true) do {
 				case (_food > 60) : {
-					_result = "vous avez trop mangé.";
+					_result = localize "Str_eattoomuch";
 				};
 				case (_food > 40) : {
-					_result ="vous avez bien mangé.";
+					_result = localize "Str_eatwell";
 				};
 				case (_food > 0) : {
-					_result ="vous avez mangé un peu.";
+					_result = localize "Str_eatabit";
 				};
 				default{
-					_result ="vous n'avez pas mangé.";
+					_result = localize "Str_noteat";
 				};
 			};
 			 _result;
@@ -147,16 +147,16 @@
 			#endif
 			switch (true) do {
 				case (_drink > 60) : {
-					_result = "vous avez trop bu.";
+					_result = localize "Str_drinktoomuch";
 				};
 				case (_drink > 40) : {
-					_result ="vous avez bien bu.";
+					_result = localize "Str_drinkwell";
 				};
 				case (_drink > 0) : {
-					_result ="vous avez bu un petit peu.";
+					_result = localize "Str_drinkalittle";
 				};
 				default{
-					_result ="vous n'avez pas bu.";
+					_result = localize "Str_notdrink";
 				};
 			};
 			 _result;
@@ -170,16 +170,16 @@
 			#endif
 			switch (true) do {
 				case (_drink > 60) : {
-					_result = "Votre corps est hydraté et ";
+					_result = localize "Str_deshydrate";
 				};
 				case (_drink > 40) : {
-					_result ="Votre corps est légèrement déshydraté et ";
+					_result = localize "Str_slightydeshydrate";
 				};
 				case (_drink > 20) : {
-					_result ="Votre corps est déshydraté et ";
+					_result = localize "Str_underdeshydrate";
 				};
 				default{
-					_result ="Votre corps est complètement déshydraté et ";
+					_result = localize "Str_totalydeshydrate";
 				};
 			};
 			 _result;
@@ -193,19 +193,19 @@
 			#endif
 			switch (true) do {
 				case (_food > 60) : {
-					_result = "Vous êtes bien nourri et ";
+					_result = localize "Str_wellfed";
 				};
 				case (_food > 40) : {
-					_result ="Vous avez de légères carences et ";
+					_result = localize "Str_milddeficiences";
 				};
 				case (_food > 20) : {
-					_result ="Vous souffrez d'une anémie sévère et ";
+					_result = localize "Str_severeanemia";
 				};
 				default{
-					_result ="Vous souffrez d'une anémie extrême et ";
+					_result = localize "Str_extremeanemia";
 				};
 			};
-			 _result;
+			_result;
 		};
 
 		PUBLIC FUNCTION("", "resumeTemperature") {
@@ -217,19 +217,19 @@
 			#endif
 			switch (true) do {
 				case (_temperature > 2) : {
-					_result = "Vous avez une fievre terrible.";
+					_result = localize "Str_terriblefever";
 				};
 				case (_temperature > 1) : {
-					_result ="Vous avez de la temperature.";
+					_result = localize "Str_havetemperature";
 				};
 				case (_temperature > -1 ) : {
-					_result ="Vous n'avez pas de temperature.";
+					_result = localize "Str_notemperature";
 				};
 				case (_temperature > -2) : {
-					_result ="Votre temperature est basse.";
+					_result = localize "Str_temperaturelow";
 				};
 				case (_temperature < -2) : {
-					_result ="Vous etes en hypothermie";
+					_result = localize "Str_hypothermie";
 				};
 				default {_result = "None";};
 			};	
@@ -245,16 +245,16 @@
 			#endif
 			switch (true) do {
 				case (_injury > 95) : {
-					_result = "Vous n'avez aucune blessure.";
+					_result = localize "Str_noinjuries";
 				};
 				case (_injury > 75) : {
-					_result ="Vous avez quelques blessures mineures.";
+					_result = localize "Str_minorinjuries";
 				};
 				case (_injury > 50) : {
-					_result ="Vous avez des blessures majeures.";
+					_result = localize "Str_majorinjuries";
 				};
 				default{
-					_result ="Vos blessures sont critiques.";
+					_result = localize "Str_criticalinjuries";
 				};
 			};
 			 _result;
@@ -268,22 +268,22 @@
 			#endif
 			switch (true) do {
 				case (_life > 90) : {
-					_result = "Votre santé est excellente.";
+					_result = localize "Str_excellenthealth";
 				};
 				case (_life > 70) : {
-					_result ="Votre santé est bonne.";
+					_result = localize "Str_goodhealth";
 				};
 				case (_life > 50) : {
-					_result ="Votre santé est fragile.";
+					_result = localize "Str_fragilehealth";
 				};
 				case (_life > 25) : {
-					_result ="Votre santé est mauvaise.";
+					_result = localize "Str_badhealth";
 				};
 				case (_life > 0) : {
-					_result ="Votre santé est très mauvaise.";
+					_result = localize "Str_verybadhealth";
 				};
 				default{
-					_result ="Vous êtes mort.";
+					_result = localize "Str_dead";
 				};
 			};
 			_result;
