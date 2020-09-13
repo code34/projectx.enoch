@@ -323,6 +323,12 @@
 				//if(_count isEqualTo 0) then {
 					["consumeItem", [_mag,1]] call capcontainer;
 				//};
+				[] spawn {
+					private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
+					private _sound = _path + "sounds\" + "dropammo.ogg";
+					sleep 1;
+					playSound3D [_sound, player, false, getPosASL player, 0.8, 1, 150];
+				};
 				private _array = [_type, _mag, 10000];
 				MEMBER("addMagazines", _array);
 			};
