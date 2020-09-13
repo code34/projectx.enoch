@@ -1,6 +1,6 @@
 OnloadName="Projectx";
 Author="Code34";
-loadscreen="splash\splash.jpg";
+loadscreen="splash\zombie.jpg";
 OnLoadMission="When bullets are more valuable than humans";
 showHUD = 0;
 
