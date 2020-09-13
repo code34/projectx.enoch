@@ -31,6 +31,7 @@
 	fnc_getnearestplayer = compile preprocessFileLineNumbers "scripts\fnc_getnearestplayer.sqf";
 	fnc_setskill = compile preprocessFileLineNumbers "scripts\fnc_setskill.sqf";
 	fnc_requirement = compile preprocessFileLineNumbers "scripts\fnc_requirement.sqf";
+	[] spawn compile preprocessFileLineNumbers "scripts\fnc_sanitize.sqf";
 	
 	// mission files
 	fnc_extraction = compile preprocessFileLineNumbers "meka\m0_extraction.sqf";
