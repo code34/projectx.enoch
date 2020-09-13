@@ -460,7 +460,7 @@
 						systemChat "You are hungry";
 						#endif
 					};
-				};				
+				};
 				sleep _checktime;
 			};
 		};
@@ -571,15 +571,15 @@
 					MEMBER("bonuslife", _bonuslife);
 				};
 
-                switch (true) do {
-                	case (_level < -50) : {
-                		_level = -100;
-                	};
-                	case (_level < 0) : {
-                		_level = -1;
-                	};
-                	default {_level = 1;};
-            	};
+				switch (true) do {
+					case (_level < -50) : {
+						_level = -100;
+					};
+					case (_level < 0) : {
+						_level = -1;
+					};
+					default {_level = 1;};
+				};
 
 				_life = MEMBER("life", nil);
 				_life = _life + _level;
