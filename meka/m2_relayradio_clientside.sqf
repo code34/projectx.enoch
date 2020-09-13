@@ -5,7 +5,7 @@
 			sleep 0.1;
 		};
 		// relai radio turn off signal
-		["setPages", ["meka\story\m2_radio.html"]] call tabnote;
+		["setPages", [myLanguage+"m2_radio.html"]] call tabnote;
 		"keyF1" call keyhandler;
 		playsound "carrier";
 		sleep 10;
@@ -31,7 +31,7 @@
 		};
 
 		// add radio amplifier in
-		["setPages", ["meka\story\m2_relaisradio.html"]] call tabnote;
+		["setPages", [myLanguage+"m2_relaisradio.html"]] call tabnote;
 		["showFile", true] call hud;
 
 		_radioactive = missionNamespace getVariable ["radioactive", false];
@@ -41,6 +41,6 @@
 		};
 
 		removeAllMissionEventHandlers "Draw3D"; 
-		["setPages", ["meka\story\m2_relaisradiooff.html"]] call tabnote;
+		["setPages", [myLanguage+"m2_relaisradiooff.html"]] call tabnote;
 		["showFile", true] call hud;
 		playSound "whitenoise";

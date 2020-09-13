@@ -216,13 +216,18 @@
 	playMusic "ambientmusic2";
 	titleText ["<t size='5'>Project</t><t color='#ff9d00' size='6'>X</t><br/>by Code34", "PLAIN", -1, true, true];
 
+	_myLanguage = language;
+	switch (_myLanguage) do { 
+		case "French" : {myLanguage = "meka\story\fr\"};
+		default {myLanguage = "meka\story\eng\"}; 
+	};
+
 	sleep 20;
-
-	[ "Somewhere on Liviona", format ["Year %1", date select 0]] spawn BIS_fnc_infoText;
+	[localize "Str_somewhere", format ["%1 %2", localize "Str_Year", date select 0]] spawn BIS_fnc_infoText;
 
 	sleep 20;
+	hintSilent parseText format ["<t size='1.4' color='#ff0000' align='left'>%1:</t><t size='1.20' align='left'><br/><br/>%2<br/><br/>%3<br/>%4<br/><br/>%5<br/><br/>%6</t>", localize "Str_instructions", localize "Str_Welcome", localize "Str_pressi", localize "Str_pressF1", localize "Str_havefun", localize "Str_author"];
 
-	hintSilent parseText "<t size='1.4' color='#ff0000' align='left'>Instructions:</t><t size='1.20' align='left'><br/><br/>Bienvenue dans la version Beta de ProjectX. Ceci est une version en développement plusieurs bugs peuvent encore apparaitre<br/><br/>- Press I to search<br/>- Press F1 to chech your roadmap<br/><br/>Jouez en coopération et amusez vous<br/><br/>Code34 :)</t>";
 	// initialize mission tab
-	["setPages", ["meka\story\m1_introduction1.html","meka\story\m1_introduction2.html"]] call tabnote;
+	["setPages", [myLanguage+"m1_introduction1.html",myLanguage+"m1_introduction2.html"]] call tabnote;
 	["showFile", true] call hud;

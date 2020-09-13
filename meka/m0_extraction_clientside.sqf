@@ -9,7 +9,7 @@
 
 	playMusic "stressante";
 	sleep 5;
-	["setPages", ["meka\story\m0_carnageaeroport1.html", "meka\story\m0_carnageaeroport2.html", "meka\story\m0_carnageaeroport3.html","meka\story\m0_carnageaeroport4.html","meka\story\m0_carnageaeroport5.html"]] call tabnote;
+	["setPages", [myLanguage+"m0_carnageaeroport1.html", myLanguage+"m0_carnageaeroport2.html", myLanguage+"m0_carnageaeroport3.html",myLanguage+"m0_carnageaeroport4.html",myLanguage+"m0_carnageaeroport5.html"]] call tabnote;
 	["showFile", true] call hud;
 
 	[_vehicle, _position] spawn {

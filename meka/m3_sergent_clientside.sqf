@@ -20,7 +20,7 @@
 
 	playsound "sergentbattle";
 	sleep 10;
-	["setPages", ["meka\story\m3_sergentradiocom.html"]] call tabnote;
+	["setPages", [myLanguage+"m3_sergentradiocom.html"]] call tabnote;
 	["showFile", true] call hud;
 
 	addMissionEventHandler ["Draw3D", {
@@ -47,7 +47,7 @@
 			sleep 1;
 		};
 		playMusic "stressante";
-		["setPages", ["meka\story\m3_cachesergent.html"]] call tabnote;
+		["setPages", [myLanguage+"m3_cachesergent.html"]] call tabnote;
 		["showFile", true] call hud;
 	};
 

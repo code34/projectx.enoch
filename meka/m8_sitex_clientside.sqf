@@ -9,12 +9,12 @@
 
    	missionNamespace setVariable ["labox", 1, true];
 
-    ["setPages", ["meka\story\m8_sitex1.html"]] call tabnote;
+    ["setPages", [myLanguage+"myLanguage+m8_sitex1.html"]] call tabnote;
     ["showFile", true] call hud; 
 
     while { player distance (getMarkerPos "labox_point") > 40 } do { sleep 5;}; 
 
     playMusic "ambientmusic";
 
-    ["setPages", ["meka\story\m8_sitex2.html"]] call tabnote;
+    ["setPages", [myLanguage+"m8_sitex2.html"]] call tabnote;
     ["showFile", true] call hud; 

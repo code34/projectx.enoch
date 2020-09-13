@@ -7,15 +7,15 @@
     
 	while { player distance (getMarkerPos "industrialsite_point") > 200 } do { sleep 5;};
 
-	["setPages", ["meka\story\m6_industrialsite1.html"]] call tabnote;
+	["setPages", [myLanguage+"m6_industrialsite1.html"]] call tabnote;
 	["showFile", true] call hud;
 
 	while { player distance (getMarkerPos "industrialsite_point") > 70 } do { sleep 5;};
 
-	["setPages", ["meka\story\m6_industrialsite2.html"]] call tabnote;
+	["setPages", [myLanguage+"m6_industrialsite2.html"]] call tabnote;
 	["showFile", true] call hud;
 
 	while { player distance (getMarkerPos "industrialsite_point") > 10 } do { sleep 5;};
 
-	["setPages", ["meka\story\m6_industrialsite2.html", "meka\story\m6_camion1.html"]] call tabnote;
-	["showFile", true] call hud;		
+	["setPages", [myLanguage+"m6_industrialsite2.html", myLanguage+"m6_camion1.html"]] call tabnote;
+	["showFile", true] call hud;

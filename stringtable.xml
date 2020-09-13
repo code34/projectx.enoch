@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project name="ProjectX">
+	<Package name="Mission One">
+		<Container name="Some Words">
+			<Key ID="Str_somewhere">
+				<Original>Somewhere on Liviona</Original>
+				<French>Quelquepart en Liviona</French>
+			</Key>
+			<Key ID="Str_Year">
+				<Original>Year</Original>
+				<French>Année</French>
+			</Key>
+			<Key ID="Str_Instructions">
+				<Original>Instructions</Original>
+				<French>Instructions</French>
+			</Key>
+			<Key ID="Str_Instructions">
+				<Original>Instructions</Original>
+				<French>Instructions</French>
+			</Key>
+			<Key ID="Str_Welcome">
+				<Original>Welcome to the Beta version of ProjectX. This is a development version several bugs may still appear</Original>
+				<French>Bienvenue dans la version Beta de ProjectX. Ceci est une version en développement plusieurs bugs peuvent encore apparaitre</French>
+			</Key>
+			<Key ID="Str_pressi">
+				<Original>- Press I to search</Original>
+				<French>- Appuyez sur I pour chercher</French>
+			</Key>
+			<Key ID="Str_pressF1">
+				<Original>- Press F1 to chech your roadmap</Original>
+				<French>- Appuyez sur F1 pour voir votre mission</French>
+			</Key>
+			<Key ID="Str_havefun">
+				<Original>Cooperate and have fun</Original>
+				<French>Jouez en coopération et amusez vous</French>
+			</Key>
+			<Key ID="Str_author">
+				<Original>Code34 :)</Original>
+				<French>Code34 :)</French>
+			</Key>
+		</Container>
+	</Package>
+</Project>
