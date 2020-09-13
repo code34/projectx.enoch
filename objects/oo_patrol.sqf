@@ -253,7 +253,7 @@
 			_see;
 		};		
 
-		PUBLIC FUNCTION("array", "estimateTarget") {	
+		PUBLIC FUNCTION("array", "estimateTarget") {
 			DEBUG(#, "OO_PATROL::estimateTarget")
 			((_this select 0) getHideFrom (_this select 1)) distance (position (_this select 1));
 		};
