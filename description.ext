@@ -31,33 +31,33 @@ class cfgVitems {
 
 class CfgDebriefing
 {  
-    class End1
-    {
-        title = "Mission complétée";
-        subtitle = "Finir comme un lâche mais vivant (..)";
-        description = "Vous avez réussi à vous enfuir de ce pays dévasté. Peut etre avez vous oublié quelque chose derrière vous? Peut être y avait il d'autres solutions ? Vous ne le saurez jamais. Vous aurez au moins une chance de revoir vos amis mais pour combien de temps (..).";
-        pictureBackground = "";
-        picture = "paa\fear.paa";
-        pictureColor[] = {0.0,0.3,0.6,1};
-    };
-    class End2
-    {
-        title = "Mission échouée";
-        subtitle = "Finir abandonné";
-        description = "Votre équipe vous a abandonné sur ce territoire ravagé. Personne ne vous aidera plus. Le destin est fait";
-        pictureBackground = "";
-        picture = "paa\fear.paa";
-        pictureColor[] = {0.0,0.3,0.6,1};
-    };
-    class End3
-    {
-        title = "Mission réussie";
-        subtitle = "Finir comme un héro";
-        description = "Vous avez finalement découvert la vérité. Livionia est un pays en faillite mais les éléments que vous avez récupéré seront essentiels pour annoncer la vérité au monde. Peut être y aura-t-il un espoir de stopper le virus mais ceci est une autre histoire (..)";
-        pictureBackground = "";
-        picture = "paa\medalofhonor.paa";
-        pictureColor[] = {0.0,0.3,0.6,1};
-    };
+	class End1
+	{
+		title = "Mission complétée";
+		subtitle = "Finir comme un lâche mais vivant (..)";
+		description = "Vous avez réussi à vous enfuir de ce pays dévasté. Peut etre avez vous oublié quelque chose derrière vous? Peut être y avait il d'autres solutions ? Vous ne le saurez jamais. Vous aurez au moins une chance de revoir vos amis mais pour combien de temps (..).";
+		pictureBackground = "";
+		picture = "paa\fear.paa";
+		pictureColor[] = {0.0,0.3,0.6,1};
+	};
+	class End2
+	{
+		title = "Mission échouée";
+		subtitle = "Finir abandonné";
+		description = "Votre équipe vous a abandonné sur ce territoire ravagé. Personne ne vous aidera plus. Le destin est fait";
+		pictureBackground = "";
+		picture = "paa\fear.paa";
+		pictureColor[] = {0.0,0.3,0.6,1};
+	};
+	class End3
+	{
+		title = "Mission réussie";
+		subtitle = "Finir comme un héro";
+		description = "Vous avez finalement découvert la vérité. Livionia est un pays en faillite mais les éléments que vous avez récupéré seront essentiels pour annoncer la vérité au monde. Peut être y aura-t-il un espoir de stopper le virus mais ceci est une autre histoire (..)";
+		pictureBackground = "";
+		picture = "paa\medalofhonor.paa";
+		pictureColor[] = {0.0,0.3,0.6,1};
+	};
 };
 
 class CfgMusic
@@ -68,49 +68,55 @@ class CfgMusic
 		name	= "stressante";
 		sound[]	= { "\sounds\stressante.ogg", db + 0, 1.0 };
 	};
-    class ambientmusic
-    {
-        name    = "ambientmusic";
-        sound[] = { "\sounds\ambientmusic.ogg", db +0, 1.0 };
-    };
-    class ambientmusic2
-    {
-        name    = "ambientmusic2";
-        sound[] = { "\sounds\ambientmusic2.ogg", db +0, 1.0 };
-    };
+	class ambientmusic
+	{
+		name    = "ambientmusic";
+		sound[] = { "\sounds\ambientmusic.ogg", db +0, 1.0 };
+	};
+	class ambientmusic2
+	{
+		name    = "ambientmusic2";
+		sound[] = { "\sounds\ambientmusic2.ogg", db +0, 1.0 };
+	};
 };
 
 class CfgSounds
 {
-    sounds[] = {};
-    class carrier
-    {
-        name = "carrier";
-        sound[] = { "sounds\carrier.ogg", 1, 1, 10 };
-        titles[] = { 1, "** Radio carrier **" };
-    };
-    class whitenoise
-    {
-        name = "whitenoise";
-        sound[] = { "sounds\whitenoise.ogg", 1, 1, 10 };
-        titles[] = { 1, "** Radio white noise **" };
-    };
-    class wrench
-    {
-        name = "wrench";
-        sound[] = { "sounds\wrench.ogg", 1, 1, 10 };
-        titles[] = {};
-    };
-    class newmessage
-    {
-        name = "newmessage";
-        sound[] = { "sounds\newmessage.ogg", 1, 1, 10 };
-       titles[] = { 0, "** Press F1 **" };
-    };
-    class sergentbattle
-    {
+	sounds[] = {};
+	class carrier
+	{
+		name = "carrier";
+		sound[] = { "sounds\carrier.ogg", 1, 1, 10 };
+		titles[] = { 1, "** Radio carrier **" };
+	};
+	class whitenoise
+	{
+		name = "whitenoise";
+		sound[] = { "sounds\whitenoise.ogg", 1, 1, 10 };
+		titles[] = { 1, "** Radio white noise **" };
+	};
+	class wrench
+	{
+		name = "wrench";
+		sound[] = { "sounds\wrench.ogg", 1, 1, 10 };
+		titles[] = {};
+	};
+	class newmessage
+	{
+		name = "newmessage";
+		sound[] = { "sounds\newmessage.ogg", 1, 1, 10 };
+		titles[] = { 0, "** Press F1 **" };
+	};
+	class sergentbattle
+	{
 		name = "sergentbattle";
 		sound[] = { "sounds\sergentbattle.ogg", 1, 1, 10 };
 		titles[] = { 1, "** Battle sound from your radio **" };
-    };
+	};
+	class dropammo
+	{
+		name = "dropammo";
+		sound[] = { "sounds\dropammo.ogg", 1, 1, 10 };
+		titles[] = {};
+	};
 };
