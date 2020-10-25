@@ -116,7 +116,11 @@
 					systemChat "Spawn Russian location";
 					#endif
 					MEMBER("active", true);
-					MEMBER("popSector", nil);
+					if(random 1 > 0.5) then {
+						MEMBER("popRenegat", nil);
+					} else {
+						MEMBER("popSector", nil);
+					};
 				};
 				if((west countside _list isEqualTo 0) and MEMBER("active", nil)) then {
 					#ifdef DEBUGSECTORRUSSIAN
@@ -141,6 +145,20 @@
 			MEMBER("russianstype", _array);
 		};
 
+		PUBLIC FUNCTION("object", "reClothes") {
+			_soldiers = [];
+			{
+				_soldiers set [count _soldiers,configname _x];
+			} foreach ("isclass _x && getnumber (_x >> 'scope') > 1 && gettext (_x >> 'simulation') == 'soldier'" configclasses (configfile >> "cfgvehicles"));
+			private _tmpop = 'ryan';
+			private _tmp = "";
+			while { _tmpop isEqualTo 'ryan'} do {
+				_tmp = _soldiers call bis_fnc_selectrandom;
+				_tmpop = toLower(_tmp select [0, 4]);
+			};
+			[_this,_tmp] call bis_fnc_loadinventory;
+		};
+
 		PUBLIC FUNCTION("","popSector") {
 			DEBUG(#, "OO_SECTOR::popRussians")
 			MEMBER("spawnVehicle", nil);
@@ -148,11 +166,15 @@
 			private _position = MEMBER("position", nil);
 			private _group = createGroup resistance;
 			private _temp = createGroup east;
-			private _count = 3 + ceil(random 5);
+			private _count = 1 + ceil(random 5);
+			private _ref = "";
 
 			for "_i" from 0 to _count do {
 				_type = selectRandom (MEMBER("russianstype", nil));
 				_unit = _temp createUnit [_type, _position, [], 0, "NONE"];
+				if(_ref isEqualTo "") then {_ref = _unit;};
+				private _positiontemp = _ref getRelPos [MEMBER("sectorsize", nil), random 360];
+				_unit setpos _positiontemp;
 				_unit call fnc_setskill;
 				MEMBER("russians", nil) pushBack _unit;
 
@@ -183,6 +205,51 @@
 			_group deleteGroupWhenEmpty true;
 			private _patrol = ["new", _group] call OO_PATROL;
 			["patrol", [_position, MEMBER("sectorsize", nil)]] spawn _patrol;
+		};
+
+		PUBLIC FUNCTION("","popRenegat") {
+			DEBUG(#, "OO_SECTOR::popRenegat")
+			if!(MEMBER("militarized",nil)) exitWith {};
+			private _position = MEMBER("position", nil);
+			private _count = 1 + ceil(random 5);
+			private _ref = "";
+
+			for "_i" from 0 to _count do {
+				private _group = createGroup east;
+				_type = selectRandom (MEMBER("russianstype", nil));
+				_unit = _group createUnit [_type, _position, [], 0, "NONE"];
+				if(_ref isEqualTo "") then {_ref = _unit;};
+				private _positiontemp = _ref getRelPos [MEMBER("sectorsize", nil), random 360];
+				_unit setpos _positiontemp;
+				_unit call fnc_setskill;
+				MEMBER("reClothes", _unit);
+				_group deleteGroupWhenEmpty true;
+				MEMBER("russians", nil) pushBack _unit;
+				private _patrol = ["new", _group] call OO_PATROL;
+				["patrol", [_position, MEMBER("sectorsize", nil)]] spawn _patrol;
+
+				#ifdef DEBUGSECTORRUSSIAN
+				private _id = random 65000;
+				private _name = format["%1_%2", "russians", _id];
+				private _marker = createMarkerLocal [_name, _position];
+				_marker setMarkerShapeLocal "ICON";
+				_marker setMarkerTypeLocal "loc_CivilDefense";
+				_marker setMarkerTextLocal _name;
+				_marker setMarkerColorLocal "ColorRed";
+				_marker setMarkerSizeLocal [0.5,0.5];
+				_marker setMarkerBrushLocal "FDiagonal";
+				[_unit, _marker]spawn {
+					_unit = _this select 0;
+					_marker = _this select 1;
+					while {alive _unit} do {
+						_marker setMarkerPosLocal (position _unit);
+						sleep 0.5;
+					};
+					deleteMarkerLocal _marker;
+				};
+				#endif
+				sleep 0.1;
+			};
 		};
 
 		PUBLIC FUNCTION("","unpopSector") {
