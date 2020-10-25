@@ -136,6 +136,12 @@
 		};
 	}];
 
+	player addEventHandler ["Killed", {
+		private _UID = getPlayerUID player;
+		["remoteSpawn", ["getReset", _UID, "server"]] call bmeclient;
+		closeDialog 0;
+	}];
+
 	// Initialize hud
 	1000 cutRsc ["hud", "PLAIN"];
 	health = "new" call OO_HEALTH;
@@ -155,10 +161,58 @@
 	//private _content = [["arifle_MSBS65_F",1], ["launch_RPG32_camo_F", 1],["armyradio",-1],["wrench",-1],["medicalkit",1],["survivalration",5], ["screwdriver", -1],["waterbottle",1],["30Rnd_65x39_caseless_mag_Tracer", 5]];
 
 	capcontainer = ["new", [netId player, ((getModelInfo player) select 0)]] call OO_CONTAINER;
-	private _content = [["computetab", -1],["armyradio",-1],["medicalkit",1],["survivalration",2]];
-	["overLoad", _content] call capcontainer;
-	["loadInventory", player] call capcontainer;
+	private _UID = getPlayerUID player;
+	private _backup = ["remoteCall", ["getBackup", _UID , 2, []]] call bmeclient;
+	private _content = [];
+
+	if(_backup isEqualTo []) then { 
+		_content = [["computetab", -1],["armyradio",-1],["medicalkit",1],["survivalration",2], ["Binocular", 1], ["itemMap", 1]];
+		["overLoad", _content] call capcontainer;
+		["loadInventory", player] call capcontainer;
+		systemchat "Inventory load";
+	} else {
+		player setpos (_backup select 0);
+		player setdir (_backup select 1);
+		private _health = _backup select 2;
+		["unserialize", _health] call health;
+		_content = _backup select 3;
+		private _stuff = _backup select 4;
+		private _gear = "new" call OO_ARMAGEAR;
+		["clearInventory", player] call _gear;
+		["overLoad", _content] call capcontainer;
+		["loadInventory", player] call capcontainer;
+		["putAllStuff", _stuff] call mygear;
+		systemchat "Inventory restored";
+	};
 	"save" call capcontainer;
+
+/*	[] spawn {
+	while { true} do {
+		_soldiers = [];
+		{
+			_soldiers set [count _soldiers,configname _x];
+		} foreach ("isclass _x && getnumber (_x >> 'scope') > 1 && gettext (_x >> 'simulation') == 'soldier'" configclasses (configfile >> "cfgvehicles"));
+		//_unit forceAddUniform "U_B_CombatUniform_mcam";
+		private _tmpop = 'ryan';
+		private _tmp = "";
+		while { _tmpop isEqualTo 'ryan'} do {
+			_tmp = _soldiers call bis_fnc_selectrandom;
+			_tmpop = toLower(_tmp select [0, 4]);
+		};
+		hint format ["%1", _tmpop];
+		[player,_tmp] call bis_fnc_loadinventory;
+		sleep 5;
+	};
+	};*/
+
+	[] spawn {
+		while { true } do {
+			sleep 10;
+			private _health = "serialize" call health;
+			private _stuff = "getAllStuff" call mygear;
+			["remoteSpawn", ["getSave", [_health, _stuff, player] , "server"]] call bmeclient;
+		};
+	};
 
 	/*	_test = "getContent" call capcontainer;
 	_print = [];
@@ -166,8 +220,6 @@
 		_print pushBack (_x select 0);
 	} forEach _test;
 	copyToClipboard format ["%1", _print];*/
-
-	systemchat "Inventory load";
 
 	// initialize ui requirement
 	uirequirement = "new" call oo_uirequirement;
@@ -197,11 +249,6 @@
 	};
 
 	mysound = "new" call OO_SOUND;
-	player addEventHandler ["killed", "closeDialog 0;"];
-	/*	player addEventHandler ["Hit", {
-		params ["_unit", "_source", "_damage", "_instigator"];
-		hint format ["%1", _damage];
-	}];*/
 
 	#undef DEBUGFPS
 	#ifdef DEBUGFPS
