@@ -1,6 +1,6 @@
 	/*
 	Author: code34 nicolas_boiteux@yahoo.fr
-	Copyright (C) 2018 Nicolas BOITEUX
+	Copyright (C) 2018-2020 Nicolas BOITEUX
 
 	CLASS OO_ARMAGEAR
 
@@ -29,7 +29,8 @@
 
 		};
 
-		PUBLIC FUNCTION("","weaponsItems") { 
+		PUBLIC FUNCTION("","weaponsItems") {
+			DEBUG(#, "OO_ARMAGEAR::weaponsItems")
 			private _wp = weaponsItems player;
 			private _p = primaryWeapon player;
 			private _s = secondaryWeapon player;
@@ -51,8 +52,57 @@
 			if(_primary isEqualTo "") then {_primary = ["","","","",[""],[],""];};
 			if(_secondary isEqualTo "") then {_secondary = ["","","","",[""],[],""];};
 			if(_gun isEqualTo "") then {_gun = ["","","","",[""],[],""];};
-
 			[_primary, _secondary, _gun];
+		};
+
+		PUBLIC FUNCTION("","getAllStuff") {
+			DEBUG(#, "OO_ARMAGEAR::getAllStuff")
+			private _primaryweapon = primaryWeapon player;
+			private _secondaryweapon = secondaryWeapon player;
+			private _handgunweapon = handgunWeapon player;
+			private _binocular = binocular player;
+			private _weaponsitems = MEMBER("weaponsItems", nil);
+			private _primaryoptic = (_weaponsitems select 0) select 3;
+			private _secondaryoptic = (_weaponsitems select 1) select 3;
+			private _handgunoptic = (_weaponsitems select 2) select 3;
+			private _primarymaginfo = ((_weaponsitems select 0) select 4);
+			private _primarymag = if(count _primarymaginfo > 0) then { _primarymaginfo select 0;} else {"";};
+			private _secondarymaginfo = ((_weaponsitems select 1) select 4);
+			private _secondarymag = if(count _secondarymaginfo > 0) then {_secondarymaginfo select 0;} else {"";};
+			private _handgunmaginfo = ((_weaponsitems select 2) select 4);
+			private _handgunmag = if(count _handgunmaginfo > 0) then {_handgunmaginfo select 0;}else{"";};
+			private _primaryflash = (_weaponsitems select 0) select 2;
+			private _secondaryflash = (_weaponsitems select 1) select 2;
+			private _handgunflash = (_weaponsitems select 2) select 2;
+			private _headgear = headgear player;
+			private _uniform = uniform player;
+			private _vest = vest player;
+			private _bag = backpack player;
+			private _muzzle = (player weaponAccessories (primaryWeapon player)) select 0;
+			[_primaryweapon,_secondaryweapon, _handgunweapon, _binocular, _primaryoptic, _secondaryoptic, _handgunoptic, _primarymag, _secondarymag, _handgunmag, _primaryflash, _secondaryflash, _handgunflash, _headgear, _uniform, _vest, _bag, _muzzle];
+		};
+
+		PUBLIC FUNCTION("array","putAllStuff") {
+			DEBUG(#, "OO_ARMAGEAR::putAllStuff")
+			player addweapon (_this select 0);
+			player addweapon (_this select 1);
+			player addweapon (_this select 2);
+			player addWeapon (_this select 3);
+			player addPrimaryWeaponItem (_this select 4);
+			player addSecondaryWeaponItem (_this select 5);
+			player addHandgunItem (_this select 6);
+			player addPrimaryWeaponItem (_this select 7);
+			player addSecondaryWeaponItem (_this select 8);
+			player addHandgunItem (_this select 9);
+			player addPrimaryWeaponItem (_this select 10);
+			player addSecondaryWeaponItem (_this select 11);
+			player addHandgunItem (_this select 12);
+			player addHeadgear (_this select 13);
+			player forceAddUniform (_this select 14);
+			player addVest (_this select 15);
+			player addBackpack (_this select 16);
+			clearAllItemsFromBackpack player;
+			player addPrimaryWeaponItem (_this select 17);
 		};
 
 		PUBLIC FUNCTION("array","loadCfg") {
@@ -190,6 +240,17 @@
 			if((_this select 1) in _magazines) then {true;}else{false;};
 		};
 		
+		PUBLIC FUNCTION("object", "clearInventory") {
+			private _player = _this;
+			removeallweapons _player;
+			removeGoggles _player;
+			removeHeadgear _player;
+			removeVest _player;
+			removeUniform _player;
+			removeAllAssignedItems _player;
+			removeBackpack _player;
+		};
+
 		PUBLIC FUNCTION("array","addItem") {
 			DEBUG(#, "OO_ARMAGEAR::addItem")
 			// type : head, backpack, vest, uniform
@@ -208,6 +269,7 @@
 				case "secondaryweapon" : {player addSecondaryWeaponItem _item;};
 				case "handgunweapon" : {player addHandgunItem _item;};
 				case "muzzle" : {player addPrimaryWeaponItem _item;};
+				case "binocular" : { player addWeapon _item};
 				default {}; 
 			};
 		};
@@ -482,8 +544,8 @@
 			if(_cargo isEqualTo (handgunWeapon player)) then{
 				player removeWeaponGlobal _cargo;
 			};
-			if(_cargo isEqualTo (binocular player)) then{
-				player removeWeapon _cargo;
+			if(_cargo isEqualTo (binocular player)) then {
+				player removeWeapon (binocular player);
 			};
 			if(_cargo isEqualTo (headgear player)) then{
 				removeHeadgear player;
