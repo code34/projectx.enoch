@@ -248,6 +248,7 @@
 		// Consume Item
 		// [type, nbusage]
 		PUBLIC FUNCTION("array","consumeItem") {
+			DEBUG(#, "OO_CONTAINER::consumeItem")
 			private _type = _this select 0;
 			private _nbusage = _this select 1;
 			private _content = MEMBER("getContent", nil);
@@ -265,6 +266,7 @@
 		// Consume Item by Index
 		// [type, nbusage]
 		PUBLIC FUNCTION("scalar","consumeOneItemByIndex") {
+			DEBUG(#, "OO_CONTAINER::consumeOneItemByIndex")
 			private _content = MEMBER("getContent", nil);
 			private _index = _this;
 			private _item = _content select _index;
