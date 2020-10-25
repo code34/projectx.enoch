@@ -45,8 +45,8 @@
 	fnc_missiongears = compile preprocessFileLineNumbers "meka\missiongears.sqf";
 	fnc_missioncandle = compile preprocessFileLineNumbers "meka\missioncandle.sqf";
 
-	playerstartatpos = selectRandom [[500,6500],[1500,6500],[2500,6500],[3500,6500],[4500,6500],[5500,6500],[6500,6500],[7500,6500],[8500,6500],[9500,6500],[10500,6500],[12500,6500],[1500,7500],[2500,7500],[3500,7500],[4500,7500],[5500,7500],[9500,7500],[11500,7500],[12500,7500],[1500,8500],[3500,8500],[4500,8500],[6500,8500],[7500,8500],[8500,8500],[9500,8500],[10500,8500],[12500,8500],[500,9500],[1500,9500],[2500,9500],[4500,9500],[5500,9500],[6500,9500],[8500,9500],[10500,9500],[11500,9500],[1500,10500],[2500,10500],[4500,10500],[5500,10500],[6500,10500],[8500,10500],[9500,10500],[10500,10500],[11500,10500],[12500,10500],[1500,11500],[2500,11500],[3500,11500],[6500,11500],[7500,11500],[8500,11500],[9500,11500],[10500,11500],[11500,11500],[3500,12500],[4500,12500],[5500,12500],[7500,12500],[8500,12500],[9500,12500],[10500,12500]];
-	getSpawnPosition = {playerstartatpos;};
+	//playerstartatpos = selectRandom [[500,6500],[1500,6500],[2500,6500],[3500,6500],[4500,6500],[5500,6500],[6500,6500],[7500,6500],[8500,6500],[9500,6500],[10500,6500],[12500,6500],[1500,7500],[2500,7500],[3500,7500],[4500,7500],[5500,7500],[9500,7500],[11500,7500],[12500,7500],[1500,8500],[3500,8500],[4500,8500],[6500,8500],[7500,8500],[8500,8500],[9500,8500],[10500,8500],[12500,8500],[500,9500],[1500,9500],[2500,9500],[4500,9500],[5500,9500],[6500,9500],[8500,9500],[10500,9500],[11500,9500],[1500,10500],[2500,10500],[4500,10500],[5500,10500],[6500,10500],[8500,10500],[9500,10500],[10500,10500],[11500,10500],[12500,10500],[1500,11500],[2500,11500],[3500,11500],[6500,11500],[7500,11500],[8500,11500],[9500,11500],[10500,11500],[11500,11500],[3500,12500],[4500,12500],[5500,12500],[7500,12500],[8500,12500],[9500,12500],[10500,12500]];
+	getSpawnPosition = {[ceil(random 250) * 50, ceil(random 250) * 50];};
 
 	if((isServer) and (isDedicated)) then { 
 		bmeclient = "new" call OO_BME;
@@ -162,20 +162,6 @@
 		true;
 	};
 
-/*	[] spawn {
-		while {true} do {
-			sleep 60;
-			{
-				if(alive _x) then {
-					private _value = missionNamespace getVariable [format["inventory_%1", netId _x], []];
-					["write", [getPlayerUID _x, _value]] call myintdb;
-					systemChat "Save on progress..";
-					sleep 1;
-				};
-			} forEach allPlayers;
-		};
-	};*/
-
 	private _list = [];
 	_stuff = ["new", ""] call OO_RANDOMSTUFF;
 	["setNeutre", _list] call _stuff;
@@ -200,7 +186,7 @@
 	for "_i" from 1 to 68 step 1 do {
 		private _markername = "enemy" + str(_i);
 		private _militarized = false;
-		if(random 1 > 0.25) then {_militarized = true;};
+		if(random 1 > 0.1) then {_militarized = true;};
 		_position = getMarkerPos _markername;
 		_size = (getMarkerSize _markername) select 0;
 		_location = ["new", [_position, _size, _militarized]] call OO_SECTOR_RUSSIAN;
@@ -223,4 +209,4 @@
 
 	/// unites russes RHS - VV 
 	// vehicules : rhs_btr70_vv, rhs_brm1k_vv,rhs_uaz_open_vv, RHS_Ural_Open_Flat_VV_01
-	// chopper: RHS_Mi8mt_Cargo_vv    
+	// chopper: RHS_Mi8mt_Cargo_vv
