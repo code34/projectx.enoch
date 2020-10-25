@@ -141,7 +141,7 @@
 			if!(_zonetype isEqualTo "ventilated") then {
 				private _xarray = [];
 				private _yarray = [];
-				{               
+				{
 					_xarray pushBack floor(((getpos _x) select 0)/10);
 					_yarray pushBack floor(((getpos _x) select 1)/10);
 				} forEach _array;
@@ -196,6 +196,21 @@
 			MEMBER("zombiestype", _array);
 		};
 
+
+		PUBLIC FUNCTION("object", "reClothes") {
+			_soldiers = [];
+			{
+				_soldiers set [count _soldiers,configname _x];
+			} foreach ("isclass _x && getnumber (_x >> 'scope') > 1 && gettext (_x >> 'simulation') == 'soldier'" configclasses (configfile >> "cfgvehicles"));
+			private _tmpop = 'ryan';
+			private _tmp = "";
+			while { _tmpop isEqualTo 'ryan'} do {
+				_tmp = _soldiers call bis_fnc_selectrandom;
+				_tmpop = toLower(_tmp select [0, 4]);
+			};
+			[_this,_tmp] call bis_fnc_loadinventory;
+		};
+
 		PUBLIC FUNCTION("","popZombies") {
 			DEBUG(#, "OO_SECTOR::popZombies")
 			private _centerposition = MEMBER("checkCenter", nil);
@@ -211,11 +226,10 @@
 			private _zonetype = MEMBER("zonetype", nil);
 			private _count = 0;
 			switch (_zonetype) do {
-/*              case "horde" : {_count = 30 + ceil(random 30);};
+				/*case "horde" : {_count = 30 + ceil(random 30);};
 				case "hill" : {_count = 5 + ceil(random 10);};
 				case "ventilated" : {_count = 5 + ceil(random 5);};
 				default {_count = 10 + ceil(random 5);};*/
-				
 				case "horde" : {_count = 5 + ceil(random 5);};
 				case "hill" : {_count = ceil(random 5);};
 				case "ventilated" : {_count = (random 5);};
@@ -242,22 +256,21 @@
 						_position = _ref getRelPos [50 + (random 100), random 360];
 					};
 					sleep 0.5;
-				};  
+				};
 
 				_type = format["%1%2", (selectRandom _array),"Opfor"];
 				_unit = _group createUnit [_type, _position, [], 0, "NONE"];
 				_unit setpos _position;
-				
+
 				_unit spawn {
 					private _unit = _this;
 					private _unitmov = position _unit;
-					private _flag = true;
 					private _arraypos = [];
 					for "_i" from 0 to 5 do {
-						_arraypos pushBack (_unit getRelPos [random 300, random 360]);
+						_arraypos pushBack (_unit getRelPos [(50 + random 250), random 360]);
 					};
 					private _movpos = (selectRandom _arraypos);
-					while { alive _unit && _flag } do {
+					while { alive _unit } do {
 						if(_unitmov distance (position _unit) < 5) then {
 							_movpos = (selectRandom _arraypos);
 						};
@@ -265,7 +278,6 @@
 						_enemy = (_unit findNearestEnemy _unit);
 						if(_unit knowsAbout _enemy > 1) then {
 							_unit domove (position _enemy);
-							_flag = false;
 						} else {
 							_unit domove _movpos;
 							sleep 30 + random(30);
@@ -306,7 +318,7 @@
 
 		PUBLIC FUNCTION("","unpopZombies") {
 			private _zombies = MEMBER("zombies", nil);
-			{                
+			{
 				_x setDamage 1;
 				hideBody _x;
 				sleep 0.1;
