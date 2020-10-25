@@ -153,27 +153,31 @@ CLASS("oo_Vitems")
 
 	// Rempli le centre de l'inventaire avec l'uniforme, les armes ,le casque etc.
 	PUBLIC FUNCTION("", "refreshInventory") {
-		private _weaponsitems = "weaponsItems" call mygear;
-		private _primaryoptic = (_weaponsitems select 0) select 3;
-		private _secondaryoptic = (_weaponsitems select 1) select 3;
-		private _handgunoptic = (_weaponsitems select 2) select 3;
-		private _primarymag = ((_weaponsitems select 0) select 4) select 0;
-		private _secondarymag = ((_weaponsitems select 1) select 4) select 0;
-		private _handgunmag = ((_weaponsitems select 2) select 4) select 0;
-		private _primaryflash = (_weaponsitems select 0) select 2;
-		private _secondaryflash = (_weaponsitems select 1) select 2;
-		private _handgunflash = (_weaponsitems select 2) select 2;
-		private _headgear = headgear player;
-		private _uniform = uniform player;
-		private _vest = vest player;
-		private _bag = backpack player;
-		private _muzzle = (player weaponAccessories (primaryWeapon player)) select 0;
+		private _weaponsitems = "getAllStuff" call mygear;
+		private _primaryweapon = _weaponsitems select 0;
+		private _secondaryweapon = _weaponsitems select 1;
+		private _handgunweapon = _weaponsitems select 2;
+		private _binocular = _weaponsitems select 3;
+		private _primaryoptic = _weaponsitems select 4;
+		private _secondaryoptic = _weaponsitems select 5;
+		private _handgunoptic = _weaponsitems select 6;
+		private _primarymag = _weaponsitems select 7;
+		private _secondarymag = _weaponsitems select 8;
+		private _handgunmag = _weaponsitems select 9;
+		private _primaryflash = _weaponsitems select 10;
+		private _secondaryflash = _weaponsitems select 11;
+		private _handgunflash = _weaponsitems select 12;
+		private _headgear = _weaponsitems select 13;
+		private _uniform = _weaponsitems select 14;
+		private _vest = _weaponsitems select 15;
+		private _bag = _weaponsitems select 16;
+		private _muzzle = _weaponsitems select 17;
 
 		private _array = [
-		[(primaryWeapon player), "OOP_pic_primaryweapon", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_primary_gs.paa"],
-		[(secondaryWeapon player), "OOP_pic_secondaryweapon", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_secondary_gs.paa"],
-		[(handgunWeapon player), "OOP_pic_gunweapon", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_hgun_gs.paa"],
-		[(binocular player), "OOP_pic_binocular", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_binocular_gs.paa"],
+		[_primaryweapon, "OOP_pic_primaryweapon", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_primary_gs.paa"],
+		[_secondaryweapon, "OOP_pic_secondaryweapon", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_secondary_gs.paa"],
+		[_handgunweapon, "OOP_pic_gunweapon", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_hgun_gs.paa"],
+		[_binocular, "OOP_pic_binocular", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_binocular_gs.paa"],
 		[_primarymag, "OOP_pic_magprimaryweapon", "CfgMagazines", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_magazine_gs.paa"],
 		[_handgunmag, "OOP_pic_maggunweapon", "CfgMagazines", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_magazine_gs.paa"],
 		[_secondarymag, "OOP_pic_magsecondaryweapon", "CfgMagazines", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_magazine_gs.paa"],
@@ -190,7 +194,6 @@ CLASS("oo_Vitems")
 		[_muzzle, "OOP_pic_muzzle", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_muzzle_gs.paa"]
 		];
 		{MEMBER("setItemPicture", _x);} forEach _array;
-
 
 		// toLower(_primarymag), toLower(_secondarymag), toLower(_handgunmag)
 		private _alreadyshow = [toLower(_headgear),toLower(_uniform), toLower(_vest), toLower(_bag),
@@ -346,7 +349,7 @@ CLASS("oo_Vitems")
 						_type = handgunWeapon player;
 					};
 					case (_target isEqualTo MEMBER("OOP_pic_binocular",nil)) : {
-						_type = binocular player;
+						_type = (binocular player);
 					};
 					default {}; 
 				};
@@ -711,6 +714,18 @@ CLASS("oo_Vitems")
 					_index = MEMBER("count_Indexwithoutfilter", _array);
 					private _object = ("getContent" call _scontainer) select _index;
 					["addItem", ["muzzle", _object select 0]] call mygear;
+					if(_scontainer isEqualTo proxcontainer) then {
+						private _item = ["popItem", _index] call proxcontainer;
+						["addItem", _item] call capcontainer;
+					};
+				};
+
+				case (_destination isEqualTo MEMBER("OOP_pic_binocular", nil)) : {
+					private _index = (((_this select 4) select 0) select 1);
+					private _array = [_scontainer, _index];
+					_index = MEMBER("count_Indexwithoutfilter", _array);
+					private _object = ("getContent" call _scontainer) select _index;
+					["addItem", ["binocular", _object select 0]] call mygear;
 					if(_scontainer isEqualTo proxcontainer) then {
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
