@@ -24,6 +24,7 @@
 	call compile preprocessFileLineNumbers "objects\oo_sector.sqf";
 	call compile preprocessFileLineNumbers "objects\oo_sector_russian.sqf";
 	call compile preprocessFileLineNumbers "objects\oo_patrol.sqf";
+	call compile preprocessFileLineNumbers "objects\oo_intdb.sqf";
 	//call compile preprocessFileLineNumbers "objects\oo_missionloader.sqf";
 
 	//call compile preprocessFileLineNumbers "scripts\fnc_enumvillages.sqf";
@@ -55,6 +56,9 @@
 	while { isNil "bmeclient" } do {sleep 1;};
 
 	[] spawn fnc_weathers;
+
+	myintdb = ["new", "profile"] call OO_INTDB;
+	["setSaveName", "projectX"] call myintdb;
 
 	_size = getNumber (configfile >> "CfgWorlds" >> worldName >> "mapSize");
 	_sectorsize = 250;
@@ -96,7 +100,7 @@
 	// Get/Set content/properties of containers from NetID
 	callMission = {
 		switch (true) do {
-			case (_this isEqualTo "sergent") : { [] spawn fnc_sergent;	};
+			case (_this isEqualTo "sergent") : { [] spawn fnc_sergent;};
 			//case (_this isEqualTo "village") : {[] spawn fnc_village;};
 			default {};
 		};
@@ -112,7 +116,7 @@
 		};
 		_return;
 	};
-	
+
 	vitems_setInventory = {
 		missionNamespace setVariable [format["inventory_%1", _this select 0], _this select 1, false];true;
 		missionNamespace setVariable [format["lock_%1", _this select 0], false, false];
@@ -137,6 +141,41 @@
 		true;
 	};
 
+	getBackup = {
+		private _UID = _this;
+		["read", [_UID, []]] call myintdb;
+	};
+
+	getReset = {
+		["write", [_this, []]] call myintdb;
+	};
+
+	getSave = {
+		private _health = _this select 0;
+		private _stuff = _this select 1;
+		private _player = _this select 2;
+		if(alive _player) then {
+			private _inventory = missionNamespace getVariable [format["inventory_%1", netId _player], []];
+			private _value = [position _player, getDir _player, _health, _inventory, _stuff];
+			["write", [getPlayerUID _player, _value]] call myintdb;
+		};
+		true;
+	};
+
+/*	[] spawn {
+		while {true} do {
+			sleep 60;
+			{
+				if(alive _x) then {
+					private _value = missionNamespace getVariable [format["inventory_%1", netId _x], []];
+					["write", [getPlayerUID _x, _value]] call myintdb;
+					systemChat "Save on progress..";
+					sleep 1;
+				};
+			} forEach allPlayers;
+		};
+	};*/
+
 	private _list = [];
 	_stuff = ["new", ""] call OO_RANDOMSTUFF;
 	["setNeutre", _list] call _stuff;
@@ -157,14 +196,6 @@
 		_location = ["new", [_position, 250]] call OO_SECTOR;
 		"check" spawn _location;
 	} forEach _sectors;*/
-
-	onPlayerConnected {
-		/*params ["_id", "_uid", "_name", "_jip", "_owner", "_idstr"];
-		private _mission = ["getMission", _name] call oo_missionloader;
-		if(_mission isEqualTo "") then {
-			_mission = "getMissionactive" call oo_missionloader;
-		};*/
-	};
 
 	for "_i" from 1 to 68 step 1 do {
 		private _markername = "enemy" + str(_i);
