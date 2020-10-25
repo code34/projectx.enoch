@@ -59,27 +59,6 @@
 		PUBLIC FUNCTION("array","checkAverage") {
 			private _array = _this;
 			_array sort true;
-
-			private _value = 0;
-			private _count = 0;
-			private _somme = 0;
-			private _totalcoef = 0;
-			{
-				if!(_value isEqualTo _x) then {
-					_somme = (_value * _count) + _somme;
-					_totalcoef = _count + _totalcoef;
-					_value = _x;
-					_count = 1;
-				} else {
-					_count = _count + 1;
-				};
-			} forEach _array;
-			(_somme/_totalcoef);
-		};
-
-		PUBLIC FUNCTION("array","checkAverage2") {
-			private _array = _this;
-			_array sort true;
 			private _max = 0;
 			private _value = 0;
 			private _count = 0;
@@ -146,8 +125,8 @@
 					_yarray pushBack floor(((getpos _x) select 1)/10);
 				} forEach _array;
 
-				_xmax = MEMBER("checkAverage2", _xarray) * 10;
-				_ymax = MEMBER("checkAverage2", _yarray) * 10;
+				_xmax = MEMBER("checkAverage", _xarray) * 10;
+				_ymax = MEMBER("checkAverage", _yarray) * 10;
 				_position = [_xmax, _ymax];
 			};
 			_position;
@@ -196,21 +175,6 @@
 			MEMBER("zombiestype", _array);
 		};
 
-
-		PUBLIC FUNCTION("object", "reClothes") {
-			_soldiers = [];
-			{
-				_soldiers set [count _soldiers,configname _x];
-			} foreach ("isclass _x && getnumber (_x >> 'scope') > 1 && gettext (_x >> 'simulation') == 'soldier'" configclasses (configfile >> "cfgvehicles"));
-			private _tmpop = 'ryan';
-			private _tmp = "";
-			while { _tmpop isEqualTo 'ryan'} do {
-				_tmp = _soldiers call bis_fnc_selectrandom;
-				_tmpop = toLower(_tmp select [0, 4]);
-			};
-			[_this,_tmp] call bis_fnc_loadinventory;
-		};
-
 		PUBLIC FUNCTION("","popZombies") {
 			DEBUG(#, "OO_SECTOR::popZombies")
 			private _centerposition = MEMBER("checkCenter", nil);
@@ -226,11 +190,7 @@
 			private _zonetype = MEMBER("zonetype", nil);
 			private _count = 0;
 			switch (_zonetype) do {
-				/*case "horde" : {_count = 30 + ceil(random 30);};
-				case "hill" : {_count = 5 + ceil(random 10);};
-				case "ventilated" : {_count = 5 + ceil(random 5);};
-				default {_count = 10 + ceil(random 5);};*/
-				case "horde" : {_count = 5 + ceil(random 5);};
+				case "horde" : {_count = 10 + ceil(random 20);};
 				case "hill" : {_count = ceil(random 5);};
 				case "ventilated" : {_count = (random 5);};
 				default {_count = 5 + ceil(random 5);};
