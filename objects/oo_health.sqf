@@ -66,6 +66,31 @@
 			SPAWN_MEMBER("computeLife", 5);
 		};
 
+		PUBLIC FUNCTION("","serialize") {
+			[
+				MEMBER("drink", nil), 
+				MEMBER("food", nil), 
+				MEMBER("life", nil), 
+				MEMBER("virus", nil), 
+				MEMBER("zombie", nil), 
+				MEMBER("infected", nil)
+			];
+		};
+
+		PUBLIC FUNCTION("array","unserialize") {
+			MEMBER("drink", _this select 0);
+			MEMBER("food", _this select 1);
+			MEMBER("life", _this select 2);
+			MEMBER("virus", _this select 3);
+			MEMBER("zombie", _this select 4);
+			MEMBER("infected", _this select 5);
+
+			["setDrink", _this select 0] call hud;
+			["setFood", _this select 1] call hud;
+			["setLife", _this select 2] call hud;
+			["setVirus", _this select 3] call hud;
+		};
+
 		PUBLIC FUNCTION("","getNausea") {
 			MEMBER("nausea", nil);
 		};
