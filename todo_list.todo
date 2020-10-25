@@ -4,16 +4,16 @@ THE PROGRAM OF TONIGHT !
 ========================
 
 bug:
-- bazooka reload
+- verifier les zones de spawn
+- horde de zombie
 
 fonctionnalité optionnelle
-- voir pour les optimisations de performance
+- bazooka reload
 - tabnote gérer plusieurs missions en meme temps
-- voir pour la traduction eng
 - ajouter des nuages toxiques
 - verifier l'utilité de la classe OO_MODEL
 - voir s'il est possible d'utiliser les notes pour aussi afficher du texte autre que la mission
-	-> est il necessaire d ajotuer les objectifs sur la map
+	-> est il necessaire d ajouter les objectifs sur la map
 - ajouter d'autres objets pour améliorer le lore 
 	=> les notes scientifiques, les journaux/avis dans les villages
 
