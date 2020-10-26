@@ -1,6 +1,6 @@
 	/*
 	Author: code34 nicolas_boiteux@yahoo.fr
-	Copyright (C) 2018 Nicolas BOITEUX
+	Copyright (C) 2018-2020 Nicolas BOITEUX
 
 	This program is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -101,14 +101,6 @@
 	};
 	systemchat "BME 2.0 is initialized";
 
-	// Random respawn position
-	private _position = position player;
-	_position = ["remoteCall", ["getSpawnPosition", "" , 2, _position]] call bmeclient;
-	player setpos _position;
-	//"initPosition" call optimizefps;
-
-	15203 cutText ["","PLAIN", 0];
-
 	player addEventHandler ["InventoryOpened", {execVM "gui\loading.sqf";true;}];
 	player addEventHandler ["InventoryClosed", {player addEventHandler ["InventoryOpened", {execVM "gui\loading.sqf";true;}];}];
 
@@ -136,10 +128,16 @@
 		};
 	}];
 
-	player addEventHandler ["Killed", {
+	fnc_killed = {
 		private _UID = getPlayerUID player;
-		["remoteSpawn", ["getReset", _UID, "server"]] call bmeclient;
+		["remoteCall", ["getReset", _UID , 2, []]] call bmeclient;
 		closeDialog 0;
+		sleep 2;
+		endmission "END4";
+	};
+
+	player addEventHandler ["Killed", {
+		[] spawn fnc_killed;
 	}];
 
 	// Initialize hud
@@ -166,10 +164,13 @@
 	private _content = [];
 
 	if(_backup isEqualTo []) then { 
-		_content = [["computetab", -1],["armyradio",-1],["medicalkit",1],["survivalration",2], ["Binocular", 1], ["itemMap", 1]];
+		_content = [["computetab", -1],["armyradio",-1],["medicalkit",1],["survivalration",2], ["Binocular", 1]];
 		["overLoad", _content] call capcontainer;
 		["loadInventory", player] call capcontainer;
 		systemchat "Inventory load";
+		private _position = position player;
+		_position = ["remoteCall", ["getSpawnPosition", "" , 2, _position]] call bmeclient;
+		player setpos _position;
 	} else {
 		player setpos (_backup select 0);
 		player setdir (_backup select 1);
@@ -185,32 +186,16 @@
 		systemchat "Inventory restored";
 	};
 	"save" call capcontainer;
-
-/*	[] spawn {
-	while { true} do {
-		_soldiers = [];
-		{
-			_soldiers set [count _soldiers,configname _x];
-		} foreach ("isclass _x && getnumber (_x >> 'scope') > 1 && gettext (_x >> 'simulation') == 'soldier'" configclasses (configfile >> "cfgvehicles"));
-		//_unit forceAddUniform "U_B_CombatUniform_mcam";
-		private _tmpop = 'ryan';
-		private _tmp = "";
-		while { _tmpop isEqualTo 'ryan'} do {
-			_tmp = _soldiers call bis_fnc_selectrandom;
-			_tmpop = toLower(_tmp select [0, 4]);
-		};
-		hint format ["%1", _tmpop];
-		[player,_tmp] call bis_fnc_loadinventory;
-		sleep 5;
-	};
-	};*/
+	sleep 5;
+	15203 cutText ["","PLAIN", 0];
 
 	[] spawn {
 		while { true } do {
-			sleep 10;
+			sleep 60;
 			private _health = "serialize" call health;
 			private _stuff = "getAllStuff" call mygear;
 			["remoteSpawn", ["getSave", [_health, _stuff, player] , "server"]] call bmeclient;
+			systemChat format["save: %1", time];
 		};
 	};
 
