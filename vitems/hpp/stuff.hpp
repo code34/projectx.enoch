@@ -46,7 +46,7 @@
 	class antibiotic {
 		type[] = {"stuff","man"};
 		title = "Antibiotic";
-		description = "A box full of antibiotic in an acceptable state";
+		description = "A box full of antibiotic in an acceptable state<br/><br/>Antivirus: <t color='#ff9d00'>-100</t>";
 		weight = 0.1;
 		nbusage = 1;
 		picture = "paa\antibiotic.paa";
