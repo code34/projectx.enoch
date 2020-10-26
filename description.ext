@@ -3,6 +3,9 @@ Author="Code34";
 loadscreen="splash\zombie.jpg";
 OnLoadMission="When bullets are more valuable than humans";
 showHUD = 0;
+Respawn = 3;
+RespawnDelay = 10;
+RespawnDialog = 0;
 
 #include "gui\define.hpp"
 #include "gui\style.hpp"
@@ -56,6 +59,15 @@ class CfgDebriefing
 		description = "Vous avez finalement découvert la vérité. Livionia est un pays en faillite mais les éléments que vous avez récupéré seront essentiels pour annoncer la vérité au monde. Peut être y aura-t-il un espoir de stopper le virus mais ceci est une autre histoire (..)";
 		pictureBackground = "";
 		picture = "paa\medalofhonor.paa";
+		pictureColor[] = {0.0,0.3,0.6,1};
+	};
+	class End4
+	{
+		title = "Mission failed";
+		subtitle = "Au ciel vous serez mieux (..)";
+		description = "Vous êtes mort.";
+		pictureBackground = "";
+		picture = "paa\fear.paa";
 		pictureColor[] = {0.0,0.3,0.6,1};
 	};
 };
