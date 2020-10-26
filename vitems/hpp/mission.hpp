@@ -63,8 +63,8 @@
 	};
 	class helicoptercandle {
 		type[] = {"mission"};
-		title = "Helicopter engine candle";
-		description = "Internal combustion engine candle.";
+		title = "Helicopter spark plug";
+		description = "Internal combustion engine spark plug.";
 		weight = 0.1;
 		nbusage = 1;
 		picture = "paa\helicoptercandle.paa";
