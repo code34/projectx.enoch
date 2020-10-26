@@ -51,7 +51,7 @@
 	_startingdate = [2019, 08, 01, 05, 00];
 
 	// Mission starting weather "CLEAR|CLOUDY|RAIN";
-	_startingweather = selectRandom ["CLOUDY", "RAIN"];
+	_startingweather = selectRandom ["CLOUDY", "RAIN", "CLEAR"];
 
 	/////////////////////////////////////////////////////////////////
 	// Do not edit below
