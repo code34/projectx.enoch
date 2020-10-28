@@ -128,6 +128,7 @@
 		PUBLIC FUNCTION("","keyF5") { 
 			private _exit = false;
 			copyToClipboard format ["%1", (getModelInfo cursorObject) select 0];
+			//copyToClipboard format ["%1", (typeOf cursorObject)];
 		};
 
 		PUBLIC FUNCTION("","keyF6") { 
