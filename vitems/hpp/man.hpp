@@ -34,15 +34,6 @@
 		picture = "paa\smartphone.paa";
 		requirement[] = {};
 	};
-	class tissues {
-		type[] = {"man", "stuff"};
-		title = "Tissues";
-		description = "Tissues are made with a mix of bamboo and sugarcane";
-		weight = 0.2;
-		nbusage = 1;
-		picture = "paa\tissues.paa";
-		requirement[] = {};
-	};
 	class wallet {
 		type[] = {"man"};
 		title = "Wallet";

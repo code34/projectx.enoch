@@ -40,7 +40,7 @@
 		description = "Secret Defense - This information should not be disclosed to the enemy - Bring in sector c124535 the contents of this briefcase. Ask for colonel Jackson Bro";
 		weight = 0.05;
 		nbusage = 1;
-		picture = "paa\missionplan.paa";
+		picture = "paa\classified_red.paa";
 		requirement[] = {};
 	};
 	class medal {
@@ -94,7 +94,7 @@
 		description = "A synthesis medical note that has been produce during Z pandemia.";
 		weight = 0.1;
 		nbusage = 1;
-		picture = "paa\medicalnote.paa";
+		picture = "paa\classified_green.paa";
 		requirement[] = {};
 	};
 	class bk18researchreport {
@@ -103,7 +103,7 @@
 		description = "A research report about the BK18 medecine.";
 		weight = 0.1;
 		nbusage = 1;
-		picture = "paa\medicalnote.paa";
+		picture = "paa\classified_green.paa";
 		requirement[] = {};
 	};
 	class am212 {
@@ -121,7 +121,7 @@
 		description = "A shipping note with the address of the supplier";
 		weight = 0.1;
 		nbusage = 1;
-		picture = "paa\shippingnote.paa";
+		picture = "paa\xsitereport.paa";
 		requirement[] = {};
 	};
 	class xsitereport {
@@ -130,7 +130,7 @@
 		description = "A top secret X Site Report";
 		weight = 0.1;
 		nbusage = 1;
-		picture = "paa\xsitereport.paa";
+		picture = "paa\classified_red.paa";
 		requirement[] = {};
 	};
 	class computetab {
@@ -167,5 +167,32 @@
 		weight = 2;
 		nbusage = 1;
 		picture = "paa\helicoptergears.paa";
+		requirement[] = {};
+	};
+	class classified_green {
+		type[] = {"mission"};
+		title = "Classified Green Data";
+		description = "Information relating to your mission with summary importance.";
+		weight = 2;
+		nbusage = 1;
+		picture = "paa\classified_green.paa";
+		requirement[] = {};
+	};
+	class classified_orange {
+		type[] = {"mission"};
+		title = "Classified Orange Data";
+		description = "Important information relating to your mission difficult to collect.";
+		weight = 2;
+		nbusage = 1;
+		picture = "paa\classified_orange.paa";
+		requirement[] = {};
+	};
+	class classified_red {
+		type[] = {"mission"};
+		title = "Classified Red Data";
+		description = "Information that should not fall into any hand, very difficult to collect.";
+		weight = 2;
+		nbusage = 1;
+		picture = "paa\classified_red.paa";
 		requirement[] = {};
 	};
