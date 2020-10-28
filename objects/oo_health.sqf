@@ -28,6 +28,7 @@
 		PRIVATE VARIABLE("scalar","life");
 		PRIVATE VARIABLE("scalar","virus");
 		PRIVATE VARIABLE("scalar","zombie");
+		PRIVATE VARIABLE("scalar","boost");
 		PRIVATE VARIABLE("scalar","temperature");
 		PRIVATE VARIABLE("scalar","bonusfood");
 		PRIVATE VARIABLE("scalar","bonusdrink");
@@ -53,8 +54,10 @@
 			MEMBER("bonusvirus", 0);
 			MEMBER("nausea", 0);
 			MEMBER("stomac", 0);
+			MEMBER("boost", 0);
 			MEMBER("infected", false);
 			MEMBER("checktime", 30);
+			SPAWN_MEMBER("checkBoost", 30);
 			SPAWN_MEMBER("checkFood", 30);
 			SPAWN_MEMBER("checkDrink", 30);
 			SPAWN_MEMBER("checkStomac", 5);
@@ -89,6 +92,10 @@
 			["setFood", _this select 1] call hud;
 			["setLife", _this select 2] call hud;
 			["setVirus", _this select 3] call hud;
+		};
+
+		PUBLIC FUNCTION("","getBoost") {
+			if(MEMBER("boost", nil) > 0) then {true;} else {false;};
 		};
 
 		PUBLIC FUNCTION("","getNausea") {
@@ -328,6 +335,29 @@
 			if(_bonusvirus < 0) then {_bonusvirus = 0;};
 			if(_bonusvirus > 100) then { _bonusvirus = 100;};
 			MEMBER("bonusvirus", _bonusvirus);
+		};
+
+		PUBLIC FUNCTION("scalar","addBoost") {
+			DEBUG(#, "OO_HEALTH::addBoost")
+			private _boost = MEMBER("boost", nil);
+			_boost = _boost + _this;
+			if(_boost < 0) then {_boost = 0;};
+			if(_boost > 100) then { _boost = 100;};
+			MEMBER("boost", _boost);
+		};
+
+		PUBLIC FUNCTION("scalar","checkBoost") {
+			DEBUG(#, "OO_HEALTH::checkBoost")
+			private _checktime = _this;
+			private _boost = 0;
+			while { true } do {
+				private _boost = MEMBER("boost", nil);
+				if(_boost > 0) then { 
+					_boost = _boost - 1; 
+					MEMBER("boost", _boost);
+				};
+				sleep _checktime;
+			};
 		};
 
 		PUBLIC FUNCTION("scalar","checkStomac") {
@@ -622,6 +652,7 @@
 			DELETE_VARIABLE("food");
 			DELETE_VARIABLE("life");
 			DELETE_VARIABLE("zombie");
+			DELETE_VARIABLE("boost");
 			DELETE_VARIABLE("temperature");
 			DELETE_VARIABLE("bonusfood");
 			DELETE_VARIABLE("bonusdrink");
