@@ -14,6 +14,7 @@ CLASS("oo_hud")
 	PRIVATE UI_VARIABLE("control", "OOP_Picture_virusstate");
 	PRIVATE UI_VARIABLE("control", "OOP_Picture_zombiestate");
 	PRIVATE UI_VARIABLE("control", "OOP_Picture_file");
+	PRIVATE UI_VARIABLE("control", "OOP_Picture_weight");
 	PRIVATE UI_VARIABLE("control", "OOP_Picture_blood");
 	PRIVATE UI_VARIABLE("control", "OOP_SubLayer_101");
 	PRIVATE UI_VARIABLE("control", "OOP_Text_drink");
@@ -28,6 +29,7 @@ CLASS("oo_hud")
 
 	PRIVATE UI_VARIABLE("display", "Display");
 	PRIVATE VARIABLE("bool", "isshowfile");
+	PRIVATE VARIABLE("bool", "isshowweight");
 	PRIVATE VARIABLE("bool", "isshowzombie");
 
 	PUBLIC FUNCTION("display", "constructor"){
@@ -46,6 +48,7 @@ CLASS("oo_hud")
 		MEMBER("OOP_Picture_virusstate", _this displayCtrl 1050);
 		MEMBER("OOP_Picture_zombiestate", _this displayCtrl 1120);
 		MEMBER("OOP_Picture_file", _this displayCtrl 110);
+		MEMBER("OOP_Picture_weight", _this displayCtrl 120);
 		MEMBER("OOP_Picture_blood", _this displayCtrl 111);
 		MEMBER("OOP_SubLayer_101", _this displayCtrl 101);
 		MEMBER("OOP_Text_drink", _this displayCtrl 106);
@@ -57,6 +60,9 @@ CLASS("oo_hud")
 		MEMBER("OOP_Text_weapon", _this displayCtrl 118);
 		MEMBER("OOP_Text_nbmags", _this displayCtrl 185);
 		MEMBER("OOP_Text_nbammos", _this displayCtrl 184);
+		MEMBER("isshowfile", false);
+		MEMBER("isshowweight", false);
+		MEMBER("isshowzombie", false);
 		SPAWN_MEMBER("Init", nil);
 	};
 
@@ -65,6 +71,7 @@ CLASS("oo_hud")
 		sleep 5;
 		MEMBER("OOP_Picture_file", nil) ctrlShow false;
 		SPAWN_MEMBER("hintFile", nil);
+		SPAWN_MEMBER("hintWeight", nil);
 		SPAWN_MEMBER("hintBlood", nil);
 		SPAWN_MEMBER("hintZombie", nil);
 		SPAWN_MEMBER("hintWeapon", nil);
@@ -81,6 +88,18 @@ CLASS("oo_hud")
 			if(_index > -1) then {_nbmags = (["getItem", _index] call capcontainer) select 4;} else {_nbmags = 0;};
 			MEMBER("OOP_Text_nbmags", nil) ctrlSetText str(_nbmags);
 			sleep 0.1;
+		};
+	};
+
+	PUBLIC FUNCTION("", "hintWeight"){
+		while { true } do {
+			if(MEMBER("isshowweight", nil)) then {
+				MEMBER("OOP_Picture_weight", nil) ctrlShow true;
+				MEMBER("OOP_Picture_weight", nil) ctrlSetText "paa\weight.paa";
+			} else{
+				MEMBER("OOP_Picture_weight", nil) ctrlShow false;
+			};
+			sleep 1;
 		};
 	};
 
@@ -126,6 +145,10 @@ CLASS("oo_hud")
 
 	PUBLIC FUNCTION("bool", "setShowZombie"){
 		MEMBER("isshowzombie", _this);
+	};
+
+	PUBLIC FUNCTION("bool", "setShowWeight"){
+		MEMBER("isshowweight", _this);
 	};
 
 	PUBLIC FUNCTION("bool", "showFile"){
