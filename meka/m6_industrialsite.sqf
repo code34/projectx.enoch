@@ -29,7 +29,7 @@
 
 	createbk18stock = {
 		_position = _this;
-		_number = 4;
+		_number = 2;
 
 		private _gc = [];
 		private _posx = _position select 0;
@@ -47,7 +47,7 @@
 
 		for "_enumx" from 0 to _number step 1 do {
 			for "_enumy" from 0 to _number step 1 do {
-				for "_enumz" from 0 to 5 step 1 do {
+				for "_enumz" from 0 to _number step 1 do {
 					// B_Slingload_01_Fuel_F, CargoNet_01_barrels_F,CBRNContainer_01_closed_yellow_F 
 					private _object = createSimpleObject ["CargoNet_01_barrels_F", [_posx, _posy, _posz]];
 					private _container = ["new", [netId _object, ((getModelInfo _object) select 0)]] call OO_CONTAINER;
@@ -67,7 +67,7 @@
 	};
 
 	private _camion = "B_Truck_01_ammo_F" createVehicle _position;
-	_position = _camion getRelPos [25, 180];
+	_position = _camion getRelPos [(10 + random 10), (10 + random 10)];
 	_gc = _gc + ([_position select 0, _position select 1, (getPosASL _camion) select 2] call createbk18stock);
 
 	private _group = createGroup east;
@@ -83,6 +83,7 @@
 
 	private _container = ["new", [netId _camion, ((getModelInfo _camion) select 0)]] call OO_CONTAINER;
 	["addItemsByLabel", [["shippingnote", -1]]] call _container;
+	["addItemsByLabel", [["am212", -1]]] call _container;
 	"save" call _container;
 	["delete", _container] call OO_CONTAINER;
 	sleep 3600;
