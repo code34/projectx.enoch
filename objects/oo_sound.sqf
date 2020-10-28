@@ -26,6 +26,7 @@
 		PRIVATE VARIABLE("string","mode");
 		PRIVATE VARIABLE("array","forest");
 		PRIVATE VARIABLE("array","village");
+		PRIVATE VARIABLE("array","night");
 
 		PUBLIC FUNCTION("","constructor") { 
 			DEBUG(#, "OO_SOUND::constructor")
@@ -36,8 +37,12 @@
 			private _array = ["microwave.ogg","cookiepan.ogg", "lullaby.ogg", "ghostlyvoices.ogg", "cough.ogg", "razor.ogg", "evacuation.ogg", "rustydoor.ogg","lockdoor.ogg", "vanishroar.ogg"];
 			MEMBER("village", _array);
 			
-			private _array = ["wscreaming.ogg", "aliengate.ogg", "screechy.ogg", "comeback.ogg", "whisper.ogg", "wetfoot.ogg", "wildanimal.ogg", "boar.ogg"];
+			private _array = ["wscreaming.ogg", "dock.ogg", "screechy.ogg", "comeback.ogg", "whisper.ogg", "wetfoot.ogg", "wildanimal.ogg", "boar.ogg", "wavparser.ogg", "fallen.ogg"];
 			MEMBER("forest", _array);
+
+			private _array = ["stangeanimal1.ogg", "wscreaming.ogg", "whisper.ogg","wetfoot.ogg", "ghostforest.ogg", "scaryviolins.ogg", "childscream.ogg"];
+			MEMBER("night", _array);
+
 			SPAWN_MEMBER("playAmbientSounds", nil);
 		};
 
@@ -58,11 +63,11 @@
 
 		PUBLIC FUNCTION("","playAmbientSounds") {
 			while { true } do {
-				sleep (120 + random 480);
 				private _location = MEMBER("localizePlayer", nil);
 				switch (_location) do {
-					case "village" : { MEMBER("getExpHouse", nil); };
-					case "forest" : { MEMBER("getExpBack", nil); };
+					case "village" : { sleep (120 + random 480);MEMBER("getExpHouse", nil); };
+					case "forest" : { sleep (120 + random 480);MEMBER("getExpForest", nil); };
+					case "night" : { sleep (15 + random 15);MEMBER("getExpNight", nil); };
 					default {};
 				};
 			};
@@ -72,6 +77,8 @@
 			_houses = nearestObjects [player, ["House_F", "House"], 100];
 			sleep 0.2;
 			if (count _houses > 20) exitWith { "village";};
+			private _hour = date select 3;
+			if(((_hour >= 22) and (_hour <= 24)) or ((_hour >=0) and(_hour <=4))) exitWith {"night";};
 			private _trees = nearestTerrainObjects [player, ["Tree","Bush"], 100];
 			sleep 0.2;
 			if (count _trees > 20) exitWith {"forest";};
@@ -87,12 +94,21 @@
 			playSound3D [_sound, _object, false, getPosASL _object, 2, 1, 150];
 		};
 
-		PUBLIC FUNCTION("","getExpBack") {
+		PUBLIC FUNCTION("","getExpForest") {
 			private _screamers = nearestTerrainObjects [player, ["Tree","Bush"], 100];
 			sleep 0.2;
 			private _object = selectRandom _screamers;
 			private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
 			private _sound = _path + "sounds\" + (selectRandom MEMBER("forest", nil));
+			playSound3D [_sound, _object, false, getPosASL _object, 2, 1, 150];
+		};
+
+		PUBLIC FUNCTION("","getExpNight") {
+			private _screamers = nearestTerrainObjects [player, ["Tree","Bush", "House"], 100];
+			sleep 0.2;
+			private _object = selectRandom _screamers;
+			private _path = [(str missionConfigFile), 0, -15] call BIS_fnc_trimString;
+			private _sound = _path + "sounds\" + (selectRandom MEMBER("night", nil));
 			playSound3D [_sound, _object, false, getPosASL _object, 2, 1, 150];
 		};
 
@@ -103,5 +119,6 @@
 			DELETE_VARIABLE("mode");
 			DELETE_VARIABLE("village");
 			DELETE_VARIABLE("forest");
+			DELETE_VARIABLE("night");
 		};
 	ENDCLASS;
