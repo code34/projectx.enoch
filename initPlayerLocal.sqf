@@ -54,7 +54,9 @@
 	vitems_eating = compile preprocessFileLineNumbers "vitems\generic\eating.sqf";
 	vitems_drinking = compile preprocessFileLineNumbers "vitems\generic\drinking.sqf";
 	vitems_digesting = compile preprocessFileLineNumbers "vitems\generic\digesting.sqf";
+	vitems_boosting = compile preprocessFileLineNumbers "vitems\generic\boosting.sqf";
 	vitems_firing = compile preprocessFileLineNumbers "vitems\generic\firing.sqf";
+	vitems_fueling = compile preprocessFileLineNumbers "vitems\generic\fueling.sqf";
 	vitems_explosing = compile preprocessFileLineNumbers "vitems\generic\explosing.sqf";
 	vitems_tracking = compile preprocessFileLineNumbers "vitems\generic\tracking.sqf";
 	vitems_healing = compile preprocessFileLineNumbers "vitems\generic\healing.sqf";
@@ -156,7 +158,7 @@
 	// load inventory
 	// inventaire de base
 	//["armyradio","wrench","medicalkit","survivalration","H_HelmetB_tna_F","U_B_T_Soldier_F","30Rnd_65x39_caseless_khaki_mag","V_PlateCarrier1_tna_F","16Rnd_9x21_Mag","B_Carryall_oli_BTAmmo_F","acc_pointer_IR","optic_Aco","arifle_MX_khk_F","hgun_P07_khk_F","Binocular","ItemMap","ItemCompass","ItemWatch"];
-	//private _content = [["arifle_MSBS65_F",1], ["launch_RPG32_camo_F", 1],["armyradio",-1],["wrench",-1],["medicalkit",1],["survivalration",5], ["screwdriver", -1],["waterbottle",1],["30Rnd_65x39_caseless_mag_Tracer", 5]];
+	//private _content = [["arifle_MSBS65_F",1], ["launch_RPG32_camo_F", 1],["armyradio",-1],["wrench",-1],["medicalkit",1],["survivalration",5], ["screwdriver", -1],["waterbottle",1],["30Rnd_65x39_caseless_mag_Tracer", 5],["O_NVGoggles_grn_F", -1]];
 
 	capcontainer = ["new", [netId player, ((getModelInfo player) select 0)]] call OO_CONTAINER;
 	private _UID = getPlayerUID player;
@@ -199,12 +201,8 @@
 		};
 	};
 
-	/*	_test = "getContent" call capcontainer;
-	_print = [];
-	{
-		_print pushBack (_x select 0);
-	} forEach _test;
-	copyToClipboard format ["%1", _print];*/
+	//onMapSingleClick "player setpos _pos; true";
+	//controltower_01_f.p3d
 
 	// initialize ui requirement
 	uirequirement = "new" call oo_uirequirement;
@@ -216,19 +214,25 @@
 		private _hadvest = vest player;
 		private _haduniform = uniform player;
 		private _capacity = 0;
+		private _overloadtag = false;
+		private _boost = 0;
 		while { true } do {
-			_capacity = "getCapacity" call mygear;
-			_overload = floor(_capacity - ("countWeight" call capcontainer));
+			_capacity = ("getCapacity" call mygear) * 1.2;
+			if("getBoost" call health) then {_boost = 50;}else{_boost = 0;};
+			_overload = 100 - (floor((("countWeight" call capcontainer) + 0.001) * 100) / _capacity) + _boost;
 			switch (true) do { 
-				case (_overload > 20) : { player setAnimSpeedCoef 1.3;};
-				case (_overload > 10) : { player setAnimSpeedCoef 1.2;};
-				case (_overload > 0) : { player setAnimSpeedCoef 1.1;};
-				case (_overload > -10) : { player setAnimSpeedCoef 0.9;};
-				case (_overload > -20) : { player setAnimSpeedCoef 0.8;};
-				case (_overload > -30) : { player setAnimSpeedCoef 0.7;};
-				case (_overload > -40) : { player setAnimSpeedCoef 0.6;};
-				default { player setAnimSpeedCoef 1;}; 
+				case (_overload > 90) : { player setAnimSpeedCoef 1.35;_overloadtag = false;};
+				case (_overload > 80) : { player setAnimSpeedCoef 1.3;_overloadtag = false;};
+				case (_overload > 70) : { player setAnimSpeedCoef 1.2;_overloadtag = false;};
+				case (_overload > 60) : { player setAnimSpeedCoef 1.1;_overloadtag = false;};
+				case (_overload > 50) : { player setAnimSpeedCoef 1;_overloadtag = false;};
+				case (_overload > 40) : { player setAnimSpeedCoef 0.9;_overloadtag = true;};
+				case (_overload > 30) : { player setAnimSpeedCoef 0.8;_overloadtag = true;};
+				case (_overload > 20) : { player setAnimSpeedCoef 0.7;_overloadtag = true;};
+				case (_overload > 10) : { player setAnimSpeedCoef 0.6;_overloadtag = true;};
+				default { player setAnimSpeedCoef 0.5;_overloadtag = true;}; 
 			};
+			["setShowWeight", _overloadtag] call hud;
 			sleep 1;
 		};
 	};

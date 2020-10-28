@@ -25,6 +25,8 @@
 	call compile preprocessFileLineNumbers "objects\oo_sector_russian.sqf";
 	call compile preprocessFileLineNumbers "objects\oo_patrol.sqf";
 	call compile preprocessFileLineNumbers "objects\oo_intdb.sqf";
+	call compile preprocessFileLineNumbers "objects\oo_controltower.sqf";
+
 	//call compile preprocessFileLineNumbers "objects\oo_missionloader.sqf";
 
 	//call compile preprocessFileLineNumbers "scripts\fnc_enumvillages.sqf";
@@ -168,6 +170,9 @@
 	["setNeutre", _list] call _stuff;
 	"preload" call _stuff;
 
+	_controltower = "new" call OO_CONTROLTOWER;
+	"check" spawn _controltower;
+
 	private _size = 250;
 	private _count = 0;
 	for "_myx" from _size to (12500-_size) step (_size*2) do {
@@ -176,13 +181,6 @@
 			"check" spawn _location;
 		};
 	};
-
-/*	_sectors = ["getSectorsAroundPos", position player] call mygrid;
-	{
-		_position = ["getPosFromSector", _x] call mygrid;
-		_location = ["new", [_position, 250]] call OO_SECTOR;
-		"check" spawn _location;
-	} forEach _sectors;*/
 
 	for "_i" from 1 to 68 step 1 do {
 		private _markername = "enemy" + str(_i);
@@ -194,19 +192,6 @@
 		"check" spawn _location;
 		deleteMarker _markername;
 	};
-
-	// debug industrialize mission
-	//player setpos getMarkerPos "industrialsite_point";
-
-	// debug sitex
-	// sitex = 1;
-	//_building = (nearestObjects [[7277.76,2910.65,0], ["Land_DPP_01_mainFactory_old_F"], 50]) select 0;
-	//_position = _building getRelPos [30, random 360];
-	//player setpos _position;
-
-	//labox = 1;
-	//_position = [7475.38,2541.66,0];
-	//player setPos _position;
 
 	/// unites russes RHS - VV 
 	// vehicules : rhs_btr70_vv, rhs_brm1k_vv,rhs_uaz_open_vv, RHS_Ural_Open_Flat_VV_01
