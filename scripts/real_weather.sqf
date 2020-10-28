@@ -39,8 +39,8 @@
 	// If Fastime is on
 	// Ratio 1 real time second for x game time seconds
 	// Default: 1 real second = 6 second in game
-	_daytimeratio = 2;
-	_nighttimeratio = 24;
+	_daytimeratio = 24;
+	_nighttimeratio = 48;
 
 	// send sync data across the network each xxx seconds
 	// 60 real seconds by default is a good value
@@ -171,10 +171,10 @@
 		if((overcast > 0.7) and (_overcast > overcast)) then {
 			_rain = 0.7 + random 0.3;
 		} else {
-			if(random 1 < 0.8) then {
-				_rain = 0.5 + (random 0.5);
+			if(random 1 > 0.8) then {
+				_rain = random 0.5;
 			} else {
-				_rain = 0.2 + (random 0.5);
+				_rain = 0.5 + (random 0.5);
 			};
 		};
 		if((date select 3 > 2) and (date select 3 <6)) then {
@@ -187,10 +187,10 @@
 			if((_lastrain > 0.6) and (_rain < 0.2)) then {
 				_fog = 0.2 + random 0.2;
 			} else {
-				if(random 1 > 0.80) then {
-					_fog = 0.15 + random 0.05;
-				} else {
+				if(random 1 > 0.8) then {
 					_fog = 0.15 + random 0.15;
+				} else {
+					_fog = 0.15 + random 0.05;
 				};
 			};
 		};
