@@ -16,7 +16,7 @@
 		_vehicle = _this select 0;
 		_position = _this select 1;
 
-		while { (_vehicle distance _position < 500) } do { sleep 30;};
+		while { (_vehicle distance [6000,6000,1] < 6000) } do { sleep 30;};
 
 		if(player in (crew _vehicle)) then {
 			if((missionNamespace getVariable ["xsitereport", 0]) isEqualTo 0) then {

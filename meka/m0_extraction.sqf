@@ -13,7 +13,7 @@
 	private _marker2 = createMarkerLocal [_name, _position];
 	_marker2 setMarkerShape  "ICON";
 	_marker2 setMarkerType "hd_pickup";
-	_marker2 setMarkerText "Extraction Point";
+	_marker2 setMarkerText "Escape Point";
 	_marker2 setMarkerColor "ColorRed";
 	_marker2 setMarkerSize [0.5,0.5];
 	_marker2 setMarkerBrush "FDiagonal";
@@ -31,7 +31,6 @@
 		private _flag = false;
 		while {!_flag} do {
 			_flag = _vehicle getVariable ["enginerepaired", false];
-			if((missionNamespace getVariable ["xsitereport", 0]) isEqualTo 1) then { _flag = true;};
 			_vehicle setHitPointDamage["HitEngine", 1];
 			sleep 1;
 		};
