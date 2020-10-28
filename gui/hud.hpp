@@ -103,7 +103,15 @@ class hud {
 				w = 6 * pixelGrid * pixelW;
 				h = 5.2 * pixelGrid * pixelH;
 				text = "";
-			};						
+			};
+			class OOP_Picture_weight_120: OOP_Picture {
+				idc = 120;
+				x = (safezoneW * 0.9) + safezoneX;
+				y = (safezoneH * 0.84) + safezoneY;
+				w = 6 * pixelGrid * pixelW;
+				h = 5.2 * pixelGrid * pixelH;
+				text = "";
+			};
 			class OOP_Text_drink_106: OOP_Text {
 				idc = 106;
 				x = (safezoneW * 0.94) + safezoneX;
