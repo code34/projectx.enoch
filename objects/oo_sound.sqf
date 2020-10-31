@@ -34,13 +34,13 @@
 			private _path = ([(str missionConfigFile), 0, -15] call BIS_fnc_trimString) + "sounds\";
 			MEMBER("path", _path);
 			
-			private _array = ["microwave.ogg","cookiepan.ogg", "lullaby.ogg", "ghostlyvoices.ogg", "cough.ogg", "razor.ogg", "evacuation.ogg", "rustydoor.ogg","lockdoor.ogg", "vanishroar.ogg"];
+			private _array = ["microwave.ogg","cookiepan.ogg", "childscream.ogg", "lullaby.ogg", "ghostlyvoices.ogg", "cough.ogg", "razor.ogg", "evacuation.ogg", "rustydoor.ogg","lockdoor.ogg", "vanishroar.ogg"];
 			MEMBER("village", _array);
 			
 			private _array = ["wscreaming.ogg", "dock.ogg", "screechy.ogg", "comeback.ogg", "whisper.ogg", "wetfoot.ogg", "wildanimal.ogg", "boar.ogg", "wavparser.ogg", "fallen.ogg"];
 			MEMBER("forest", _array);
 
-			private _array = ["stangeanimal1.ogg", "wscreaming.ogg", "whisper.ogg","wetfoot.ogg", "ghostforest.ogg", "scaryviolins.ogg", "childscream.ogg"];
+			private _array = ["stangeanimal1.ogg", "whisper.ogg","wetfoot.ogg", "ghostforest.ogg", "scaryviolins.ogg", "leafwalking.ogg", "crowcall.ogg", "jogging.ogg", "breath.ogg", "weirdpulsing.ogg", "destructionwood.ogg", "woodstomp.ogg", "exoticcreature.ogg"];
 			MEMBER("night", _array);
 
 			SPAWN_MEMBER("playAmbientSounds", nil);
@@ -67,7 +67,7 @@
 				switch (_location) do {
 					case "village" : { sleep (120 + random 480);MEMBER("getExpHouse", nil); };
 					case "forest" : { sleep (120 + random 480);MEMBER("getExpForest", nil); };
-					case "night" : { sleep (15 + random 15);MEMBER("getExpNight", nil); };
+					case "night" : { sleep (10 + random 5); MEMBER("getExpNight", nil); };
 					default {};
 				};
 			};
