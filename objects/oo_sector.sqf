@@ -63,8 +63,8 @@
 			DEBUG(#, "OO_SECTOR::spawnVehicle")
 			private _roads = MEMBER("position", nil) nearRoads MEMBER("sectorsize", nil);
 			private _vehicles = [];
-			private _count = 1 + ceil(random 4);
 			if(count _roads isEqualTo 0) exitWith {};
+			private _count = ceil(count _roads / 10);
 			while { _count > 0 } do {
 				_count = _count - 1;
 				private _position = selectRandom _roads;
@@ -86,6 +86,7 @@
 					_type = selectRandom ["RHS_UAZ_MSV_01","rhs_uaz_open_MSV_01","RHS_Ural_VMF_01","RHS_Ural_Civ_01","RHS_Ural_Open_Civ_03", "C_Truck_02_transport_F","C_Truck_02_covered_F", "Land_Wreck_BMP2_F", "Land_Wreck_BRDM2_F", "Land_Wreck_Skodovka_F", "Land_Wreck_Slammer_F", "Land_Wreck_Slammer_hull_F", "Land_Wreck_T72_hull_F", "Land_Wreck_UAZ_F", "Land_Wreck_Ural_F"];
 				}; 
 				private _vehicle = _type createVehicle _position;
+				_vehicle allowDamage false;
 				_vehicle setFuel (0.1 + random 0.3);
 				_vehicle setdir _dir;
 				if(random 1 > 0.3) then {
@@ -97,6 +98,7 @@
 					};
 				};
 				_vehicles pushBack _vehicle;
+				_vehicle spawn { sleep 5; _this allowDamage true;};
 				if (_requirement) then { _vehicle call fnc_requirement;};
 			};
 			MEMBER("vehicles", _vehicles);
@@ -154,13 +156,13 @@
 			#ifdef DEBUGSECTOR
 			private _id = random 65000;
 			private _name = format["%1_spawn_%2", _zonetype, _id];
-			private _marker = createMarker [_name, _position];
-			_marker setMarkerShape "ICON";
-			_marker setMarkerType "loc_CivilDefense";
-			_marker setMarkerText _name;
-			_marker setMarkerColor "ColorGreen";
-			_marker setMarkerSize [0.7,0.7];
-			_marker setMarkerBrush "FDiagonal";
+			private _marker = createMarkerLocal [_name, _position];
+			_marker setMarkerShapeLocal "ICON";
+			_marker setMarkerTypeLocal "loc_CivilDefense";
+			_marker setMarkerTextLocal _name;
+			_marker setMarkerColorLocal "ColorGreen";
+			_marker setMarkerSizeLocal [0.7,0.7];
+			_marker setMarkerBrushLocal "FDiagonal";
 			#endif
 
 			if!(_zonetype isEqualTo "ventilated") then {
@@ -183,7 +185,7 @@
 			private _position = MEMBER("position", nil);
 			MEMBER("monitor", true);
 			while { MEMBER("monitor", nil) } do {
-				private _list = _position nearEntities [["Man", "Air", "Car", "Motorcycle", "Tank"], 350];
+				private _list = _position nearEntities [["Man", "Air", "Car", "Motorcycle", "Tank"], 500];
 				sleep 1;
 				if((west countside _list > 0) and !MEMBER("active",nil)) then {
 					#ifdef DEBUGSECTOR
@@ -347,7 +349,7 @@
 						if(count(crew _this) isEqualTo 0) then {
 							_credit = _credit - 1;
 						} else {
-							_credit = 60;
+							_credit = 30;
 						};
 						sleep 10;
 					};
