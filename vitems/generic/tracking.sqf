@@ -9,20 +9,21 @@
 
 		private _id = random 65000;
 		private _name = format["gpstracker_%1", _id];
-		private _marker = createMarker [_name, position _object];
+		private _marker = createMarkerLocal [_name, position _object];
 		
-		_marker setMarkerShape "ICON";
-		_marker setMarkerType "loc_CivilDefense";
-		_marker setMarkerText _name;
+		_marker setMarkerShapeLocal "ICON";
+		_marker setMarkerTypeLocal "loc_CivilDefense";
+		_marker setMarkerTextLocal _name;
 		_marker setMarkerColor "ColorRed";
-		_marker setMarkerSize [0.5,0.5];
-		_marker setMarkerBrush "FDiagonal";
+		_marker setMarkerSizeLocal [0.5,0.5];
+		_marker setMarkerBrushLocal "FDiagonal";
 		
 		while { alive _object && _time > 0} do {
-			_marker setMarkerPos (position _object);
+			_marker setMarkerPosLocal (position _object);
 			_time = _time - 1;
 			sleep 5;
 		};
+		deleteMarkerLocal _marker;
 	};
 
 	true;
