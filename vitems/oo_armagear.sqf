@@ -262,6 +262,7 @@
 				case "uniform" : {player forceAddUniform _item;}; 
 				case "vest" : {player addVest _item;}; 
 				case "backpack" : {
+					removeBackpack player;
 					player addBackpack _item;
 					clearAllItemsFromBackpack player;
 				}; 
