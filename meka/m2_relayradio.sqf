@@ -5,10 +5,11 @@
 		sleep 0.1;
 	};
 
-	private _radio = selectRandom (nearestObjects [[6000,6000], ["Land_Communication_F"], 7000]);
+	private _tmppos = selectRandom [[3000,3000],[6000,3000],[9000,3000],[3000,6000],[6000,6000],[9000,6000],[3000,9000],[6000,9000],[9000,9000]];
+	radiocenter = selectRandom (nearestObjects [_tmppos, ["Land_TBox_F"], 3000]);
 	sleep 1;
 	private _name = "antenne_radio";
-	_missionmarker = createMarker [_name, position _radio];
+	_missionmarker = createMarker [_name, position radiocenter];
 	_missionmarker setMarkerShape "ICON";
 	_missionmarker setMarkerType "selector_selectedMission";
 	_missionmarker setMarkerText "Antenne Radio";
@@ -16,7 +17,6 @@
 	_missionmarker setMarkerSize [1,1];
 	_missionmarker setMarkerBrush "FDiagonal";
 
-	radiocenter = (nearestObjects [position _radio, ["Land_TBox_F"], 50]) select 0;
 	private _object = radiocenter;
 	private _container = ["new", [netId _object , (getModelInfo _object) select 0]] call OO_CONTAINER;
 	private _content = [["radioamplifier", 1]];
