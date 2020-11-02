@@ -41,7 +41,7 @@
 			DEBUG(#, "OO_CONTAINER::load")
 			private _netId = MEMBER("netId", nil);
 			private _properties = ["remoteCall", ["vitems_getProperties",  _netId, 2, ["", 0,0]]] call bmeclient;
-			private _inventory = ["remoteCall", ["vitems_getInventory",  _netId, 2, []]] call bmeclient;
+			private _inventory = ["remoteCall", ["vitems_getInventory",  _netId, 2, [false,[]]]] call bmeclient;
 			private _list = MEMBER("fillInventory", _inventory select 1);
 			MEMBER("content", _list);
 			MEMBER("properties", _properties);
