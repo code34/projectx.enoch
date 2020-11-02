@@ -43,10 +43,10 @@
 			MEMBER("declareHandler", nil);
 			MEMBER("handlers", []);
 
-			MEMBER("handlers", nil) pushBack (["runReceiveCallQueue", 0.05] spawn MEMBER("this", nil));
-			MEMBER("handlers", nil) pushBack (["runReceiveSpawnQueue", 0.05] spawn MEMBER("this", nil));
-			MEMBER("handlers", nil) pushBack (["runSendCallQueue", 0.05] spawn MEMBER("this", nil));
-			MEMBER("handlers", nil) pushBack (["runSendSpawnQueue", 0.05] spawn MEMBER("this", nil));
+			MEMBER("handlers", nil) pushBack (["runReceiveCallQueue", 0.01] spawn MEMBER("this", nil));
+			MEMBER("handlers", nil) pushBack (["runReceiveSpawnQueue", 0.01] spawn MEMBER("this", nil));
+			MEMBER("handlers", nil) pushBack (["runSendCallQueue", 0.01] spawn MEMBER("this", nil));
+			MEMBER("handlers", nil) pushBack (["runSendSpawnQueue", 0.01] spawn MEMBER("this", nil));
 		};
 
 		// Declare connexion handlers
