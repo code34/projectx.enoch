@@ -3,9 +3,12 @@ THE PROGRAM OF TONIGHT !
 ========================
 ========================
 
-bug:
-- verifier les zones de spawn
-- horde de zombie
+bug
+- bug container: setitemcount line 4 (diviseur nul)
+- corriger le probleme de marker red and black
+
+improvement:
+- ajouter des sons la nuit + zombies
 
 fonctionnalité optionnelle
 - bazooka reload
