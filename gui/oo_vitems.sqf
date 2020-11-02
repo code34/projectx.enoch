@@ -500,7 +500,6 @@ CLASS("oo_Vitems")
 			private _item = ["getItem", _index] call _scontainer;
 			private _transfert = [_scontainer, _dcontainer, _item select 0, _item select 4];
 			MEMBER("transfertItem2", _transfert);
-			MEMBER("refresh", nil);
 		} else {
 			switch (true) do {
 				case (_destination isEqualTo MEMBER("OOP_pic_head", nil)) : {
@@ -513,8 +512,8 @@ CLASS("oo_Vitems")
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
 					};
-					_picture = [_class, "OOP_pic_head", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_helmet_gs.paa"];
-					MEMBER("setItemPicture", _picture);
+					//_picture = [_class, "OOP_pic_head", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_helmet_gs.paa"];
+					//MEMBER("setItemPicture", _picture);
 				};
 
 				case (_destination isEqualTo MEMBER("OOP_pic_vest", nil)) : {
@@ -527,8 +526,8 @@ CLASS("oo_Vitems")
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
 					};
-					_picture = [_class, "OOP_pic_vest", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_vest_gs.paa"];
-					MEMBER("setItemPicture", _picture);
+					//_picture = [_class, "OOP_pic_vest", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_vest_gs.paa"];
+					//MEMBER("setItemPicture", _picture);
 				};
 
 				case (_destination isEqualTo MEMBER("OOP_pic_uniform", nil)) : {
@@ -541,8 +540,8 @@ CLASS("oo_Vitems")
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
 					};
-					_picture = [_class, "OOP_pic_uniform", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_uniform_gs.paa"];
-					MEMBER("setItemPicture", _picture);
+					//_picture = [_class, "OOP_pic_uniform", "CfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_uniform_gs.paa"];
+					//MEMBER("setItemPicture", _picture);
 				};
 
 				case (_destination isEqualTo MEMBER("OOP_pic_backpack", nil)) : {
@@ -555,8 +554,8 @@ CLASS("oo_Vitems")
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
 					};
-					_picture = [_class, "OOP_pic_backpack", "CfgVehicles", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_backpack_gs.paa"];
-					MEMBER("setItemPicture", _picture);
+					//_picture = [_class, "OOP_pic_backpack", "CfgVehicles", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_backpack_gs.paa"];
+					//MEMBER("setItemPicture", _picture);
 				};
 
 				case (_destination isEqualTo MEMBER("OOP_pic_primaryweapon", nil)) : {
@@ -570,8 +569,8 @@ CLASS("oo_Vitems")
 						["addItem", _item] call capcontainer;
 					};
 					player selectWeapon (_object select 0);
-					_picture = [_object select 0, "OOP_pic_primaryweapon", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_primary_gs.paa"];
-					MEMBER("setItemPicture", _picture);
+					//_picture = [_object select 0, "OOP_pic_primaryweapon", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_primary_gs.paa"];
+					//MEMBER("setItemPicture", _picture);
 				};
 
 				case (_destination isEqualTo MEMBER("OOP_pic_secondaryweapon", nil)) : {
@@ -585,8 +584,8 @@ CLASS("oo_Vitems")
 						["addItem", _item] call capcontainer;
 					};
 					player selectWeapon (_object select 0);
-					_picture = [_object select 0, "OOP_pic_secondaryweapon", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_secondary_gs.paa"];
-					MEMBER("setItemPicture", _picture);
+					//_picture = [_object select 0, "OOP_pic_secondaryweapon", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_secondary_gs.paa"];
+					//MEMBER("setItemPicture", _picture);
 				};
 
 				case (_destination isEqualTo MEMBER("OOP_pic_gunweapon", nil)) : {
@@ -600,8 +599,8 @@ CLASS("oo_Vitems")
 						["addItem", _item] call capcontainer;
 					};
 					player selectWeapon (_object select 0);
-					_picture = [_object select 0, "OOP_pic_gunweapon", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_hgun_gs.paa"];
-					MEMBER("setItemPicture", _picture);
+					//_picture = [_object select 0, "OOP_pic_gunweapon", "cfgWeapons", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_hgun_gs.paa"];
+					//MEMBER("setItemPicture", _picture);
 				};
 
 				case (_destination isEqualTo MEMBER("OOP_pic_magprimaryweapon", nil)) : {
@@ -618,8 +617,12 @@ CLASS("oo_Vitems")
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
 					};
-					_picture = [_object select 0, "OOP_pic_magprimaryweapon", "CfgMagazines", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_magazine_gs.paa"];
-					MEMBER("setItemPicture", _picture);
+					//_picture = [_object select 0, "OOP_pic_magprimaryweapon", "CfgMagazines", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_magazine_gs.paa"];
+					//MEMBER("setItemPicture", _picture);
+					MEMBER("this", nil) spawn {
+						sleep 3;
+						if(dialog) then {"refresh" call _this;};
+					};
 				};
 
 				case (_destination isEqualTo MEMBER("OOP_pic_magsecondaryweapon", nil)) : {
@@ -636,8 +639,10 @@ CLASS("oo_Vitems")
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
 					};
-					_picture = [_object select 0, "OOP_pic_magsecondaryweapon", "CfgMagazines", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_magazine_gs.paa"];
-					MEMBER("setItemPicture", _picture);
+					MEMBER("this", nil) spawn {
+						sleep 3;
+						if(dialog) then {"refresh" call _this;};
+					};
 				};
 
 				case (_destination isEqualTo MEMBER("OOP_pic_maggunweapon", nil)) : {
@@ -654,8 +659,10 @@ CLASS("oo_Vitems")
 						private _item = ["popItem", _index] call proxcontainer;
 						["addItem", _item] call capcontainer;
 					};
-					_picture = [_object select 0, "OOP_pic_maggunweapon", "CfgMagazines", "A3\Ui_f\data\GUI\Rsc\RscDisplayGear\ui_gear_magazine_gs.paa"];
-					MEMBER("setItemPicture", _picture);
+					MEMBER("this", nil) spawn {
+						sleep 3;
+						if(dialog) then {"refresh" call _this;};
+					};
 				};
 
 				case (_destination isEqualTo MEMBER("OOP_pic_opticprimaryweapon", nil)) : {
@@ -772,6 +779,7 @@ CLASS("oo_Vitems")
 
 				default { hint "other";};
 			};
+		MEMBER("refresh", nil);
 		};
 	};
 
