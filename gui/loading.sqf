@@ -20,6 +20,7 @@
 	if(_tocreate) then {
 		//_object = createSimpleObject ["Box_B_UAV_06_F", [0,0,0]];
 		_object = "Box_B_UAV_06_F" createVehicle [0,0,0];
+		_object spawn {sleep 120;deleteVehicle _this;};
 		proxcontainer = ["new", [netId _object, ((getModelInfo _object) select 0)]] call OO_CONTAINER;
 		createDialog "VITEMS";
 	} else {
