@@ -1,0 +1,1 @@
+	[20,true] call vitems_eating;

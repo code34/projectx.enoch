@@ -1,4 +1,4 @@
-OnloadName="Projectx";
+OnloadName="Extinction";
 Author="Code34";
 loadscreen="splash\zombie.jpg";
 OnLoadMission="When bullets are more valuable than humans";
@@ -30,6 +30,7 @@ class cfgVitems {
 #include "vitems\hpp\mission.hpp"
 #include "vitems\hpp\man.hpp"
 #include "vitems\hpp\reserved.hpp"
+#include "vitems\hpp\animal.hpp"
 };
 
 class CfgDebriefing
