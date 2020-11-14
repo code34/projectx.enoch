@@ -79,7 +79,10 @@
 			private _vest = vest player;
 			private _bag = backpack player;
 			private _muzzle = (player weaponAccessories (primaryWeapon player)) select 0;
-			[_primaryweapon,_secondaryweapon, _handgunweapon, _binocular, _primaryoptic, _secondaryoptic, _handgunoptic, _primarymag, _secondarymag, _handgunmag, _primaryflash, _secondaryflash, _handgunflash, _headgear, _uniform, _vest, _bag, _muzzle];
+			private _map = if([player, "ItemMap"] call BIS_fnc_hasItem) then {"ItemMap";}else{"";};
+			private _grenade = currentThrowable player;
+			if(_grenade isEqualTo []) then {_grenade = "";}else{_grenade = _grenade select 0;};
+			[_primaryweapon,_secondaryweapon, _handgunweapon, _binocular, _primaryoptic, _secondaryoptic, _handgunoptic, _primarymag, _secondarymag, _handgunmag, _primaryflash, _secondaryflash, _handgunflash, _headgear, _uniform, _vest, _bag, _muzzle, _map, _grenade];
 		};
 
 		PUBLIC FUNCTION("array","putAllStuff") {
@@ -103,6 +106,7 @@
 			player addBackpack (_this select 16);
 			clearAllItemsFromBackpack player;
 			player addPrimaryWeaponItem (_this select 17);
+			player addWeapon (_this select 18);
 		};
 
 		PUBLIC FUNCTION("array","loadCfg") {
@@ -270,7 +274,9 @@
 				case "secondaryweapon" : {player addSecondaryWeaponItem _item;};
 				case "handgunweapon" : {player addHandgunItem _item;};
 				case "muzzle" : {player addPrimaryWeaponItem _item;};
-				case "binocular" : { player addWeapon _item};
+				case "binocular" : { player addWeapon _item;};
+				case "map" : {player addItem _item;};
+				case "grenade" : {player addItem _item;};
 				default {}; 
 			};
 		};
@@ -361,6 +367,16 @@
 			};
 		};
 
+		PUBLIC FUNCTION("","throw") {
+			private _type = (currentThrowable player);
+			if!(_type isEqualTo []) then {
+				_type = _type select 0;
+				if(["containsItem", _type] call capcontainer) then {
+					["consumeItem", [_type,1]] call capcontainer;
+				};
+			};
+		};
+
 		PUBLIC FUNCTION("","reloadWeapon") {
 			DEBUG(#, "OO_ARMAGEAR::reloadWeapon")
 			private _type = "";
@@ -412,6 +428,11 @@
 				switch (_type) do { 
 					case "primaryweapon" : { 
 						_wp = (primaryWeapon player);
+						private _supportedMags = getArray (configFile >> "CfgWeapons" >> _wp >> "magazines");
+						if!(_item in _supportedMags) exitWith {
+							hint "Ammo not supported by Weapon";
+							false;
+						};
 						_mags = primaryWeaponMagazine player;
 						_items = primaryWeaponItems player;
 						{
@@ -422,6 +443,11 @@
 					}; 
 					case "secondaryweapon" : {
 						_wp = (secondaryWeapon player);
+						private _supportedMags = getArray (configFile >> "CfgWeapons" >> _wp >> "magazines");
+						if!(_item in _supportedMags) exitWith {
+							hint "Ammo not supported by Weapon";
+							false;
+						};
 						_mags = secondaryWeaponMagazine player;
 						_items = secondaryWeaponItems player;
 						{
@@ -432,6 +458,11 @@
 					}; 
 					case "handgunweapon" : {
 						_wp = (handgunWeapon player);
+						private _supportedMags = getArray (configFile >> "CfgWeapons" >> _wp >> "magazines");
+						if!(_item in _supportedMags) exitWith {
+							hint "Ammo not supported by Weapon";
+							false;
+						};
 						_mags = handgunMagazine player;
 						_items = handgunItems player;
 						{
@@ -446,6 +477,7 @@
 				if(_count isEqualTo 0) then {_count = 10000;};
 				player addMagazine [_item, _count];
 				reload player;
+				true;
 			};
 		};
 
@@ -469,11 +501,13 @@
 				player addBackpack (_items select 0);
 				clearAllItemsFromBackpack player;
 			};
-			if(MEMBER("isMagazine",(_items select 0))) then {
-				for "_i" from ((_items select 4) -1) to 0 step -1 do {
-					player addMagazine (_items select 0);
-				};	
-			};
+
+			// desactiver car ça rajoute des muns à l infini
+			//if(MEMBER("isMagazine",(_items select 0))) then {
+			//	for "_i" from ((_items select 4) -1) to 0 step -1 do {
+					//player addMagazine (_items select 0);
+			//	};
+			//};
 		};
 
 		PUBLIC FUNCTION("array","addToInventory2") {
@@ -550,6 +584,13 @@
 			};
 			if(_cargo isEqualTo (headgear player)) then{
 				removeHeadgear player;
+			};
+			if(_cargo isEqualTo "ItemMap") then {
+				player unassignItem "ItemMap";
+				player removeItem "ItemMap";
+			};
+			if(_cargo isEqualTo ((currentThrowable player) select 0)) then {
+				player removeMagazine ((currentThrowable player) select 0);
 			};
 		};
 
