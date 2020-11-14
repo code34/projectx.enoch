@@ -66,6 +66,7 @@
 			// _this select 3 = ctrl stroke
 			// _this select 4 = alt stroke
 			private _reload = (actionKeys "ReloadMagazine") select 0;
+			private _throw = (actionKeys "Throw") select 0;
 
 			switch (_this select 1) do { 
 				case DIK_UP : { MEMBER("keyUp", nil); }; 
@@ -83,6 +84,7 @@
 					//player action ["loadmagazine", player, player, 0, 1 ,"vbs2_us_m16a2_iron_gla", "vbs2_us_m16a2_iron_gla"];
 					"reloadWeapon" call mygear;
 				};
+				case _throw : {"throw" call mygear;};
 				default {  /*...code...*/ }; 
 			};
 			false;
