@@ -182,7 +182,7 @@
 		};
 	};
 
-	for "_i" from 1 to 68 step 1 do {
+	for "_i" from 1 to 74 step 1 do {
 		private _markername = "enemy" + str(_i);
 		private _militarized = false;
 		if(random 1 > 0.1) then {_militarized = true;};

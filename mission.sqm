@@ -8,7 +8,7 @@ class EditorData
 	toggles=513;
 	class ItemIDProvider
 	{
-		nextID=389;
+		nextID=395;
 	};
 	class MarkerIDProvider
 	{
@@ -16,10 +16,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={12522.191,78.805428,12664.348};
-		dir[]={-0.25332987,-0.45091042,-0.85586435};
-		up[]={-0.12708063,0.89256883,-0.43263313};
-		aside[]={-0.95899665,0.00083511323,0.28341633};
+		pos[]={12396.42,78.805428,12645.771};
+		dir[]={0.87774885,-0.25618446,-0.40487835};
+		up[]={0.2331921,0.96662706,-0.10608306};
+		aside[]={-0.41854319,0.0013001561,-0.90819597};
 	};
 };
 binarizationWanted=0;
@@ -173,7 +173,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=141;
+		items=147;
 		class Item0
 		{
 			dataType="Group";
@@ -9761,6 +9761,78 @@ class Mission
 			alpha=0;
 			id=388;
 			atlOffset=-4.9591064e-005;
+		};
+		class Item141
+		{
+			dataType="Marker";
+			position[]={3832.324,384.54001,1814.684};
+			name="enemy69";
+			markerType="ELLIPSE";
+			type="ellipse";
+			a=100;
+			b=100;
+			id=389;
+			atlOffset=-4.1421814;
+		};
+		class Item142
+		{
+			dataType="Marker";
+			position[]={4837.7612,174.472,874.31799};
+			name="enemy70";
+			markerType="ELLIPSE";
+			type="ellipse";
+			a=100;
+			b=100;
+			id=390;
+			atlOffset=-3.2603607;
+		};
+		class Item143
+		{
+			dataType="Marker";
+			position[]={6507.4189,27.182129,9251.2881};
+			name="enemy71";
+			markerType="ELLIPSE";
+			type="ellipse";
+			a=100;
+			b=100;
+			id=391;
+			atlOffset=-3.8125648;
+		};
+		class Item144
+		{
+			dataType="Marker";
+			position[]={11268.878,38.577999,7897.8638};
+			name="enemy72";
+			markerType="ELLIPSE";
+			type="ellipse";
+			a=100;
+			b=100;
+			id=392;
+			atlOffset=-4.1423683;
+		};
+		class Item145
+		{
+			dataType="Marker";
+			position[]={7635.415,1.8789999,11536.463};
+			name="enemy73";
+			markerType="ELLIPSE";
+			type="ellipse";
+			a=100;
+			b=100;
+			id=393;
+			atlOffset=-3.9459879;
+		};
+		class Item146
+		{
+			dataType="Marker";
+			position[]={7928.1099,0.97399998,11665.14};
+			name="enemy74";
+			markerType="ELLIPSE";
+			type="ellipse";
+			a=100;
+			b=100;
+			id=394;
+			atlOffset=-4.1420245;
 		};
 	};
 };
