@@ -472,6 +472,10 @@ CLASS("oo_Vitems")
 	};
 
 	PUBLIC FUNCTION("", "refresh"){
+		private _array = [];
+		MEMBER("destination", _array);
+		private _array = [];
+		MEMBER("source", _array);
 		MEMBER("refreshInventory", nil);
 		private _array = [MEMBER("OOP_Listbox_Proximity",nil), proxcontainer, []];
 		MEMBER("refresh_LISTBOX", _array);
