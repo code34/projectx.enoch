@@ -11,7 +11,7 @@ class Vitems {
 				x = (safezoneW * 0.26) + safeZoneX;
 				y = (safezoneH * 0.09) + safeZoneY;
 				w = (safezoneW * 0.48);
-				h = (safezoneH * 0.70);
+				h = (safezoneH * 0.71);
 				text = "";
 				colorBackground[] = {0, 0, 0, 0.8};
 				size = (GUI_GRID_H * 1.15);
@@ -102,14 +102,14 @@ class Vitems {
 						tooltipColorText[] = {1, 1, 1, 1};
 						class Attributes {
 							align = "center";
-						};	
+						};
 					};
 					class OOP_Text_Description_107: RscStructuredText {
 						idc = 107;
 						x = (safezoneW * 0.312);
 						y = (safezoneH * 0.092);
 						w = (safezoneW * 0.427);
-						h = (safezoneH * 0.696);
+						h = (safezoneH * 0.706);
 						text = "Description";
 						colorBackground[] = {0.6, 0.6, 0.6, 0.5};
 						size = (GUI_GRID_H * 1.15);
@@ -256,7 +256,7 @@ class Vitems {
 						onMouseButtonDblClick = "['removeItem', 'binocular'] call VITEMS";
 					};
 					class mapBackground : RscStructuredText {
-						idc = 1099;
+						idc = 1103;
 						x = (safezoneW * 0.261);
 						y = (safezoneH * 0.597);
 						w = (safezoneW * 0.05);
@@ -280,7 +280,35 @@ class Vitems {
 						onLBDragging = "['setDestination', _this] call VITEMS";
 						onLBDrag = "['setSource', _this] call VITEMS";
 						onMouseButtonClick = "['setInvMenu', _this] call VITEMS";
-						onMouseButtonDblClick = "['removeItem', 'binocular'] call VITEMS";
+						onMouseButtonDblClick = "['removeItem', 'map'] call VITEMS";
+					};
+
+					class compassBackground : RscStructuredText {
+						idc = 1104;
+						x = (safezoneW * 0.261);
+						y = (safezoneH * 0.698);
+						w = (safezoneW * 0.05);
+						h = (safezoneH * 0.1);
+						colorBackground[] = {0.5,0.5,0.5,1};
+					};
+					class compass : RscActiveText {
+						idc = 132;
+						x = (safezoneW * 0.261);
+						y = (safezoneH * 0.698);
+						w = (safezoneW * 0.05);
+						h = (safezoneH * 0.1);
+						style = "0x30 + 0x800";
+						soundDoubleClick[] = {"",0.1,1};
+						color[] = {1,1,1,1};
+						colorBackground[] = {0,0,0,1};
+						colorBackgroundSelected[] = {1,1,1,1};
+						colorFocused[] = {0.0,0.0,0.0,0};
+						onLBSelChanged = "['onLBSelChanged_OOP_Listbox_Proximity', _this] call Vitems;";
+						canDrag = 1;
+						onLBDragging = "['setDestination', _this] call VITEMS";
+						onLBDrag = "['setSource', _this] call VITEMS";
+						onMouseButtonClick = "['setInvMenu', _this] call VITEMS";
+						onMouseButtonDblClick = "['removeItem', 'compass'] call VITEMS";
 					};
 
 					class weaponsBackground: RscStructuredText {
