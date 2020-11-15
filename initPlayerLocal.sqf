@@ -157,8 +157,8 @@
 
 	// load inventory
 	// inventaire de base
-	//["armyradio","wrench","medicalkit","survivalration","H_HelmetB_tna_F","U_B_T_Soldier_F","30Rnd_65x39_caseless_khaki_mag","V_PlateCarrier1_tna_F","16Rnd_9x21_Mag","B_Carryall_oli_BTAmmo_F","acc_pointer_IR","optic_Aco","arifle_MX_khk_F","hgun_P07_khk_F","Binocular","ItemMap","ItemCompass","ItemWatch"];
-	//private _content = [["arifle_MSBS65_F",1], ["launch_RPG32_camo_F", 1],["armyradio",-1],["wrench",-1],["medicalkit",1],["survivalration",5], ["screwdriver", -1],["waterbottle",1],["30Rnd_65x39_caseless_mag_Tracer", 5],["O_NVGoggles_grn_F", -1]];
+	//["armyradio","wrench","medicalkit","survivalration","H_HelmetB_tna_F","U_B_T_Soldier_F","30Rnd_65x39_caseless_khaki_mag","V_PlateCarrier1_tna_F","16Rnd_9x21_Mag","B_Carryall_oli_BTAmmo_F","acc_pointer_IR","optic_Aco","arifle_MX_khk_F","hgun_P07_khk_F","Binocular","ItemMap","ItemCompass","ItemWatch", "SmokeShellBlue"];
+	//private _content = [["arifle_MSBS65_F",1], ["launch_RPG32_camo_F", 1],["armyradio",-1],["wrench",-1],["medicalkit",1],["survivalration",5], ["screwdriver", -1],["waterbottle",1],["30Rnd_65x39_caseless_mag_Tracer", 5],["O_NVGoggles_grn_F", -1],["RPG32_F", 2], ["RPG32_HE_F", 2], ["launch_RPG32_green_F", 1]];
 
 	capcontainer = ["new", [netId player, ((getModelInfo player) select 0)]] call OO_CONTAINER;
 	private _UID = getPlayerUID player;
@@ -166,7 +166,7 @@
 	private _content = [];
 
 	if(_backup isEqualTo []) then { 
-		_content = [["computetab", -1],["armyradio",-1],["medicalkit",1],["survivalration",2], ["Binocular", 1]];
+		_content = [["computetab", 1],["armyradio",1],["medicalkit",1],["survivalration",2], ["Binocular", 1], ["ItemMap",1], ["ItemCompass", 1]];
 		["overLoad", _content] call capcontainer;
 		["loadInventory", player] call capcontainer;
 		systemchat "Inventory load";
@@ -201,7 +201,17 @@
 		};
 	};
 
+
 	//onMapSingleClick "player setpos _pos; true";
+	if!(isserver) then {
+		for "_i" from 1 to 74 step 1 do {
+			private _markername = "enemy" + str(_i);
+			deleteMarker _markername;
+		};
+	};
+
+
+	//(selectRandom ["Cock_random_F", "Fin_blackwhite_F", "Fin_sand_F"]) createUnit [position player, _group];
 	//controltower_01_f.p3d
 
 	// initialize ui requirement
@@ -250,7 +260,7 @@
 	#endif
 
 	playMusic "ambientmusic2";
-	titleText ["<t size='5'>Project</t><t color='#ff9d00' size='6'>X</t><br/>by Code34", "PLAIN", -1, true, true];
+	titleText ["<t size='6'>e</t><t color='#ff9d00' size='6'>X</t><t size='6'>tinction</t><br/>by Code34", "PLAIN", -1, true, true];
 
 	_myLanguage = language;
 	switch (_myLanguage) do { 
