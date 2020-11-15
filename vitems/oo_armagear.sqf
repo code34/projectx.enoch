@@ -275,7 +275,7 @@
 				case "handgunweapon" : {player addHandgunItem _item;};
 				case "muzzle" : {player addPrimaryWeaponItem _item;};
 				case "binocular" : { player addWeapon _item;};
-				case "map" : {player addItem _item;};
+				case "map" : {player addWeapon _item;};
 				case "grenade" : {player addItem _item;};
 				default {}; 
 			};
