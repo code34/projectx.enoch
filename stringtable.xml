@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Project name="ProjectX">
+<Project name="eXtinction">
 	<Package name="Mission One">
 		<Container name="Some Words">
 			<Key ID="Str_somewhere">
@@ -19,8 +19,8 @@
 				<French>Instructions</French>
 			</Key>
 			<Key ID="Str_Welcome">
-				<Original>Welcome to the Beta version of ProjectX. This is a development version several bugs may still appear</Original>
-				<French>Bienvenue dans la version Beta de ProjectX. Ceci est une version en développement plusieurs bugs peuvent encore apparaitre</French>
+				<Original>Welcome to the Beta version of eXtinction. This is a development version several bugs may still appear</Original>
+				<French>Bienvenue dans la version Beta de eXtinction. Ceci est une version en développement plusieurs bugs peuvent encore apparaitre</French>
 			</Key>
 			<Key ID="Str_pressi">
 				<Original>- Press I to search</Original>
