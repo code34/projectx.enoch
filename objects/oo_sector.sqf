@@ -20,6 +20,7 @@
 
 	#include "oop.h"
 	#undef DEBUGSECTOR
+	#undef DEBUGVEHICLE
 
 	CLASS("OO_SECTOR")
 		PRIVATE VARIABLE("code","this");
@@ -31,6 +32,8 @@
 		PRIVATE VARIABLE("array","zombiestype");
 		PRIVATE VARIABLE("scalar","sectorsize");
 		PRIVATE VARIABLE("array","vehicles");
+		PRIVATE VARIABLE("bool","popzombiedone");
+		PRIVATE VARIABLE("bool","popvehicledone");
 
 		PUBLIC FUNCTION("array","constructor") {
 			DEBUG(#, "OO_SECTOR::constructor")
@@ -47,6 +50,8 @@
 			private _zonetype = "";
 			MEMBER("zonetype", _zonetype);
 			MEMBER("setZombiesType", nil);
+			MEMBER("popzombiedone", false);
+			MEMBER("popvehicledone", false);
 		};
 
 		PUBLIC FUNCTION("scalar","setPosition") {
@@ -59,8 +64,8 @@
 			MEMBER("zonetype", nil);
 		};
 
-		PUBLIC FUNCTION("","spawnVehicle") {
-			DEBUG(#, "OO_SECTOR::spawnVehicle")
+		PUBLIC FUNCTION("","popVehicle") {
+			DEBUG(#, "OO_SECTOR::popVehicle")
 			private _roads = MEMBER("position", nil) nearRoads MEMBER("sectorsize", nil);
 			private _vehicles = [];
 			if(count _roads isEqualTo 0) exitWith {};
@@ -83,12 +88,34 @@
 						_type = selectRandom ["rhs_uaz_open_vv","RHS_Ural_Open_Flat_VV_01"];
 					};
 				} else {
-					_type = selectRandom ["RHS_UAZ_MSV_01","rhs_uaz_open_MSV_01","RHS_Ural_VMF_01","RHS_Ural_Civ_01","RHS_Ural_Open_Civ_03", "C_Truck_02_transport_F","C_Truck_02_covered_F", "Land_Wreck_BMP2_F", "Land_Wreck_BRDM2_F", "Land_Wreck_Skodovka_F", "Land_Wreck_Slammer_F", "Land_Wreck_Slammer_hull_F", "Land_Wreck_T72_hull_F", "Land_Wreck_UAZ_F", "Land_Wreck_Ural_F"];
+					_type = selectRandom ["Land_ConcreteHedgehog_01_F", "Land_CzechHedgehog_01_new_F", "RoadBarrier_F", "Land_DragonsTeeth_01_4x2_new_F", "Land_DragonsTeeth_01_4x2_old_F","RHS_UAZ_MSV_01","rhs_uaz_open_MSV_01","RHS_Ural_VMF_01","RHS_Ural_Civ_01","RHS_Ural_Open_Civ_03", "C_Truck_02_transport_F","C_Truck_02_covered_F", "Land_Wreck_BMP2_F", "Land_Wreck_BRDM2_F", "Land_Wreck_Skodovka_F", "Land_Wreck_Slammer_F", "Land_Wreck_Slammer_hull_F", "Land_Wreck_T72_hull_F", "Land_Wreck_UAZ_F", "Land_Wreck_Ural_F"];
 				}; 
 				private _vehicle = _type createVehicle _position;
 				_vehicle allowDamage false;
 				_vehicle setFuel (0.1 + random 0.3);
 				_vehicle setdir _dir;
+
+				#ifdef DEBUGVEHICLE
+				private _id = random 65000;
+				private _name = format["%1_%2", "vehicles", _id];
+				private _marker = createMarkerLocal [_name, _position];
+				_marker setMarkerShapeLocal "ICON";
+				_marker setMarkerTypeLocal "loc_CivilDefense";
+				_marker setMarkerTextLocal _name;
+				_marker setMarkerColorLocal "ColorRed";
+				_marker setMarkerSizeLocal [0.5,0.5];
+				_marker setMarkerBrushLocal "FDiagonal";
+				[_vehicle, _marker]spawn {
+					_vehicle = _this select 0;
+					_marker = _this select 1;
+					while {alive _vehicle} do {
+						_marker setMarkerPosLocal (position _vehicle);
+						sleep 0.5;
+					};
+					deleteMarkerLocal _marker;
+				};
+				#endif
+
 				if(random 1 > 0.3) then {
 					if(random 1 > 0.7) then {
 						_hitpoint = selectRandom ["HitEngine", "HitLFWheel","HitLF2Wheel","HitLMWheel","HitLBWheel","HitRFWheel","HitRF2Wheel","HitRMWheel","HitRBWheel"];
@@ -98,10 +125,12 @@
 					};
 				};
 				_vehicles pushBack _vehicle;
+				_vehicle addEventHandler ["GetIn", {(_this select 0) setVariable ["credit", 30];}];
 				_vehicle spawn { sleep 5; _this allowDamage true;};
 				if (_requirement) then { _vehicle call fnc_requirement;};
 			};
 			MEMBER("vehicles", _vehicles);
+			MEMBER("popvehicledone", true);
 		};
 
 		PUBLIC FUNCTION("array","checkAverage") {
@@ -192,13 +221,13 @@
 					systemChat "Spawn Zombie location";
 					#endif
 					MEMBER("active", true);
-					SPAWN_MEMBER("spawnVehicle", nil);
-					MEMBER("popZombies", nil);
+					SPAWN_MEMBER("popVehicle", nil);
+					SPAWN_MEMBER("popZombies", nil);
 					#ifdef DEBUGSECTOR
 					systemChat format ["zombies count %1", count MEMBER("zombies", nil)];
 					#endif
 				};
-				if((west countside _list isEqualTo 0) and MEMBER("active", nil)) then {
+				if((west countside _list isEqualTo 0) and MEMBER("active", nil) and MEMBER("popzombiedone", nil) and MEMBER("popvehicledone", nil)) then {
 					#ifdef DEBUGSECTOR
 					systemChat "Unspawn Zombie location";
 					#endif
@@ -209,7 +238,7 @@
 					systemChat format ["zombies count %1", count MEMBER("zombies", nil)];
 					#endif
 				};
-				sleep 30;
+				sleep 15;
 			};
 		};
 
@@ -235,6 +264,7 @@
 			private _array = MEMBER("zombiestype", nil);
 			_type = format["%1%2", (selectRandom _array),"Opfor"];
 			private _ref = _group createUnit [_type, _centerposition, [], 0, "NONE"];
+			MEMBER("zombies", nil) pushBack _ref;
 			_group deleteGroupWhenEmpty true;
 
 			private _zonetype = MEMBER("zonetype", nil);
@@ -324,6 +354,7 @@
 			// move last one
 			_position = _ref getRelPos [floor(random 250), random 360];
 			_ref setpos _position;
+			MEMBER("popzombiedone", true);
 		};
 
 		PUBLIC FUNCTION("","unpopZombies") {
@@ -338,6 +369,7 @@
 			} forEach _zombies;
 			private _array = [];
 			MEMBER("zombies", _array);
+			MEMBER("popzombiedone", false);
 		};
 
 		PUBLIC FUNCTION("","unpopVehicles") {
@@ -346,10 +378,12 @@
 				_x spawn {
 					private _credit = 1;
 					while { _credit > 0 } do {
+						_credit = _this getVariable ["credit", 1];
 						if(count(crew _this) isEqualTo 0) then {
 							_credit = _credit - 1;
+							_this setVariable ["credit", _credit];
 						} else {
-							_credit = 30;
+							_this setVariable ["credit", 30];
 						};
 						sleep 10;
 					};
@@ -359,6 +393,7 @@
 			} forEach _vehicles;
 			_vehicles = [];
 			MEMBER("vehicles", _vehicles);
+			MEMBER("popvehicledone", false);
 		};
 
 		PUBLIC FUNCTION("","deconstructor") {
@@ -375,5 +410,7 @@
 			DELETE_VARIABLE("zombiestype");
 			DELETE_VARIABLE("sectorsize");
 			DELETE_VARIABLE("vehicles");
+			DELETE_VARIABLE("popzombiedone");
+			DELETE_VARIABLE("popvehicledone");
 		};
 	ENDCLASS;
