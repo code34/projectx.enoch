@@ -70,7 +70,7 @@
 
 			switch (_drivername) do {
 				case "inidbi": { _result = ["read", ["pdw", _key, _default]] call MEMBER("driver", nil);};
-				case "profile": { _result = profileNamespace getVariable _key;};
+				case "profile": { _result = profileNamespace getVariable [_key, _default];};
 				default { _result = false; };
 			};
 			_result;
