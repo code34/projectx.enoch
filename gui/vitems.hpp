@@ -104,12 +104,24 @@ class Vitems {
 							align = "center";
 						};
 					};
+
+					class OOP_Text_health_130: RscStructuredText {
+						idc = 130;
+						x = (safezoneW * 0.312);
+						y = (safezoneH * 0.088);
+						w = (safezoneW * 0.427);
+						h = (safezoneH * 0.306);
+						text = "health";
+						colorBackground[] = {0.6, 0.6, 0.6, 0.5};
+						size = (GUI_GRID_H * 1.15);
+					};
+
 					class OOP_Text_Description_107: RscStructuredText {
 						idc = 107;
 						x = (safezoneW * 0.312);
-						y = (safezoneH * 0.092);
+						y = (safezoneH * 0.395);
 						w = (safezoneW * 0.427);
-						h = (safezoneH * 0.706);
+						h = (safezoneH * 0.403);
 						text = "Description";
 						colorBackground[] = {0.6, 0.6, 0.6, 0.5};
 						size = (GUI_GRID_H * 1.15);

@@ -423,60 +423,84 @@
 			private _mages = "";
 			private _wp = "";
 			private _items = "";
+			private _reload = true;
 			
 			if(MEMBER("isMagazine",_item)) then {
 				switch (_type) do { 
 					case "primaryweapon" : { 
 						_wp = (primaryWeapon player);
-						private _supportedMags = getArray (configFile >> "CfgWeapons" >> _wp >> "magazines");
-						if!(_item in _supportedMags) exitWith {
-							hint "Ammo not supported by Weapon";
-							false;
-						};
-						_mags = primaryWeaponMagazine player;
-						_items = primaryWeaponItems player;
+						private _magswell = getArray (configFile >> "CfgWeapons" >> _wp >> "magazineWell");
+						private _supportedMags = [];
 						{
-							player removeMagazines  _x;
-							player removePrimaryWeaponItem _x;
-						} forEach _mags;
-						player setAmmo [primaryWeapon player, 0];
+							_supportedMags =  _supportedMags + getArray (configFile >> "CfgMagazineWells" >> _x >> "RHS_Magazines");
+							_supportedMags =  _supportedMags + getArray (configFile >> "CfgMagazineWells" >> _x >> "BI_Magazines");
+							_supportedMags =  _supportedMags + getArray (configFile >> "CfgMagazineWells" >> _x >> "BI_Enoch_Magazines");
+						}forEach _magswell;
+						if(_supportedMags findIf { _x == _item; } isEqualTo -1) then {
+							hint "Ammo not supported by Weapon";
+							_reload = false;
+						} else {
+							_mags = primaryWeaponMagazine player;
+							_items = primaryWeaponItems player;
+							{
+								player removeMagazines  _x;
+								player removePrimaryWeaponItem _x;
+							} forEach _mags;
+							player setAmmo [primaryWeapon player, 0];
+						};
 					}; 
 					case "secondaryweapon" : {
 						_wp = (secondaryWeapon player);
-						private _supportedMags = getArray (configFile >> "CfgWeapons" >> _wp >> "magazines");
-						if!(_item in _supportedMags) exitWith {
-							hint "Ammo not supported by Weapon";
-							false;
-						};
-						_mags = secondaryWeaponMagazine player;
-						_items = secondaryWeaponItems player;
+						private _magswell = getArray (configFile >> "CfgWeapons" >> _wp >> "magazineWell");
+						private _supportedMags = [];
 						{
-							player removeMagazines  _x;
-							player removeSecondaryWeaponItem _x;
-						} forEach _mags;
-						player setAmmo [secondaryWeapon player, 0];
+							_supportedMags =  _supportedMags + getArray (configFile >> "CfgMagazineWells" >> _x >> "RHS_Magazines");
+							_supportedMags =  _supportedMags + getArray (configFile >> "CfgMagazineWells" >> _x >> "BI_Magazines");
+							_supportedMags =  _supportedMags + getArray (configFile >> "CfgMagazineWells" >> _x >> "BI_Enoch_Magazines");
+						}forEach _magswell;
+						if(_supportedMags findIf { _x == _item; } isEqualTo -1) then {
+							hint "Ammo not supported by Weapon";
+							_reload = false;
+						} else {
+							_mags = secondaryWeaponMagazine player;
+							_items = secondaryWeaponItems player;
+							{
+								player removeMagazines  _x;
+								player removeSecondaryWeaponItem _x;
+							} forEach _mags;
+							player setAmmo [secondaryWeapon player, 0];
+						};
 					}; 
 					case "handgunweapon" : {
 						_wp = (handgunWeapon player);
-						private _supportedMags = getArray (configFile >> "CfgWeapons" >> _wp >> "magazines");
-						if!(_item in _supportedMags) exitWith {
-							hint "Ammo not supported by Weapon";
-							false;
-						};
-						_mags = handgunMagazine player;
-						_items = handgunItems player;
+						private _magswell = getArray (configFile >> "CfgWeapons" >> _wp >> "magazineWell");
+						private _supportedMags = [];
 						{
-							player removeMagazines  _x;
-							player removeHandgunItem _x;
-						} forEach _mags;
-						player setAmmo [handgunWeapon player, 0];
+							_supportedMags =  _supportedMags + getArray (configFile >> "CfgMagazineWells" >> _x >> "RHS_Magazines");
+							_supportedMags =  _supportedMags + getArray (configFile >> "CfgMagazineWells" >> _x >> "BI_Magazines");
+							_supportedMags =  _supportedMags + getArray (configFile >> "CfgMagazineWells" >> _x >> "BI_Enoch_Magazines");
+						}forEach _magswell;
+						if(_supportedMags findIf { _x == _item; } isEqualTo -1) then {
+							hint "Ammo not supported by Weapon";
+							_reload = false;
+						} else {
+							_mags = handgunMagazine player;
+							_items = handgunItems player;
+							{
+								player removeMagazines  _x;
+								player removeHandgunItem _x;
+							} forEach _mags;
+							player setAmmo [handgunWeapon player, 0];
+						};
 					}; 
 					default {}; 
 				};
-				player selectWeapon _wp;
-				if(_count isEqualTo 0) then {_count = 10000;};
-				player addMagazine [_item, _count];
-				reload player;
+				if(_reload) then {
+					player selectWeapon _wp;
+					if(_count isEqualTo 0) then {_count = 10000;};
+					player addMagazine [_item, _count];
+					reload player;
+				};
 				true;
 			};
 		};

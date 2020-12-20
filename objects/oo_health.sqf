@@ -88,6 +88,7 @@
 			MEMBER("zombie", _this select 4);
 			MEMBER("infected", _this select 5);
 
+			player setDamage (1 - ((_this select 2) / 100));
 			["setDrink", _this select 0] call hud;
 			["setFood", _this select 1] call hud;
 			["setLife", _this select 2] call hud;

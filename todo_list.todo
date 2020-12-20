@@ -3,25 +3,42 @@ THE PROGRAM OF TONIGHT !
 ========================
 ========================
 
+- Spawn des obstacles comme les épaves instant quand on roule. (on c'est pris une épave en plein milieu de la route ce qui nous a tous tué.)
+- Menu inventaire écriture et item trop gros. Un hud qui ne fais pas tout l'écran serait plus agréable. 
+- Quand on loot une arme vide obliger de mettre le chargeur manuellement via l'inventaire pour qui reload normalement en suite.
+- Les Zombies sont trop amical et peut présent.
+- Quand on loot une arme trop lourd pour rentré dans le sac elle ce supprime.
+- regarder pourquoi les tetes des zombies explosent pas, et fixer le probleme de sons des z
+- probleme du slot boussole
+- ajouter les clefs dans les vehicules
+- ajouter la capacite pour reparer les elements du vehicule
+
+++ MISSION
+- le F1 est pas à jour quand la mission est pas lu du sergent / ou tabnote vide quand on fait use
+- pareil pour la mission du labo
+
 bug
+
 - bug container: setitemcount line 4 (diviseur nul)
 - corriger le probleme de marker red and black
 
 improvement:
+- probleme du slot silencieux sur le gun
 - ajouter des sons la nuit + zombies
+- ajouter d'autres objets pour améliorer le lore  => les notes scientifiques, les journaux/avis dans les villages
++ ajouter des meubles dans les maisons
 
 fonctionnalité optionnelle
-- bazooka reload
+	
 - tabnote gérer plusieurs missions en meme temps
 - ajouter des nuages toxiques
 - verifier l'utilité de la classe OO_MODEL
 - voir s'il est possible d'utiliser les notes pour aussi afficher du texte autre que la mission
 	-> est il necessaire d ajouter les objectifs sur la map
-- ajouter d'autres objets pour améliorer le lore 
-	=> les notes scientifiques, les journaux/avis dans les villages
-
 
 // grosse corrections
+- Quand ont ce soignent alors qu'on est coucher le personnage ce remet a croupi.
+- Pluie insupportable on n'entend rien et ça occasionne des pertes de fps.
 - vérifier la pluviometrie - fix
 - ajouter les modeles des soldats RHS dans le randomstuff pour donner des armes - fix
 - ajouter du debug dans les objets OOP - fix

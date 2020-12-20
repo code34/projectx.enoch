@@ -18,7 +18,7 @@
 		private _time = _this select 1;
 		for "_i" from _time to 0 step -1 do {
 			hint format ["Time: %1", _i];
-			sleep 1;         
+			sleep 1;
 		};
 		_c4 setDamage 1;
 	};

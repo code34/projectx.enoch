@@ -1,8 +1,8 @@
 	/*
 	Author: code34 nicolas_boiteux@yahoo.fr
-	Copyright (C) 2013-2015 Nicolas BOITEUX
+	Copyright (C) 2013-2020 Nicolas BOITEUX
 
-	Real weather for MP GAMES v 1.4
+	Real weather for MP GAMES v 1.5
 	
 	This program is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -53,6 +53,29 @@
 	// Mission starting weather "CLEAR|CLOUDY|RAIN";
 	_startingweather = selectRandom ["CLOUDY", "RAIN", "CLEAR"];
 
+	_setWeather = {
+		_wcweather = [];
+		switch(toUpper(_this)) do {
+			case "CLEAR": {
+				_wcweather = [0, 0, 0, [random 3, random 3, true], date];
+			};
+			
+			case "CLOUDY": {
+				_wcweather = [0, 0, 0.6, [random 3, random 3, true], date];
+			};
+			
+			case "RAIN": {
+				_wcweather = [1, 0, 1, [random 3, random 3, true], date];
+			};
+			default {
+				_wcweather = [0, 0, 0, [random 3, random 3, true], date];
+				diag_log "Real weather: wrong starting weather";
+			};
+		};
+		_wcweather;
+	};
+
+
 	/////////////////////////////////////////////////////////////////
 	// Do not edit below
 	/////////////////////////////////////////////////////////////////
@@ -64,26 +87,8 @@
 	_timeforecast = _mintime;
 
 	if!(isnil "_startingdate") then { setdate _startingdate };
-	
-	switch(toUpper(_startingweather)) do {
-		case "CLEAR": {
-			wcweather = [0, 0, 0, [random 3, random 3, true], date];
-		};
-		
-		case "CLOUDY": {
-			wcweather = [0, 0, 0.6, [random 3, random 3, true], date];
-		};
-		
-		case "RAIN": {
-			wcweather = [1, 0, 1, [random 3, random 3, true], date];
-		};
 
-		default {
-			// clear
-			wcweather = [0, 0, 0, [random 3, random 3, true], date];
-			diag_log "Real weather: wrong starting weather";
-		};
-	};
+	wcweather = _startingweather call _setWeather;
 
 	checkTemperature = {
 		private _basetemp = 22;
@@ -163,44 +168,21 @@
 	};
 
 	_lastrain = 0;
-	_rain = 0;
-	_overcast = 0;
-
 	while {true} do {
+		_rain = 0;
+		_fog = 0;
+		_wind = [0,0,true];
 		_overcast = random 1;
-		if((overcast > 0.7) and (_overcast > overcast)) then {
-			_rain = 0.7 + random 0.3;
+		if(overcast > 0.5) then { _rain = random overcast;} else {_rain = 0;};
+		if(random 1 > 0.75) then {
+			_wind = [random 10, random 10, true];
+			_fog = 0;
 		} else {
-			if(random 1 > 0.8) then {
-				_rain = random 0.5;
-			} else {
-				_rain = 0.5 + (random 0.5);
-			};
-		};
-		if((date select 3 > 2) and (date select 3 <6)) then {
-			if(random 1 > 0.75) then {
-				_fog = 0.3 + (random 0.2);
-			} else {
-				_fog = 0.2 + (random 0.2);
-			};
-		} else {
-			if((_lastrain > 0.6) and (_rain < 0.2)) then {
-				_fog = 0.2 + random 0.2;
-			} else {
-				if(random 1 > 0.8) then {
-					_fog = 0.15 + random 0.15;
-				} else {
-					_fog = 0.15 + random 0.05;
-				};
-			};
-		};
-		if(random 1 > 0.95) then {
-			_wind = [random 7, random 7, true];
-		} else {
-			_wind = [random 3, random 3, true];
+			_wind = [random 3, random 3,true];
+			if((_lastrain > 0.6) and (_rain < 0.2)) then { _fog = 0.4 + random 0.2;} else {_fog = random 0.4;};
+			if((date select 3 > 22) and (date select 3 <6)) then { _fog = 0.4 + random 0.6;};
 		};
 		_lastrain = _rain;
-
 		wcweather = [_rain, _fog, _overcast, _wind, date];
 		60 setRain (wcweather select 0);
 		60 setfog (wcweather select 1);

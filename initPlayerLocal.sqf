@@ -166,7 +166,7 @@
 	private _content = [];
 
 	if(_backup isEqualTo []) then { 
-		_content = [["computetab", 1],["armyradio",1],["medicalkit",1],["survivalration",2], ["Binocular", 1], ["ItemMap",1], ["ItemCompass", 1]];
+		_content = [["computetab", 1],["armyradio",1],["medicalkit",1],["survivalration",2], ["Binocular", 1], ["ItemMap",1], ["ItemCompass", 1],["rhs_weap_45th_ak103", 1], ["30rnd_762x39_AK12_Lush_Mag_F",10]];
 		["overLoad", _content] call capcontainer;
 		["loadInventory", player] call capcontainer;
 		systemchat "Inventory load";
@@ -229,7 +229,7 @@
 		while { true } do {
 			_capacity = ("getCapacity" call mygear) * 1.2;
 			if("getBoost" call health) then {_boost = 50;}else{_boost = 0;};
-			_overload = 100 - (floor((("countWeight" call capcontainer) + 0.001) * 100) / _capacity) + _boost;
+			_overload = 120 - (floor((("countWeight" call capcontainer) + 0.001) * 100) / _capacity) + _boost;
 			switch (true) do { 
 				case (_overload > 90) : { player setAnimSpeedCoef 1.35;_overloadtag = false;};
 				case (_overload > 80) : { player setAnimSpeedCoef 1.3;_overloadtag = false;};

@@ -31,17 +31,17 @@
 
 		PUBLIC FUNCTION("","resume") { 
 			DEBUG(#, "OO_HEALTHRESUME::resume")
-			private _result = "<img image='paa\caduceus.paa'/><t size='1.2'>Medical Statement</t><br/>";
-			_result = _result + "<br/>" +  MEMBER("resumeLife", nil);
-			_result = _result + "<br/>" +  MEMBER("resumeInjury", nil);
-			_result = _result + "<br/>" +  MEMBER("resumeTemperature", nil);
-			_result = _result + "<br/>" +  MEMBER("resumeFood", nil);
-			_result = _result +  MEMBER("resumeBonusFood", nil);
-			_result = _result + "<br/>" +  MEMBER("resumeDrink", nil);
-			_result = _result +  MEMBER("resumeBonusDrink", nil);
-			_result = _result + "<br/>" +  MEMBER("resumeNausea", nil);
-			_result = _result + "<br/>" +  MEMBER("resumeVirus", nil);
-			_result = _result + "<br/>" +  MEMBER("resumeZombie", nil);
+			private _result = "<br/><t size='1'>Medical Statement</t><br/>";
+			_result = _result + "<br/><t size='0.7'>" +  MEMBER("resumeLife", nil) + "</t>";
+			_result = _result + "<br/><t size='0.7'>" +  MEMBER("resumeInjury", nil) + "</t>";
+			_result = _result + "<br/><t size='0.7'>" +  MEMBER("resumeTemperature", nil) + "</t>";
+			_result = _result + "<br/><t size='0.7'>" +  MEMBER("resumeFood", nil);
+			_result = _result + " " + MEMBER("resumeBonusFood", nil) + "</t>";
+			_result = _result + "<br/><t size='0.7'>" +  MEMBER("resumeDrink", nil);
+			_result = _result + " " + MEMBER("resumeBonusDrink", nil) + "</t>";
+			_result = _result + "<br/><t size='0.7'>" +  MEMBER("resumeNausea", nil) + "</t>";
+			_result = _result + "<br/><t size='0.7'>" +  MEMBER("resumeVirus", nil) + "</t>";
+			_result = _result + "<br/><t size='0.7'>" +  MEMBER("resumeZombie", nil) + "</t>";
 			parseText _result;
 		};
 

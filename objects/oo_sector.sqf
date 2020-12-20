@@ -77,18 +77,18 @@
 				_position = _position getRelPos [random (50), 90];
 				private _type = [];
 				private _requirement = false;
-				if(random 1 > 0.95) then {
-					if(random 1 > 0.98) then {
+				if((random 1 > 0.95) and (random 1 > 0.98)) then {
 						_type = selectRandom ["rhs_btr70_vv","rhs_brm1k_vv","rhs_t72be_tv", "rhs_t90sm_tv"];
 						_requirement = true;
 						#ifdef DEBUGSECTORRUSSIAN
 						systemchat format["Spawn special vehicle: %1", _type];
 						#endif
-					} else {
-						_type = selectRandom ["rhs_uaz_open_vv","RHS_Ural_Open_Flat_VV_01"];
-					};
 				} else {
-					_type = selectRandom ["Land_ConcreteHedgehog_01_F", "Land_CzechHedgehog_01_new_F", "RoadBarrier_F", "Land_DragonsTeeth_01_4x2_new_F", "Land_DragonsTeeth_01_4x2_old_F","RHS_UAZ_MSV_01","rhs_uaz_open_MSV_01","RHS_Ural_VMF_01","RHS_Ural_Civ_01","RHS_Ural_Open_Civ_03", "C_Truck_02_transport_F","C_Truck_02_covered_F", "Land_Wreck_BMP2_F", "Land_Wreck_BRDM2_F", "Land_Wreck_Skodovka_F", "Land_Wreck_Slammer_F", "Land_Wreck_Slammer_hull_F", "Land_Wreck_T72_hull_F", "Land_Wreck_UAZ_F", "Land_Wreck_Ural_F"];
+					if(random 1 > 0.1) then {
+						_type = selectRandom ["Land_Wreck_Hunter_F", "Land_Wreck_HMMWV_F", "Land_ScrapHeap_2_F", "Land_ScrapHeap_1_F", "Land_Scrap_MRAP_01_F", "Land_Tyres_F", "Land_JunkPile_F", "Land_GarbageBags_F", "Land_PillboxBunker_01_hex_F", "Land_HBarrierTower_F", "Land_Razorwire_F", "Land_BagFence_Long_F", "Land_ConcreteHedgehog_01_F", "Land_CzechHedgehog_01_new_F", "RoadBarrier_F", "Land_DragonsTeeth_01_4x2_new_F", "Land_DragonsTeeth_01_4x2_old_F", "Land_Wreck_BMP2_F", "Land_Wreck_BRDM2_F", "Land_Wreck_Skodovka_F", "Land_Wreck_Slammer_F", "Land_Wreck_Slammer_hull_F", "Land_Wreck_T72_hull_F", "Land_Wreck_UAZ_F", "Land_Wreck_Ural_F"];
+					} else {
+						_type = selectRandom ["RHS_UAZ_MSV_01","rhs_uaz_open_MSV_01","RHS_Ural_VMF_01","RHS_Ural_Civ_01","RHS_Ural_Open_Civ_03", "C_Truck_02_transport_F","C_Truck_02_covered_F","rhs_uaz_open_vv","RHS_Ural_Open_Flat_VV_01"];
+					};
 				}; 
 				private _vehicle = _type createVehicle _position;
 				_vehicle allowDamage false;

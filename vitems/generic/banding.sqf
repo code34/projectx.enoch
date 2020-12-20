@@ -9,11 +9,13 @@
 
 	if(getDammage _object isEqualTo 0) exitWith {hint "you are not injured";false;};
 
-	if(vehicle player isEqualTo player) then {
-		if(_object isEqualTo player) then {
-			player playMove "AinvPknlMstpSlayWrflDnon_medic";
-		} else {
-			player playMove "AinvPknlMstpSlayWpstDnon_medicOther";
+	if (stance player == "STAND") then {
+		if(vehicle player isEqualTo player) then {
+			if(_object isEqualTo player) then {
+				player playMove "AinvPknlMstpSlayWrflDnon_medic";
+			} else {
+				player playMove "AinvPknlMstpSlayWpstDnon_medicOther";
+			};
 		};
 	};
 

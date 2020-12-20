@@ -28,6 +28,7 @@ CLASS("oo_Vitems")
 	PRIVATE UI_VARIABLE("control", "OOP_Listbox_Proximity");
 	PRIVATE UI_VARIABLE("control", "OOP_Text_Capacities");
 	PRIVATE UI_VARIABLE("control", "OOP_Text_Description");
+	PRIVATE UI_VARIABLE("control", "OOP_Text_Health");
 	PRIVATE UI_VARIABLE("control", "OOP_Text_Inventory");
 	PRIVATE UI_VARIABLE("control", "OOP_Text_proximity");
 	PRIVATE UI_VARIABLE("control", "OOP_cap_menu");
@@ -69,6 +70,7 @@ CLASS("oo_Vitems")
 		MEMBER("OOP_Text_Description", _this displayCtrl 107);
 		MEMBER("OOP_Text_Inventory", _this displayCtrl 106);
 		MEMBER("OOP_Text_proximity", _this displayCtrl 104);
+		MEMBER("OOP_Text_Health", _this displayCtrl 130);
 		MEMBER("OOP_cap_menu", _this displayCtrl 108);
 		MEMBER("OOP_inv_menu", _this displayCtrl 123);
 		MEMBER("OOP_pic_primaryweapon", _this displayCtrl 109);
@@ -113,6 +115,7 @@ CLASS("oo_Vitems")
 			private _content = ("getContent" call proxcontainer) select 0;
 			MEMBER("OOP_Listbox_Capacities",nil) lbSetCurSel -1;
 			//"name", "description", "category", "price","weight", "owner", "life"
+			MEMBER("OOP_Text_Health", nil) ctrlSetStructuredText ("resume" call healthresume);
 			MEMBER("OOP_Text_Description", nil) ctrlSetStructuredText parseText format ["<br/><img size='2' image='%1' /> %2<br/><br/>%3<br/>", _content select 5, _content select 1, _content select 2];
 		};
 		MEMBER("refresh", nil);
@@ -878,6 +881,7 @@ CLASS("oo_Vitems")
 		//private _limitsize = "getLimitSize" call capcontainer;
 		//private _limitweight = "getLimitWeight" call capcontainer;
 		MEMBER("OOP_Text_Inventory", nil) ctrlSetText format["Description | Items: %1 | Total Weight: %2/%3 Kg", _size, _weight, _capacity];
+		MEMBER("OOP_Text_Health", nil) ctrlSetStructuredText ("resume" call healthresume);
 	};
 
 	// filtre les equipements déjà montré au centre hormis les munitions
@@ -1073,6 +1077,7 @@ CLASS("oo_Vitems")
 		DELETE_UI_VARIABLE("OOP_Listbox_Proximity");
 		DELETE_UI_VARIABLE("OOP_Text_Capacities");
 		DELETE_UI_VARIABLE("OOP_Text_Description");
+		DELETE_UI_VARIABLE("OOP_Text_Health");
 		DELETE_UI_VARIABLE("OOP_Text_Inventory");
 		DELETE_UI_VARIABLE("OOP_Text_proximity");
 		DELETE_UI_VARIABLE("OOP_cap_menu");

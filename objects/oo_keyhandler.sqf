@@ -113,18 +113,6 @@
 
 		PUBLIC FUNCTION("","keyF2") { 
 			private _exit = false;
-			if(["findItemIndex","computetab"] call capcontainer > -1) then {
-				if("isDisplay" call tabnote) then {
-					closeDialog 0;
-					if(("getMode" call tabnote) isEqualTo "F2") then {_exit = true;};
-				};
-				if(_exit) then {
-					["setMode", ""] call tabnote;
-				} else {
-					["setMode", "F2"] call tabnote;
-					"createDialog" call tabnote;
-				};
-			};
 		};
 
 		PUBLIC FUNCTION("","keyF5") { 
